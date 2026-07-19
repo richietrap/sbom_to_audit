@@ -1,0 +1,3 @@
+issue_id,discovered_at,affected_version,severity,summary,root_cause,fix,regression_control,status,paper_impact
+BUG-001,2026-07-19,0.2.1,high,GitHub Actions could not resolve v7 action tags,Action versions were asserted without independent verification,Changed to valid v6 tags,test_workflow.py plus actionlint and Dependabot,closed,None; tests had not executed
+BUG-002,2026-07-19,0.2.1,high,Schema tests failed in clean GitHub checkout,Tests read generated outputs excluded by .gitignore,Generate EvidencePack from the scenario inside the test,test_schema.py self-contained fixture and CLI integration test,closed,None; local test environment had masked missing tracked files

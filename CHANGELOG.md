@@ -58,3 +58,28 @@ All notable repository design and implementation changes are recorded here.
 - real-format source ingestion and source-hash verification remain Stage 2 work.
 - scenario-driven deadline, authorization, and submission events remain Stage 2/3 integration work.
 - scoped semantic conflict resolution and event-ledger persistence remain Stage 3 work.
+
+## [0.2.2] - 2026-07-19
+
+### Fixed
+
+- made schema regression tests self-contained by generating their EvidencePack from the committed scenario instead of reading generated outputs excluded by `.gitignore`;
+- made manifest validation ignore local virtual environments, analysis caches, and coverage files;
+- corrected CI so tests and deterministic smoke replays operate entirely in temporary output directories.
+
+### Added
+
+- pre-commit hooks for Ruff, Mypy, Codespell, Yamllint, and repository validation;
+- a separate quality workflow with actionlint v1.7.12, static checks, repository validation, and branch coverage;
+- Dependabot monitoring for Python and GitHub Actions dependencies;
+- canonical repository and release-validation scripts;
+- Hypothesis property tests, parser contract tests, CLI integration tests, evidence-record tests, and repository-integrity tests;
+- a 70% branch-coverage ratchet, quality-assurance documentation, known-issues register, bug register, and ADR-003.
+
+### Preserved
+
+- EvidencePack Schema v0.2, the 34 mandatory EC fields, the seven locked effectiveness metrics, the state set, and all v0.2.1 decision semantics.
+
+### Deferred
+
+- immutable SHA pinning for third-party GitHub Actions, mutation testing, full security scanning, strict source-file validation, and Execution Latency instrumentation remain documented follow-up controls.

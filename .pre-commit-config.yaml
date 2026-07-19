@@ -1,0 +1,34 @@
+minimum_pre_commit_version: "4.0.0"
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: Ruff lint
+        entry: ruff check
+        language: system
+        types: [python]
+      - id: ruff-format-check
+        name: Ruff format check
+        entry: ruff format --check
+        language: system
+        types: [python]
+      - id: mypy
+        name: Mypy type check
+        entry: python -m mypy src
+        language: system
+        pass_filenames: false
+      - id: codespell
+        name: Codespell
+        entry: codespell
+        language: system
+        pass_filenames: false
+      - id: yamllint
+        name: YAML lint
+        entry: yamllint .github data .pre-commit-config.yaml .yamllint.yml
+        language: system
+        pass_filenames: false
+      - id: repository-validation
+        name: Repository integrity validation
+        entry: python scripts/validate_repository.py
+        language: system
+        pass_filenames: false

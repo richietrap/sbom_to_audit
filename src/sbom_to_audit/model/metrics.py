@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 MANDATORY_FIELDS: tuple[str, ...] = (
     "case_metadata.case_id",
@@ -98,7 +99,7 @@ def clock_aware_escalation(opportunities: Iterable[dict[str, Any]]) -> float | N
     rows = list(opportunities)
     if not rows:
         return None
-    escalated = sum(row.get("observed_state") == "Escalate" for row in rows)
+    escalated = sum(1 for row in rows if row.get("observed_state") == "Escalate")
     return round(escalated / len(rows), 6)
 
 
@@ -113,7 +114,7 @@ def audit_reconstructability(entries: list[dict[str, Any]]) -> float:
 def state_correctness(rows: list[dict[str, Any]]) -> float:
     if not rows:
         return 0.0
-    correct = sum(row.get("observed_state") == row.get("expected_state") for row in rows)
+    correct = sum(1 for row in rows if row.get("observed_state") == row.get("expected_state"))
     return round(correct / len(rows), 6)
 
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import requests
 
@@ -21,10 +21,10 @@ def load_kev_catalog(
     if offline:
         if snapshot_path is None or not Path(snapshot_path).exists():
             raise FileNotFoundError("offline KEV lookup requires an existing snapshot_path")
-        return read_json(snapshot_path)
+        return cast(dict[str, Any], read_json(snapshot_path))
     response = requests.get(CISA_KEV_URL, timeout=timeout)
     response.raise_for_status()
-    data = response.json()
+    data = cast(dict[str, Any], response.json())
     if snapshot_path is not None:
         write_json(snapshot_path, data)
     return data
@@ -32,6 +32,6 @@ def load_kev_catalog(
 
 def kev_entry(catalog: dict[str, Any], cve_id: str) -> dict[str, Any] | None:
     for item in catalog.get("vulnerabilities", []):
-        if item.get("cveID") == cve_id:
-            return item
+        if isinstance(item, dict) and item.get("cveID") == cve_id:
+            return cast(dict[str, Any], item)
     return None

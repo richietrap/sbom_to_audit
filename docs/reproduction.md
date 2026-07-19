@@ -14,6 +14,8 @@ source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
 python -m pip install -e .[dev]
 python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
 pytest
+python scripts/validate_repository.py
+python scripts/release_check.py
 ```
 
 ## 3. Colab execution
@@ -24,6 +26,7 @@ pytest
 !python -m pip install -e .
 !python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
 !pytest -q
+!python scripts/validate_repository.py
 ```
 
 A Drive mount is optional:
@@ -69,4 +72,4 @@ python -m jsonschema -i outputs/evidence_packs/ghost_logger.json schemas/evidenc
 pytest -q
 ```
 
-Then verify that all four output files exist and that `ghost_logger_metrics.json` reports `EPG: 1`.
+Then verify that all four output files exist and that `ghost_logger_metrics.json` reports `EPG: 1`. Generated outputs are not committed; schema and integration tests generate their own temporary EvidencePacks so a clean checkout is sufficient.

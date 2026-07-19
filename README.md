@@ -37,6 +37,8 @@ source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
 python -m pip install -e .[dev]
 python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
 pytest
+python scripts/validate_repository.py
+python scripts/release_check.py
 ```
 
 Expected replay outputs:
@@ -48,7 +50,7 @@ outputs/conflict_reports/ghost_logger.json
 outputs/metrics/ghost_logger_metrics.json
 ```
 
-The replay is deterministic: timestamps and seeded evidence values come from the scenario file rather than wall-clock execution time.
+The replay is deterministic: timestamps and seeded evidence values come from the scenario file rather than wall-clock execution time. Generated files under `outputs/` are intentionally ignored by Git; tests create fresh temporary outputs and do not rely on local generated files.
 
 ## Repository map
 
@@ -57,7 +59,8 @@ The replay is deterministic: timestamps and seeded evidence values come from the
 - `src/sbom_to_audit/` — parsers, identity handling, scoring, state machine, pack generation, and metrics.
 - `data/` — controlled inputs and cached public-source snapshots.
 - `outputs/` — generated evidence packs, state logs, conflict reports, and metrics.
-- `tests/` — unit tests for the locked identity, scoring, state, and metric rules.
+- `tests/` — unit, integration, parser-contract, property, schema, and repository-integrity tests.
+- `scripts/` — canonical repository validation and pre-release quality checks.
 - `MANIFEST.md` — drift-control inventory of every expected repository file.
 
 ## Prototype semantics v0.2.1

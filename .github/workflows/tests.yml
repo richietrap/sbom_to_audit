@@ -24,9 +24,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-          cache-dependency-path: |
-            pyproject.toml
-            requirements.txt
+          cache-dependency-path: pyproject.toml
 
       - name: Install package and development dependencies
         run: |
@@ -35,18 +33,19 @@ jobs:
           python -m pip check
 
       - name: Compile package
-        run: python -m compileall -q src tests
+        run: python -m compileall -q src tests scripts
 
       - name: Run regression suite
-        run: python -m pytest -q
+        run: python -m pytest
 
       - name: Run deterministic CLI smoke test
         run: |
-          output_dir="${RUNNER_TEMP}/sbom-to-audit-outputs"
+          first="${RUNNER_TEMP}/sbom-to-audit-first"
+          second="${RUNNER_TEMP}/sbom-to-audit-second"
           python -m sbom_to_audit.cli \
             --scenario data/scenarios/ghost_logger.yaml \
-            --output-root "$output_dir"
-          test -f "$output_dir/evidence_packs/ghost_logger.json"
-          test -f "$output_dir/state_logs/ghost_logger.csv"
-          test -f "$output_dir/conflict_reports/ghost_logger.json"
-          test -f "$output_dir/metrics/ghost_logger_metrics.json"
+            --output-root "$first"
+          python -m sbom_to_audit.cli \
+            --scenario data/scenarios/ghost_logger.yaml \
+            --output-root "$second"
+          diff -ru "$first" "$second"

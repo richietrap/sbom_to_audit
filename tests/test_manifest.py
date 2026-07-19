@@ -1,7 +1,6 @@
 import re
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "MANIFEST.md"
 GENERATED_OUTPUT_DIRS = {
@@ -10,7 +9,18 @@ GENERATED_OUTPUT_DIRS = {
     Path("outputs/conflict_reports"),
     Path("outputs/metrics"),
 }
-IGNORED_DIRECTORY_NAMES = {".git", ".pytest_cache", "__pycache__"}
+IGNORED_DIRECTORY_NAMES = {
+    ".git",
+    ".hypothesis",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    ".qa-venv",
+    "__pycache__",
+    "build",
+    "dist",
+}
 
 
 def _declared_paths(text: str) -> list[str]:
@@ -24,9 +34,11 @@ def _repository_files_requiring_manifest_entry() -> set[str]:
         if not path.is_file():
             continue
         relative = path.relative_to(ROOT)
-        if any(part in IGNORED_DIRECTORY_NAMES or part.endswith(".egg-info") for part in relative.parts):
+        if any(
+            part in IGNORED_DIRECTORY_NAMES or part.endswith(".egg-info") for part in relative.parts
+        ):
             continue
-        if path.suffix == ".pyc":
+        if path.suffix == ".pyc" or relative.name.startswith(".coverage"):
             continue
         if relative.parent in GENERATED_OUTPUT_DIRS and relative.name != ".gitkeep":
             continue
@@ -34,12 +46,16 @@ def _repository_files_requiring_manifest_entry() -> set[str]:
     return files
 
 
-def test_manifest_declared_files_exist_and_counts_match():
+def test_manifest_declared_files_exist_and_counts_match() -> None:
     text = MANIFEST.read_text(encoding="utf-8")
     declared = set(_declared_paths(text))
-    expected = int(re.search(r"\*\*Expected files:\*\* (\d+)", text).group(1))
-    created = int(re.search(r"\*\*Created files:\*\* (\d+)", text).group(1))
-    missing = int(re.search(r"\*\*Missing files:\*\* (\d+)", text).group(1))
+    expected_match = re.search(r"\*\*Expected files:\*\* (\d+)", text)
+    created_match = re.search(r"\*\*Created files:\*\* (\d+)", text)
+    missing_match = re.search(r"\*\*Missing files:\*\* (\d+)", text)
+    assert expected_match and created_match and missing_match
+    expected = int(expected_match.group(1))
+    created = int(created_match.group(1))
+    missing = int(missing_match.group(1))
     actual = _repository_files_requiring_manifest_entry()
 
     assert len(declared) == expected

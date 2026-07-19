@@ -8,7 +8,6 @@ from sbom_to_audit.model.deadline_engine import (
     evaluate_deadline_profile,
 )
 
-
 MILESTONE = DeadlineMilestone(
     milestone_id="early_warning",
     deadline_hours=24,

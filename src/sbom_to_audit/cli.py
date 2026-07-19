@@ -39,10 +39,17 @@ STATE_FIELDS = [
 
 
 def _find_repository_root(scenario_path: Path) -> Path:
-    for candidate in [Path.cwd().resolve(), *Path.cwd().resolve().parents, scenario_path.resolve().parent, *scenario_path.resolve().parents]:
+    for candidate in [
+        Path.cwd().resolve(),
+        *Path.cwd().resolve().parents,
+        scenario_path.resolve().parent,
+        *scenario_path.resolve().parents,
+    ]:
         if (candidate / "pyproject.toml").exists() and (candidate / "schemas").is_dir():
             return candidate
-    raise FileNotFoundError("could not locate repository root containing pyproject.toml and schemas/")
+    raise FileNotFoundError(
+        "could not locate repository root containing pyproject.toml and schemas/"
+    )
 
 
 def _validate_pack(pack: dict[str, Any], schema_path: Path) -> None:
@@ -50,7 +57,9 @@ def _validate_pack(pack: dict[str, Any], schema_path: Path) -> None:
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = sorted(validator.iter_errors(pack), key=lambda error: list(error.path))
     if errors:
-        details = "; ".join(f"{'.'.join(map(str, error.path)) or '<root>'}: {error.message}" for error in errors)
+        details = "; ".join(
+            f"{'.'.join(map(str, error.path)) or '<root>'}: {error.message}" for error in errors
+        )
         raise ValueError(f"generated EvidencePack failed schema validation: {details}")
 
 
@@ -98,7 +107,9 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
         "schema_version": "0.2",
         "EC": evidence_completeness(result["pack"]),
         "TR": traceability_ratio(result["pack"]["claims"]),
-        "CD": conflict_detection(len(result["conflicts"]), int(scenario["scenario"].get("seeded_conflicts", 0))),
+        "CD": conflict_detection(
+            len(result["conflicts"]), int(scenario["scenario"].get("seeded_conflicts", 0))
+        ),
         "CA": ca_value,
         "CA_status": "not_applicable" if ca_value is None else "applicable",
         "AR": audit_reconstructability(result["pack"]["audit_log"]),
@@ -122,8 +133,12 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--scenario", required=True, help="Path to a controlled scenario YAML file.")
-    parser.add_argument("--output-root", help="Optional output directory; defaults to repository outputs/.")
+    parser.add_argument(
+        "--scenario", required=True, help="Path to a controlled scenario YAML file."
+    )
+    parser.add_argument(
+        "--output-root", help="Optional output directory; defaults to repository outputs/."
+    )
     return parser
 
 

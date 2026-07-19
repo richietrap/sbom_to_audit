@@ -1,0 +1,19 @@
+extends: default
+
+rules:
+  document-start: disable
+  line-length:
+    max: 100
+    level: warning
+  truthy:
+    allowed-values: ["true", "false"]
+    check-keys: false
+
+ignore: |
+  .git/
+  .hypothesis/
+  .mypy_cache/
+  .pytest_cache/
+  .ruff_cache/
+  .venv/
+  .qa-venv/

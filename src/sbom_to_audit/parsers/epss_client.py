@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import requests
 
@@ -22,10 +22,10 @@ def query_epss(
     if offline:
         if snapshot_path is None or not Path(snapshot_path).exists():
             raise FileNotFoundError("offline EPSS query requires an existing snapshot_path")
-        return read_json(snapshot_path)
+        return cast(dict[str, Any], read_json(snapshot_path))
     response = requests.get(EPSS_API_URL, params={"cve": cve_id}, timeout=timeout)
     response.raise_for_status()
-    data = response.json()
+    data = cast(dict[str, Any], response.json())
     if snapshot_path is not None:
         write_json(snapshot_path, data)
     return data

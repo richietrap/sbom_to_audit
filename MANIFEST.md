@@ -2,21 +2,21 @@
 
 **Schema baseline:** EvidencePack v0.2  
 **Semantic baseline:** v0.2.1, approved 2026-07-13  
-**Purpose:** Drift control. This file lists every expected scaffold file, its role, creation status, and approved semantic amendments.
+**Purpose:** Drift control. This file lists every expected scaffold file, its role, creation status, and approved semantic and quality amendments.
 
-**Expected files:** 67  
-**Created files:** 67  
+**Expected files:** 83  
+**Created files:** 83  
 **Missing files:** 0
 
 | Path | Purpose | Status |
 |---|---|---|
 | `README.md` | Project scope, research questions, quick start, non-goals, and repository map. | Amended v0.2.1 |
 | `LICENSE` | MIT license for the research code. | Created |
-| `CITATION.cff` | Machine-readable software citation metadata. | Amended v0.2.1 |
-| `.gitignore` | Excludes environments and generated outputs while retaining placeholders. | Created |
+| `CITATION.cff` | Machine-readable software citation metadata. | Amended v0.2.2 |
+| `.gitignore` | Excludes environments, quality caches, and generated outputs while retaining placeholders. | Amended v0.2.2 |
 | `requirements.txt` | Flat dependency list for simple environments. | Created |
-| `pyproject.toml` | Package metadata, dependencies, console entry point, and pytest configuration. | Amended v0.2.1 |
-| `.github/workflows/tests.yml` | Continuous regression on Python 3.10–3.12 with compilation, tests, and deterministic CLI smoke execution. | Created v0.2.1 |
+| `pyproject.toml` | Package metadata, bounded dependencies, quality-tool configuration, coverage ratchet, and console entry point. | Amended v0.2.2 |
+| `.github/workflows/tests.yml` | Clean-checkout regression on Python 3.10–3.12 with self-contained tests and double-replay comparison. | Amended v0.2.2 |
 | `CHANGELOG.md` | Versioned record of semantic, schema, implementation, and evaluation changes. | Created v0.2.1 |
 | `docs/design_freeze_v0.2.md` | Locked research questions, tri-part model, scoring semantics, schema, evaluation, and non-claims. | Amended v0.2.1 |
 | `docs/decision_semantics.md` | Authoritative definitions of `R_t`, `D_(k,t)`, `Pi_t`, execution/exploitation separation, and authorization/submission boundaries. | Created v0.2.1 |
@@ -60,9 +60,9 @@
 | `tests/test_state_machine.py` | State-rule precedence and mitigation-non-suppression tests. | Amended v0.2.1 |
 | `tests/test_deadline_engine.py` | Configured deadline-status precedence and audit-event tests. | Created v0.2.1 |
 | `tests/test_authorization.py` | Human authorization and submission-separation tests. | Created v0.2.1 |
-| `tests/test_schema.py` | EvidencePack v0.2 and deadline-event schema-regression tests. | Created v0.2.1 |
-| `tests/test_manifest.py` | Manifest completeness and count-regression test. | Created v0.2.1 |
-| `tests/test_workflow.py` | Prevents unsupported GitHub Actions major-tag drift. | Created v0.2.1 |
+| `tests/test_schema.py` | Self-contained EvidencePack v0.2 and deadline-event schema-regression tests. | Amended v0.2.2 |
+| `tests/test_manifest.py` | Manifest completeness test resilient to local environments and quality caches. | Amended v0.2.2 |
+| `tests/test_workflow.py` | Prevents action-tag drift and verifies independent regression and quality workflows. | Amended v0.2.2 |
 | `data/sbom/.gitkeep` | Keeps the required empty directory in Git. | Created |
 | `data/csaf/.gitkeep` | Keeps the required empty directory in Git. | Created |
 | `data/osv_snapshots/.gitkeep` | Keeps the required empty directory in Git. | Created |
@@ -76,6 +76,22 @@
 | `outputs/state_logs/.gitkeep` | Keeps the required empty directory in Git. | Created |
 | `outputs/conflict_reports/.gitkeep` | Keeps the required empty directory in Git. | Created |
 | `outputs/metrics/.gitkeep` | Keeps the required empty directory in Git. | Created |
+| `.pre-commit-config.yaml` | Local fail-fast hooks for lint, formatting, typing, spelling, YAML, and repository integrity. | Created v0.2.2 |
+| `.yamllint.yml` | YAML style and structural lint configuration. | Created v0.2.2 |
+| `.codespellrc` | Typographical-check configuration and repository exclusions. | Created v0.2.2 |
+| `.github/dependabot.yml` | Weekly dependency and GitHub Actions update monitoring. | Created v0.2.2 |
+| `.github/workflows/quality.yml` | Static analysis, actionlint, repository validation, and coverage quality gate. | Created v0.2.2 |
+| `docs/quality_assurance.md` | Defence-in-depth quality controls, fail-closed rules, and coverage policy. | Created v0.2.2 |
+| `docs/known_issues.md` | Open limitations and deferred safeguards with risk treatment. | Created v0.2.2 |
+| `docs/bug_register.csv` | Structured defect register with root causes, fixes, and regression controls. | Created v0.2.2 |
+| `docs/decision_records/ADR-003-quality-gates-and-clean-checkout-tests.md` | Records clean-checkout independence and the Stage 1.5.2 quality-gate decision. | Created v0.2.2 |
+| `scripts/validate_repository.py` | Canonical schema, manifest, scenario, and text-integrity validator. | Created v0.2.2 |
+| `scripts/release_check.py` | Canonical pre-release quality and deterministic-replay runner. | Created v0.2.2 |
+| `tests/test_cli_integration.py` | Clean temporary-output CLI integration and determinism tests. | Created v0.2.2 |
+| `tests/test_repository_integrity.py` | Repository-validator and ignore-policy regression tests. | Created v0.2.2 |
+| `tests/test_properties.py` | Hypothesis invariants for identity uncertainty and conflict precedence. | Created v0.2.2 |
+| `tests/test_parsers.py` | Current parser and offline snapshot helper contract tests. | Created v0.2.2 |
+| `tests/test_evidence_record.py` | Typed source-artifact and claim serialization tests. | Created v0.2.2 |
 | `MANIFEST.md` | Drift-control inventory of expected files and creation status. | Created |
 
 

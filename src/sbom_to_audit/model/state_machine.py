@@ -44,18 +44,33 @@ def recommend_state(
     C_t = bool(scores["C_t"])
 
     if C_t:
-        return "Escalate", "Active evidence claims conflict; conflict precedence forces internal escalation."
+        return (
+            "Escalate",
+            "Active evidence claims conflict; conflict precedence forces internal escalation.",
+        )
     if previous_state == "Prepare" and delta_t_hours >= t.tau_E_hours:
         return (
             "Escalate",
-            f"The case remained in Prepare until delta_t={delta_t_hours:g}h, meeting the internal {t.tau_E_hours:g}h safeguard.",
+            f"The case remained in Prepare until delta_t={delta_t_hours:g}h, "
+            f"meeting the internal {t.tau_E_hours:g}h safeguard.",
         )
     if A_t >= t.theta_A and E_t >= t.theta_E and I_t >= t.theta_I:
-        return "Report-Ready", "Applicability, exploitation evidence, and impact meet the prototype thresholds; human review is required."
+        return (
+            "Report-Ready",
+            "Applicability, exploitation evidence, and impact meet the prototype "
+            "thresholds; human review is required.",
+        )
     if U_t >= t.theta_U and (E_t >= t.theta_E or I_t >= t.theta_I):
-        return "Prepare", "Uncertainty is high while exploitation evidence or impact meets its threshold."
+        return (
+            "Prepare",
+            "Uncertainty is high while exploitation evidence or impact meets its threshold.",
+        )
     if A_t <= t.theta_N and U_t <= t.theta_L:
-        return "Document No-Report", "Applicability and uncertainty are both low under the prototype thresholds; preserve the rationale for review."
+        return (
+            "Document No-Report",
+            "Applicability and uncertainty are both low under the prototype thresholds; "
+            "preserve the rationale for review.",
+        )
     return "Monitor", "No higher-precedence transition rule is satisfied."
 
 

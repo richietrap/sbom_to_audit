@@ -6,8 +6,9 @@ that a configured reporting milestone was completed or submitted.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
-from typing import Any, Mapping
+from typing import Any
 
 from sbom_to_audit.model.state_machine import validate_authorized_state
 
@@ -68,7 +69,7 @@ def authorization_from_mapping(event: Mapping[str, Any]) -> HumanAuthorizationEv
         actor_id=str(event.get("actor_id") or ""),
         actor_role=str(event.get("actor_role") or ""),
         actor_type=str(event.get("actor_type") or ""),
-        authorized_state=event.get("authorized_state"),
+        authorized_state=str(event.get("authorized_state") or ""),
         rationale=str(event.get("rationale") or ""),
     )
 

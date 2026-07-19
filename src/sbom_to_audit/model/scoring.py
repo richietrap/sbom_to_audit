@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 from sbom_to_audit.model.identity import apply_identity_uncertainty, clamp
 
@@ -62,7 +63,9 @@ TRACEABILITY_FIELDS = (
 
 
 def _claim_traceable(claim: Mapping[str, Any]) -> bool:
-    return all(claim.get(field) is not None and claim.get(field) != "" for field in TRACEABILITY_FIELDS)
+    return all(
+        claim.get(field) is not None and claim.get(field) != "" for field in TRACEABILITY_FIELDS
+    )
 
 
 def _active_malicious_exploitation_claim(claims: Iterable[Mapping[str, Any]]) -> bool:
@@ -71,8 +74,7 @@ def _active_malicious_exploitation_claim(claims: Iterable[Mapping[str, Any]]) ->
         if status not in {"active", "confirmed"}:
             continue
         if (
-            str(claim.get("proposition") or "").strip().lower()
-            == "malicious_exploitation_observed"
+            str(claim.get("proposition") or "").strip().lower() == "malicious_exploitation_observed"
             and claim.get("value") is True
             and _claim_traceable(claim)
         ):
@@ -105,9 +107,7 @@ def exploitation_score(
     return round(max(candidates), 6)
 
 
-def applicability_score(
-    supplier: dict[str, Any], local: dict[str, Any], gamma_id: float
-) -> float:
+def applicability_score(supplier: dict[str, Any], local: dict[str, Any], gamma_id: float) -> float:
     if local.get("execution_observed") is True or local.get("reachability_confirmed") is True:
         return 1.0
     status = str(supplier.get("csaf_vex_status") or "").strip().lower()
@@ -165,7 +165,9 @@ def compute_scores(
             snapshot["local_evidence"],
             claims,
         ),
-        A_t=applicability_score(snapshot["supplier_assertions"], snapshot["local_evidence"], gamma_id),
+        A_t=applicability_score(
+            snapshot["supplier_assertions"], snapshot["local_evidence"], gamma_id
+        ),
         I_t=impact_score(snapshot["asset_context"]),
         M_t=mitigation_score(snapshot["mitigation_context"]),
         U_t=uncertainty_score(snapshot, gamma_id),

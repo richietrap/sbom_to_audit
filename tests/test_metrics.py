@@ -9,16 +9,42 @@ from sbom_to_audit.model.metrics import (
 
 def complete_pack():
     return {
-        "case_metadata": {"case_id": "c", "generated_at": "t", "clock_start_time": "t", "delta_t_hours": 0},
-        "product_context": {"product_id": "p", "product_version": "1", "purl": "pkg:x/y@1", "sbom_reference": "s"},
-        "identity_resolution": {"primary_identifier": "pkg:x/y@1", "matching_method": "exact_versioned_purl", "gamma_id": 1.0},
-        "vulnerability_intelligence": {"cve_id": "CVE-2026-10000", "cisa_kev_status": False, "epss_percentile": 0.0},
+        "case_metadata": {
+            "case_id": "c",
+            "generated_at": "t",
+            "clock_start_time": "t",
+            "delta_t_hours": 0,
+        },
+        "product_context": {
+            "product_id": "p",
+            "product_version": "1",
+            "purl": "pkg:x/y@1",
+            "sbom_reference": "s",
+        },
+        "identity_resolution": {
+            "primary_identifier": "pkg:x/y@1",
+            "matching_method": "exact_versioned_purl",
+            "gamma_id": 1.0,
+        },
+        "vulnerability_intelligence": {
+            "cve_id": "CVE-2026-10000",
+            "cisa_kev_status": False,
+            "epss_percentile": 0.0,
+        },
         "supplier_assertions": {"csaf_vex_status": "known_not_affected", "csaf_reference": "v"},
-        "local_evidence": {"execution_observed": False, "reachability_confirmed": False, "telemetry_reference": "t"},
+        "local_evidence": {
+            "execution_observed": False,
+            "reachability_confirmed": False,
+            "telemetry_reference": "t",
+        },
         "asset_context": {"asset_criticality": "low", "deployment_scope": "isolated"},
         "mitigation_context": {"mitigation_status": "none"},
         "orchestration_metrics": {"E_t": 0, "A_t": 0, "I_t": 0, "M_t": 0, "U_t": 0, "C_t": False},
-        "decision_state": {"recommended_state": "Monitor", "human_authorization_required": True, "rationale": "r"},
+        "decision_state": {
+            "recommended_state": "Monitor",
+            "human_authorization_required": True,
+            "rationale": "r",
+        },
         "claims": [{"claim_id": "1"}],
         "source_artifacts": [{"artifact_id": "1"}],
         "audit_log": [{"event_id": "1"}],

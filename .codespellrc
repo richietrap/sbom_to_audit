@@ -1,0 +1,4 @@
+[codespell]
+skip = .git,.hypothesis,.mypy_cache,.pytest_cache,.ruff_cache,.venv,.qa-venv,build,dist,*.json,*.csv
+ignore-words-list = artefact,artefacts
+quiet-level = 2

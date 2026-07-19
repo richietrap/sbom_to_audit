@@ -25,7 +25,9 @@ def identity_confidence(match_type: str) -> float:
         raise ValueError(f"unknown identity match type {match_type!r}; allowed: {allowed}") from exc
 
 
-def apply_identity_uncertainty(base_uncertainty: float, gamma_id: float, lambda_id: float = 0.5) -> float:
+def apply_identity_uncertainty(
+    base_uncertainty: float, gamma_id: float, lambda_id: float = 0.5
+) -> float:
     if not 0 <= gamma_id <= 1:
         raise ValueError("gamma_id must be within [0,1]")
     if lambda_id < 0:
@@ -40,5 +42,5 @@ class IdentityResolution:
     gamma_id: float
 
     @classmethod
-    def from_match_type(cls, primary_identifier: str, match_type: str) -> "IdentityResolution":
+    def from_match_type(cls, primary_identifier: str, match_type: str) -> IdentityResolution:
         return cls(primary_identifier, match_type, identity_confidence(match_type))

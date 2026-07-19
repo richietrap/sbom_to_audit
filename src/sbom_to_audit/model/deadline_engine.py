@@ -7,9 +7,10 @@ of awareness.
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
 from enum import Enum
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 
 class DeadlineStatus(str, Enum):
@@ -46,10 +47,7 @@ class DeadlineMilestone:
         if self.deadline_hours <= 0:
             raise ValueError("deadline_hours must be greater than zero")
         if not (
-            0
-            < self.breach_imminent_lead_hours
-            < self.due_soon_lead_hours
-            < self.deadline_hours
+            0 < self.breach_imminent_lead_hours < self.due_soon_lead_hours < self.deadline_hours
         ):
             raise ValueError(
                 "deadline leads must satisfy 0 < breach_imminent_lead_hours "

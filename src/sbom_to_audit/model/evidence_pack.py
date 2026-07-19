@@ -35,7 +35,7 @@ def detect_conflicts(claims: list[dict[str, Any]]) -> list[dict[str, Any]]:
     for claim in claims:
         by_proposition.setdefault(str(claim.get("proposition")), []).append(claim)
 
-    conflicts = []
+    conflicts: list[dict[str, Any]] = []
     for proposition, proposition_claims in sorted(by_proposition.items()):
         normalized = {repr(claim.get("value")) for claim in proposition_claims}
         if len(normalized) > 1:

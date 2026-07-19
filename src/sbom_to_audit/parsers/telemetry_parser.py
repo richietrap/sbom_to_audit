@@ -32,5 +32,5 @@ def parse_telemetry(path: str | Path) -> list[dict[str, Any]]:
 
 
 def execution_observed(records: list[dict[str, Any]]) -> bool:
-    truthy = {True, 1, "1", "true", "True", "yes", "observed", "executed"}
+    truthy = {True, "1", "true", "True", "yes", "observed", "executed"}
     return any(record.get("execution_observed") in truthy for record in records)

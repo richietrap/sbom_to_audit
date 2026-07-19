@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import requests
 
@@ -25,7 +25,7 @@ def query_osv(
     if offline:
         if snapshot_path is None or not Path(snapshot_path).exists():
             raise FileNotFoundError("offline OSV query requires an existing snapshot_path")
-        return read_json(snapshot_path)
+        return cast(dict[str, Any], read_json(snapshot_path))
 
     if purl:
         payload: dict[str, Any] = {"package": {"purl": purl}}
@@ -38,7 +38,7 @@ def query_osv(
 
     response = requests.post(OSV_QUERY_URL, json=payload, timeout=timeout)
     response.raise_for_status()
-    data = response.json()
+    data = cast(dict[str, Any], response.json())
     if snapshot_path is not None:
         write_json(snapshot_path, data)
     return data
