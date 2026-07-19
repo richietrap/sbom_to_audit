@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local secrets and configuration
+.env
+.env.*
+!.env.example
+
+# Generated outputs: keep directory placeholders and documentation
+outputs/evidence_packs/*
+!outputs/evidence_packs/.gitkeep
+outputs/state_logs/*
+!outputs/state_logs/.gitkeep
+outputs/conflict_reports/*
+!outputs/conflict_reports/.gitkeep
+outputs/metrics/*
+!outputs/metrics/.gitkeep
+
+# Cached/downloaded data: keep directory placeholders
+# Uncomment these rules when snapshots are generated locally.
+# data/osv_snapshots/*
+# !data/osv_snapshots/.gitkeep
+# data/nvd_snapshots/*
+# !data/nvd_snapshots/.gitkeep
+# data/kev_snapshots/*
+# !data/kev_snapshots/.gitkeep
+# data/epss_snapshots/*
+# !data/epss_snapshots/.gitkeep

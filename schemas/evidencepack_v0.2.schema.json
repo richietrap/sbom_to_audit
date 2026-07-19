@@ -1,0 +1,420 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/sbom-to-audit/schemas/evidencepack_v0.2.schema.json",
+  "title": "EvidencePack Schema v0.2",
+  "description": "Locked evidence-pack structure for temporal vulnerability-evidence orchestration.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_metadata",
+    "product_context",
+    "identity_resolution",
+    "vulnerability_intelligence",
+    "supplier_assertions",
+    "local_evidence",
+    "asset_context",
+    "mitigation_context",
+    "orchestration_metrics",
+    "decision_state",
+    "claims",
+    "source_artifacts",
+    "audit_log"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2"
+    },
+    "case_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "case_id",
+        "generated_at",
+        "clock_start_time",
+        "delta_t_hours"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clock_start_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "delta_t_hours": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "product_context": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "product_id",
+        "product_version",
+        "purl",
+        "sbom_reference"
+      ],
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purl": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sbom_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "identity_resolution": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "primary_identifier",
+        "matching_method",
+        "gamma_id"
+      ],
+      "properties": {
+        "primary_identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "matching_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gamma_id": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "vulnerability_intelligence": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "cve_id",
+        "cisa_kev_status",
+        "epss_percentile"
+      ],
+      "properties": {
+        "cve_id": {
+          "type": "string",
+          "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"
+        },
+        "cisa_kev_status": {
+          "type": "boolean"
+        },
+        "epss_percentile": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "supplier_assertions": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "csaf_vex_status",
+        "csaf_reference"
+      ],
+      "properties": {
+        "csaf_vex_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "csaf_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "local_evidence": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "execution_observed",
+        "reachability_confirmed",
+        "telemetry_reference"
+      ],
+      "properties": {
+        "execution_observed": {
+          "type": "boolean"
+        },
+        "reachability_confirmed": {
+          "type": "boolean"
+        },
+        "telemetry_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "asset_context": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "asset_criticality",
+        "deployment_scope"
+      ],
+      "properties": {
+        "asset_criticality": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "deployment_scope": {
+          "enum": [
+            "isolated",
+            "limited",
+            "broad",
+            "widespread"
+          ]
+        }
+      }
+    },
+    "mitigation_context": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "mitigation_status"
+      ],
+      "properties": {
+        "mitigation_status": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "orchestration_metrics": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "E_t",
+        "A_t",
+        "I_t",
+        "M_t",
+        "U_t",
+        "C_t"
+      ],
+      "properties": {
+        "E_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "A_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "I_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "M_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "U_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "C_t": {
+          "type": "boolean"
+        }
+      }
+    },
+    "decision_state": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "recommended_state",
+        "authorized_state",
+        "human_authorization_required",
+        "rationale"
+      ],
+      "properties": {
+        "recommended_state": {
+          "enum": [
+            "Monitor",
+            "Prepare",
+            "Escalate",
+            "Report-Ready",
+            "Report",
+            "Document No-Report"
+          ]
+        },
+        "authorized_state": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "Report",
+            "Document No-Report",
+            null
+          ]
+        },
+        "human_authorization_required": {
+          "type": "boolean"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "claim_id",
+          "proposition",
+          "value",
+          "source_artifact_id",
+          "source_uri",
+          "source_hash",
+          "timestamp",
+          "confidence"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "proposition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "source_artifact_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_hash": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "source_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "artifact_id",
+          "artifact_type",
+          "source_uri",
+          "source_hash",
+          "timestamp"
+        ],
+        "properties": {
+          "artifact_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_hash": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "audit_log": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "event_id",
+          "timestamp",
+          "actor",
+          "action",
+          "input_references",
+          "output_state"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "input_references": {
+            "type": "array"
+          },
+          "output_state": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

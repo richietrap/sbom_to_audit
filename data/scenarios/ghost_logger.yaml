@@ -1,0 +1,116 @@
+schema_version: "0.2"
+scenario:
+  scenario_id: ghost_logger
+  title: "Silent Transitive / Ghost-Logger"
+  classification: controlled_fictional_scenario
+  purpose: >-
+    Test transitive-dependency evidence, a supplier known_not_affected assertion,
+    contradictory local execution telemetry, explicit conflict detection, and
+    escalation without claiming a legal reporting determination.
+  seeded_conflicts: 1
+  expected_final_state: Escalate
+
+case_metadata:
+  case_id: CASE-GHOST-LOGGER-001
+  clock_start_time: "2026-09-12T08:00:00Z"
+
+product_context:
+  product_id: industrial-smart-gateway
+  product_version: "4.2.0"
+  purl: "pkg:generic/industrial-smart-gateway@4.2.0"
+  sbom_reference: "data/sbom/ghost_logger.cdx.json"
+  transitive_component_purl: "pkg:maven/org.example/lib-xml-processor@2.4.1"
+
+identity_resolution:
+  primary_identifier: "pkg:maven/org.example/lib-xml-processor@2.4.1"
+  matching_method: exact_versioned_purl
+  gamma_id: 1.0
+
+vulnerability_intelligence:
+  cve_id: CVE-2026-41001
+  cisa_kev_status: false
+  epss_percentile: 0.92
+  osv_alias: CVE-2026-41001
+
+supplier_assertions:
+  csaf_vex_status: known_not_affected
+  csaf_reference: "data/csaf/ghost_logger_vex.json"
+
+local_evidence:
+  execution_observed: false
+  reachability_confirmed: false
+  telemetry_reference: "data/telemetry/ghost_logger_initial.jsonl"
+
+asset_context:
+  asset_criticality: high
+  deployment_scope: limited
+
+mitigation_context:
+  mitigation_status: none
+
+source_artifacts:
+  - artifact_id: ART-SBOM-001
+    artifact_type: cyclonedx_sbom
+    source_uri: "file:data/sbom/ghost_logger.cdx.json"
+    source_hash: "71af3d32662c914837592f720388cc2fc3175c74a41e6718fe2130d4d921c294"
+    timestamp: "2026-09-12T08:15:00Z"
+  - artifact_id: ART-VEX-001
+    artifact_type: csaf_vex
+    source_uri: "file:data/csaf/ghost_logger_vex.json"
+    source_hash: "20e6ca1cf43aafc41f6e5a726870711756091d10aa57f5f97dd7d1cb1cdf9b13"
+    timestamp: "2026-09-12T09:00:00Z"
+  - artifact_id: ART-TELEM-001
+    artifact_type: runtime_telemetry
+    source_uri: "file:data/telemetry/ghost_logger_execution.jsonl"
+    source_hash: "93033b2f62562d72ebacf4fa27e58dfebc385fa36ef9598afc869560530f9f0e"
+    timestamp: "2026-09-12T18:00:00Z"
+
+claims:
+  - claim_id: CLAIM-VEX-NOT-AFFECTED
+    proposition: product_affectedness
+    value: false
+    source_artifact_id: ART-VEX-001
+    source_uri: "file:data/csaf/ghost_logger_vex.json"
+    source_hash: "20e6ca1cf43aafc41f6e5a726870711756091d10aa57f5f97dd7d1cb1cdf9b13"
+    timestamp: "2026-09-12T09:00:00Z"
+    confidence: 0.85
+    assertion: known_not_affected
+  - claim_id: CLAIM-TELEMETRY-EXECUTION
+    proposition: product_affectedness
+    value: true
+    source_artifact_id: ART-TELEM-001
+    source_uri: "file:data/telemetry/ghost_logger_execution.jsonl"
+    source_hash: "93033b2f62562d72ebacf4fa27e58dfebc385fa36ef9598afc869560530f9f0e"
+    timestamp: "2026-09-12T18:00:00Z"
+    confidence: 0.95
+    assertion: vulnerable_function_executed
+
+replay_events:
+  - event_id: EVT-GL-002H
+    timestamp: "2026-09-12T10:00:00Z"
+    description: >-
+      The transitive component is present and supplier VEX states known_not_affected;
+      local execution is not observed and reachability is not confirmed.
+    active_claim_ids:
+      - CLAIM-VEX-NOT-AFFECTED
+    evidence_overrides:
+      local_evidence:
+        execution_observed: false
+        reachability_confirmed: false
+        telemetry_reference: "data/telemetry/ghost_logger_initial.jsonl"
+    expected_state: Document No-Report
+
+  - event_id: EVT-GL-010H
+    timestamp: "2026-09-12T18:00:00Z"
+    description: >-
+      Customer telemetry shows vulnerable XML-parser execution in a non-default
+      edge deployment, contradicting the active supplier assertion.
+    active_claim_ids:
+      - CLAIM-VEX-NOT-AFFECTED
+      - CLAIM-TELEMETRY-EXECUTION
+    evidence_overrides:
+      local_evidence:
+        execution_observed: true
+        reachability_confirmed: true
+        telemetry_reference: "data/telemetry/ghost_logger_execution.jsonl"
+    expected_state: Escalate
