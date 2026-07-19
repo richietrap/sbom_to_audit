@@ -1,129 +1,157 @@
 # Repository Manifest
 
-**Schema baseline:** EvidencePack v0.2  
-**Semantic baseline:** v0.2.1, approved 2026-07-13  
-**Purpose:** Drift control. This file lists every expected scaffold file, its role, creation status, and approved semantic and quality amendments.
+**EvidencePack schema baseline:** v0.2  
+**Semantic baseline:** v0.2.1  
+**Implementation baseline:** Stage 2 pilot, package v0.2.3  
+**Purpose:** Drift control. Every tracked repository artefact is listed below.
 
-**Expected files:** 83  
-**Created files:** 83  
+**Expected files:** 133  
+**Created files:** 133  
 **Missing files:** 0
 
 | Path | Purpose | Status |
 |---|---|---|
-| `README.md` | Project scope, research questions, quick start, non-goals, and repository map. | Amended v0.2.1 |
-| `LICENSE` | MIT license for the research code. | Created |
-| `CITATION.cff` | Machine-readable software citation metadata. | Amended v0.2.2 |
-| `.gitignore` | Excludes environments, quality caches, and generated outputs while retaining placeholders. | Amended v0.2.2 |
-| `requirements.txt` | Flat dependency list for simple environments. | Created |
-| `pyproject.toml` | Package metadata, bounded dependencies, quality-tool configuration, coverage ratchet, and console entry point. | Amended v0.2.2 |
-| `.github/workflows/tests.yml` | Clean-checkout regression on Python 3.10–3.12 with self-contained tests and double-replay comparison. | Amended v0.2.2 |
-| `CHANGELOG.md` | Versioned record of semantic, schema, implementation, and evaluation changes. | Created v0.2.1 |
-| `docs/design_freeze_v0.2.md` | Locked research questions, tri-part model, scoring semantics, schema, evaluation, and non-claims. | Amended v0.2.1 |
-| `docs/decision_semantics.md` | Authoritative definitions of `R_t`, `D_(k,t)`, `Pi_t`, execution/exploitation separation, and authorization/submission boundaries. | Created v0.2.1 |
-| `docs/decision_records/ADR-001-tri-part-model.md` | Records the original model, `M_t` inconsistency, approved tri-part refinement, schema decision, and affected modules/tests. | Created v0.2.1 |
-| `docs/decision_records/ADR-002-semantic-implementation-alignment.md` | Records the scoring correction, deadline engine, authorization boundary, schema preservation, and regression gates. | Created v0.2.1 |
-| `docs/schema.md` | EvidencePack v0.2 fields, mandatory-field rules, and schema-compatible v0.2.1 audit-event extensions. | Amended v0.2.1 |
-| `docs/metrics.md` | Frozen effectiveness metrics plus supplemental Execution Latency and scale-benchmark protocol. | Amended v0.2.1 |
-| `docs/reproduction.md` | Local and Colab reproduction instructions. | Created |
-| `docs/scenario_protocol.md` | Real-format controlled-replay protocol with separate state, deadline, authorization, and submission oracles. | Amended v0.2.1 |
-| `schemas/evidencepack_v0.2.schema.json` | JSON Schema for EvidencePack v0.2. | Created |
-| `data/README.md` | Data-directory governance and snapshot rules. | Created |
-| `data/scenarios/ghost_logger.yaml` | Initial controlled fictional replay with one seeded conflict. | Created |
-| `outputs/README.md` | Generated-output directory contract. | Created |
-| `notebooks/README.md` | Rules for thin, reproducible Colab notebooks. | Created |
-| `src/sbom_to_audit/__init__.py` | Package version and identity. | Amended v0.2.1 |
-| `src/sbom_to_audit/utils/__init__.py` | Utility package marker. | Created |
-| `src/sbom_to_audit/utils/hashing.py` | SHA-256 helpers. | Created |
-| `src/sbom_to_audit/utils/time.py` | UTC parsing and delta_t calculation. | Created |
-| `src/sbom_to_audit/utils/io.py` | Deterministic JSON, YAML, and CSV I/O. | Created |
-| `src/sbom_to_audit/parsers/__init__.py` | Parser package marker. | Created |
-| `src/sbom_to_audit/parsers/cyclonedx_parser.py` | CycloneDX JSON component extraction. | Created |
-| `src/sbom_to_audit/parsers/csaf_parser.py` | CSAF/VEX vulnerability and product-status extraction. | Created |
-| `src/sbom_to_audit/parsers/osv_client.py` | OSV package/PURL query and CVE-alias extraction. | Created |
-| `src/sbom_to_audit/parsers/kev_client.py` | CISA KEV download/snapshot and CVE lookup. | Created |
-| `src/sbom_to_audit/parsers/epss_client.py` | FIRST EPSS query, snapshot, and percentile extraction. | Created |
-| `src/sbom_to_audit/parsers/telemetry_parser.py` | JSON, JSONL, and CSV telemetry ingestion. | Created |
-| `src/sbom_to_audit/parsers/asset_context_parser.py` | JSON/YAML asset-context ingestion. | Created |
-| `src/sbom_to_audit/model/__init__.py` | Model package marker. | Amended v0.2.1 |
-| `src/sbom_to_audit/model/identity.py` | Locked gamma_id table and uncertainty penalty. | Created |
-| `src/sbom_to_audit/model/evidence_record.py` | Typed source-artifact and claim records. | Created |
-| `src/sbom_to_audit/model/scoring.py` | v0.2.1 E/A/I/M/U computation with execution/exploitation separation. | Amended v0.2.1 |
-| `src/sbom_to_audit/model/state_machine.py` | Frozen state precedence and authorization boundary. | Created |
-| `src/sbom_to_audit/model/deadline_engine.py` | Configured reporting-deadline posture independent of recommended state. | Created v0.2.1 |
-| `src/sbom_to_audit/model/authorization.py` | Explicit human authorization and separate milestone-satisfaction evidence. | Created v0.2.1 |
-| `src/sbom_to_audit/model/metrics.py` | EC, TR, CD, CA, AR, SC, and EPG implementations. | Created |
-| `src/sbom_to_audit/model/evidence_pack.py` | Replay, active-claim scoring, conflict detection, audit log, and pack construction. | Amended v0.2.1 |
-| `src/sbom_to_audit/cli.py` | Executable replay, schema validation, output, and metrics pipeline. | Created |
-| `tests/test_identity.py` | Identity-confidence and uncertainty tests. | Created |
-| `tests/test_metrics.py` | Mandatory-field, false-value, EC, and TR tests. | Created |
-| `tests/test_scoring.py` | Regression tests for execution, exploitation, KEV, EPSS, missingness, and applicability. | Amended v0.2.1 |
-| `tests/test_state_machine.py` | State-rule precedence and mitigation-non-suppression tests. | Amended v0.2.1 |
-| `tests/test_deadline_engine.py` | Configured deadline-status precedence and audit-event tests. | Created v0.2.1 |
-| `tests/test_authorization.py` | Human authorization and submission-separation tests. | Created v0.2.1 |
-| `tests/test_schema.py` | Self-contained EvidencePack v0.2 and deadline-event schema-regression tests. | Amended v0.2.2 |
-| `tests/test_manifest.py` | Manifest completeness test resilient to local environments and quality caches. | Amended v0.2.2 |
-| `tests/test_workflow.py` | Prevents action-tag drift and verifies independent regression and quality workflows. | Amended v0.2.2 |
-| `data/sbom/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/csaf/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/osv_snapshots/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/nvd_snapshots/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/kev_snapshots/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/epss_snapshots/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/telemetry/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/asset_context/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `data/mitigation/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `outputs/evidence_packs/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `outputs/state_logs/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `outputs/conflict_reports/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `outputs/metrics/.gitkeep` | Keeps the required empty directory in Git. | Created |
-| `.pre-commit-config.yaml` | Local fail-fast hooks for lint, formatting, typing, spelling, YAML, and repository integrity. | Created v0.2.2 |
-| `.yamllint.yml` | YAML style and structural lint configuration. | Created v0.2.2 |
-| `.codespellrc` | Typographical-check configuration and repository exclusions. | Created v0.2.2 |
-| `.github/dependabot.yml` | Weekly dependency and GitHub Actions update monitoring. | Created v0.2.2 |
-| `.github/workflows/quality.yml` | Static analysis, actionlint, repository validation, and coverage quality gate. | Created v0.2.2 |
-| `docs/quality_assurance.md` | Defence-in-depth quality controls, fail-closed rules, and coverage policy. | Created v0.2.2 |
-| `docs/known_issues.md` | Open limitations and deferred safeguards with risk treatment. | Created v0.2.2 |
-| `docs/bug_register.csv` | Structured defect register with root causes, fixes, and regression controls. | Created v0.2.2 |
-| `docs/decision_records/ADR-003-quality-gates-and-clean-checkout-tests.md` | Records clean-checkout independence and the Stage 1.5.2 quality-gate decision. | Created v0.2.2 |
-| `scripts/validate_repository.py` | Canonical schema, manifest, scenario, and text-integrity validator. | Created v0.2.2 |
-| `scripts/release_check.py` | Canonical pre-release quality and deterministic-replay runner. | Created v0.2.2 |
-| `tests/test_cli_integration.py` | Clean temporary-output CLI integration and determinism tests. | Created v0.2.2 |
-| `tests/test_repository_integrity.py` | Repository-validator and ignore-policy regression tests. | Created v0.2.2 |
-| `tests/test_properties.py` | Hypothesis invariants for identity uncertainty and conflict precedence. | Created v0.2.2 |
-| `tests/test_parsers.py` | Current parser and offline snapshot helper contract tests. | Created v0.2.2 |
-| `tests/test_evidence_record.py` | Typed source-artifact and claim serialization tests. | Created v0.2.2 |
-| `MANIFEST.md` | Drift-control inventory of expected files and creation status. | Created |
-
+| `.codespellrc` | Spelling-check configuration. | Preserved |
+| `.github/dependabot.yml` | Dependency and GitHub Actions update monitoring. | Preserved |
+| `.github/workflows/quality.yml` | Static analysis, strict source validation, and coverage workflow. | Amended v0.2.3 |
+| `.github/workflows/tests.yml` | Cross-version regression and deterministic replay workflow. | Preserved |
+| `.gitignore` | Excludes local environments, caches, and generated outputs. | Amended v0.2.3 |
+| `.pre-commit-config.yaml` | Local fail-fast quality hooks. | Amended v0.2.3 |
+| `.yamllint.yml` | YAML lint configuration. | Preserved |
+| `CHANGELOG.md` | Versioned semantic, implementation, quality, and evaluation change record. | Amended v0.2.3 |
+| `CITATION.cff` | Machine-readable software citation metadata. | Amended v0.2.3 |
+| `LICENSE` | MIT licence for the research code. | Preserved |
+| `MANIFEST.md` | Drift-control inventory of all tracked repository artefacts. | Preserved |
+| `README.md` | Project scope, Stage 2 status, quick start, boundaries, and repository map. | Amended v0.2.3 |
+| `data/README.md` | Data governance documentation or required placeholder. | Amended v0.2.3 |
+| `data/asset_context/.gitkeep` | Controlled asset-context source or directory placeholder. | Preserved |
+| `data/asset_context/ghost_logger_asset.yaml` | Controlled asset-context source or directory placeholder. | Created v0.2.3 |
+| `data/csaf/.gitkeep` | CSAF/VEX source artefact or directory placeholder. | Preserved |
+| `data/csaf/ghost_logger_vex.json` | CSAF/VEX source artefact or directory placeholder. | Created v0.2.3 |
+| `data/decision_records/ghost_logger_authorization.yaml` | Controlled adjudication, authorization, or milestone evidence record. | Created v0.2.3 |
+| `data/decision_records/ghost_logger_conflict_resolution.yaml` | Controlled adjudication, authorization, or milestone evidence record. | Created v0.2.3 |
+| `data/decision_records/ghost_logger_early_warning_submission.yaml` | Controlled adjudication, authorization, or milestone evidence record. | Created v0.2.3 |
+| `data/decision_records/ghost_logger_full_notification_submission.yaml` | Controlled adjudication, authorization, or milestone evidence record. | Created v0.2.3 |
+| `data/epss_snapshots/.gitkeep` | Frozen EPSS-shaped source snapshot or directory placeholder. | Preserved |
+| `data/epss_snapshots/ghost_logger_epss.json` | Frozen EPSS-shaped source snapshot or directory placeholder. | Created v0.2.3 |
+| `data/kev_snapshots/.gitkeep` | Frozen KEV-shaped source snapshot or directory placeholder. | Preserved |
+| `data/kev_snapshots/ghost_logger_kev.json` | Frozen KEV-shaped source snapshot or directory placeholder. | Created v0.2.3 |
+| `data/mitigation/.gitkeep` | Controlled mitigation source or directory placeholder. | Preserved |
+| `data/mitigation/ghost_logger_initial.yaml` | Controlled mitigation source or directory placeholder. | Created v0.2.3 |
+| `data/mitigation/ghost_logger_verified.yaml` | Controlled mitigation source or directory placeholder. | Created v0.2.3 |
+| `data/nvd_snapshots/.gitkeep` | Data governance documentation or required placeholder. | Preserved |
+| `data/osv_snapshots/.gitkeep` | Frozen OSV-shaped source snapshot or directory placeholder. | Preserved |
+| `data/osv_snapshots/ghost_logger_osv.json` | Frozen OSV-shaped source snapshot or directory placeholder. | Created v0.2.3 |
+| `data/sbom/.gitkeep` | CycloneDX source artefact or directory placeholder. | Preserved |
+| `data/sbom/ghost_logger.cdx.json` | CycloneDX source artefact or directory placeholder. | Created v0.2.3 |
+| `data/scenarios/ghost_logger.yaml` | Source-release scenario manifest with frozen expected oracles. | Amended v0.2.3 |
+| `data/telemetry/.gitkeep` | Controlled runtime telemetry source or directory placeholder. | Preserved |
+| `data/telemetry/ghost_logger_execution.jsonl` | Controlled runtime telemetry source or directory placeholder. | Created v0.2.3 |
+| `data/telemetry/ghost_logger_initial.jsonl` | Controlled runtime telemetry source or directory placeholder. | Created v0.2.3 |
+| `data/telemetry/ghost_logger_reproduction.jsonl` | Controlled runtime telemetry source or directory placeholder. | Created v0.2.3 |
+| `docs/bug_register.csv` | Research design, evaluation, quality, reproduction, or governance documentation. | Amended v0.2.3 |
+| `docs/decision_records/ADR-001-tri-part-model.md` | Architectural decision record preserving design rationale and consequences. | Preserved |
+| `docs/decision_records/ADR-002-semantic-implementation-alignment.md` | Architectural decision record preserving design rationale and consequences. | Preserved |
+| `docs/decision_records/ADR-003-quality-gates-and-clean-checkout-tests.md` | Architectural decision record preserving design rationale and consequences. | Preserved |
+| `docs/decision_records/ADR-004-real-format-ghost-logger-vertical-slice.md` | Architectural decision record preserving design rationale and consequences. | Created v0.2.3 |
+| `docs/decision_semantics.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
+| `docs/design_freeze_v0.2.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
+| `docs/known_issues.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Amended v0.2.3 |
+| `docs/metrics.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
+| `docs/paper_asset_protocol.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Created v0.2.3 |
+| `docs/paper_claim_matrix.md` | Traceability matrix linking provisional manuscript claims to runs, outputs, and limitations. | Created v0.2.3 |
+| `docs/quality_assurance.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
+| `docs/reproduction.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Amended v0.2.3 |
+| `docs/scenario_protocol.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Amended v0.2.3 |
+| `docs/schema.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
+| `docs/stage2_vertical_slice_report.md` | Pilot implementation, validation, result, and limitation report for Stage 2. | Created v0.2.3 |
+| `evaluation/README.md` | Research run or scenario registry and evaluation governance. | Created v0.2.3 |
+| `evaluation/environments/README.md` | Evaluation environment record or environment-record guidance. | Created v0.2.3 |
+| `evaluation/environments/stage2_local_build.json` | Evaluation environment record or environment-record guidance. | Created v0.2.3 |
+| `evaluation/run_registry.csv` | Research run or scenario registry and evaluation governance. | Created v0.2.3 |
+| `evaluation/scenario_registry.csv` | Research run or scenario registry and evaluation governance. | Created v0.2.3 |
+| `evaluation/summaries/README.md` | Derived pilot evaluation summary or summary guidance. | Created v0.2.3 |
+| `evaluation/summaries/ghost_logger_stage2_pilot.json` | Derived pilot evaluation summary or summary guidance. | Created v0.2.3 |
+| `notebooks/README.md` | Thin Colab notebook rules and Stage 2 checkpoint guidance. | Amended v0.2.3 |
+| `notebooks/stage2_colab_checkpoint.ipynb` | Thin clean-room Stage 2 orchestration notebook; no model logic. | Created v0.2.3 |
+| `outputs/README.md` | Keeps a generated-output directory present in Git. | Amended v0.2.3 |
+| `outputs/audit_ledgers/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `outputs/conflict_reports/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `outputs/evidence_packs/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `outputs/metrics/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `outputs/source_manifests/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `outputs/state_logs/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `outputs/validation/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
+| `paper_assets/README.md` | Paper-asset governance, register, or package marker. | Created v0.2.3 |
+| `paper_assets/__init__.py` | Paper-asset governance, register, or package marker. | Created v0.2.3 |
+| `paper_assets/data/stage2_ghost_logger_asset_manifest.json` | Machine-readable paper-asset provenance manifest. | Created v0.2.3 |
+| `paper_assets/figure_table_register.csv` | Paper-asset governance, register, or package marker. | Created v0.2.3 |
+| `paper_assets/figures/ghost_logger_trajectory.svg` | Pilot vector figure generated from registered outputs. | Created v0.2.3 |
+| `paper_assets/figures/prototype_architecture.svg` | Pilot vector figure generated from registered outputs. | Created v0.2.3 |
+| `paper_assets/scripts/__init__.py` | Data-driven paper-asset generation code. | Created v0.2.3 |
+| `paper_assets/scripts/build_stage2_assets.py` | Data-driven paper-asset generation code. | Created v0.2.3 |
+| `paper_assets/tables/ghost_logger_event_replay.csv` | Pilot tabular paper asset generated from registered outputs. | Created v0.2.3 |
+| `paper_assets/tables/ghost_logger_source_inventory.csv` | Pilot tabular paper asset generated from registered outputs. | Created v0.2.3 |
+| `pyproject.toml` | Package metadata, dependencies, quality tools, coverage, and entry points. | Amended v0.2.3 |
+| `requirements.txt` | Flat runtime dependency list. | Preserved |
+| `schemas/evidencepack_v0.2.schema.json` | Locked EvidencePack v0.2 JSON Schema. | Preserved |
+| `scripts/release_check.py` | Canonical repository validation or release-quality script. | Amended v0.2.3 |
+| `scripts/validate_repository.py` | Canonical repository validation or release-quality script. | Amended v0.2.3 |
+| `src/sbom_to_audit/__init__.py` | Package identity or command-line implementation. | Amended v0.2.3 |
+| `src/sbom_to_audit/cli.py` | Package identity or command-line implementation. | Amended v0.2.3 |
+| `src/sbom_to_audit/ingestion/__init__.py` | Real-format source registration, validation, or ingestion pipeline module. | Created v0.2.3 |
+| `src/sbom_to_audit/ingestion/artifact_validator.py` | Real-format source registration, validation, or ingestion pipeline module. | Created v0.2.3 |
+| `src/sbom_to_audit/ingestion/ingestion_result.py` | Real-format source registration, validation, or ingestion pipeline module. | Created v0.2.3 |
+| `src/sbom_to_audit/ingestion/pipeline.py` | Real-format source registration, validation, or ingestion pipeline module. | Created v0.2.3 |
+| `src/sbom_to_audit/ingestion/source_registry.py` | Real-format source registration, validation, or ingestion pipeline module. | Created v0.2.3 |
+| `src/sbom_to_audit/model/__init__.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/model/authorization.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/model/conflict_engine.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Created v0.2.3 |
+| `src/sbom_to_audit/model/deadline_engine.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Amended v0.2.3 |
+| `src/sbom_to_audit/model/evidence_pack.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Amended v0.2.3 |
+| `src/sbom_to_audit/model/evidence_record.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/model/identity.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/model/metrics.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/model/scoring.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/model/state_machine.py` | Evidence, scoring, conflict, deadline, authorization, state, pack, or metric model. | Preserved |
+| `src/sbom_to_audit/parsers/__init__.py` | Format-specific parser or vulnerability-intelligence client. | Preserved |
+| `src/sbom_to_audit/parsers/asset_context_parser.py` | Format-specific parser or vulnerability-intelligence client. | Preserved |
+| `src/sbom_to_audit/parsers/csaf_parser.py` | Format-specific parser or vulnerability-intelligence client. | Amended v0.2.3 |
+| `src/sbom_to_audit/parsers/cyclonedx_parser.py` | Format-specific parser or vulnerability-intelligence client. | Amended v0.2.3 |
+| `src/sbom_to_audit/parsers/epss_client.py` | Format-specific parser or vulnerability-intelligence client. | Preserved |
+| `src/sbom_to_audit/parsers/kev_client.py` | Format-specific parser or vulnerability-intelligence client. | Preserved |
+| `src/sbom_to_audit/parsers/osv_client.py` | Format-specific parser or vulnerability-intelligence client. | Preserved |
+| `src/sbom_to_audit/parsers/telemetry_parser.py` | Format-specific parser or vulnerability-intelligence client. | Amended v0.2.3 |
+| `src/sbom_to_audit/utils/__init__.py` | Deterministic I/O, hashing, or time utility. | Preserved |
+| `src/sbom_to_audit/utils/hashing.py` | Deterministic I/O, hashing, or time utility. | Preserved |
+| `src/sbom_to_audit/utils/io.py` | Deterministic I/O, hashing, or time utility. | Amended v0.2.3 |
+| `src/sbom_to_audit/utils/time.py` | Deterministic I/O, hashing, or time utility. | Preserved |
+| `tests/test_authorization.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_cli_integration.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Amended v0.2.3 |
+| `tests/test_conflict_engine.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Created v0.2.3 |
+| `tests/test_deadline_engine.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_evidence_record.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_identity.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_manifest.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Amended v0.2.3 |
+| `tests/test_metrics.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_paper_assets.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Created v0.2.3 |
+| `tests/test_parsers.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_properties.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_real_format_pipeline.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Created v0.2.3 |
+| `tests/test_repository_integrity.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Amended v0.2.3 |
+| `tests/test_schema.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_scoring.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_source_registry.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Created v0.2.3 |
+| `tests/test_state_machine.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
+| `tests/test_workflow.py` | Automated unit, property, parser, integration, schema, or repository regression test. | Preserved |
 
 ## v0.2.1 semantic-amendment register
 
-| Amendment | Repository effect | Schema effect | Status |
-|---|---|---|---|
-| Separate `R_t`, `D_(k,t)`, and `Pi_t` | Added authoritative semantics, deadline engine, authorization boundary, and active-claim scoring. | None | Implemented for Stage 1.5 |
-| Remove `M_t` from evidential recommendation | `M_t` remains computed and serialized as mandatory payload context. | None | Approved |
-| Separate execution from exploitation | Vulnerable-function execution belongs to `A_t`; active traceable malicious-exploitation claims, KEV, and EPSS contribute to `E_t`. | None | Implemented and tested |
-| Separate authorization from submission | Human authorization affects `authorized_state`; milestone satisfaction requires completion or submission evidence. | None | Implemented and tested |
-| Add configured deadline posture | Deadline changes are represented as compliant `audit_log[]` events and sidecar summaries. | None | Engine implemented and tested |
-| Add Execution Latency | EL is supplemental and stored in metrics or benchmark sidecars. | None | Approved; instrumentation pending |
-| Preserve current schema | Top-level blocks, mandatory fields, allowed states, and EC denominator remain unchanged. | EvidencePack remains v0.2 | Verified |
+- The tri-part `R_t`, `D_(k,t)`, and `Pi_t` semantics remain authoritative.
+- EvidencePack Schema v0.2, the 34-field EC denominator, and seven locked metrics remain unchanged.
 
-## Stage 1.5 acceptance-gate status
+## v0.2.3 Stage 2 register
 
-- `scoring.py` implements the v0.2.1 execution/exploitation distinction.
-- vulnerable-function execution and confirmed reachability affect `A_t`, not automatically `E_t`.
-- active, traceable malicious-exploitation claims, KEV, and EPSS provide graded `E_t` inputs.
-- configured deadline posture is calculated independently by `deadline_engine.py`.
-- only explicit human events may set `authorized_state`; completion or submission evidence is separate.
-- deadline audit events remain valid within the unchanged EvidencePack v0.2 schema.
-- the EC denominator remains exactly 34 fields and EL remains supplemental.
-- continuous integration and manifest regression checks are present.
-- real-format ingestion has not begun and remains blocked until this checkpoint is merged and reproduced.
-
-## Locked checks
-
-- EvidencePack schema version remains `0.2`.
-- The EC denominator remains exactly 34 mandatory fields.
-- `claims`, `source_artifacts`, `identity_resolution`, `authorized_state`, `audit_log`, `gamma_id`, `delta_t_hours`, and `C_t` are present.
-- The first scenario contains one predeclared conflict and expects final state `Escalate`.
-- No controlled scenario is described as an industrial case study.
-- No component claims to make a legal reporting decision.
+- Ghost-Logger now derives evidence from committed real-format artefacts.
+- Six deterministic output products are generated.
+- Pilot evaluation and paper assets are explicitly ineligible for final manuscript claims until regenerated from a tagged commit and independently reproduced.

@@ -8,6 +8,9 @@ GENERATED_OUTPUT_DIRS = {
     Path("outputs/state_logs"),
     Path("outputs/conflict_reports"),
     Path("outputs/metrics"),
+    Path("outputs/source_manifests"),
+    Path("outputs/audit_ledgers"),
+    Path("outputs/validation"),
 }
 IGNORED_DIRECTORY_NAMES = {
     ".git",

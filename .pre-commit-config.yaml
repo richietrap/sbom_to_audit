@@ -29,6 +29,6 @@ repos:
         pass_filenames: false
       - id: repository-validation
         name: Repository integrity validation
-        entry: python scripts/validate_repository.py
+        entry: python scripts/validate_repository.py --strict-sources
         language: system
         pass_filenames: false

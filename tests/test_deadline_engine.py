@@ -60,6 +60,17 @@ def test_valid_completion_evidence_marks_satisfied_and_records_lateness():
     assert late.satisfied_late is True
 
 
+def test_completion_exactly_at_deadline_is_satisfied_on_time():
+    result = evaluate_deadline(
+        MILESTONE,
+        delta_t_hours=24,
+        applicable=True,
+        satisfaction_evidence={"evidence_id": "submission-at-deadline"},
+    )
+    assert result.status == DeadlineStatus.SATISFIED.value
+    assert result.satisfied_late is False
+
+
 def test_authorization_like_mapping_without_completion_identifier_is_rejected():
     with pytest.raises(ValueError, match="satisfaction_evidence"):
         evaluate_deadline(

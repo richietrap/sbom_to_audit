@@ -1,0 +1,1 @@
+{"event_id":"TEL-GL-INITIAL-001","timestamp":"2026-09-12T08:30:00Z","deployment_id":"edge-17","component_purl":"pkg:maven/org.example/lib-xml-processor@2.4.1","execution_observed":false,"reachability_confirmed":false,"malicious_exploitation_observed":false,"observation_type":"baseline_runtime_observation"}

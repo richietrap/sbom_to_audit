@@ -1,0 +1,41 @@
+{
+  "run_id": "GL-STAGE2-PILOT-001",
+  "evaluation_status": "PILOT",
+  "input_manifest_hash": "bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc",
+  "output_manifest_hash": "5a416c70c6d9b9d0de2f541214b483fbd8451b898af43247cdb1fa767359e5b2",
+  "output_hashes": {
+    "outputs/evidence_packs/ghost_logger.json": "a7ad3eb692f370efcea421a3e7e837e77524ebe8fed6bbe5201e4d41e2eb921a",
+    "outputs/state_logs/ghost_logger.csv": "ace0742c788eeb51bd424e03ba0e5df75eef26c311a23ac5b9cf7c95e9840e44",
+    "outputs/conflict_reports/ghost_logger.json": "7ea67ba34e0c1442d5fcc9a2822805fd0a38cae9007d043be540f2e949ecd9c1",
+    "outputs/metrics/ghost_logger_metrics.json": "2ecb46d6b2a97108db427f6c5c051ad217db0133ebf6f1e9a013e6ebc650cd98",
+    "outputs/source_manifests/ghost_logger_sources.json": "622e348e324b6c00ba79b2b04ed5567a022897c54c8ea3be3947c26ea8cce497",
+    "outputs/audit_ledgers/ghost_logger.jsonl": "653c9cf6b84baa1fc7ae04a1ab309c81a0b01b16c4d91abf9001f15dc97f1241"
+  },
+  "metrics": {
+    "scenario_id": "ghost_logger",
+    "schema_version": "0.2",
+    "evaluation_status": "pilot",
+    "EC": 1.0,
+    "TR": 1.0,
+    "CD": 1.0,
+    "CA": null,
+    "CA_status": "not_applicable",
+    "AR": 1.0,
+    "SC": 1.0,
+    "EPG": 1,
+    "supplemental": {
+      "authorization_correctness": 1.0,
+      "deadline_posture_correctness": 1.0,
+      "source_integrity_ratio": 1.0,
+      "source_manifest_hash": "bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc",
+      "source_count": 15,
+      "claim_count": 18,
+      "audit_event_count": 28
+    },
+    "identity_uncertainty_context": {
+      "gamma_id": 1.0,
+      "U_t": 0.0
+    },
+    "baseline_comparison_status": "pending_matched_baseline_replay"
+  }
+}

@@ -127,7 +127,7 @@ def evaluate_deadline(
         )
 
     if evidence_id is not None:
-        late = delta_t_hours >= milestone.deadline_hours
+        late = delta_t_hours > milestone.deadline_hours
         timing = "after" if late else "before"
         return DeadlineResult(
             milestone_id=milestone.milestone_id,

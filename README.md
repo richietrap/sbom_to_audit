@@ -1,18 +1,16 @@
-# From SBOM to Audit
+# sbom-to-audit
 
-**Temporal vulnerability-evidence orchestration for NIS2 and Cyber Resilience Act reporting**
+Research artefact for **“From SBOM to Audit: Temporal Vulnerability-Evidence Orchestration for NIS2 and Cyber Resilience Act Reporting.”**
 
-`sbom-to-audit` is a Design Science Research proof-of-concept that turns fragmented product-security evidence into time-indexed, auditable decision-support records. It is being developed for the C&ESAR 2026 paper **“From SBOM to Audit: Temporal Vulnerability-Evidence Orchestration for NIS2 and Cyber Resilience Act Reporting.”**
-
-The repository is the source of truth. Google Colab is the intended runtime environment, while Google Drive may be used for persistent generated outputs and cached public-source snapshots.
+GitHub is the source of truth. Google Colab is the independent clean-room runtime; Google Drive may preserve generated outputs and cached snapshots.
 
 ## Status
 
-This repository implements the locked EvidencePack Schema v0.2 scaffold and an executable controlled replay for the fictional **Silent Transitive / Ghost-Logger** scenario. The paper has been shortlisted for C&ESAR 2026 final selection; it is not yet an accepted final paper.
+Version 0.2.3 implements the Stage 2 **real-format Ghost-Logger pilot vertical slice**. It ingests committed CycloneDX, CSAF/VEX, OSV-shaped, KEV-shaped, EPSS-shaped, telemetry, asset, mitigation, adjudication, authorization, and milestone-evidence files. The case remains controlled and fictional and must not be described as an industrial case study.
 
 ## Research questions
 
-- **RQ1.** What evidence artifacts are required to support defensible reportability decisions for actively exploited vulnerabilities and severe product-security incidents?
+- **RQ1.** What evidence artefacts are required to support defensible reportability decisions for actively exploited vulnerabilities and severe product-security incidents?
 - **RQ2.** How can SBOM, VEX/CSAF, CVE, KEV, EPSS, reachability, telemetry, asset-context, and PSIRT records be normalized and linked into an auditable evidence chain?
 - **RQ3.** How can reportability be operationalized as a temporal state transition with explicit uncertainty, mitigation, impact, identity-confidence, regulatory-clock, and conflict-handling mechanisms?
 - **RQ4.** Can a proof-of-concept implementation ingest real security-data formats and public vulnerability-intelligence sources to generate auditable evidence packs and state-transition logs?
@@ -20,66 +18,56 @@ This repository implements the locked EvidencePack Schema v0.2 scaffold and an e
 
 ## Model boundary
 
-The artefact is an evidence-orchestration and decision-support layer. It is **not**:
-
-- a legal-reporting engine;
-- a production PSIRT platform;
-- an automatic regulatory-submission tool; or
-- a complete solution to PURL/CPE identity matching.
-
-It may recommend `Report-Ready`, but only human review can authorize `Report` or `Document No-Report`.
+The artefact is an evidence-orchestration and decision-support layer. It is not a legal-reporting engine, production PSIRT platform, automatic submission tool, or complete PURL/CPE identity-resolution solution.
 
 ## Quick start
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
-python -m pip install -e .[dev]
+python -m pip install -e ".[dev]"
+python scripts/validate_repository.py --strict-sources
 python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
-pytest
-python scripts/validate_repository.py
+python paper_assets/scripts/build_stage2_assets.py \
+  --output-root outputs \
+  --destination paper_assets
+python -m pytest
 python scripts/release_check.py
 ```
 
-Expected replay outputs:
+## Deterministic outputs
 
 ```text
 outputs/evidence_packs/ghost_logger.json
 outputs/state_logs/ghost_logger.csv
 outputs/conflict_reports/ghost_logger.json
 outputs/metrics/ghost_logger_metrics.json
+outputs/source_manifests/ghost_logger_sources.json
+outputs/audit_ledgers/ghost_logger.jsonl
 ```
 
-The replay is deterministic: timestamps and seeded evidence values come from the scenario file rather than wall-clock execution time. Generated files under `outputs/` are intentionally ignored by Git; tests create fresh temporary outputs and do not rely on local generated files.
+The source registry computes hashes from files; the scenario contains no source hashes, normalized claims, or precomputed scores.
 
-## Repository map
-
-- `docs/` — design freeze, schema, metric definitions, reproduction, and replay protocol.
-- `schemas/` — JSON Schema for EvidencePack v0.2.
-- `src/sbom_to_audit/` — parsers, identity handling, scoring, state machine, pack generation, and metrics.
-- `data/` — controlled inputs and cached public-source snapshots.
-- `outputs/` — generated evidence packs, state logs, conflict reports, and metrics.
-- `tests/` — unit, integration, parser-contract, property, schema, and repository-integrity tests.
-- `scripts/` — canonical repository validation and pre-release quality checks.
-- `MANIFEST.md` — drift-control inventory of every expected repository file.
-
-## Prototype semantics v0.2.1
-
-The implementation separates evidential recommendation, configured deadline posture, and EvidencePack construction:
+## Pilot trajectory
 
 ```text
-R_t       = f(E_t, A_t, I_t, U_t, C_t, delta_t)
-D_(k,t)   = h(delta_t, tau_k, Q_(k,t), S_(k,t))
-Pi_t      = g(R_t, D_t, M_t, gamma_id, X_t, L_t, H_t, S_t)
+T+2h   Document No-Report
+T+10h  Escalate
+T+14h  Report-Ready
+T+20h  Report-Ready + authorized_state=Report
+T+72h  Report-Ready + completed milestone evidence
 ```
 
-Conflict has precedence within `R_t`. A prior `Prepare` recommendation escalates at `delta_t >= 18h`; this is a configurable internal safeguard, not a statutory deadline. Vulnerable-function execution contributes to applicability `A_t`, not automatically to exploitation evidence `E_t`. Configured deadline posture is calculated independently, and only explicit human events may set `authorized_state`.
+The distinction between `Report-Ready` and human-authorized `Report` is intentional.
 
-See [`docs/decision_semantics.md`](docs/decision_semantics.md) for the authoritative v0.2.1 definitions, [`docs/design_freeze_v0.2.md`](docs/design_freeze_v0.2.md) for the complete design baseline, and [`docs/metrics.md`](docs/metrics.md) for the seven locked effectiveness metrics.
+## Research-evidence accumulation
 
-## Baseline
+- `evaluation/` records scenarios, runs, environments, and derived summaries;
+- `paper_assets/` contains data-driven pilot figures and tables;
+- `docs/paper_asset_protocol.md` defines when an asset becomes eligible for the manuscript;
+- `MANIFEST.md` controls repository drift.
 
-The comparison baseline is a conventional un-orchestrated PSIRT workflow in which an analyst separately checks SBOMs, advisories, VEX status, KEV, EPSS, reachability, telemetry, asset criticality, and mitigation records, then manually records the rationale. The baseline does not imply poor practice; it is the comparator for measuring the effect of orchestration.
+Pilot assets are not final paper results. They must be regenerated from a tagged GitHub commit and reproduced in Colab.
 
 ## License and citation
 

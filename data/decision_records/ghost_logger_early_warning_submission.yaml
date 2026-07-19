@@ -1,0 +1,6 @@
+event_type: milestone_satisfaction
+evidence_id: SUB-GL-EARLY-001
+milestone_id: early_warning
+submission_reference: controlled-portal-receipt-EW-001
+timestamp: "2026-09-13T04:00:00Z"
+actor: psirt-reporting-operator

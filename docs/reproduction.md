@@ -1,75 +1,59 @@
 # Reproduction Guide
 
-## 1. Environment
+## 1. Reference environment
 
-The reference runtime is Python 3.10 or later. GitHub is the source of truth; Google Colab is the intended hosted runtime. Google Drive may be mounted for persistent outputs and cached API snapshots, but replay correctness must not depend on Drive.
+The supported runtime is Python 3.10–3.12. GitHub is the source of truth. Google Colab is the independent clean-room runtime; Google Drive may preserve generated run bundles but must not supply hidden dependencies.
 
 ## 2. Local execution
 
 ```bash
-git clone https://github.com/<YOUR-GITHUB-OWNER>/sbom-to-audit.git
-cd sbom-to-audit
+git clone https://github.com/richietrap/sbom_to_audit.git
+cd sbom_to_audit
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
-python -m pip install -e .[dev]
+python -m pip install -e ".[dev]"
+python scripts/validate_repository.py --strict-sources
 python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
-pytest
-python scripts/validate_repository.py
+python paper_assets/scripts/build_stage2_assets.py \
+  --output-root outputs \
+  --destination paper_assets
+python -m pytest
 python scripts/release_check.py
 ```
 
-## 3. Colab execution
+## 3. Generated outputs
 
-```python
-!git clone https://github.com/<YOUR-GITHUB-OWNER>/sbom-to-audit.git
-%cd sbom-to-audit
-!python -m pip install -e .
-!python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
-!pytest -q
-!python scripts/validate_repository.py
+The Stage 2 replay generates six deterministic products:
+
+```text
+outputs/evidence_packs/ghost_logger.json
+outputs/state_logs/ghost_logger.csv
+outputs/conflict_reports/ghost_logger.json
+outputs/metrics/ghost_logger_metrics.json
+outputs/source_manifests/ghost_logger_sources.json
+outputs/audit_ledgers/ghost_logger.jsonl
 ```
 
-A Drive mount is optional:
-
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-```
-
-Copy generated outputs to Drive only after the deterministic replay has completed.
+Generated files under `outputs/` are intentionally ignored by Git. Tests always create temporary outputs so clean checkouts do not depend on local generated files.
 
 ## 4. Determinism
 
-The controlled scenario YAML supplies:
+The scenario fixes source-release times, event times, target identifiers, expected oracles, and configured milestone parameters. The implementation computes source hashes and derived claims from committed files. It does not insert wall-clock timestamps into replay outputs.
 
-- `clock_start_time`;
-- replay event timestamps;
-- seeded source hashes;
-- expected states;
-- active claim identifiers; and
-- expected conflict counts.
+Re-running the same commit should produce byte-identical outputs. The canonical release check performs two independent replays and compares all six products.
 
-The CLI uses the final replay timestamp as `generated_at`; it does not insert the current wall-clock time. Re-running the same commit and scenario should therefore produce byte-stable JSON and CSV outputs, subject only to platform newline conventions.
+## 5. Colab checkpoint
 
-## 5. Public-source snapshots
+Use an isolated virtual environment inside Colab rather than Colab's global package set. The checkpoint should:
 
-OSV, KEV, and EPSS clients support saving raw responses into their respective snapshot directories. A paper evaluation run should record:
+1. clone the exact branch or tag;
+2. create an isolated environment;
+3. install `.[dev]`;
+4. run `pip check` inside that environment;
+5. run strict repository validation;
+6. run the full release check;
+7. preserve the report and output hashes.
 
-- retrieval timestamp;
-- request coordinates or CVE identifier;
-- source URI;
-- SHA-256 hash; and
-- parser version or repository commit.
+## 6. Paper assets
 
-Network-fetched data should be frozen before final evaluation so later API changes do not alter the reported results.
-
-## 6. Validation
-
-Run:
-
-```bash
-python -m jsonschema -i outputs/evidence_packs/ghost_logger.json schemas/evidencepack_v0.2.schema.json
-pytest -q
-```
-
-Then verify that all four output files exist and that `ghost_logger_metrics.json` reports `EPG: 1`. Generated outputs are not committed; schema and integration tests generate their own temporary EvidencePacks so a clean checkout is sufficient.
+`paper_assets/scripts/build_stage2_assets.py` generates pilot SVG figures and CSV tables from the replay outputs. Stage 2 assets are labelled `PILOT` and are not eligible for final manuscript claims until regenerated from a `FROZEN_EVALUATION` run with an exact Git commit.

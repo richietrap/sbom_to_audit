@@ -1,0 +1,1 @@
+"""Paper-asset generation scripts."""

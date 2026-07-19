@@ -2,66 +2,68 @@
 
 ## Purpose
 
-Scenario replay evaluates the artefact under predeclared evidence conditions without representing the scenarios as industrial case studies. The final study uses controlled scenario replays over real-format artifacts.
+Scenario replay evaluates the artefact under predeclared evidence conditions without representing controlled scenarios as industrial case studies. Stage 2 uses controlled fictional events over committed, machine-readable security artefacts.
 
-## Required scenario metadata
+## Stage 2 scenario contract
 
-Each scenario must declare:
+A scenario YAML is a replay manifest, not a container for normalized answers. It must declare:
 
-1. a stable scenario and case identifier;
-2. purpose and threat narrative;
-3. clock start `t_0`;
-4. product, identity, vulnerability, supplier, local, asset, and mitigation context;
-5. source artifacts and source hashes;
-6. atomic claims with provenance;
-7. ordered replay events;
-8. active claims at each event;
-9. the expected state at each event; and
-10. the seeded conflict count.
+1. stable scenario and case identifiers;
+2. purpose, classification, and evaluation status;
+3. `clock_start_time` and its internal-awareness-proxy basis;
+4. target product PURL, component PURL, CVE, and CSAF product identifier;
+5. configured deadline milestones;
+6. a source catalog containing artefact IDs, types, repository paths, and source timestamps;
+7. ordered replay events that release source artefacts;
+8. expected recommended state, authorization state, and deadline posture; and
+9. the seeded conflict count.
 
-Expected states and seeded conflicts must be fixed before replay.
+The scenario must not embed:
+
+- precomputed `E_t`, `A_t`, `I_t`, `M_t`, `U_t`, or `C_t` values;
+- normalized claims;
+- source hashes;
+- resolved identity-confidence values;
+- conflict results; or
+- final decision rationale.
 
 ## Replay procedure
 
-1. Parse and validate the scenario YAML.
-2. Establish `t_0` from `case_metadata.clock_start_time`.
-3. Apply each event's evidence overrides to the previous evidence snapshot.
-4. Activate the claims listed by the event.
-5. Detect direct proposition conflicts and compute `C_t`.
-6. Calculate `E_t`, `A_t`, `I_t`, `M_t`, and `U_t` using the v0.2.1 semantics; vulnerable-function execution contributes to `A_t`, while only an active traceable malicious-exploitation claim, KEV, or EPSS contributes numerically to `E_t`.
-7. Calculate `delta_t_hours` from the event timestamp and `t_0`.
-8. Apply the state rule in frozen precedence order.
-9. Append a state-log and audit-log entry.
-10. Generate the final EvidencePack, conflict report, and metrics output.
+1. Load the source catalog.
+2. confine every source path to the repository root;
+3. validate each source with its designated parser;
+4. calculate SHA-256 directly from the committed file;
+5. release artefacts according to the event timeline;
+6. derive product, component, vulnerability, supplier, local, asset, mitigation, authorization, and submission evidence;
+7. construct traceable claims with parser and derivation metadata;
+8. supersede earlier observations within the same evidence class and scope;
+9. retain cross-class contradictions until an explicit scoped adjudication record resolves them;
+10. calculate `E_t`, `A_t`, `I_t`, `M_t`, `U_t`, and `C_t`;
+11. calculate configured deadline posture independently from recommended state;
+12. apply the frozen state rule;
+13. retain human authorization and milestone satisfaction as separate events;
+14. emit the EvidencePack, state log, conflict report, metrics, source manifest, and append-only audit ledger.
 
-## Ghost-Logger acceptance criteria
+## Ghost-Logger pilot trajectory
 
-The initial scenario is a fictional transitive-dependency case in which:
+| Time | Derived evidence purpose | Expected recommendation | Expected authorization |
+|---|---|---|---|
+| T+2h | Transitive component, KEV/EPSS, VEX `known_not_affected`, no local execution | Document No-Report | null |
+| T+10h | Runtime execution and reachability contradict supplier affectedness | Escalate | null |
+| T+14h | Controlled reproduction and scoped conflict resolution | Report-Ready | null |
+| T+20h | Explicit human authorization and separate early-warning submission evidence | Report-Ready | Report |
+| T+72h | Verified mitigation and full-notification submission evidence | Report-Ready | Report |
 
-- a supplier assertion states `known_not_affected`;
-- local telemetry later indicates vulnerable-function execution;
-- the two active claims address the same product-affectedness proposition;
-- one conflict is seeded and one conflict must be detected;
-- `C_t` must become `true`; and
-- the observed final state must be `Escalate`.
+The refinement from the proposal's `Report` recommendation to `Report-Ready` plus `authorized_state=Report` is intentional and follows the approved tri-part semantics.
 
-The first event may produce `Document No-Report` while evidence is reassuring and uncertainty is low. This is not a final legal determination; it is a time-stamped recommendation that can pivot when new evidence arrives.
+## Realism and interpretation
 
-## Remaining scenarios
+Ghost-Logger remains fictional. Its Stage 2 value is technical verification: the same result must be derived from representative formats rather than injected YAML conclusions. It does not establish industrial effectiveness or legal correctness.
 
-- **False Comfort:** a reassuring third-party assertion is contradicted by local evidence.
-- **Operational Outlier:** moderate technical severity is elevated by critical deployment context.
-- **Rapid Pivot:** new evidence sharply changes uncertainty and state within the reporting clock.
+## Remaining evaluation scenarios
 
-A separate `Silent Transitive` label may be retained as the category name for Ghost-Logger; the scenario should not be double-counted as two independent evaluations.
+- **False Comfort:** valid but stale or wrongly scoped supplier assurance;
+- **Operational Outlier:** high operational impact despite non-extreme technical severity;
+- **Rapid Pivot:** unresolved uncertainty and the 18-hour internal safeguard.
 
-## Baseline replay
-
-For each scenario, a matched baseline analyst worksheet records whether each evidence source was consulted, whether provenance was preserved, whether conflicts were noticed, whether the clock was visible, and whether the final decision can be reconstructed. The baseline is a conventional un-orchestrated PSIRT process, not a claim about any named organization.
-
-
-## Stage 1.5 implementation boundary
-
-The current Ghost-Logger YAML remains a normalized scaffold. Stage 1.5 validates scoring semantics, configured deadline posture, authorization, submission separation, schema compatibility, and continuous regression. Stage 2 must replace normalized conclusions with evidence derived from real-format source artifacts before the scenario is used for final RQ4 evaluation.
-
-Configured deadline results and human events are evaluated independently of `recommended_state`. Deadline-status entries must retain all six base `audit_log[]` fields required by EvidencePack v0.2.
+Each later scenario must use the same ingestion engine and include at least one negative control.

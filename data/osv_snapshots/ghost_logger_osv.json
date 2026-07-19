@@ -1,0 +1,25 @@
+{
+  "query": {
+    "package": {
+      "purl": "pkg:maven/org.example/lib-xml-processor@2.4.1"
+    }
+  },
+  "vulns": [
+    {
+      "id": "OSV-2026-GL41001",
+      "aliases": ["CVE-2026-41001"],
+      "published": "2026-09-12T07:30:00Z",
+      "modified": "2026-09-12T07:30:00Z",
+      "affected": [
+        {
+          "package": {
+            "ecosystem": "Maven",
+            "name": "org.example:lib-xml-processor",
+            "purl": "pkg:maven/org.example/lib-xml-processor"
+          },
+          "versions": ["2.4.1"]
+        }
+      ]
+    }
+  ]
+}

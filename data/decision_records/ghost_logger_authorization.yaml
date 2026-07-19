@@ -1,0 +1,8 @@
+event_type: human_authorization
+event_id: DEC-GL-AUTH-001
+timestamp: "2026-09-13T04:00:00Z"
+actor_id: psirt-legal-reviewer-01
+actor_role: psirt_legal_reviewer
+actor_type: human
+authorized_state: Report
+rationale: Report-Ready evidence reviewed and reporting authorized.

@@ -1,4 +1,4 @@
-"""Command-line entry point for deterministic controlled scenario replay."""
+"""Command-line entry point for deterministic real-format scenario replay."""
 
 from __future__ import annotations
 
@@ -18,7 +18,8 @@ from sbom_to_audit.model.metrics import (
     state_correctness,
     traceability_ratio,
 )
-from sbom_to_audit.utils.io import read_json, read_yaml, write_csv, write_json
+from sbom_to_audit.utils.hashing import sha256_json
+from sbom_to_audit.utils.io import read_json, read_yaml, write_csv, write_json, write_jsonl
 
 STATE_FIELDS = [
     "event_id",
@@ -34,6 +35,14 @@ STATE_FIELDS = [
     "observed_state",
     "expected_state",
     "state_match",
+    "authorized_state",
+    "expected_authorized_state",
+    "authorization_match",
+    "deadline_posture",
+    "expected_deadline_posture",
+    "deadline_match",
+    "released_artifact_ids",
+    "active_claim_ids",
     "rationale",
 ]
 
@@ -63,6 +72,12 @@ def _validate_pack(pack: dict[str, Any], schema_path: Path) -> None:
         raise ValueError(f"generated EvidencePack failed schema validation: {details}")
 
 
+def _ratio(rows: list[dict[str, Any]], field: str) -> float:
+    if not rows:
+        return 0.0
+    return round(sum(bool(row.get(field)) for row in rows) / len(rows), 6)
+
+
 def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dict[str, Path]:
     scenario_file = Path(scenario_path).resolve()
     scenario = read_yaml(scenario_file)
@@ -74,12 +89,14 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
     repository_root = _find_repository_root(scenario_file)
     outputs_root = Path(output_root).resolve() if output_root else repository_root / "outputs"
     scenario_id = scenario["scenario"]["scenario_id"]
-    result = replay_scenario(scenario)
+    result = replay_scenario(scenario, repository_root=repository_root)
 
     evidence_pack_path = outputs_root / "evidence_packs" / f"{scenario_id}.json"
     state_log_path = outputs_root / "state_logs" / f"{scenario_id}.csv"
     conflict_report_path = outputs_root / "conflict_reports" / f"{scenario_id}.json"
     metrics_path = outputs_root / "metrics" / f"{scenario_id}_metrics.json"
+    source_manifest_path = outputs_root / "source_manifests" / f"{scenario_id}_sources.json"
+    audit_ledger_path = outputs_root / "audit_ledgers" / f"{scenario_id}.jsonl"
 
     _validate_pack(result["pack"], repository_root / "schemas" / "evidencepack_v0.2.schema.json")
     write_json(evidence_pack_path, result["pack"])
@@ -94,6 +111,8 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
             "conflicts": result["conflicts"],
         },
     )
+    write_json(source_manifest_path, result["source_manifest"])
+    write_jsonl(audit_ledger_path, result["audit_ledger"])
 
     near_clock_events = [
         row
@@ -102,9 +121,11 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
     ]
     primary_outputs = [evidence_pack_path, state_log_path, conflict_report_path]
     ca_value = clock_aware_escalation(near_clock_events)
+    source_records = result["source_manifest"]["sources"]
     metrics = {
         "scenario_id": scenario_id,
         "schema_version": "0.2",
+        "evaluation_status": scenario["scenario"].get("evaluation_status", "development"),
         "EC": evidence_completeness(result["pack"]),
         "TR": traceability_ratio(result["pack"]["claims"]),
         "CD": conflict_detection(
@@ -115,6 +136,19 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
         "AR": audit_reconstructability(result["pack"]["audit_log"]),
         "SC": state_correctness(result["state_rows"]),
         "EPG": evidence_pack_generation(primary_outputs),
+        "supplemental": {
+            "authorization_correctness": _ratio(result["state_rows"], "authorization_match"),
+            "deadline_posture_correctness": _ratio(result["state_rows"], "deadline_match"),
+            "source_integrity_ratio": round(
+                sum(item["validation_status"] == "valid" for item in source_records)
+                / len(source_records),
+                6,
+            ),
+            "source_manifest_hash": sha256_json(result["source_manifest"]),
+            "source_count": len(source_records),
+            "claim_count": len(result["pack"]["claims"]),
+            "audit_event_count": len(result["pack"]["audit_log"]),
+        },
         "identity_uncertainty_context": {
             "gamma_id": result["pack"]["identity_resolution"]["gamma_id"],
             "U_t": result["pack"]["orchestration_metrics"]["U_t"],
@@ -128,6 +162,8 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
         "state_log": state_log_path,
         "conflict_report": conflict_report_path,
         "metrics": metrics_path,
+        "source_manifest": source_manifest_path,
+        "audit_ledger": audit_ledger_path,
     }
 
 
@@ -145,7 +181,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     paths = run(args.scenario, args.output_root)
-    print("EvidencePack v0.2 replay completed:")
+    print("EvidencePack v0.2 real-format replay completed:")
     for label, path in paths.items():
         print(f"- {label}: {path}")
     return 0

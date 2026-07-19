@@ -1,0 +1,1 @@
+{"event_id":"TEL-GL-REPRO-001","timestamp":"2026-09-12T22:00:00Z","deployment_id":"lab-reproduction","component_purl":"pkg:maven/org.example/lib-xml-processor@2.4.1","execution_observed":true,"reachability_confirmed":true,"malicious_exploitation_observed":false,"observation_type":"controlled_internal_reproduction","reproduction_confirmed":true}

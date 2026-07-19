@@ -45,7 +45,7 @@ jobs:
           yamllint .github data .pre-commit-config.yaml .yamllint.yml
 
       - name: Validate repository integrity
-        run: python scripts/validate_repository.py
+        run: python scripts/validate_repository.py --strict-sources
 
       - name: Run tests with branch coverage
         run: |

@@ -50,3 +50,9 @@ outputs/metrics/*
 # !data/kev_snapshots/.gitkeep
 # data/epss_snapshots/*
 # !data/epss_snapshots/.gitkeep
+outputs/source_manifests/*
+!outputs/source_manifests/.gitkeep
+outputs/audit_ledgers/*
+!outputs/audit_ledgers/.gitkeep
+outputs/validation/*
+!outputs/validation/.gitkeep

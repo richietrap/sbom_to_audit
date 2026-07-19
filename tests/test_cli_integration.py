@@ -14,7 +14,14 @@ def test_cli_generates_schema_valid_deterministic_outputs(tmp_path: Path) -> Non
     first = run(SCENARIO, tmp_path / "first")
     second = run(SCENARIO, tmp_path / "second")
 
-    assert set(first) == {"evidence_pack", "state_log", "conflict_report", "metrics"}
+    assert set(first) == {
+        "evidence_pack",
+        "state_log",
+        "conflict_report",
+        "metrics",
+        "source_manifest",
+        "audit_ledger",
+    }
     for key in first:
         assert first[key].is_file()
         assert second[key].is_file()
@@ -24,8 +31,17 @@ def test_cli_generates_schema_valid_deterministic_outputs(tmp_path: Path) -> Non
     schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
     Draft202012Validator(schema).validate(pack)
     assert pack["schema_version"] == "0.2"
-    assert pack["decision_state"]["recommended_state"] == "Escalate"
-    assert pack["decision_state"]["authorized_state"] is None
-    assert pack["orchestration_metrics"]["E_t"] < 1.0
+    assert pack["decision_state"]["recommended_state"] == "Report-Ready"
+    assert pack["decision_state"]["authorized_state"] == "Report"
+    assert pack["orchestration_metrics"]["E_t"] == 0.85
     assert pack["orchestration_metrics"]["A_t"] == 1.0
-    assert pack["orchestration_metrics"]["C_t"] is True
+    assert pack["orchestration_metrics"]["C_t"] is False
+    assert pack["identity_resolution"]["dependency_depth"] == 2
+
+    metrics = json.loads(first["metrics"].read_text(encoding="utf-8"))
+    assert metrics["EC"] == 1.0
+    assert metrics["TR"] == 1.0
+    assert metrics["CD"] == 1.0
+    assert metrics["AR"] == 1.0
+    assert metrics["SC"] == 1.0
+    assert metrics["supplemental"]["source_integrity_ratio"] == 1.0

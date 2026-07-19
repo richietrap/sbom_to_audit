@@ -1,0 +1,50 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:6bdb2c2f-6de2-4ea8-9c86-73ef178b97b2",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-12T08:05:00Z",
+    "component": {
+      "type": "device",
+      "bom-ref": "product:industrial-smart-gateway:4.2.0",
+      "group": "example-industries",
+      "name": "industrial-smart-gateway",
+      "version": "4.2.0",
+      "purl": "pkg:generic/industrial-smart-gateway@4.2.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.example/structured-logger@5.8.0",
+      "group": "org.example",
+      "name": "structured-logger",
+      "version": "5.8.0",
+      "purl": "pkg:maven/org.example/structured-logger@5.8.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.example/lib-xml-processor@2.4.1",
+      "group": "org.example",
+      "name": "lib-xml-processor",
+      "version": "2.4.1",
+      "purl": "pkg:maven/org.example/lib-xml-processor@2.4.1",
+      "cpe": "cpe:2.3:a:example:lib-xml-processor:2.4.1:*:*:*:*:*:*:*"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "product:industrial-smart-gateway:4.2.0",
+      "dependsOn": ["pkg:maven/org.example/structured-logger@5.8.0"]
+    },
+    {
+      "ref": "pkg:maven/org.example/structured-logger@5.8.0",
+      "dependsOn": ["pkg:maven/org.example/lib-xml-processor@2.4.1"]
+    },
+    {
+      "ref": "pkg:maven/org.example/lib-xml-processor@2.4.1",
+      "dependsOn": []
+    }
+  ]
+}

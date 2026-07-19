@@ -1,0 +1,1 @@
+{"event_id":"TEL-GL-EXEC-001","timestamp":"2026-09-12T18:00:00Z","deployment_id":"edge-17","component_purl":"pkg:maven/org.example/lib-xml-processor@2.4.1","execution_observed":true,"reachability_confirmed":true,"malicious_exploitation_observed":false,"observation_type":"vulnerable_function_execution","input_origin":"non_default_edge_configuration"}

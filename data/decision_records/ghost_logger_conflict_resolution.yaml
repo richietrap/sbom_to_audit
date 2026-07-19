@@ -1,0 +1,11 @@
+event_type: conflict_resolution
+event_id: DEC-GL-CONFLICT-001
+timestamp: "2026-09-12T22:00:00Z"
+actor_id: psirt-analyst-01
+actor_role: product_security_engineer
+supersede_source_artifact_ids:
+  - ART-VEX-001
+rationale: >-
+  Controlled reproduction demonstrated that the supplier assertion did not cover
+  the non-default edge deployment; the assertion is retained but marked superseded
+  for the affected deployment scope.

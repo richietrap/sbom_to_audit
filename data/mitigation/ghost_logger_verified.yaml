@@ -1,0 +1,5 @@
+mitigation_status: verified
+patch_available: true
+verification_status: verified
+patched_deployments: 3
+timestamp: "2026-09-15T08:00:00Z"

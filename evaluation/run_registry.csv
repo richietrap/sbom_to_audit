@@ -1,0 +1,2 @@
+run_id,git_commit,scenario_id,scenario_version,run_type,evaluation_status,environment_id,input_manifest_hash,output_manifest_hash,started_at,completed_at,status,notes
+GL-STAGE2-PILOT-001,not_recorded_export_build,ghost_logger,stage2-v0.1,BASE,PILOT,stage2-local-build,bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc,5a416c70c6d9b9d0de2f541214b483fbd8451b898af43247cdb1fa767359e5b2,2026-07-19T00:00:00Z,2026-07-19T00:00:00Z,PASS,Pilot only; rerun after GitHub commit and Colab checkpoint before citing results.

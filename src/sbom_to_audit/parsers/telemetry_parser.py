@@ -1,4 +1,4 @@
-"""Parsers for controlled JSON, JSONL, and CSV telemetry evidence."""
+"""Parsers and reducers for controlled JSON, JSONL, and CSV telemetry."""
 
 from __future__ import annotations
 
@@ -14,8 +14,8 @@ def parse_telemetry(path: str | Path) -> list[dict[str, Any]]:
     if suffix == ".json":
         with source.open("r", encoding="utf-8") as handle:
             data = json.load(handle)
-        return data if isinstance(data, list) else [data]
-    if suffix == ".jsonl":
+        records = data if isinstance(data, list) else [data]
+    elif suffix == ".jsonl":
         records = []
         with source.open("r", encoding="utf-8") as handle:
             for line_number, line in enumerate(handle, 1):
@@ -24,13 +24,28 @@ def parse_telemetry(path: str | Path) -> list[dict[str, Any]]:
                         records.append(json.loads(line))
                     except json.JSONDecodeError as exc:
                         raise ValueError(f"invalid JSONL at line {line_number}") from exc
-        return records
-    if suffix == ".csv":
+    elif suffix == ".csv":
         with source.open("r", encoding="utf-8", newline="") as handle:
-            return list(csv.DictReader(handle))
-    raise ValueError(f"unsupported telemetry format: {suffix}")
+            records = list(csv.DictReader(handle))
+    else:
+        raise ValueError(f"unsupported telemetry format: {suffix}")
+
+    if not all(isinstance(record, dict) for record in records):
+        raise ValueError("telemetry records must be objects")
+    return records
+
+
+def _truthy(value: Any) -> bool:
+    return value in {True, "1", "true", "True", "yes", "observed", "executed", "confirmed"}
 
 
 def execution_observed(records: list[dict[str, Any]]) -> bool:
-    truthy = {True, "1", "true", "True", "yes", "observed", "executed"}
-    return any(record.get("execution_observed") in truthy for record in records)
+    return any(_truthy(record.get("execution_observed")) for record in records)
+
+
+def reachability_confirmed(records: list[dict[str, Any]]) -> bool:
+    return any(_truthy(record.get("reachability_confirmed")) for record in records)
+
+
+def malicious_exploitation_observed(records: list[dict[str, Any]]) -> bool:
+    return any(_truthy(record.get("malicious_exploitation_observed")) for record in records)

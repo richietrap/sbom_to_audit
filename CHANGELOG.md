@@ -83,3 +83,39 @@ All notable repository design and implementation changes are recorded here.
 ### Deferred
 
 - immutable SHA pinning for third-party GitHub Actions, mutation testing, full security scanning, strict source-file validation, and Execution Latency instrumentation remain documented follow-up controls.
+
+## [0.2.3] - 2026-07-19
+
+### Added
+
+- a path-confined source registry that computes hashes and records parser, media-type, validation, and file-size evidence;
+- committed Ghost-Logger CycloneDX, CSAF/VEX, OSV-shaped, KEV-shaped, EPSS-shaped, telemetry, asset, mitigation, adjudication, authorization, and milestone artefacts;
+- a scenario-agnostic real-format ingestion pipeline and scoped conflict engine;
+- source-manifest and JSONL audit-ledger outputs;
+- full T+2h, T+10h, T+14h, T+20h, and T+72h Ghost-Logger replay;
+- strict-source repository validation and source-registry regression tests;
+- evaluation run/scenario registries and pilot paper-asset generation;
+- ADR-004 and the paper-asset accumulation protocol.
+
+### Changed
+
+- converted `ghost_logger.yaml` from a normalized evidence container into a source-release manifest;
+- derived product, identity, vulnerability, supplier, telemetry, asset, and mitigation blocks from committed files;
+- separated sequential same-class evidence updates from active cross-class conflicts;
+- completed scoped VEX conflict resolution, human authorization, and milestone satisfaction;
+- expanded deterministic replay from four to six outputs;
+- updated strict repository and release gates for Stage 2 sources;
+- corrected deadline lateness so completion exactly at the configured deadline is not labelled late.
+
+### Verified pilot result
+
+- five expected state transitions matched;
+- final recommendation: `Report-Ready`;
+- final human authorization: `Report`;
+- EC, TR, CD, AR, and SC: `1.0`;
+- source-integrity, authorization-correctness, and deadline-correctness supplemental checks: `1.0`.
+
+### Limitations
+
+- all Ghost-Logger organisational evidence remains fictional;
+- full official CycloneDX/CSAF schema validation, remaining scenarios, public historical replay, matched baseline, mutation testing, and performance evaluation remain pending.

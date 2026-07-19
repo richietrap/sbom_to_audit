@@ -2,33 +2,34 @@
 
 ## Open limitations
 
-### KI-001 — Real-format source files are not yet present
+### KI-001 — Ghost-Logger evidence is fictional
 
-Ghost-Logger still references future CycloneDX, CSAF/VEX, and telemetry files. The
-repository validator reports these as warnings. Stage 2 must create, hash, validate, and
-ingest them, after which strict source validation becomes mandatory.
+Stage 2 uses representative machine-readable artefacts but a controlled fictional CVE, supplier, deployment, telemetry, and decision history. It verifies implementation behaviour and format ingestion, not industrial effectiveness or legal correctness. The four-scenario evaluation, matched baseline, expert plausibility review, and public historical replay remain pending.
 
-### KI-002 — GitHub Actions use major tags rather than immutable commit SHAs
+### KI-002 — Identifier matching is intentionally narrow
 
-`actions/checkout@v6` and `actions/setup-python@v6` are valid, but major tags can move.
-Dependabot monitors them and actionlint validates syntax. Immutable SHA pinning remains
-recommended before the final archival release, after the exact upstream SHAs are
-independently verified.
+The pilot demonstrates an exact versioned PURL match and OSV alias bridge. Fuzzy, CPE, ambiguous-candidate, and multi-ecosystem resolution remain later evaluation work. The artefact must not be described as solving general PURL/CPE identity matching.
 
-### KI-003 — Mutation testing is not yet enforced
+### KI-003 — Conflict semantics are scoped but not ontology-complete
 
-Property tests and branch coverage are implemented, but mutation testing is deferred
-until the Stage 2 parser and source-registry APIs stabilise. The current risk is that
-some weak assertions may not detect semantically inverted code.
+Stage 2 compares exact propositions and serialized scopes. It distinguishes sequential same-class observations from simultaneous cross-class contradictions, but does not yet implement a comprehensive proposition ontology, interval algebra, or semantic subsumption.
 
-### KI-004 — Security scanning is partial
+### KI-004 — Full standards conformance validation is incomplete
 
-Dependency monitoring is enabled, but CodeQL, secret scanning, and a dedicated dependency
-vulnerability scanner are not yet configured. The repository is public and contains no
-secrets by design. These controls should be added before external contributors or live
-credentials are introduced.
+The committed CycloneDX and CSAF documents are structurally parsed and checked by repository tests, but the pipeline does not yet run the complete official CycloneDX and OASIS CSAF schema suites. Add official-schema validation before the evaluation freeze.
 
-### KI-005 — Performance benchmarking remains pending
+### KI-005 — GitHub Actions use major tags rather than immutable SHAs
 
-Execution Latency is defined but not yet instrumented. This does not block Stage 2
-functional development, but it must be completed before the evaluation-results freeze.
+Dependabot and actionlint reduce version-drift risk, but immutable action SHA pinning remains required for the archival release.
+
+### KI-006 — Mutation and security testing remain deferred
+
+Property tests and branch coverage are active. Mutation testing, CodeQL, secret scanning, and dedicated dependency vulnerability scanning should be added after the Stage 2 APIs stabilise and before the final public release.
+
+### KI-007 — Execution Latency is not yet instrumented
+
+EL is defined but not emitted by the CLI. Functional development can proceed, but latency and scale results are mandatory before evaluation-results freeze.
+
+### KI-008 — Pilot paper assets are not final results
+
+The Stage 2 figures and tables are generated from a local export build whose Git commit is not recorded. They must be regenerated from a tagged GitHub commit and independently reproduced in Colab before manuscript use.

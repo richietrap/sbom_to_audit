@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate repository structure, locked definitions, and scenario integrity."""
+"""Validate repository structure, locked definitions, and source-catalog scenarios."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from typing import Any
 
 import yaml
 
+from sbom_to_audit.ingestion.source_registry import SourceRegistry
 from sbom_to_audit.model.metrics import MANDATORY_FIELDS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +22,9 @@ GENERATED_OUTPUT_DIRS = {
     Path("outputs/state_logs"),
     Path("outputs/conflict_reports"),
     Path("outputs/metrics"),
+    Path("outputs/source_manifests"),
+    Path("outputs/audit_ledgers"),
+    Path("outputs/validation"),
 }
 IGNORED_NAMES = {
     ".git",
@@ -34,7 +38,6 @@ IGNORED_NAMES = {
     "build",
     "dist",
 }
-SOURCE_REFERENCE_PREFIX = "file:"
 LOCKED_REQUIRED_TOP_LEVEL = {
     "schema_version",
     "case_metadata",
@@ -169,10 +172,9 @@ def validate_schema(report: ValidationReport) -> None:
     )
     if set(states) != LOCKED_RECOMMENDED_STATES:
         report.error("recommended_state enumeration drifted from the locked set")
-    mandatory_count = len(MANDATORY_FIELDS)
-    report.checks["mandatory_fields"] = mandatory_count
-    if mandatory_count != 34:
-        report.error(f"EC mandatory-field count drifted from 34 to {mandatory_count}")
+    report.checks["mandatory_fields"] = len(MANDATORY_FIELDS)
+    if len(MANDATORY_FIELDS) != 34:
+        report.error(f"EC mandatory-field count drifted from 34 to {len(MANDATORY_FIELDS)}")
 
 
 def validate_scenarios(report: ValidationReport, strict_sources: bool) -> None:
@@ -189,63 +191,54 @@ def validate_scenarios(report: ValidationReport, strict_sources: bool) -> None:
             continue
         if scenario.get("schema_version") != "0.2":
             report.error(f"{path.name}: scenario schema_version must remain 0.2")
-        claims = scenario.get("claims") or []
-        artifacts = scenario.get("source_artifacts") or []
+        for forbidden in ("claims", "source_artifacts", "product_context", "identity_resolution"):
+            if forbidden in scenario:
+                report.error(
+                    f"{path.name}: normalized block {forbidden!r} must not be "
+                    "embedded in Stage 2 YAML"
+                )
+
+        target = scenario.get("target") or {}
+        required_target = {"product_purl", "component_purl", "cve_id", "csaf_product_id"}
+        if not required_target.issubset(target):
+            report.error(f"{path.name}: target must define {sorted(required_target)}")
+            continue
+        catalog = scenario.get("source_catalog") or []
         events = scenario.get("replay_events") or []
-        claim_ids = [str(item.get("claim_id")) for item in claims]
-        artifact_ids = [str(item.get("artifact_id")) for item in artifacts]
+        artifact_ids = [str(item.get("artifact_id")) for item in catalog]
         event_ids = [str(item.get("event_id")) for item in events]
-        for label, values in (
-            ("claim", claim_ids),
-            ("source artifact", artifact_ids),
-            ("event", event_ids),
-        ):
-            duplicate_values = _duplicates(values)
-            if duplicate_values:
-                report.error(f"{path.name}: duplicate {label} IDs: {duplicate_values}")
-        unknown_claims = sorted(
-            {
-                str(claim_id)
-                for event in events
-                for claim_id in (event.get("active_claim_ids") or [])
-                if str(claim_id) not in set(claim_ids)
-            }
-        )
-        if unknown_claims:
-            report.error(f"{path.name}: events reference unknown claims: {unknown_claims}")
-        unknown_artifacts = sorted(
-            {
-                str(claim.get("source_artifact_id"))
-                for claim in claims
-                if str(claim.get("source_artifact_id")) not in set(artifact_ids)
-            }
-        )
-        if unknown_artifacts:
-            report.error(
-                f"{path.name}: claims reference unknown source artifacts: {unknown_artifacts}"
-            )
-        missing_sources: list[str] = []
-        for artifact in artifacts:
-            uri = str(artifact.get("source_uri") or "")
-            if not uri.startswith(SOURCE_REFERENCE_PREFIX):
-                continue
-            relative = uri.removeprefix(SOURCE_REFERENCE_PREFIX)
-            if not (ROOT / relative).is_file():
-                missing_sources.append(relative)
-        if missing_sources:
-            message = (
-                f"{path.name}: referenced source files not yet present: {sorted(missing_sources)}"
-            )
+        for label, values in (("source artifact", artifact_ids), ("event", event_ids)):
+            duplicates = _duplicates(values)
+            if duplicates:
+                report.error(f"{path.name}: duplicate {label} IDs: {duplicates}")
+        known_artifacts = set(artifact_ids)
+        released = {
+            str(artifact_id)
+            for event in events
+            for artifact_id in (event.get("release_artifact_ids") or [])
+        }
+        unknown = sorted(released - known_artifacts)
+        if unknown:
+            report.error(f"{path.name}: events release unknown source artifacts: {unknown}")
+        never_released = sorted(known_artifacts - released)
+        if never_released:
+            report.warning(f"{path.name}: catalog sources never released: {never_released}")
+
+        try:
+            registry = SourceRegistry(ROOT, target_cve=str(target["cve_id"]))
+            registry.register_catalog(catalog)
+        except (FileNotFoundError, KeyError, TypeError, ValueError) as exc:
             if strict_sources:
-                report.error(message)
+                report.error(f"{path.name}: source validation failed: {exc}")
             else:
-                report.warning(message + " (expected before Stage 2)")
+                report.warning(f"{path.name}: source validation warning: {exc}")
+            continue
         summaries.append(
             {
                 "file": path.relative_to(ROOT).as_posix(),
-                "claims": len(claims),
-                "source_artifacts": len(artifacts),
+                "source_catalog": len(catalog),
                 "events": len(events),
+                "registered_sources": registry.manifest()["source_count"],
             }
         )
     report.checks["scenarios"] = summaries
@@ -255,18 +248,18 @@ def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
     placeholder_files: list[str] = []
-    scan_roots = [
+    for scan_root in (
         ROOT / "src",
         ROOT / "tests",
         ROOT / "scripts",
         ROOT / "schemas",
         ROOT / ".github",
-    ]
-    for scan_root in scan_roots:
+        ROOT / "paper_assets" / "scripts",
+    ):
         if not scan_root.exists():
             continue
         for path in scan_root.rglob("*"):
-            if not path.is_file() or path.suffix in {".pyc"}:
+            if not path.is_file() or path.suffix == ".pyc":
                 continue
             try:
                 text = path.read_text(encoding="utf-8")
@@ -296,7 +289,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--strict-sources",
         action="store_true",
-        help="Fail when scenario source files are absent; becomes mandatory in Stage 2.",
+        help="Fail when any source-catalog artefact is missing or invalid.",
     )
     parser.add_argument("--report", type=Path, help="Optional JSON report path.")
     return parser

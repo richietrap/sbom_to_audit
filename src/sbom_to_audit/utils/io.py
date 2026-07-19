@@ -1,4 +1,4 @@
-"""Deterministic JSON, YAML, and CSV I/O helpers."""
+"""Deterministic JSON, JSONL, YAML, and CSV I/O helpers."""
 
 from __future__ import annotations
 
@@ -27,6 +27,16 @@ def write_json(path: str | Path, value: Any) -> Path:
     with output.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(value, handle, indent=2, sort_keys=False, ensure_ascii=False)
         handle.write("\n")
+    return output
+
+
+def write_jsonl(path: str | Path, rows: Iterable[Mapping[str, Any]]) -> Path:
+    output = Path(path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        for row in rows:
+            handle.write(json.dumps(dict(row), sort_keys=True, ensure_ascii=False))
+            handle.write("\n")
     return output
 
 

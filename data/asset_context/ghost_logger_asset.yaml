@@ -1,0 +1,6 @@
+asset_id: edge-gateway-fleet
+asset_criticality: critical
+deployment_scope: limited
+internet_exposed: true
+affected_deployment_count: 3
+context_timestamp: "2026-09-12T08:40:00Z"

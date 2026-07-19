@@ -68,6 +68,8 @@ def _deterministic_replay(report: ReleaseReport) -> None:
         "state_logs/ghost_logger.csv",
         "conflict_reports/ghost_logger.json",
         "metrics/ghost_logger_metrics.json",
+        "source_manifests/ghost_logger_sources.json",
+        "audit_ledgers/ghost_logger.jsonl",
     )
     with tempfile.TemporaryDirectory(prefix="sbom-audit-release-") as temp:
         base = Path(temp)
@@ -120,7 +122,7 @@ def run_release_check() -> ReleaseReport:
         ),
         (
             "repository validation",
-            [sys.executable, "scripts/validate_repository.py"],
+            [sys.executable, "scripts/validate_repository.py", "--strict-sources"],
         ),
         (
             "tests and coverage",
