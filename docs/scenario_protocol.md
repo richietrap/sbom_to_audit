@@ -1,159 +1,67 @@
 # Controlled Scenario Replay Protocol
 
-**Semantic version:** v0.2.1  
-**Schema version:** EvidencePack v0.2
+## Purpose
 
-## 1. Purpose
+Scenario replay evaluates the artefact under predeclared evidence conditions without representing the scenarios as industrial case studies. The final study uses controlled scenario replays over real-format artifacts.
 
-Scenario replay evaluates the artefact under predeclared evidence conditions without representing the scenarios as industrial case studies. The final study uses **controlled scenario replays over real-format artifacts**.
+## Required scenario metadata
 
-The scenario definition configures evidence release and expected behaviour. It must not inject normalized answers that the prototype is expected to derive.
+Each scenario must declare:
 
-## 2. Scenario-definition boundary
+1. a stable scenario and case identifier;
+2. purpose and threat narrative;
+3. clock start `t_0`;
+4. product, identity, vulnerability, supplier, local, asset, and mitigation context;
+5. source artifacts and source hashes;
+6. atomic claims with provenance;
+7. ordered replay events;
+8. active claims at each event;
+9. the expected state at each event; and
+10. the seeded conflict count.
 
-A final evaluation scenario may contain:
+Expected states and seeded conflicts must be fixed before replay.
 
-- stable scenario and case identifiers;
-- a fictional or hybrid historical-synthetic narrative;
-- `t_0` as an internal awareness proxy;
-- relative or absolute evidence-release times;
-- paths to real-format input artefacts;
-- a configured deadline profile;
-- prototype parameters;
-- predeclared seeded-conflict descriptions;
-- expected evidential-state, deadline, authorization, and submission oracles; and
-- explicit human authorization or submission events where the scenario requires them.
+## Replay procedure
 
-A final evaluation scenario must not contain:
+1. Parse and validate the scenario YAML.
+2. Establish `t_0` from `case_metadata.clock_start_time`.
+3. Apply each event's evidence overrides to the previous evidence snapshot.
+4. Activate the claims listed by the event.
+5. Detect direct proposition conflicts and compute `C_t`.
+6. Calculate `E_t`, `A_t`, `I_t`, `M_t`, and `U_t` using the v0.2.1 semantics; vulnerable-function execution contributes to `A_t`, while only an active traceable malicious-exploitation claim, KEV, or EPSS contributes numerically to `E_t`.
+7. Calculate `delta_t_hours` from the event timestamp and `t_0`.
+8. Apply the state rule in frozen precedence order.
+9. Append a state-log and audit-log entry.
+10. Generate the final EvidencePack, conflict report, and metrics output.
 
-- precomputed `E_t`, `A_t`, `I_t`, `M_t`, `U_t`, or `C_t` values;
-- pre-generated normalized claims;
-- trusted source hashes that the source registry does not recompute;
-- derived identity matches;
-- parser outputs;
-- generated state rationale; or
-- a final EvidencePack embedded as scenario input.
+## Ghost-Logger acceptance criteria
 
-The current Ghost-Logger YAML is a scaffold fixture and must be replaced or migrated before final v0.2.1 evaluation.
+The initial scenario is a fictional transitive-dependency case in which:
 
-## 3. Required real-format source bundle
+- a supplier assertion states `known_not_affected`;
+- local telemetry later indicates vulnerable-function execution;
+- the two active claims address the same product-affectedness proposition;
+- one conflict is seeded and one conflict must be detected;
+- `C_t` must become `true`; and
+- the observed final state must be `Escalate`.
 
-Each base scenario should provide, as applicable:
+The first event may produce `Document No-Report` while evidence is reassuring and uncertainty is low. This is not a final legal determination; it is a time-stamped recommendation that can pivot when new evidence arrives.
 
-1. CycloneDX JSON SBOM;
-2. CSAF/VEX JSON supplier assertion;
-3. cached OSV response;
-4. dated CISA KEV snapshot or scenario-specific extract preserving source metadata;
-5. dated EPSS response;
-6. telemetry in JSONL, JSON, or CSV;
-7. asset-context JSON or YAML;
-8. mitigation-context JSON or YAML; and
-9. explicit human-decision or milestone-completion records where needed.
+## Remaining scenarios
 
-Every source must be registered, validated, timestamped, and hashed by the prototype.
+- **False Comfort:** a reassuring third-party assertion is contradicted by local evidence.
+- **Operational Outlier:** moderate technical severity is elevated by critical deployment context.
+- **Rapid Pivot:** new evidence sharply changes uncertainty and state within the reporting clock.
 
-## 4. Predeclared oracle
+A separate `Silent Transitive` label may be retained as the category name for Ghost-Logger; the scenario should not be double-counted as two independent evaluations.
 
-Expected outcomes must be frozen before final replay. Each event oracle separates four concepts:
+## Baseline replay
 
-```yaml
-expected:
-  recommended_state: Report-Ready
-  deadline_posture:
-    early_warning:
-      status: Overdue
-    full_notification:
-      status: Breach Imminent
-  authorized_state: null
-  submission_evidence:
-    early_warning: null
-    full_notification: null
-```
+For each scenario, a matched baseline analyst worksheet records whether each evidence source was consulted, whether provenance was preserved, whether conflicts were noticed, whether the clock was visible, and whether the final decision can be reconstructed. The baseline is a conventional un-orchestrated PSIRT process, not a claim about any named organization.
 
-- `recommended_state` evaluates `R_t`.
-- `deadline_posture` evaluates the configured `D_(k,t)` milestones.
-- `authorized_state` records expected human authorization.
-- `submission_evidence` records whether a milestone should be considered satisfied.
 
-State Correctness uses only the predeclared evidential `recommended_state` values unless a separate deadline-conformance result is explicitly reported.
+## Stage 1.5 implementation boundary
 
-## 5. Replay procedure
+The current Ghost-Logger YAML remains a normalized scaffold. Stage 1.5 validates scoring semantics, configured deadline posture, authorization, submission separation, schema compatibility, and continuous regression. Stage 2 must replace normalized conclusions with evidence derived from real-format source artifacts before the scenario is used for final RQ4 evaluation.
 
-1. Parse and validate the scenario configuration.
-2. Establish `t_0` from the recorded internal awareness proxy.
-3. Register every referenced source artefact.
-4. Validate the format and compute the source hash.
-5. Release source artefacts according to the ordered event timeline.
-6. Parse the newly available evidence through format-specific parsers.
-7. resolve product, component, version, and vulnerability identity;
-8. generate normalized, scoped, traceable claims;
-9. detect active claim conflicts and compute `C_t`;
-10. compute `E_t`, `A_t`, `I_t`, `M_t`, and `U_t` using the frozen semantics;
-11. calculate `delta_t_hours` from the event timestamp and `t_0`;
-12. apply the evidential state rule in frozen precedence order;
-13. evaluate every enabled deadline milestone independently;
-14. apply explicit human authorization and milestone-satisfaction events without conflating them;
-15. append state, deadline, authorization, source, and audit records; and
-16. generate the EvidencePack, state log, conflict report, source manifest, and metrics sidecar.
-
-## 6. Ghost-Logger target trajectory
-
-Ghost-Logger is the Silent Transitive scenario. The complete target replay contains:
-
-| Time | Evidence purpose | Expected posture |
-|---|---|---|
-| T+2h | Transitive component present; supplier says not affected; no local execution | `Document No-Report` or `Monitor`, as frozen in the final oracle |
-| T+10h | Local vulnerable-function execution contradicts the supplier assertion | `Escalate`, active conflict |
-| T+14h | Internal reproduction confirms applicability and resolves the scoped affectedness conflict | `Report-Ready` when all thresholds are met |
-| T+20h | Explicit human review event | `authorized_state=Report` only if the scenario oracle specifies it |
-| T+72h | Mitigation, deployment scope, and milestone-completion evidence are added | prior history retained; payload enriched |
-
-Vulnerable-function execution affects `A_t`; it does not automatically set `E_t=1.0`. Exploitation evidence must come from a correctly scoped malicious-exploitation claim, KEV, EPSS, or another explicitly versioned contributor.
-
-## 7. Remaining scenarios
-
-- **False Comfort:** valid but stale, wrongly scoped, or version-mismatched reassurance is challenged by local evidence; the scenario may resolve to a defensible human-authorized no-report outcome.
-- **Operational Outlier:** moderate technical severity is elevated by critical deployment context, testing the influence of `I_t` without requiring a supplier/local conflict.
-- **Rapid Pivot:** unresolved evidence remains in `Prepare`, exercises the internal `tau_E` safeguard, and later pivots after new evidence.
-
-Ghost-Logger must not be counted separately from Silent Transitive.
-
-Every base scenario requires at least one negative-control variant in which a small, predeclared evidence change produces a different expected outcome.
-
-## 8. Deadline-profile requirements
-
-Each monitored milestone defines:
-
-- milestone ID;
-- `tau_k` due time;
-- due-soon lead `w_k`;
-- breach-imminent lead `b_k`;
-- profile-enable flag `Q_(k,t)`;
-- clock basis;
-- expected satisfaction evidence, where applicable.
-
-The configured profile is an evaluation and workflow aid. It does not establish legal applicability or legal awareness.
-
-## 9. Baseline replay
-
-The baseline analyst receives the same source artefacts, release timeline, and task. The analyst may use predeclared ordinary inspection tools such as `jq`, `grep`, text editors, spreadsheet software, and JSON or CSV viewers.
-
-The analyst must not receive:
-
-- prototype-generated claims;
-- automated conflict reports;
-- expected scenario states;
-- prototype-generated packs; or
-- custom orchestration scripts implementing the experimental intervention.
-
-The baseline protocol records tools, commands, evidence consulted, start and finish times, provenance retained, conflicts noticed, deadline posture, rationale, and reconstructability.
-
-## 10. Freeze and change control
-
-Final scenario oracles must be committed before final evaluation. Any change requires:
-
-- a dated rationale;
-- an ADR or scenario change record;
-- an updated golden fixture;
-- an impact assessment on reported results; and
-- preservation of the prior version.
+Configured deadline results and human events are evaluated independently of `recommended_state`. Deadline-status entries must retain all six base `audit_log[]` fields required by EvidencePack v0.2.

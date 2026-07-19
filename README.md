@@ -60,17 +60,19 @@ The replay is deterministic: timestamps and seeded evidence values come from the
 - `tests/` — unit tests for the locked identity, scoring, state, and metric rules.
 - `MANIFEST.md` — drift-control inventory of every expected repository file.
 
-## Initial prototype rules
+## Prototype semantics v0.2.1
 
-The locked state function is:
+The implementation separates evidential recommendation, configured deadline posture, and EvidencePack construction:
 
 ```text
-R_t = f(E_t, A_t, I_t, M_t, U_t, C_t, delta_t)
+R_t       = f(E_t, A_t, I_t, U_t, C_t, delta_t)
+D_(k,t)   = h(delta_t, tau_k, Q_(k,t), S_(k,t))
+Pi_t      = g(R_t, D_t, M_t, gamma_id, X_t, L_t, H_t, S_t)
 ```
 
-Conflict has precedence. A prior `Prepare` state escalates at `delta_t >= 18h`. The 18-hour value is an internal PSIRT safeguard before a 24-hour reporting window, not legal advice.
+Conflict has precedence within `R_t`. A prior `Prepare` recommendation escalates at `delta_t >= 18h`; this is a configurable internal safeguard, not a statutory deadline. Vulnerable-function execution contributes to applicability `A_t`, not automatically to exploitation evidence `E_t`. Configured deadline posture is calculated independently, and only explicit human events may set `authorized_state`.
 
-See [`docs/design_freeze_v0.2.md`](docs/design_freeze_v0.2.md) for the complete frozen specification and [`docs/metrics.md`](docs/metrics.md) for the seven evaluation metrics.
+See [`docs/decision_semantics.md`](docs/decision_semantics.md) for the authoritative v0.2.1 definitions, [`docs/design_freeze_v0.2.md`](docs/design_freeze_v0.2.md) for the complete design baseline, and [`docs/metrics.md`](docs/metrics.md) for the seven locked effectiveness metrics.
 
 ## Baseline
 

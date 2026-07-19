@@ -1,0 +1,52 @@
+name: Regression suite
+
+"on":
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            pyproject.toml
+            requirements.txt
+
+      - name: Install package and development dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+          python -m pip check
+
+      - name: Compile package
+        run: python -m compileall -q src tests
+
+      - name: Run regression suite
+        run: python -m pytest -q
+
+      - name: Run deterministic CLI smoke test
+        run: |
+          output_dir="${RUNNER_TEMP}/sbom-to-audit-outputs"
+          python -m sbom_to_audit.cli \
+            --scenario data/scenarios/ghost_logger.yaml \
+            --output-root "$output_dir"
+          test -f "$output_dir/evidence_packs/ghost_logger.json"
+          test -f "$output_dir/state_logs/ghost_logger.csv"
+          test -f "$output_dir/conflict_reports/ghost_logger.json"
+          test -f "$output_dir/metrics/ghost_logger_metrics.json"

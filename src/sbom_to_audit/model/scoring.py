@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable, Mapping
 
 from sbom_to_audit.model.identity import apply_identity_uncertainty, clamp
 
@@ -52,9 +52,50 @@ class Scores:
         }
 
 
-def exploitation_score(vulnerability: dict[str, Any], local: dict[str, Any]) -> float:
+TRACEABILITY_FIELDS = (
+    "source_artifact_id",
+    "source_uri",
+    "source_hash",
+    "timestamp",
+    "confidence",
+)
+
+
+def _claim_traceable(claim: Mapping[str, Any]) -> bool:
+    return all(claim.get(field) is not None and claim.get(field) != "" for field in TRACEABILITY_FIELDS)
+
+
+def _active_malicious_exploitation_claim(claims: Iterable[Mapping[str, Any]]) -> bool:
+    for claim in claims:
+        status = str(claim.get("status") or "active").strip().lower()
+        if status not in {"active", "confirmed"}:
+            continue
+        if (
+            str(claim.get("proposition") or "").strip().lower()
+            == "malicious_exploitation_observed"
+            and claim.get("value") is True
+            and _claim_traceable(claim)
+        ):
+            return True
+    return False
+
+
+def exploitation_score(
+    vulnerability: dict[str, Any],
+    local: dict[str, Any] | None = None,
+    claims: Iterable[Mapping[str, Any]] = (),
+) -> float:
+    """Compute graded exploitation evidence without conflating execution.
+
+    ``local`` remains in the signature for backward compatibility, but
+    vulnerable-function execution and reachability do not contribute to
+    ``E_t``. They are applicability evidence evaluated by
+    :func:`applicability_score`.
+    """
+
+    del local
     candidates = [0.0]
-    if local.get("execution_observed") is True:
+    if _active_malicious_exploitation_claim(claims):
         candidates.append(1.0)
     if vulnerability.get("cisa_kev_status") is True:
         candidates.append(0.85)
@@ -108,11 +149,22 @@ def uncertainty_score(snapshot: dict[str, Any], gamma_id: float, lambda_id: floa
     return apply_identity_uncertainty(base, gamma_id, lambda_id)
 
 
-def compute_scores(snapshot: dict[str, Any], conflict: bool) -> Scores:
+def compute_scores(
+    snapshot: dict[str, Any],
+    conflict: bool,
+    claims: Iterable[Mapping[str, Any]] = (),
+) -> Scores:
     identity = snapshot.get("identity_resolution") or {}
-    gamma_id = float(identity.get("gamma_id"))
+    gamma_value = identity.get("gamma_id")
+    if gamma_value is None:
+        raise ValueError("identity_resolution.gamma_id is required for scoring")
+    gamma_id = float(gamma_value)
     return Scores(
-        E_t=exploitation_score(snapshot["vulnerability_intelligence"], snapshot["local_evidence"]),
+        E_t=exploitation_score(
+            snapshot["vulnerability_intelligence"],
+            snapshot["local_evidence"],
+            claims,
+        ),
         A_t=applicability_score(snapshot["supplier_assertions"], snapshot["local_evidence"], gamma_id),
         I_t=impact_score(snapshot["asset_context"]),
         M_t=mitigation_score(snapshot["mitigation_context"]),

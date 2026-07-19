@@ -1,11 +1,8 @@
 # EvidencePack Schema v0.2
 
-**Semantic clarification:** v0.2.1  
-**Canonical schema:** `schemas/evidencepack_v0.2.schema.json`
+The canonical machine-readable schema is `schemas/evidencepack_v0.2.schema.json`. This document explains the locked structure and the Evidence Completeness denominator.
 
-This document explains the locked structure, Evidence Completeness denominator, traceability contract, and schema-compatible v0.2.1 audit-event extensions.
-
-## 1. Top-level structure
+## Top-level structure
 
 | Block | Purpose |
 |---|---|
@@ -21,12 +18,10 @@ This document explains the locked structure, Evidence Completeness denominator, 
 | `orchestration_metrics` | `E_t`, `A_t`, `I_t`, `M_t`, `U_t`, and `C_t`. |
 | `decision_state` | Recommendation, human-authorization boundary, rationale, and `authorized_state`. |
 | `claims` | Atomic, source-linked assertions used for traceability and conflict detection. |
-| `source_artifacts` | Normalized artefact inventory with hashes and timestamps. |
-| `audit_log` | Ordered reconstruction events, including v0.2.1 deadline and human-action events. |
+| `source_artifacts` | Normalized artifact inventory with hashes and timestamps. |
+| `audit_log` | Ordered reconstruction events. |
 
-The presence of `M_t` in `orchestration_metrics` is preserved. Under semantic version v0.2.1 it is payload and audit context rather than an input to the evidential recommendation function `R_t`.
-
-## 2. Mandatory fields for Evidence Completeness
+## Mandatory fields for Evidence Completeness
 
 EvidencePack v0.2 has exactly 34 mandatory fields for the `EC` denominator.
 
@@ -78,7 +73,7 @@ Population rules:
 
 `decision_state.authorized_state` is structurally required and must be one of `Report`, `Document No-Report`, or `null`. It is not a thirty-fifth EC field.
 
-## 3. Claim traceability contract
+## Claim traceability contract
 
 A claim is traceable only when all of these fields are populated:
 
@@ -88,9 +83,9 @@ A claim is traceable only when all of these fields are populated:
 - `timestamp`; and
 - `confidence`.
 
-Claims also carry `claim_id`, `proposition`, and `value`. The planned scoped claim model additionally records product, component, vulnerability, deployment, and temporal scope without changing the v0.2 top-level schema.
+Claims also carry `claim_id`, `proposition`, and `value` so the conflict detector can compare active assertions.
 
-## 4. Allowed states
+## Allowed states
 
 `recommended_state`:
 
@@ -107,93 +102,4 @@ Claims also carry `claim_id`, `proposition`, and `value`. The planned scoped cla
 - `Document No-Report`
 - `null`
 
-The automatic evidential recommendation function does not originate `Report`. The schema retains it for compatibility with human-authorized or historical records.
-
-## 5. Audit-log base contract
-
-Every `audit_log[]` entry must contain:
-
-- `event_id`;
-- `timestamp`;
-- `actor`;
-- `action`;
-- `input_references`; and
-- `output_state`.
-
-The JSON Schema permits additional properties. Semantic version v0.2.1 uses those additional properties to record deadline status, authorization, and milestone satisfaction without adding a new top-level block.
-
-### 5.1 Deadline-status event
-
-A schema-compatible deadline event is:
-
-```json
-{
-  "event_id": "evt-deadline-0004",
-  "timestamp": "2026-07-13T14:38:00Z",
-  "actor": "deadline_engine",
-  "action": "deadline_status_changed",
-  "input_references": [
-    "clock-start-event",
-    "deadline-profile-cra-active-exploitation"
-  ],
-  "output_state": "Report-Ready",
-  "milestone_id": "early_warning",
-  "previous_status": "Due Soon",
-  "new_status": "Breach Imminent",
-  "delta_t_hours": 22,
-  "clock_basis": "internal_awareness_proxy"
-}
-```
-
-`output_state` remains the evidential recommendation at that event. `new_status` is the separate configured deadline posture.
-
-### 5.2 Human-authorization event
-
-```json
-{
-  "event_id": "evt-auth-0005",
-  "timestamp": "2026-07-13T15:00:00Z",
-  "actor": "psirt_legal_reviewer",
-  "action": "authorized_state_recorded",
-  "input_references": ["evidence-pack-version-4"],
-  "output_state": "Report-Ready",
-  "authorized_state": "Report",
-  "rationale_reference": "decision-record-0005"
-}
-```
-
-This event records human intent or authorization. It does not prove that a submission was completed.
-
-### 5.3 Milestone-satisfaction event
-
-```json
-{
-  "event_id": "evt-submit-0006",
-  "timestamp": "2026-07-13T15:12:00Z",
-  "actor": "submission_recorder",
-  "action": "milestone_satisfied",
-  "input_references": ["submission-receipt-0006"],
-  "output_state": "Report-Ready",
-  "milestone_id": "early_warning",
-  "new_status": "Satisfied",
-  "satisfaction_evidence_id": "submission-receipt-0006",
-  "satisfied_at": "2026-07-13T15:12:00Z",
-  "timeliness": "on_time"
-}
-```
-
-A valid completion or submission record, not authorization alone, changes the relevant deadline milestone to `Satisfied`.
-
-## 6. Deadline data placement
-
-EvidencePack v0.2 does not add a required `deadline_context` block.
-
-- current and historical deadline changes are represented in `audit_log[]`;
-- scenario and benchmark sidecars may contain a convenience summary of `D_t`;
-- Execution Latency remains in metrics or benchmark sidecars;
-- a required top-level deadline block would require EvidencePack v0.3.
-
-## 7. Schema-version rule
-
-- documentation or semantic clarification without a structural schema change: v0.2.1;
-- adding, removing, renaming, or changing the type of a required field or top-level block: v0.3.
+The prototype never automatically sets `authorized_state`.

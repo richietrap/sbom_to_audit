@@ -78,7 +78,7 @@ def replay_scenario(scenario: dict[str, Any]) -> dict[str, Any]:
                 all_conflicts.append(conflict)
 
         event_delta = delta_hours(t0, event["timestamp"])
-        score_obj = compute_scores(snapshot, conflict=bool(event_conflicts))
+        score_obj = compute_scores(snapshot, conflict=bool(event_conflicts), claims=active_claims)
         final_scores = score_obj.to_dict()
         observed_state, rationale = recommend_state(final_scores, event_delta, previous_state)
         final_rationale = rationale

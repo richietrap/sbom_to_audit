@@ -25,3 +25,15 @@ def test_report_ready_requires_all_three_thresholds():
 def test_document_no_report_for_low_applicability_and_uncertainty():
     state, _ = recommend_state(scores(A_t=0.1, U_t=0.1), 2)
     assert state == "Document No-Report"
+
+
+def test_mitigation_context_does_not_silently_change_evidential_state():
+    without_mitigation, _ = recommend_state(
+        scores(E_t=0.8, A_t=0.8, I_t=0.8, M_t=0.0),
+        4,
+    )
+    verified_mitigation, _ = recommend_state(
+        scores(E_t=0.8, A_t=0.8, I_t=0.8, M_t=1.0),
+        4,
+    )
+    assert without_mitigation == verified_mitigation == "Report-Ready"
