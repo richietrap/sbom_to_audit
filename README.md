@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.2.3 implements the Stage 2 **real-format Ghost-Logger pilot vertical slice**. It ingests committed CycloneDX, CSAF/VEX, OSV-shaped, KEV-shaped, EPSS-shaped, telemetry, asset, mitigation, adjudication, authorization, and milestone-evidence files. The case remains controlled and fictional and must not be described as an industrial case study.
+Version 0.2.4 implements the Stage 2 **real-format Ghost-Logger pilot vertical slice**. It ingests committed CycloneDX, CSAF/VEX, OSV-shaped, KEV-shaped, EPSS-shaped, telemetry, asset, mitigation, adjudication, authorization, and milestone-evidence files. The case remains controlled and fictional and must not be described as an industrial case study.
 
 ## Research questions
 
@@ -58,7 +58,7 @@ T+20h  Report-Ready + authorized_state=Report
 T+72h  Report-Ready + completed milestone evidence
 ```
 
-The distinction between `Report-Ready` and human-authorized `Report` is intentional.
+The distinction between `Report-Ready` and human-authorized `Report` is intentional. The T+10h affectedness conflict is retained as historical evidence and explicitly marked `resolved` at T+14h.
 
 ## Research-evidence accumulation
 

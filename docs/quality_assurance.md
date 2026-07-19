@@ -2,9 +2,10 @@
 
 ## Status
 
-Stage 1.5.2 establishes independent quality gates before real-format ingestion begins.
-These controls reduce, but do not eliminate, the possibility of defects. GitHub Actions
-and the Colab checkpoints remain independent execution environments.
+Stage 2.0.1 retains the independent quality gates established before real-format
+ingestion and adds cross-output semantic invariants. These controls reduce, but do not
+eliminate, the possibility of defects. GitHub Actions and Colab remain independent
+execution environments, not independent semantic oracles.
 
 ## Implemented safeguards
 
@@ -23,6 +24,8 @@ and the Colab checkpoints remain independent execution environments.
 | Deterministic replay | Two clean CLI runs compared byte-for-byte | Regression CI and release check |
 | Branch coverage | Pytest-cov with a 70% initial ratchet | Quality CI and release check |
 | Property-based testing | Hypothesis invariants | Regression suite |
+| Cross-output semantic consistency | `C_t` must equal the presence of active conflict-history records | Pipeline, CLI, and integration tests |
+| Explicit lifecycle closure | An active conflict may not disappear without a registered resolution artefact | Pipeline fail-closed invariant and regression test |
 | Known-defect tracking | `known_issues.md` and `bug_register.csv` | Governance review |
 | Canonical release check | `scripts/release_check.py` | Before every tagged release |
 
@@ -32,6 +35,27 @@ The quality controls must reject malformed input, unsupported states, unknown so
 references, duplicate identifiers, schema drift, merge markers, and release-blocking
 placeholders. Missing Stage 2 source files are warnings until the real-format ingestion
 milestone, after which `validate_repository.py --strict-sources` becomes mandatory.
+
+Conflict history is also fail closed. A final `C_t=false` result cannot coexist with an
+`active` retained conflict, and a previously active conflict cannot disappear merely
+because the current-state calculation no longer sees it. The replay requires an explicit,
+registered resolution artefact and emits a separate resolution audit event.
+
+## Safeguard limitation exposed by BUG-004
+
+The Stage 2.0 conflict-lifecycle defect passed CI and Colab because both environments
+executed the same incomplete assertions. Schema validation established structural
+validity, deterministic replay established repeatability, and the state oracle established
+the correct recommendation. None of those checks compared the final state variable with
+the retained sidecar status. Independent execution therefore reproduced the same semantic
+error consistently.
+
+For every new sidecar or paper-facing output, development must now identify and test:
+
+1. the authoritative source of truth;
+2. cross-output invariants;
+3. lifecycle transitions, not only final values; and
+4. conditions that must fail closed rather than being silently normalized.
 
 ## Coverage policy
 

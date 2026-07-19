@@ -101,13 +101,26 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
     _validate_pack(result["pack"], repository_root / "schemas" / "evidencepack_v0.2.schema.json")
     write_json(evidence_pack_path, result["pack"])
     write_csv(state_log_path, result["state_rows"], STATE_FIELDS)
+    active_conflicts = [
+        conflict for conflict in result["conflicts"] if conflict.get("status") == "active"
+    ]
+    resolved_conflicts = [
+        conflict for conflict in result["conflicts"] if conflict.get("status") == "resolved"
+    ]
+    final_conflict_flag = bool(result["pack"]["orchestration_metrics"]["C_t"])
+    if final_conflict_flag != bool(active_conflicts):
+        raise AssertionError(
+            "conflict report inconsistency: final C_t must match active conflict count"
+        )
     write_json(
         conflict_report_path,
         {
             "scenario_id": scenario_id,
             "seeded_conflicts": int(scenario["scenario"].get("seeded_conflicts", 0)),
             "detected_conflicts": len(result["conflicts"]),
-            "C_t": bool(result["pack"]["orchestration_metrics"]["C_t"]),
+            "active_conflicts": len(active_conflicts),
+            "resolved_conflicts": len(resolved_conflicts),
+            "C_t": final_conflict_flag,
             "conflicts": result["conflicts"],
         },
     )

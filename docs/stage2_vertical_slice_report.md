@@ -1,6 +1,6 @@
 # Stage 2 Vertical-Slice Report
 
-**Version:** 0.2.3  
+**Version:** 0.2.4  
 **Status:** PILOT — not yet eligible as final paper evidence  
 **Scenario:** Silent Transitive / Ghost-Logger  
 **Run ID:** `GL-STAGE2-PILOT-001`
@@ -23,7 +23,7 @@ The controlled replay registers 15 artefacts across CycloneDX, CSAF/VEX, OSV-sha
 | T+20h | Report-Ready | Report | Explicit human authorization and early-warning completion evidence |
 | T+72h | Report-Ready | Report | Mitigation and full-notification evidence added without rewriting history |
 
-Final evidence variables are `E_t=0.85`, `A_t=1.0`, `I_t=0.75`, `M_t=1.0`, `U_t=0.0`, and `C_t=false` after scoped conflict resolution.
+Final evidence variables are `E_t=0.85`, `A_t=1.0`, `I_t=0.75`, `M_t=1.0`, `U_t=0.0`, and `C_t=false` after scoped conflict resolution. The retained conflict record is marked `resolved`, links the T+10h detection to the T+14h adjudication artefact, and is represented by a separate resolution event in the audit ledger.
 
 ## Generated outputs
 
@@ -42,8 +42,8 @@ These results demonstrate implementation conformance within the controlled repla
 
 ## Quality evidence
 
-- 62 automated tests passed in the Stage 2 build;
-- branch-aware coverage exceeded the 70% ratchet;
+- 65 automated tests passed in the Stage 2.0.1 build;
+- branch-aware coverage reached 84.27%, exceeding the 70% ratchet;
 - strict source validation passed;
 - schema version remained `0.2`;
 - the EC denominator remained 34;
@@ -57,7 +57,8 @@ The data-driven asset pipeline currently produces:
 - F01 — prototype evidence pipeline;
 - F02 — Ghost-Logger temporal evidence trajectory;
 - T01 — source artefact inventory; and
-- T02 — event replay table.
+- T02 — event replay table; and
+- T03 — conflict lifecycle table.
 
 Every asset is linked to the pilot run, source-data hashes, generation-script hash, output hash, and `PILOT/NOT_ELIGIBLE` status in `paper_assets/figure_table_register.csv`.
 

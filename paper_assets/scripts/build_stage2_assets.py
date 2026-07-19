@@ -44,7 +44,7 @@ def _architecture_svg(path: Path) -> None:
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="white"/>',
-        '<text x="35" y="35" font-family="sans-serif" font-size="20" font-weight="bold">Stage 2 pilot architecture</text>',
+        '<text x="35" y="35" font-family="sans-serif" font-size="20" font-weight="bold">Stage 2.0.1 corrective pilot architecture</text>',
         '<text x="1160" y="35" text-anchor="end" font-family="sans-serif" font-size="12">PILOT — not final paper evidence</text>',
     ]
     for index, label in enumerate(labels):
@@ -89,7 +89,7 @@ def _trajectory_svg(path: Path, rows: list[dict[str, str]]) -> None:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="white"/>',
         '<text x="90" y="35" font-family="sans-serif" font-size="20" font-weight="bold">Ghost-Logger temporal trajectory</text>',
-        '<text x="1060" y="35" text-anchor="end" font-family="sans-serif" font-size="12">PILOT — derived from GL-STAGE2-PILOT-001</text>',
+        '<text x="1060" y="35" text-anchor="end" font-family="sans-serif" font-size="12">PILOT — derived from GL-STAGE2-0-1-PILOT-001</text>',
         f'<line x1="{left}" y1="{top + plot_h}" x2="{left + plot_w}" y2="{top + plot_h}" stroke="#222"/>',
         f'<line x1="{left}" y1="{top}" x2="{left}" y2="{top + plot_h}" stroke="#222"/>',
     ]
@@ -149,6 +149,9 @@ def build(output_root: Path, destination: Path) -> dict[str, str]:
     metrics = json.loads(
         (output_root / "metrics" / "ghost_logger_metrics.json").read_text(encoding="utf-8")
     )
+    conflict_report = json.loads(
+        (output_root / "conflict_reports" / "ghost_logger.json").read_text(encoding="utf-8")
+    )
 
     source_table = destination / "tables" / "ghost_logger_source_inventory.csv"
     source_rows = [
@@ -198,22 +201,53 @@ def build(output_root: Path, destination: Path) -> dict[str, str]:
         event_table, [{key: row[key] for key in event_fields} for row in state_rows], event_fields
     )
 
+    conflict_table = destination / "tables" / "ghost_logger_conflict_lifecycle.csv"
+    conflict_fields = [
+        "conflict_id",
+        "proposition",
+        "status",
+        "detected_at_event_id",
+        "detected_at",
+        "resolved_at_event_id",
+        "resolved_at",
+        "claim_ids",
+        "sources",
+        "resolution_artifact_ids",
+        "resolution_event_ids",
+        "resolution_rationale",
+    ]
+    conflict_rows = []
+    for conflict in conflict_report["conflicts"]:
+        conflict_rows.append(
+            {
+                **{key: conflict.get(key) for key in conflict_fields},
+                "claim_ids": json.dumps(conflict.get("claim_ids") or []),
+                "sources": json.dumps(conflict.get("sources") or []),
+                "resolution_artifact_ids": json.dumps(
+                    conflict.get("resolution_artifact_ids") or []
+                ),
+                "resolution_event_ids": json.dumps(conflict.get("resolution_event_ids") or []),
+            }
+        )
+    _write_csv(conflict_table, conflict_rows, conflict_fields)
+
     architecture = destination / "figures" / "prototype_architecture.svg"
     trajectory = destination / "figures" / "ghost_logger_trajectory.svg"
     _architecture_svg(architecture)
     _trajectory_svg(trajectory, state_rows)
 
-    generated_paths = (architecture, trajectory, source_table, event_table)
+    generated_paths = (architecture, trajectory, source_table, event_table, conflict_table)
     source_paths = (
         output_root / "state_logs" / "ghost_logger.csv",
         output_root / "metrics" / "ghost_logger_metrics.json",
         output_root / "source_manifests" / "ghost_logger_sources.json",
+        output_root / "conflict_reports" / "ghost_logger.json",
     )
     script_path = Path(__file__).resolve()
     metadata = {
         "asset_status": "PILOT",
         "manuscript_eligible": False,
-        "source_run_id": "GL-STAGE2-PILOT-001",
+        "source_run_id": "GL-STAGE2-0-1-PILOT-001",
         "scenario_id": "ghost_logger",
         "source_manifest_hash": metrics["supplemental"]["source_manifest_hash"],
         "generation_script": script_path.relative_to(script_path.parents[2]).as_posix(),
@@ -231,7 +265,10 @@ def build(output_root: Path, destination: Path) -> dict[str, str]:
     metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     return {
         "metadata": str(metadata_path),
-        **{path.stem: str(path) for path in (architecture, trajectory, source_table, event_table)},
+        **{
+            path.stem: str(path)
+            for path in (architecture, trajectory, source_table, event_table, conflict_table)
+        },
     }
 
 

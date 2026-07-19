@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240">
 <rect width="100%" height="100%" fill="white"/>
-<text x="35" y="35" font-family="sans-serif" font-size="20" font-weight="bold">Stage 2 pilot architecture</text>
+<text x="35" y="35" font-family="sans-serif" font-size="20" font-weight="bold">Stage 2.0.1 corrective pilot architecture</text>
 <text x="1160" y="35" text-anchor="end" font-family="sans-serif" font-size="12">PILOT — not final paper evidence</text>
 <rect x="35" y="72" width="160" height="92" rx="8" fill="#f2f2f2" stroke="#222" stroke-width="1.5"/>
 <text x="115.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="14">Real-format</text>

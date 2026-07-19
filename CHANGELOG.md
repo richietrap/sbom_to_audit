@@ -119,3 +119,24 @@ All notable repository design and implementation changes are recorded here.
 
 - all Ghost-Logger organisational evidence remains fictional;
 - full official CycloneDX/CSAF schema validation, remaining scenarios, public historical replay, matched baseline, mutation testing, and performance evaluation remain pending.
+
+## [0.2.4] - 2026-07-19
+
+### Fixed
+
+- added explicit conflict lifecycle tracking so a historically detected conflict is marked `resolved` when a registered adjudication artefact supersedes a conflicting source;
+- added conflict-detection and conflict-resolution audit events with event, timestamp, artefact, rationale, and state lineage;
+- prevented inconsistent outputs where final `C_t=false` coexisted with a conflict record still labelled `active`;
+- added active and resolved conflict counts to the generated conflict report.
+
+### Added
+
+- a fail-closed invariant requiring final `C_t` to equal the presence of active conflict-history records;
+- regression tests covering detection, resolution, lifecycle chronology, audit preservation, and report consistency;
+- a pilot conflict-lifecycle table for paper-asset accumulation;
+- ADR-005 and BUG-004 documenting the defect, correction, and research impact.
+
+### Preserved
+
+- the intentionally seeded VEX/runtime contradiction at T+10h;
+- the five expected state transitions, final `Report-Ready` recommendation, human `Report` authorization, Schema v0.2, and the locked metric definitions.

@@ -3,6 +3,9 @@ import shutil
 from copy import deepcopy
 from pathlib import Path
 
+import pytest
+
+from sbom_to_audit.ingestion import pipeline as ingestion_pipeline
 from sbom_to_audit.model.evidence_pack import replay_scenario
 from sbom_to_audit.utils.io import read_yaml
 
@@ -42,6 +45,46 @@ def test_full_trajectory_is_derived_from_source_files() -> None:
     assert all(row["deadline_match"] for row in rows)
     assert all(row["authorization_match"] for row in rows)
     assert result["pack"]["source_artifacts"][0]["validation_status"] == "valid"
+
+
+def test_historical_conflict_is_resolved_without_erasing_detection() -> None:
+    result = replay_scenario(_scenario(), repository_root=ROOT)
+
+    assert result["pack"]["orchestration_metrics"]["C_t"] is False
+    assert len(result["conflicts"]) == 1
+
+    conflict = result["conflicts"][0]
+    assert conflict["status"] == "resolved"
+    assert conflict["detected_at_event_id"] == "EVT-GL-010H"
+    assert conflict["resolved_at_event_id"] == "EVT-GL-014H"
+    assert conflict["resolution_artifact_ids"] == ["ART-DEC-RESOLVE-001"]
+    assert conflict["resolution_event_ids"] == ["DEC-GL-CONFLICT-001"]
+    assert [entry["status"] for entry in conflict["lifecycle"]] == ["active", "resolved"]
+
+    actions = [entry["action"] for entry in result["audit_ledger"]]
+    assert "evidence_conflict_detected" in actions
+    assert "evidence_conflict_resolved" in actions
+
+
+def test_final_conflict_flag_matches_active_history_records() -> None:
+    result = replay_scenario(_scenario(), repository_root=ROOT)
+    active = [item for item in result["conflicts"] if item["status"] == "active"]
+    assert result["pack"]["orchestration_metrics"]["C_t"] == bool(active)
+
+
+def test_conflict_cannot_disappear_without_registered_resolution(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        ingestion_pipeline,
+        "_matching_conflict_resolutions",
+        lambda _conflict, _records: [],
+    )
+    with pytest.raises(
+        AssertionError,
+        match="active conflict disappeared without an explicit registered resolution artefact",
+    ):
+        replay_scenario(_scenario(), repository_root=ROOT)
 
 
 def test_removing_execution_release_prevents_seeded_conflict() -> None:

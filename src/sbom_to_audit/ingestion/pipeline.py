@@ -345,6 +345,46 @@ def _apply_conflict_resolutions(
     return updated
 
 
+def _conflict_resolution_records(
+    registry: SourceRegistry,
+    released: set[str],
+) -> list[dict[str, Any]]:
+    """Return normalized, deterministic metadata for released resolution artefacts."""
+
+    records: list[dict[str, Any]] = []
+    for parsed in _sources_of_type(registry, released, "conflict_resolution"):
+        assert isinstance(parsed.data, dict)
+        records.append(
+            {
+                "artifact_id": parsed.source.artifact_id,
+                "event_id": str(parsed.data.get("event_id") or parsed.source.artifact_id),
+                "timestamp": str(parsed.data.get("timestamp") or parsed.source.timestamp),
+                "supersede_source_artifact_ids": sorted(
+                    str(item) for item in (parsed.data.get("supersede_source_artifact_ids") or [])
+                ),
+                "actor_id": str(parsed.data.get("actor_id") or ""),
+                "actor_role": str(parsed.data.get("actor_role") or ""),
+                "rationale": str(parsed.data.get("rationale") or ""),
+            }
+        )
+    return records
+
+
+def _matching_conflict_resolutions(
+    conflict: dict[str, Any],
+    resolution_records: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Return explicit resolution records that supersede a conflict source."""
+
+    conflict_sources = {str(item) for item in conflict.get("sources") or [] if item}
+    matches = [
+        record
+        for record in resolution_records
+        if conflict_sources.intersection(record["supersede_source_artifact_ids"])
+    ]
+    return sorted(matches, key=lambda item: (item["timestamp"], item["artifact_id"]))
+
+
 def _build_snapshot(
     registry: SourceRegistry,
     released: set[str],
@@ -484,7 +524,8 @@ def replay_real_format_scenario(
     previous_deadline: dict[str, str | None] = {item.milestone_id: None for item in milestones}
     state_rows: list[dict[str, Any]] = []
     audit_log: list[dict[str, Any]] = []
-    all_conflicts: dict[str, dict[str, Any]] = {}
+    conflict_history: list[dict[str, Any]] = []
+    active_conflict_indexes: dict[str, int] = {}
     final_claims: list[dict[str, Any]] = []
     final_snapshot: dict[str, Any] | None = None
     final_scores: dict[str, Any] | None = None
@@ -519,7 +560,9 @@ def replay_real_format_scenario(
         claims = _derive_claims(registry, released, target)
         claims = _apply_temporal_supersession(claims)
         claims = _apply_conflict_resolutions(registry, released, claims)
+        resolution_records = _conflict_resolution_records(registry, released)
         conflicts = detect_conflicts(claims)
+        current_conflict_keys: set[str] = set()
         for conflict in conflicts:
             key = sha256_json(
                 {
@@ -528,25 +571,112 @@ def replay_real_format_scenario(
                     "claim_ids": sorted(conflict["claim_ids"]),
                 }
             )
-            if key not in all_conflicts:
-                all_conflicts[key] = deepcopy(conflict)
+            current_conflict_keys.add(key)
+            if key not in active_conflict_indexes:
+                record = deepcopy(conflict)
+                record["conflict_id"] = f"CONFLICT-{len(conflict_history) + 1:03d}"
+                record.update(
+                    {
+                        "status": "active",
+                        "detected_at_event_id": event["event_id"],
+                        "detected_at": event["timestamp"],
+                        "resolved_at_event_id": None,
+                        "resolved_at": None,
+                        "resolution_artifact_ids": [],
+                        "resolution_event_ids": [],
+                        "resolution_rationale": None,
+                        "lifecycle": [
+                            {
+                                "status": "active",
+                                "event_id": event["event_id"],
+                                "timestamp": event["timestamp"],
+                            }
+                        ],
+                    }
+                )
+                conflict_history.append(record)
+                active_conflict_indexes[key] = len(conflict_history) - 1
                 audit_log.append(
                     {
-                        "event_id": f"CONFLICT-{event['event_id']}-{len(all_conflicts):03d}",
+                        "event_id": (
+                            f"CONFLICT-DETECTED-{event['event_id']}-{len(conflict_history):03d}"
+                        ),
                         "timestamp": event["timestamp"],
                         "actor": "sbom_to_audit.conflict_engine",
                         "action": "evidence_conflict_detected",
                         "input_references": conflict["claim_ids"],
                         "output_state": "Escalate",
-                        "conflict_id": conflict["conflict_id"],
+                        "conflict_id": record["conflict_id"],
                     }
                 )
+
+        resolved_this_event: list[dict[str, Any]] = []
+        for key, index in list(active_conflict_indexes.items()):
+            if key in current_conflict_keys:
+                continue
+            record = conflict_history[index]
+            matches = _matching_conflict_resolutions(record, resolution_records)
+            if matches:
+                resolution_artifact_ids = [item["artifact_id"] for item in matches]
+                resolution_event_ids = [item["event_id"] for item in matches]
+                resolution_timestamp = matches[-1]["timestamp"]
+                rationale = (
+                    " | ".join(item["rationale"] for item in matches if item["rationale"])
+                    or "Explicit conflict-resolution artefact superseded a conflicting source."
+                )
+                record.update(
+                    {
+                        "status": "resolved",
+                        "resolved_at_event_id": event["event_id"],
+                        "resolved_at": resolution_timestamp,
+                        "resolution_artifact_ids": resolution_artifact_ids,
+                        "resolution_event_ids": resolution_event_ids,
+                        "resolution_rationale": rationale,
+                    }
+                )
+                record["lifecycle"].append(
+                    {
+                        "status": "resolved",
+                        "event_id": event["event_id"],
+                        "timestamp": resolution_timestamp,
+                        "resolution_artifact_ids": resolution_artifact_ids,
+                    }
+                )
+                resolved_this_event.append(record)
+            else:
+                raise AssertionError(
+                    "active conflict disappeared without an explicit registered "
+                    f"resolution artefact: {record['conflict_id']}"
+                )
+            del active_conflict_indexes[key]
 
         snapshot = _build_snapshot(registry, released, target)
         score_obj = compute_scores(snapshot, conflict=bool(conflicts), claims=active_claims(claims))
         scores = score_obj.to_dict()
         event_delta = delta_hours(t0, event["timestamp"])
         recommended_state, rationale = recommend_state(scores, event_delta, previous_state)
+
+        for resolved_conflict in resolved_this_event:
+            audit_log.append(
+                {
+                    "event_id": (
+                        f"CONFLICT-RESOLVED-{event['event_id']}-{resolved_conflict['conflict_id']}"
+                    ),
+                    "timestamp": resolved_conflict["resolved_at"],
+                    "actor": "sbom_to_audit.conflict_engine",
+                    "action": "evidence_conflict_resolved",
+                    "input_references": sorted(
+                        [
+                            *resolved_conflict["claim_ids"],
+                            *resolved_conflict["resolution_artifact_ids"],
+                        ]
+                    ),
+                    "output_state": recommended_state,
+                    "conflict_id": resolved_conflict["conflict_id"],
+                    "resolution_event_ids": resolved_conflict["resolution_event_ids"],
+                    "rationale": resolved_conflict["resolution_rationale"],
+                }
+            )
 
         for parsed in _sources_of_type(registry, released, "human_authorization"):
             assert isinstance(parsed.data, dict)
@@ -661,6 +791,15 @@ def replay_real_format_scenario(
     if final_snapshot is None or final_scores is None:
         raise ValueError("scenario must contain at least one replay event")
 
+    active_historical_conflicts = [
+        conflict for conflict in conflict_history if conflict["status"] == "active"
+    ]
+    if bool(active_historical_conflicts) != bool(final_scores["C_t"]):
+        raise AssertionError(
+            "conflict lifecycle inconsistency: final C_t must equal the presence "
+            "of active conflict-history records"
+        )
+
     final_delta = delta_hours(t0, final_timestamp)
     pack = {
         "schema_version": "0.2",
@@ -687,7 +826,7 @@ def replay_real_format_scenario(
     return {
         "pack": pack,
         "state_rows": state_rows,
-        "conflicts": list(all_conflicts.values()),
+        "conflicts": conflict_history,
         "source_manifest": registry.manifest(),
         "audit_ledger": audit_log,
     }

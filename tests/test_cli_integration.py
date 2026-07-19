@@ -38,6 +38,14 @@ def test_cli_generates_schema_valid_deterministic_outputs(tmp_path: Path) -> Non
     assert pack["orchestration_metrics"]["C_t"] is False
     assert pack["identity_resolution"]["dependency_depth"] == 2
 
+    conflict_report = json.loads(first["conflict_report"].read_text(encoding="utf-8"))
+    assert conflict_report["C_t"] is False
+    assert conflict_report["active_conflicts"] == 0
+    assert conflict_report["resolved_conflicts"] == 1
+    assert conflict_report["detected_conflicts"] == 1
+    assert conflict_report["conflicts"][0]["status"] == "resolved"
+    assert all(item["status"] != "active" for item in conflict_report["conflicts"])
+
     metrics = json.loads(first["metrics"].read_text(encoding="utf-8"))
     assert metrics["EC"] == 1.0
     assert metrics["TR"] == 1.0

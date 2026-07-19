@@ -2,11 +2,11 @@
 
 **EvidencePack schema baseline:** v0.2  
 **Semantic baseline:** v0.2.1  
-**Implementation baseline:** Stage 2 pilot, package v0.2.3  
+**Implementation baseline:** Stage 2.0.1 corrective pilot, package v0.2.4  
 **Purpose:** Drift control. Every tracked repository artefact is listed below.
 
-**Expected files:** 133  
-**Created files:** 133  
+**Expected files:** 139  
+**Created files:** 139  
 **Missing files:** 0
 
 | Path | Purpose | Status |
@@ -54,6 +54,7 @@
 | `docs/decision_records/ADR-002-semantic-implementation-alignment.md` | Architectural decision record preserving design rationale and consequences. | Preserved |
 | `docs/decision_records/ADR-003-quality-gates-and-clean-checkout-tests.md` | Architectural decision record preserving design rationale and consequences. | Preserved |
 | `docs/decision_records/ADR-004-real-format-ghost-logger-vertical-slice.md` | Architectural decision record preserving design rationale and consequences. | Created v0.2.3 |
+| `docs/decision_records/ADR-005-conflict-lifecycle-consistency.md` | Architectural decision record for active, resolved, and historical conflict semantics. | Created v0.2.4 |
 | `docs/decision_semantics.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
 | `docs/design_freeze_v0.2.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
 | `docs/known_issues.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Amended v0.2.3 |
@@ -65,15 +66,19 @@
 | `docs/scenario_protocol.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Amended v0.2.3 |
 | `docs/schema.md` | Research design, evaluation, quality, reproduction, or governance documentation. | Preserved |
 | `docs/stage2_vertical_slice_report.md` | Pilot implementation, validation, result, and limitation report for Stage 2. | Created v0.2.3 |
+| `docs/stage2_0_1_correction_report.md` | Root-cause, safeguard-gap, correction, and research-impact report for Stage 2.0.1. | Created v0.2.4 |
 | `evaluation/README.md` | Research run or scenario registry and evaluation governance. | Created v0.2.3 |
 | `evaluation/environments/README.md` | Evaluation environment record or environment-record guidance. | Created v0.2.3 |
 | `evaluation/environments/stage2_local_build.json` | Evaluation environment record or environment-record guidance. | Created v0.2.3 |
+| `evaluation/environments/stage2_0_1_local_build.json` | Corrective-pilot local environment record. | Created v0.2.4 |
 | `evaluation/run_registry.csv` | Research run or scenario registry and evaluation governance. | Created v0.2.3 |
 | `evaluation/scenario_registry.csv` | Research run or scenario registry and evaluation governance. | Created v0.2.3 |
 | `evaluation/summaries/README.md` | Derived pilot evaluation summary or summary guidance. | Created v0.2.3 |
 | `evaluation/summaries/ghost_logger_stage2_pilot.json` | Derived pilot evaluation summary or summary guidance. | Created v0.2.3 |
+| `evaluation/summaries/ghost_logger_stage2_0_1_pilot.json` | Derived corrective-pilot evaluation summary with conflict-lifecycle evidence. | Created v0.2.4 |
 | `notebooks/README.md` | Thin Colab notebook rules and Stage 2 checkpoint guidance. | Amended v0.2.3 |
 | `notebooks/stage2_colab_checkpoint.ipynb` | Thin clean-room Stage 2 orchestration notebook; no model logic. | Created v0.2.3 |
+| `notebooks/stage2_0_1_colab_checkpoint.ipynb` | Short isolated Colab checkpoint for the conflict-lifecycle correction. | Created v0.2.4 |
 | `outputs/README.md` | Keeps a generated-output directory present in Git. | Amended v0.2.3 |
 | `outputs/audit_ledgers/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
 | `outputs/conflict_reports/.gitkeep` | Keeps a generated-output directory present in Git. | Preserved |
@@ -91,6 +96,7 @@
 | `paper_assets/scripts/__init__.py` | Data-driven paper-asset generation code. | Created v0.2.3 |
 | `paper_assets/scripts/build_stage2_assets.py` | Data-driven paper-asset generation code. | Created v0.2.3 |
 | `paper_assets/tables/ghost_logger_event_replay.csv` | Pilot tabular paper asset generated from registered outputs. | Created v0.2.3 |
+| `paper_assets/tables/ghost_logger_conflict_lifecycle.csv` | Pilot table preserving conflict detection and resolution lineage. | Created v0.2.4 |
 | `paper_assets/tables/ghost_logger_source_inventory.csv` | Pilot tabular paper asset generated from registered outputs. | Created v0.2.3 |
 | `pyproject.toml` | Package metadata, dependencies, quality tools, coverage, and entry points. | Amended v0.2.3 |
 | `requirements.txt` | Flat runtime dependency list. | Preserved |
@@ -155,3 +161,10 @@
 - Ghost-Logger now derives evidence from committed real-format artefacts.
 - Six deterministic output products are generated.
 - Pilot evaluation and paper assets are explicitly ineligible for final manuscript claims until regenerated from a tagged commit and independently reproduced.
+
+## v0.2.4 Stage 2.0.1 correction register
+
+- The T+10h VEX/runtime contradiction remains an intentional seeded conflict.
+- Historical conflict records now transition from `active` to `resolved` when the registered T+14h adjudication artefact supersedes a conflicting source.
+- Final `C_t` must equal the presence of active conflict-history records.
+- Prior conflict-report output from package v0.2.3 is retained only as defect evidence and is not manuscript-eligible.

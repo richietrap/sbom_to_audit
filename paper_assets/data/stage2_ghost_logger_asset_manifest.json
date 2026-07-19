@@ -1,15 +1,16 @@
 {
   "asset_status": "PILOT",
   "manuscript_eligible": false,
-  "source_run_id": "GL-STAGE2-PILOT-001",
+  "source_run_id": "GL-STAGE2-0-1-PILOT-001",
   "scenario_id": "ghost_logger",
   "source_manifest_hash": "bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc",
   "generation_script": "paper_assets/scripts/build_stage2_assets.py",
-  "generation_script_hash": "cfd96ec654b1837cbdba36f0a15f9e34e930b334989dc68c3a30490baf32b251",
+  "generation_script_hash": "7e3fdd77ad3800d87afa8739537dfc9f47d2a2582445e0064b960171f237dda0",
   "source_data_hashes": {
     "state_logs/ghost_logger.csv": "ace0742c788eeb51bd424e03ba0e5df75eef26c311a23ac5b9cf7c95e9840e44",
-    "metrics/ghost_logger_metrics.json": "2ecb46d6b2a97108db427f6c5c051ad217db0133ebf6f1e9a013e6ebc650cd98",
-    "source_manifests/ghost_logger_sources.json": "622e348e324b6c00ba79b2b04ed5567a022897c54c8ea3be3947c26ea8cce497"
+    "metrics/ghost_logger_metrics.json": "403777aa00e87bd859df568037d0a9fea73628e6d1474095ee3ea6415a588f47",
+    "source_manifests/ghost_logger_sources.json": "622e348e324b6c00ba79b2b04ed5567a022897c54c8ea3be3947c26ea8cce497",
+    "conflict_reports/ghost_logger.json": "c4860a29f7bb0db43b6fafbc9e62350026b1aea69769859f6651ab15b894e2fc"
   },
   "metrics": {
     "scenario_id": "ghost_logger",
@@ -30,7 +31,7 @@
       "source_manifest_hash": "bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc",
       "source_count": 15,
       "claim_count": 18,
-      "audit_event_count": 28
+      "audit_event_count": 29
     },
     "identity_uncertainty_context": {
       "gamma_id": 1.0,
@@ -39,9 +40,10 @@
     "baseline_comparison_status": "pending_matched_baseline_replay"
   },
   "generated_asset_hashes": {
-    "figures/prototype_architecture.svg": "7551b5b4bc6c96251a9cae66a759530e75759290d9ff00f273fd6b7241534bb8",
-    "figures/ghost_logger_trajectory.svg": "111d333aab3fcd9bbdf4a90bd10db94b5cf6adf3aa9e25d8d43beeaf3339ec78",
+    "figures/prototype_architecture.svg": "6c0ff8a65fe790af6d1aa1bc4da1c668c2526e8e93da52be5bf4d167a8ea3269",
+    "figures/ghost_logger_trajectory.svg": "d83d6583e4e76b07c9c3afd16e1233e8ad1bc93ae373fdae64e64217615fb5ed",
     "tables/ghost_logger_source_inventory.csv": "328f27d9cc7780a03500957f3a95259bf38bb85b1693dfac9a31dc432fed717a",
-    "tables/ghost_logger_event_replay.csv": "0c2a466ac0954392cbefc8f3448dd978aeb86330f8ea1123bae84c3a60f520f7"
+    "tables/ghost_logger_event_replay.csv": "0c2a466ac0954392cbefc8f3448dd978aeb86330f8ea1123bae84c3a60f520f7",
+    "tables/ghost_logger_conflict_lifecycle.csv": "b3a6acf44d1b346216ba988d293215043e3398d294f8faefedd1621cd5b82810"
   }
 }

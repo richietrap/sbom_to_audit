@@ -22,8 +22,14 @@ def test_pilot_paper_assets_are_generated_from_outputs(tmp_path: Path) -> None:
     )
     assert metadata["asset_status"] == "PILOT"
     assert metadata["manuscript_eligible"] is False
-    assert metadata["source_run_id"] == "GL-STAGE2-PILOT-001"
-    assert len(metadata["generated_asset_hashes"]) == 4
-    assert len(metadata["source_data_hashes"]) == 3
+    assert metadata["source_run_id"] == "GL-STAGE2-0-1-PILOT-001"
+    assert len(metadata["generated_asset_hashes"]) == 5
+    assert len(metadata["source_data_hashes"]) == 4
     assert len(metadata["generation_script_hash"]) == 64
     assert all(len(value) == 64 for value in metadata["generated_asset_hashes"].values())
+
+    lifecycle = destination / "tables" / "ghost_logger_conflict_lifecycle.csv"
+    text = lifecycle.read_text(encoding="utf-8")
+    assert "resolved" in text
+    assert "EVT-GL-010H" in text
+    assert "EVT-GL-014H" in text

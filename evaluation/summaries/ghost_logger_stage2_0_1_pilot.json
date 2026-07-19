@@ -1,0 +1,50 @@
+{
+  "run_id": "GL-STAGE2-0-1-PILOT-001",
+  "evaluation_status": "PILOT-CORRECTED",
+  "git_commit": "not_recorded_corrective_export_build",
+  "input_manifest_hash": "bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc",
+  "output_manifest_hash": "4830f0c8a7697ca1452b3a5f38c1e8022b4af5769ab292097a8cbc5f4ad2e9e4",
+  "output_hashes": {
+    "outputs/evidence_packs/ghost_logger.json": "37fa5142d03a97adb10254db18f4d6c0ddc50640c0688c54e1fbc436b17b3bd0",
+    "outputs/state_logs/ghost_logger.csv": "ace0742c788eeb51bd424e03ba0e5df75eef26c311a23ac5b9cf7c95e9840e44",
+    "outputs/conflict_reports/ghost_logger.json": "c4860a29f7bb0db43b6fafbc9e62350026b1aea69769859f6651ab15b894e2fc",
+    "outputs/metrics/ghost_logger_metrics.json": "403777aa00e87bd859df568037d0a9fea73628e6d1474095ee3ea6415a588f47",
+    "outputs/source_manifests/ghost_logger_sources.json": "622e348e324b6c00ba79b2b04ed5567a022897c54c8ea3be3947c26ea8cce497",
+    "outputs/audit_ledgers/ghost_logger.jsonl": "ac31574b0a4572e83b072eb21841092711be683db44784e450d29b5d15a88aaf"
+  },
+  "metrics": {
+    "scenario_id": "ghost_logger",
+    "schema_version": "0.2",
+    "evaluation_status": "pilot",
+    "EC": 1.0,
+    "TR": 1.0,
+    "CD": 1.0,
+    "CA": null,
+    "CA_status": "not_applicable",
+    "AR": 1.0,
+    "SC": 1.0,
+    "EPG": 1,
+    "supplemental": {
+      "authorization_correctness": 1.0,
+      "deadline_posture_correctness": 1.0,
+      "source_integrity_ratio": 1.0,
+      "source_manifest_hash": "bef55830bb759fb87c47556fdd9f891db981d37ac7e40d975d5e33a780d0b6dc",
+      "source_count": 15,
+      "claim_count": 18,
+      "audit_event_count": 29
+    },
+    "identity_uncertainty_context": {
+      "gamma_id": 1.0,
+      "U_t": 0.0
+    },
+    "baseline_comparison_status": "pending_matched_baseline_replay"
+  },
+  "conflict_lifecycle": {
+    "detected_conflicts": 1,
+    "active_conflicts": 0,
+    "resolved_conflicts": 1,
+    "detected_at_event_id": "EVT-GL-010H",
+    "resolved_at_event_id": "EVT-GL-014H"
+  },
+  "notes": "Corrective export build; rerun from a GitHub commit and isolated Colab before manuscript use."
+}

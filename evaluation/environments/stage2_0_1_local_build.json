@@ -1,0 +1,9 @@
+{
+  "environment_id": "stage2-0-1-local-build",
+  "status": "PILOT-CORRECTED",
+  "python": "3.13.5 (main, Jun 25 2025, 18:55:22) [GCC 14.2.0]",
+  "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+  "processor": "not reported",
+  "git_commit": "not_recorded_corrective_export_build",
+  "notes": "Local corrective export; not eligible for final paper latency or effectiveness claims."
+}
