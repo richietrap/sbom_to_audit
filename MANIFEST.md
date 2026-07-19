@@ -4,8 +4,8 @@
 **Semantic baseline:** v0.2.1, approved 2026-07-13  
 **Purpose:** Drift control. This file lists every expected scaffold file, its role, creation status, and approved semantic amendments.
 
-**Expected files:** 66  
-**Created files:** 66  
+**Expected files:** 67  
+**Created files:** 67  
 **Missing files:** 0
 
 | Path | Purpose | Status |
@@ -62,6 +62,7 @@
 | `tests/test_authorization.py` | Human authorization and submission-separation tests. | Created v0.2.1 |
 | `tests/test_schema.py` | EvidencePack v0.2 and deadline-event schema-regression tests. | Created v0.2.1 |
 | `tests/test_manifest.py` | Manifest completeness and count-regression test. | Created v0.2.1 |
+| `tests/test_workflow.py` | Prevents unsupported GitHub Actions major-tag drift. | Created v0.2.1 |
 | `data/sbom/.gitkeep` | Keeps the required empty directory in Git. | Created |
 | `data/csaf/.gitkeep` | Keeps the required empty directory in Git. | Created |
 | `data/osv_snapshots/.gitkeep` | Keeps the required empty directory in Git. | Created |

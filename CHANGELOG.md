@@ -4,6 +4,12 @@ All notable repository design and implementation changes are recorded here.
 
 ## [0.2.1] - 2026-07-17
 
+### Fixed on 2026-07-19
+
+- corrected the GitHub Actions references from nonexistent `actions/checkout@v7` and `actions/setup-python@v7` tags to supported `actions/checkout@v6` and `actions/setup-python@v6`;
+- added `tests/test_workflow.py` to prevent unsupported action-major drift from recurring.
+
+
 ### Added
 
 - `docs/decision_semantics.md`, freezing the tri-part model for evidential recommendation, configured deadline posture, and EvidencePack construction.
