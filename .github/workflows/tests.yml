@@ -38,14 +38,17 @@ jobs:
       - name: Run regression suite
         run: python -m pytest
 
-      - name: Run deterministic CLI smoke test
+      - name: Run deterministic CLI smoke tests
         run: |
-          first="${RUNNER_TEMP}/sbom-to-audit-first"
-          second="${RUNNER_TEMP}/sbom-to-audit-second"
-          python -m sbom_to_audit.cli \
-            --scenario data/scenarios/ghost_logger.yaml \
-            --output-root "$first"
-          python -m sbom_to_audit.cli \
-            --scenario data/scenarios/ghost_logger.yaml \
-            --output-root "$second"
-          diff -ru "$first" "$second"
+          for scenario in data/scenarios/*.yaml; do
+            name="$(basename "$scenario" .yaml)"
+            first="${RUNNER_TEMP}/${name}-first"
+            second="${RUNNER_TEMP}/${name}-second"
+            python -m sbom_to_audit.cli \
+              --scenario "$scenario" \
+              --output-root "$first"
+            python -m sbom_to_audit.cli \
+              --scenario "$scenario" \
+              --output-root "$second"
+            diff -ru "$first" "$second"
+          done

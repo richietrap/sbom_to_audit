@@ -1,0 +1,154 @@
+schema_version: "0.2"
+scenario:
+  scenario_id: false_comfort
+  title: "False Comfort"
+  classification: controlled_fictional_scenario_real_format
+  evaluation_status: pilot
+  purpose: >-
+    Test whether a valid supplier known_not_affected assertion is prevented from
+    suppressing deployment-specific evidence when its declared product variant
+    does not cover the active deployment.
+  seeded_conflicts: 0
+  expected_final_state: Report-Ready
+  expected_final_authorized_state: Report
+
+case_metadata:
+  case_id: CASE-FALSE-COMFORT-001
+  clock_start_time: "2026-10-01T08:00:00Z"
+  clock_basis: internal_awareness_proxy
+
+target:
+  product_purl: "pkg:generic/claims-hub@3.8.0"
+  component_purl: "pkg:npm/formula-renderer@5.1.0"
+  cve_id: CVE-2026-42002
+  csaf_product_id: CSAFPID-CH-380-STANDARD
+
+deadline_profile:
+  milestones:
+    - milestone_id: early_warning
+      deadline_hours: 24
+      due_soon_lead_hours: 6
+      breach_imminent_lead_hours: 2
+      applicable: true
+    - milestone_id: full_notification
+      deadline_hours: 72
+      due_soon_lead_hours: 12
+      breach_imminent_lead_hours: 2
+      applicable: true
+
+source_catalog:
+  - artifact_id: ART-FC-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/sbom/false_comfort.cdx.json
+    timestamp: "2026-10-01T08:05:00Z"
+  - artifact_id: ART-FC-OSV-001
+    artifact_type: osv_snapshot
+    path: data/osv_snapshots/false_comfort_osv.json
+    timestamp: "2026-10-01T08:10:00Z"
+  - artifact_id: ART-FC-KEV-001
+    artifact_type: kev_snapshot
+    path: data/kev_snapshots/false_comfort_kev.json
+    timestamp: "2026-10-01T08:12:00Z"
+  - artifact_id: ART-FC-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/epss_snapshots/false_comfort_epss.json
+    timestamp: "2026-10-01T08:14:00Z"
+  - artifact_id: ART-FC-VEX-001
+    artifact_type: csaf_vex
+    path: data/csaf/false_comfort_vex.json
+    timestamp: "2026-10-01T09:00:00Z"
+  - artifact_id: ART-FC-ASSET-001
+    artifact_type: asset_context
+    path: data/asset_context/false_comfort_asset.yaml
+    timestamp: "2026-10-01T08:40:00Z"
+  - artifact_id: ART-FC-MIT-INITIAL-001
+    artifact_type: mitigation_context
+    path: data/mitigation/false_comfort_initial.yaml
+    timestamp: "2026-10-01T08:45:00Z"
+  - artifact_id: ART-FC-TELEM-INITIAL-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/false_comfort_initial.jsonl
+    timestamp: "2026-10-01T08:30:00Z"
+  - artifact_id: ART-FC-TELEM-REACH-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/false_comfort_reachability.jsonl
+    timestamp: "2026-10-01T16:00:00Z"
+  - artifact_id: ART-FC-AUTH-001
+    artifact_type: human_authorization
+    path: data/decision_records/false_comfort_authorization.yaml
+    timestamp: "2026-10-01T20:00:00Z"
+  - artifact_id: ART-FC-SUB-EARLY-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/false_comfort_early_warning_submission.yaml
+    timestamp: "2026-10-01T20:00:00Z"
+  - artifact_id: ART-FC-MIT-VERIFIED-001
+    artifact_type: mitigation_context
+    path: data/mitigation/false_comfort_verified.yaml
+    timestamp: "2026-10-04T08:00:00Z"
+  - artifact_id: ART-FC-SUB-FULL-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/false_comfort_full_notification_submission.yaml
+    timestamp: "2026-10-04T08:00:00Z"
+
+replay_events:
+  - event_id: EVT-FC-002H
+    timestamp: "2026-10-01T10:00:00Z"
+    description: >-
+      The supplier assurance is valid for the standard profile, but the active
+      asset is the legacy-plugin profile. The assertion is retained but is not
+      applied to the deployed scope.
+    release_artifact_ids:
+      - ART-FC-SBOM-001
+      - ART-FC-OSV-001
+      - ART-FC-KEV-001
+      - ART-FC-EPSS-001
+      - ART-FC-VEX-001
+      - ART-FC-ASSET-001
+      - ART-FC-MIT-INITIAL-001
+      - ART-FC-TELEM-INITIAL-001
+    expected_state: Monitor
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+
+  - event_id: EVT-FC-008H
+    timestamp: "2026-10-01T16:00:00Z"
+    description: >-
+      Deployment-specific telemetry confirms that the vulnerable path is
+      reachable in the legacy-plugin profile.
+    release_artifact_ids:
+      - ART-FC-TELEM-REACH-001
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+
+  - event_id: EVT-FC-012H
+    timestamp: "2026-10-01T20:00:00Z"
+    description: >-
+      A human reviewer authorizes reporting and separate evidence satisfies the
+      configured early-warning milestone.
+    release_artifact_ids:
+      - ART-FC-AUTH-001
+      - ART-FC-SUB-EARLY-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: On Track
+
+  - event_id: EVT-FC-072H
+    timestamp: "2026-10-04T08:00:00Z"
+    description: >-
+      Verified mitigation and full-notification evidence complete the controlled
+      replay without changing the historical authorization.
+    release_artifact_ids:
+      - ART-FC-MIT-VERIFIED-001
+      - ART-FC-SUB-FULL-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: Satisfied

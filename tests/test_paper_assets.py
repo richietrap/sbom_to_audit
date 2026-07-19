@@ -33,3 +33,27 @@ def test_pilot_paper_assets_are_generated_from_outputs(tmp_path: Path) -> None:
     assert "resolved" in text
     assert "EVT-GL-010H" in text
     assert "EVT-GL-014H" in text
+
+
+def test_stage3_assets_compare_scope_mismatch_and_negative_control(tmp_path: Path) -> None:
+    from paper_assets.scripts.build_stage3_assets import build as build_stage3
+
+    output_root = tmp_path / "outputs"
+    for scenario_name in ("ghost_logger", "false_comfort", "false_comfort_control"):
+        run(ROOT / "data" / "scenarios" / f"{scenario_name}.yaml", output_root)
+    destination = tmp_path / "stage3_assets"
+    generated = build_stage3(output_root, destination)
+    assert all(Path(path).is_file() for path in generated.values())
+    metadata = json.loads(
+        (destination / "data" / "stage3_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT"
+    assert metadata["manuscript_eligible"] is False
+    assert len(metadata["generated_asset_hashes"]) == 4
+    scope_table = (destination / "tables" / "false_comfort_scope_applicability.csv").read_text(
+        encoding="utf-8"
+    )
+    assert "scope_mismatch" in scope_table
+    assert "applicable" in scope_table
+    assert "legacy-plugin-profile" in scope_table
+    assert "standard-profile" in scope_table

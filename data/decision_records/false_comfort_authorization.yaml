@@ -1,0 +1,8 @@
+event_type: human_authorization
+event_id: DEC-FC-AUTH-001
+timestamp: "2026-10-01T20:00:00Z"
+actor_id: psirt-legal-reviewer-02
+actor_role: psirt_legal_reviewer
+actor_type: human
+authorized_state: Report
+rationale: Deployment-specific applicability evidence reviewed and reporting authorized.

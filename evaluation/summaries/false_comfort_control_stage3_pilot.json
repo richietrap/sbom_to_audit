@@ -1,0 +1,36 @@
+{
+  "run_id": "FCC-STAGE3-PILOT-001",
+  "scenario_id": "false_comfort_control",
+  "evaluation_status": "pilot_negative_control",
+  "repository_version": "0.3.0",
+  "source_manifest_hash": "496e4a4cc0eb05ab981e62e1ff2169050661fa7304ff5fa243eeb65d6258408c",
+  "output_manifest_hash": "d92fc6402548bd5a6d5c9866d818bf146595c5a78583d69be613ea959d830893",
+  "event_count": 1,
+  "final_recommended_state": "Document No-Report",
+  "final_authorized_state": null,
+  "orchestration_metrics": {
+    "E_t": 0.85,
+    "A_t": 0.1,
+    "I_t": 0.75,
+    "M_t": 0.0,
+    "U_t": 0.0,
+    "C_t": false
+  },
+  "effectiveness_metrics": {
+    "EC": 1.0,
+    "TR": 1.0,
+    "CD": null,
+    "CA": null,
+    "AR": 1.0,
+    "SC": 1.0,
+    "EPG": 1
+  },
+  "detected_conflicts": 0,
+  "supplier_scope_applicability": "applicable",
+  "manuscript_eligible": false,
+  "limitations": [
+    "Controlled fictional replay",
+    "No industrial validation",
+    "No legal reportability determination"
+  ]
+}

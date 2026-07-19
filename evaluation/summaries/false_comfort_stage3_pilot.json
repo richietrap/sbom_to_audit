@@ -1,0 +1,36 @@
+{
+  "run_id": "FC-STAGE3-PILOT-001",
+  "scenario_id": "false_comfort",
+  "evaluation_status": "pilot",
+  "repository_version": "0.3.0",
+  "source_manifest_hash": "7d5afe1b3852c69d25791dfe0a8182805f80658d808453cced970d6517492236",
+  "output_manifest_hash": "f4f5d08ba88f149d1296c20144494884f2379a9b4f11c9f9d4c4102e96218283",
+  "event_count": 4,
+  "final_recommended_state": "Report-Ready",
+  "final_authorized_state": "Report",
+  "orchestration_metrics": {
+    "E_t": 0.85,
+    "A_t": 1.0,
+    "I_t": 0.75,
+    "M_t": 1.0,
+    "U_t": 0.0,
+    "C_t": false
+  },
+  "effectiveness_metrics": {
+    "EC": 1.0,
+    "TR": 1.0,
+    "CD": null,
+    "CA": null,
+    "AR": 1.0,
+    "SC": 1.0,
+    "EPG": 1
+  },
+  "detected_conflicts": 0,
+  "supplier_scope_applicability": "scope_mismatch",
+  "manuscript_eligible": false,
+  "limitations": [
+    "Controlled fictional replay",
+    "No industrial validation",
+    "No legal reportability determination"
+  ]
+}

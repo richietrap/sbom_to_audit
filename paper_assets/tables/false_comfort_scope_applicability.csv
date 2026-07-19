@@ -1,0 +1,3 @@
+scenario_id,asserted_status,effective_status,assertion_variant,target_variant,scope_applicability,initial_A_t,initial_state,final_state
+false_comfort,known_not_affected,not_applicable_scope_mismatch,standard-profile,legacy-plugin-profile,scope_mismatch,0.6,Monitor,Report-Ready
+false_comfort_control,known_not_affected,known_not_affected,standard-profile,standard-profile,applicable,0.1,Document No-Report,Document No-Report

@@ -83,3 +83,24 @@ def product_status_for(
             if product_id in (statuses.get(status) or []):
                 return status
     return None
+
+
+def product_scope_for(document: dict[str, Any], product_id: str) -> dict[str, str]:
+    """Extract normalized product-scope dimensions from a CSAF product helper.
+
+    CSAF model numbers are treated as product-variant identifiers. This preserves
+    the supplier's declared product scope without embedding scenario conclusions.
+    """
+
+    product = (document.get("products") or {}).get(product_id) or {}
+    helper = product.get("product_identification_helper") or {}
+    scope: dict[str, str] = {}
+    purl = str(helper.get("purl") or "").strip()
+    if purl:
+        scope["product_purl"] = purl
+    model_numbers = [
+        str(item).strip() for item in (helper.get("model_numbers") or []) if str(item).strip()
+    ]
+    if len(model_numbers) == 1:
+        scope["product_variant"] = model_numbers[0]
+    return scope

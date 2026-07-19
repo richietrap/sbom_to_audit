@@ -17,3 +17,7 @@ This directory contains committed controlled inputs and frozen public-feed-shape
 Ghost-Logger files are fictional but use representative machine-readable structures. They must not be described as public intelligence, industrial incident data, or an official vendor advisory. Public historical replay data will be stored separately and labelled by provenance and redistribution status.
 
 The scenario YAML must not contain source hashes or normalized results. Hashes are computed by the source registry at runtime.
+
+## False Comfort source family
+
+The False Comfort files are controlled fictional artefacts. The CSAF product helper declares `standard-profile` through a model number; the primary asset and telemetry declare `legacy-plugin-profile`, while the negative-control asset declares `standard-profile`. These values are source data, not precomputed orchestration conclusions.

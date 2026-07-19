@@ -1,0 +1,25 @@
+{
+  "query": {
+    "package": {
+      "purl": "pkg:npm/formula-renderer@5.1.0"
+    }
+  },
+  "vulns": [
+    {
+      "id": "OSV-2026-FC42002",
+      "aliases": ["CVE-2026-42002"],
+      "published": "2026-10-01T07:20:00Z",
+      "modified": "2026-10-01T07:20:00Z",
+      "affected": [
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "formula-renderer",
+            "purl": "pkg:npm/formula-renderer"
+          },
+          "versions": ["5.1.0"]
+        }
+      ]
+    }
+  ]
+}

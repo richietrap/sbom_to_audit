@@ -1,0 +1,1 @@
+{"event_id":"TEL-FC-CONTROL-001","timestamp":"2026-10-01T08:30:00Z","deployment_id":"claims-standard-01","product_variant":"standard-profile","environment":"production","component_purl":"pkg:npm/formula-renderer@5.1.0","execution_observed":false,"reachability_confirmed":false,"malicious_exploitation_observed":false,"observation_type":"negative_control_baseline"}

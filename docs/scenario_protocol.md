@@ -67,3 +67,14 @@ Ghost-Logger remains fictional. Its Stage 2 value is technical verification: the
 - **Rapid Pivot:** unresolved uncertainty and the 18-hour internal safeguard.
 
 Each later scenario must use the same ingestion engine and include at least one negative control.
+
+## Stage 3 scope-aware replay requirements
+
+A supplier assurance may be applied only when its declared scope contains the active target scope. The current canonical dimensions are product PURL, component PURL, CVE, product variant, deployment ID, and environment. Disjoint scopes do not create conflicts.
+
+False Comfort is paired with a negative control:
+
+- the primary replay uses a supplier `known_not_affected` assertion scoped to `standard-profile` and an active `legacy-plugin-profile` deployment;
+- the control uses a matching `standard-profile` deployment and no positive local applicability evidence.
+
+Both replays must use the same ingestion, scope, scoring, state, authorization, deadline, and output code. Scenario-specific identifiers are prohibited in application source.

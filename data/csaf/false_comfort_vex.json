@@ -1,0 +1,60 @@
+{
+  "document": {
+    "category": "csaf_vex",
+    "csaf_version": "2.0",
+    "publisher": {
+      "category": "vendor",
+      "name": "Example Services PSIRT",
+      "namespace": "https://example.invalid/psirt"
+    },
+    "title": "Claims Hub scoped VEX statement",
+    "tracking": {
+      "current_release_date": "2026-10-01T09:00:00Z",
+      "id": "EXAMPLE-2026-FALSE-COMFORT",
+      "initial_release_date": "2026-10-01T09:00:00Z",
+      "revision_history": [
+        {
+          "date": "2026-10-01T09:00:00Z",
+          "number": "1",
+          "summary": "Initial assessment for the standard deployment profile"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "full_product_names": [
+      {
+        "name": "Claims Hub 3.8.0 standard profile",
+        "product_id": "CSAFPID-CH-380-STANDARD",
+        "product_identification_helper": {
+          "purl": "pkg:generic/claims-hub@3.8.0",
+          "model_numbers": ["standard-profile"]
+        }
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2026-42002",
+      "title": "Expression injection in formula-renderer",
+      "product_status": {
+        "known_not_affected": ["CSAFPID-CH-380-STANDARD"]
+      },
+      "flags": [
+        {
+          "label": "vulnerable_code_not_in_execute_path",
+          "product_ids": ["CSAFPID-CH-380-STANDARD"]
+        }
+      ],
+      "notes": [
+        {
+          "category": "description",
+          "title": "Scoped assurance",
+          "text": "The assessment applies to the standard profile, where the legacy plugin execution path is disabled."
+        }
+      ]
+    }
+  ]
+}

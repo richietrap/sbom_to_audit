@@ -1,6 +1,6 @@
 scenario_id,title,classification,primary_mechanism,status,negative_control_status
-ghost_logger,Silent Transitive / Ghost-Logger,controlled_fictional_scenario_real_format,"transitive dependency; VEX/runtime conflict; authorization",PILOT,PLANNED
-false_comfort,False Comfort,controlled_scenario_real_format,"valid but stale or wrongly scoped supplier assertion",PLANNED,PLANNED
-operational_outlier,Operational Outlier,controlled_scenario_real_format,"critical deployment context and impact",PLANNED,PLANNED
-rapid_pivot,Rapid Pivot,controlled_scenario_real_format,"uncertainty and clock-aware escalation",PLANNED,PLANNED
-cve_2024_3400,Operation MidnightEclipse,public_historical_replay,"public evidence chronology and transferability",CANDIDATE,NOT_APPLICABLE
+ghost_logger,Silent Transitive / Ghost-Logger,controlled_fictional_scenario_real_format,transitive dependency; VEX/runtime conflict; authorization,PILOT,PLANNED
+false_comfort,False Comfort,controlled_scenario_real_format,valid but stale or wrongly scoped supplier assertion,PILOT,PILOT
+operational_outlier,Operational Outlier,controlled_scenario_real_format,critical deployment context and impact,PLANNED,PLANNED
+rapid_pivot,Rapid Pivot,controlled_scenario_real_format,uncertainty and clock-aware escalation,PLANNED,PLANNED
+cve_2024_3400,Operation MidnightEclipse,public_historical_replay,public evidence chronology and transferability,CANDIDATE,NOT_APPLICABLE

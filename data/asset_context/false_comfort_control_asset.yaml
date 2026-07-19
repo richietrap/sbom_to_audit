@@ -1,0 +1,8 @@
+asset_id: claims-hub-standard-control
+asset_criticality: high
+deployment_scope: broad
+product_variant: standard-profile
+environment: production
+internet_exposed: true
+affected_deployment_count: 0
+context_timestamp: "2026-10-01T08:40:00Z"

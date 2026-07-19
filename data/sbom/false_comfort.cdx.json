@@ -1,0 +1,47 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:3f22c4b2-4733-4ae8-8f56-8e815912c302",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-01T08:05:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "product:claims-hub:3.8.0",
+      "group": "example-services",
+      "name": "claims-hub",
+      "version": "3.8.0",
+      "purl": "pkg:generic/claims-hub@3.8.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/report-template-engine@9.2.0",
+      "name": "report-template-engine",
+      "version": "9.2.0",
+      "purl": "pkg:npm/report-template-engine@9.2.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/formula-renderer@5.1.0",
+      "name": "formula-renderer",
+      "version": "5.1.0",
+      "purl": "pkg:npm/formula-renderer@5.1.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "product:claims-hub:3.8.0",
+      "dependsOn": ["pkg:npm/report-template-engine@9.2.0"]
+    },
+    {
+      "ref": "pkg:npm/report-template-engine@9.2.0",
+      "dependsOn": ["pkg:npm/formula-renderer@5.1.0"]
+    },
+    {
+      "ref": "pkg:npm/formula-renderer@5.1.0",
+      "dependsOn": []
+    }
+  ]
+}

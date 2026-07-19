@@ -1,0 +1,1 @@
+{"event_id":"TEL-FC-INITIAL-001","timestamp":"2026-10-01T08:30:00Z","deployment_id":"claims-east-01","product_variant":"legacy-plugin-profile","environment":"production","component_purl":"pkg:npm/formula-renderer@5.1.0","execution_observed":false,"reachability_confirmed":false,"malicious_exploitation_observed":false,"observation_type":"baseline_runtime_observation"}

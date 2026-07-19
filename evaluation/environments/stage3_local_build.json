@@ -1,0 +1,9 @@
+{
+  "environment_id": "stage3-local-build",
+  "evaluation_status": "PILOT",
+  "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]",
+  "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+  "repository_version": "0.3.0",
+  "generated_at": "2026-07-19T18:00:00Z",
+  "notes": "Local development/export environment. GitHub and Colab checkpoints required before manuscript eligibility."
+}

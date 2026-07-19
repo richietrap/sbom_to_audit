@@ -16,3 +16,7 @@ Google Colab is the intended clean-room runtime. Notebooks remain thin orchestra
 8. creates a downloadable checkpoint evidence bundle.
 
 Before a run is treated as manuscript-eligible, set `REF` to an immutable Git tag, preserve the generated bundle, and record its hash in the evaluation registry.
+
+## Stage 3 checkpoint
+
+`stage3_colab_checkpoint.ipynb` clones a clean GitHub reference, installs the project in an isolated environment, runs the complete multi-scenario release gate, checks Ghost-Logger conflict preservation, verifies False Comfort scope mismatch and its scope-matched negative control, regenerates Stage 3 pilot assets, and emits a hashed evidence bundle.

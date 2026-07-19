@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.2.4 implements the Stage 2 **real-format Ghost-Logger pilot vertical slice**. It ingests committed CycloneDX, CSAF/VEX, OSV-shaped, KEV-shaped, EPSS-shaped, telemetry, asset, mitigation, adjudication, authorization, and milestone-evidence files. The case remains controlled and fictional and must not be described as an industrial case study.
+Version 0.3.0 implements Stage 3 scope-aware evidence orchestration. It preserves the corrected Ghost-Logger vertical slice and adds False Comfort plus a scope-matched negative control. Supplier assurances are retained but only applied when their declared product-variant scope covers the active deployment. All cases remain controlled and fictional and must not be described as industrial case studies.
 
 ## Research questions
 
@@ -27,8 +27,13 @@ python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
 python -m pip install -e ".[dev]"
 python scripts/validate_repository.py --strict-sources
-python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
+for scenario in data/scenarios/*.yaml; do
+  python -m sbom_to_audit.cli --scenario "$scenario"
+done
 python paper_assets/scripts/build_stage2_assets.py \
+  --output-root outputs \
+  --destination paper_assets
+python paper_assets/scripts/build_stage3_assets.py \
   --output-root outputs \
   --destination paper_assets
 python -m pytest
@@ -59,6 +64,14 @@ T+72h  Report-Ready + completed milestone evidence
 ```
 
 The distinction between `Report-Ready` and human-authorized `Report` is intentional. The T+10h affectedness conflict is retained as historical evidence and explicitly marked `resolved` at T+14h.
+
+## Stage 3 scope-aware scenarios
+
+- **Ghost-Logger:** overlapping supplier and local affectedness claims produce an intentional conflict, escalation, and explicit resolution lifecycle.
+- **False Comfort:** a `known_not_affected` supplier assertion is valid for `standard-profile` but does not apply to the active `legacy-plugin-profile`; later deployment-specific reachability produces `Report-Ready`.
+- **False Comfort negative control:** the same assertion applies to a matching `standard-profile` deployment and produces `Document No-Report` when no local reachability or execution is observed.
+
+Scope reasoning is generic application logic. No scenario identifier or product name is embedded in `src/`.
 
 ## Research-evidence accumulation
 

@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -62,41 +64,65 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _scenario_specs() -> list[tuple[Path, str]]:
+    specs: list[tuple[Path, str]] = []
+    for path in sorted((ROOT / "data" / "scenarios").glob("*.yaml")):
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise ValueError(f"scenario must contain an object: {path}")
+        scenario = payload.get("scenario") or {}
+        scenario_id = str(scenario.get("scenario_id") or "").strip()
+        if not scenario_id:
+            raise ValueError(f"scenario_id is missing: {path}")
+        specs.append((path, scenario_id))
+    return specs
+
+
 def _deterministic_replay(report: ReleaseReport) -> None:
-    expected = (
-        "evidence_packs/ghost_logger.json",
-        "state_logs/ghost_logger.csv",
-        "conflict_reports/ghost_logger.json",
-        "metrics/ghost_logger_metrics.json",
-        "source_manifests/ghost_logger_sources.json",
-        "audit_ledgers/ghost_logger.jsonl",
+    output_templates = (
+        "evidence_packs/{scenario_id}.json",
+        "state_logs/{scenario_id}.csv",
+        "conflict_reports/{scenario_id}.json",
+        "metrics/{scenario_id}_metrics.json",
+        "source_manifests/{scenario_id}_sources.json",
+        "audit_ledgers/{scenario_id}.jsonl",
     )
     with tempfile.TemporaryDirectory(prefix="sbom-audit-release-") as temp:
         base = Path(temp)
-        first = base / "first"
-        second = base / "second"
-        command_base = [
-            sys.executable,
-            "-m",
-            "sbom_to_audit.cli",
-            "--scenario",
-            "data/scenarios/ghost_logger.yaml",
-        ]
-        _run(report, "deterministic replay A", command_base + ["--output-root", str(first)])
-        _run(report, "deterministic replay B", command_base + ["--output-root", str(second)])
-        if report.status == "FAIL":
-            return
-        for relative in expected:
-            left = first / relative
-            right = second / relative
-            if not left.is_file() or not right.is_file():
-                report.fail(f"deterministic replay output missing: {relative}")
-                continue
-            left_hash = _sha256(left)
-            right_hash = _sha256(right)
-            if left_hash != right_hash:
-                report.fail(f"non-deterministic output: {relative}")
-            report.deterministic_hashes[relative] = left_hash
+        for scenario_path, scenario_id in _scenario_specs():
+            first = base / scenario_id / "first"
+            second = base / scenario_id / "second"
+            command_base = [
+                sys.executable,
+                "-m",
+                "sbom_to_audit.cli",
+                "--scenario",
+                str(scenario_path.relative_to(ROOT)),
+            ]
+            _run(
+                report,
+                f"{scenario_id} deterministic replay A",
+                command_base + ["--output-root", str(first)],
+            )
+            _run(
+                report,
+                f"{scenario_id} deterministic replay B",
+                command_base + ["--output-root", str(second)],
+            )
+            if report.status == "FAIL":
+                return
+            for template in output_templates:
+                relative = template.format(scenario_id=scenario_id)
+                left = first / relative
+                right = second / relative
+                if not left.is_file() or not right.is_file():
+                    report.fail(f"deterministic replay output missing: {relative}")
+                    continue
+                left_hash = _sha256(left)
+                right_hash = _sha256(right)
+                if left_hash != right_hash:
+                    report.fail(f"non-deterministic output: {relative}")
+                report.deterministic_hashes[f"{scenario_id}/{relative}"] = left_hash
 
 
 def run_release_check() -> ReleaseReport:

@@ -33,3 +33,11 @@ EL is defined but not emitted by the CLI. Functional development can proceed, bu
 ### KI-008 — Pilot paper assets are not final results
 
 The Stage 2 figures and tables are generated from a local export build whose Git commit is not recorded. They must be regenerated from a tagged GitHub commit and independently reproduced in Colab before manuscript use.
+
+## Stage 3 scope-model limitations
+
+- The scope vocabulary is intentionally limited to product PURL, component PURL, CVE, product variant, deployment ID, and environment.
+- A single CSAF model number is treated as a product-variant identifier; multi-valued model-number sets are retained in the source artefact but are not yet expanded into interval/set reasoning.
+- Temporal staleness and expiry of otherwise applicable supplier assertions are not implemented in Stage 3.
+- Geographic scope, serial-number ranges, CPE version intervals, and ontology-based equivalence remain deferred.
+- Under the frozen v0.2 uncertainty equation, an explicit `not_applicable_scope_mismatch` VEX status is populated rather than missing, so the mismatch does not itself increase `U_t`; applicability falls back to identity-supported evidence instead. Any future uncertainty penalty for scope mismatch requires an explicit semantic decision rather than a silent scoring change.

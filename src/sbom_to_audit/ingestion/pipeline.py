@@ -21,9 +21,10 @@ from sbom_to_audit.model.deadline_engine import (
     evaluate_deadline_profile,
 )
 from sbom_to_audit.model.identity import identity_confidence
+from sbom_to_audit.model.scope import assertion_applies, canonicalize_scope, validate_scope
 from sbom_to_audit.model.scoring import compute_scores
 from sbom_to_audit.model.state_machine import recommend_state
-from sbom_to_audit.parsers.csaf_parser import product_status_for
+from sbom_to_audit.parsers.csaf_parser import product_scope_for, product_status_for
 from sbom_to_audit.parsers.cyclonedx_parser import component_by_purl, dependency_path
 from sbom_to_audit.parsers.epss_client import extract_percentile
 from sbom_to_audit.parsers.kev_client import kev_entry
@@ -53,7 +54,7 @@ def _claim(
         "claim_id": f"CLAIM-{source.artifact_id}-{suffix}",
         "proposition": proposition,
         "value": value,
-        "scope": deepcopy(scope),
+        "scope": validate_scope(scope),
         "source_artifact_id": source.artifact_id,
         "source_uri": source.source_uri,
         "source_hash": source.source_hash,
@@ -84,15 +85,25 @@ def _latest_source(registry: SourceRegistry, released: set[str], artifact_type: 
     return items[-1]
 
 
-def _scope(target: dict[str, Any], *, deployment_id: str | None = None) -> dict[str, Any]:
-    result = {
+def _scope(
+    target: dict[str, Any],
+    *,
+    dimensions: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    result: dict[str, Any] = {
         "product_purl": target["product_purl"],
         "component_purl": target["component_purl"],
         "cve_id": target["cve_id"],
     }
-    if deployment_id:
-        result["deployment_id"] = deployment_id
-    return result
+    for key in ("product_variant", "deployment_id", "environment"):
+        value = (dimensions or {}).get(key)
+        if value is not None and str(value).strip():
+            result[key] = str(value).strip()
+    return canonicalize_scope(result)
+
+
+def _target_scope(target: dict[str, Any], asset_context: dict[str, Any]) -> dict[str, Any]:
+    return _scope(target, dimensions=asset_context)
 
 
 def _derive_claims(
@@ -102,6 +113,10 @@ def _derive_claims(
 ) -> list[dict[str, Any]]:
     claims: list[dict[str, Any]] = []
     general_scope = _scope(target)
+    asset_items = _sources_of_type(registry, released, "asset_context")
+    asset_context = asset_items[-1].data if asset_items else {}
+    assert isinstance(asset_context, dict)
+    deployment_scope = _target_scope(target, asset_context)
 
     for artifact_id in sorted(released):
         parsed = registry.parsed(artifact_id)
@@ -144,6 +159,10 @@ def _derive_claims(
             if status is None:
                 raise ValueError("CSAF/VEX did not contain a target product status")
             affected_value = status in {"known_affected", "first_affected", "last_affected"}
+            supplier_scope = _scope(
+                target,
+                dimensions=product_scope_for(data, target["csaf_product_id"]),
+            )
             claims.append(
                 _claim(
                     source,
@@ -151,7 +170,7 @@ def _derive_claims(
                     proposition="product_affectedness",
                     value=affected_value,
                     confidence=0.85,
-                    scope=general_scope,
+                    scope=supplier_scope,
                     derivation_rule=f"csaf_product_status:{status}",
                 )
             )
@@ -199,8 +218,7 @@ def _derive_claims(
         elif source.artifact_type == "runtime_telemetry":
             assert isinstance(data, list)
             for index, record in enumerate(data, 1):
-                deployment_id = str(record.get("deployment_id") or "unknown")
-                record_scope = _scope(target, deployment_id=deployment_id)
+                record_scope = _scope(target, dimensions=record)
                 record_timestamp = str(record.get("timestamp") or source.timestamp)
                 claims.extend(
                     [
@@ -236,7 +254,7 @@ def _derive_claims(
                             proposition="product_affectedness",
                             value=True,
                             confidence=0.95,
-                            scope=general_scope,
+                            scope=record_scope,
                             timestamp=record_timestamp,
                             derivation_rule="local_execution_or_reachability_supports_affectedness",
                         )
@@ -264,7 +282,7 @@ def _derive_claims(
                         proposition="asset_criticality",
                         value=data.get("asset_criticality"),
                         confidence=0.95,
-                        scope=general_scope,
+                        scope=deployment_scope,
                         derivation_rule="asset_context_field",
                     ),
                     _claim(
@@ -273,7 +291,7 @@ def _derive_claims(
                         proposition="deployment_scope",
                         value=data.get("deployment_scope"),
                         confidence=0.95,
-                        scope=general_scope,
+                        scope=deployment_scope,
                         derivation_rule="asset_context_field",
                     ),
                 ]
@@ -428,6 +446,13 @@ def _build_snapshot(
     )
     if vex_status is None:
         raise ValueError("target VEX status could not be resolved")
+    supplier_scope = _scope(
+        target,
+        dimensions=product_scope_for(vex.data, target["csaf_product_id"]),
+    )
+    deployed_scope = _target_scope(target, asset.data)
+    vex_applies = assertion_applies(supplier_scope, deployed_scope)
+    effective_vex_status = vex_status if vex_applies else "not_applicable_scope_mismatch"
     aliases = cve_aliases(osv.data)
     if target["cve_id"] not in aliases:
         raise ValueError("OSV snapshot did not bridge the component to the target CVE")
@@ -461,9 +486,13 @@ def _build_snapshot(
             "epss_reference": epss.source.relative_path,
         },
         "supplier_assertions": {
-            "csaf_vex_status": vex_status,
+            "csaf_vex_status": effective_vex_status,
+            "asserted_csaf_vex_status": vex_status,
             "csaf_reference": vex.source.relative_path,
             "csaf_product_id": target["csaf_product_id"],
+            "assertion_scope": supplier_scope,
+            "target_scope": deployed_scope,
+            "scope_applicability": "applicable" if vex_applies else "scope_mismatch",
         },
         "local_evidence": {
             "execution_observed": execution_observed(telemetry_records),

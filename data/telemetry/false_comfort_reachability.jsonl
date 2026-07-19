@@ -1,0 +1,1 @@
+{"event_id":"TEL-FC-REACH-001","timestamp":"2026-10-01T16:00:00Z","deployment_id":"claims-east-01","product_variant":"legacy-plugin-profile","environment":"production","component_purl":"pkg:npm/formula-renderer@5.1.0","execution_observed":false,"reachability_confirmed":true,"malicious_exploitation_observed":false,"observation_type":"deployment_specific_reachability"}

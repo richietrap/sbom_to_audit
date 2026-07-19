@@ -5,11 +5,18 @@ from scripts.validate_repository import run_validation
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_repository_validator_passes_with_strict_stage2_sources() -> None:
+def test_repository_validator_passes_with_all_strict_sources() -> None:
     report = run_validation(strict_sources=True)
     assert report.status == "PASS"
     assert not report.errors
-    assert report.checks["scenarios"][0]["registered_sources"] == 15
+    counts = {
+        Path(item["file"]).stem: item["registered_sources"] for item in report.checks["scenarios"]
+    }
+    assert counts == {
+        "false_comfort": 13,
+        "false_comfort_control": 8,
+        "ghost_logger": 15,
+    }
 
 
 def test_gitignore_excludes_generated_outputs_and_local_quality_caches() -> None:

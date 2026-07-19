@@ -1,0 +1,6 @@
+event_type: milestone_satisfaction
+evidence_id: SUB-FC-FULL-001
+milestone_id: full_notification
+submission_reference: controlled-portal-receipt-FC-FN-001
+timestamp: "2026-10-04T08:00:00Z"
+actor: psirt-reporting-operator

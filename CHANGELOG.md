@@ -140,3 +140,36 @@ All notable repository design and implementation changes are recorded here.
 
 - the intentionally seeded VEX/runtime contradiction at T+10h;
 - the five expected state transitions, final `Report-Ready` recommendation, human `Report` authorization, Schema v0.2, and the locked metric definitions.
+
+## [0.3.0] - 2026-07-19
+
+### Added
+
+- canonical claim-scope normalization with product, component, CVE, product-variant, deployment, and environment dimensions;
+- scope-relation reasoning for exact, containing, overlapping, and disjoint evidence scopes;
+- scope-aware conflict detection that compares contradictory claims when their declared scopes overlap;
+- CSAF product-helper extraction of product PURL and model-number variant scope;
+- the False Comfort controlled scenario and a scope-matched negative control;
+- deterministic multi-scenario release replay across Ghost-Logger, False Comfort, and its negative control;
+- Stage 3 pilot comparison figures, tables, run records, and claim-matrix entries;
+- ADR-006 documenting scope-aware supplier-assurance applicability.
+
+### Changed
+
+- supplier VEX assertions are retained but are not applied to deployments outside their declared product-variant scope;
+- local affectedness claims retain deployment-specific dimensions instead of being widened to product-wide scope;
+- CI deterministic smoke tests now execute every committed scenario;
+- the release checker now discovers and verifies every scenario and all six outputs per scenario.
+
+### Preserved
+
+- EvidencePack Schema v0.2 and its 34-field Evidence Completeness denominator;
+- the tri-part recommendation, deadline, and EvidencePack semantics;
+- Ghost-Logger's intentional conflict, its explicit resolution lifecycle, and all Stage 2.0.1 expected states;
+- human authorization as distinct from recommendation and milestone satisfaction.
+
+### Pilot interpretation
+
+- False Comfort demonstrates that a valid `known_not_affected` assertion for a standard product variant does not suppress evidence from a disjoint legacy-plugin deployment;
+- the negative control confirms that the same assertion is applied when the deployment scope matches and no contradictory local evidence exists;
+- these are controlled conformance replays, not industrial validation or legal reportability determinations.
