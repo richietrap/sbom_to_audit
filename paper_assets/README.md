@@ -13,3 +13,12 @@ Rules:
 ## Stage 3 pilot assets
 
 `build_stage3_assets.py` consumes the deterministic outputs for Ghost-Logger, False Comfort, and the False Comfort negative control. It generates a cross-scenario summary, the False Comfort event replay, a scope-applicability comparison table, and an SVG comparison figure. All remain `PILOT` and `NOT_ELIGIBLE` until regenerated from a tagged commit and reproduced in Colab.
+
+## Stage 5 pilot assets
+
+- `figures/rapid_pivot_clock_comparison.svg` compares uncertainty and state trajectories when identical resolving evidence arrives before versus after the internal 18-hour safeguard;
+- `tables/rapid_pivot_event_replay.csv` preserves the main temporal replay;
+- `tables/rapid_pivot_clock_comparison.csv` provides matched event-level values for the main and control replays;
+- `tables/stage5_scenario_summary.csv` summarizes all seven controlled replay manifests.
+
+These remain `PILOT / NOT_ELIGIBLE` until regenerated from a tagged commit and preserved through the Stage 5 Colab checkpoint.

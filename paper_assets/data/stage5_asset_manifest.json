@@ -1,0 +1,44 @@
+{
+  "asset_status": "PILOT",
+  "manuscript_eligible": false,
+  "source_run_ids": [
+    "GL-STAGE2-0-1-PILOT-001",
+    "FC-STAGE3-PILOT-001",
+    "FCC-STAGE3-PILOT-001",
+    "OO-STAGE4-PILOT-001",
+    "OOC-STAGE4-PILOT-001",
+    "RP-STAGE5-PILOT-001",
+    "RPC-STAGE5-PILOT-001"
+  ],
+  "generation_script": "paper_assets/scripts/build_stage5_assets.py",
+  "generation_script_hash": "f80f633b083470f6c16aefde4b15a9d9c18e458bedf21dbcfe7fbeb262646f0c",
+  "source_data_hashes": {
+    "evidence_packs/ghost_logger.json": "9cb1a244d1b71d024bf047db14d7cecd693bb492c06ec6e3a017079f4318749f",
+    "state_logs/ghost_logger.csv": "1b84f30b57e530470b5c718dd17c57b92e969d5a06528263487f87d5b1cffefb",
+    "metrics/ghost_logger_metrics.json": "b01156372a09b989a6ea15b3f86dcb89a23f502088606e49f55e544e9845dd19",
+    "evidence_packs/false_comfort.json": "b1867c266f6613029cfe3a88ff28cedf33fd38b49ce753d8bb00e7052cde3d3e",
+    "state_logs/false_comfort.csv": "ccc632b9d65716f4964c4207afdf49735e44cd9dee97e3b61d9b7f3711641317",
+    "metrics/false_comfort_metrics.json": "8b4d2a6d3b5d305847ec240d07181d82e532a5a45b65f33b92aaed6759dbf21b",
+    "evidence_packs/false_comfort_control.json": "9f856dbd9bb62aa3497655c015e044504b43ae5acc1c34c42c1f16d24de8f7ff",
+    "state_logs/false_comfort_control.csv": "77998aa4230a11967302cc2726f48791b343c5717f3d87cfdf1ac13a4d37289e",
+    "metrics/false_comfort_control_metrics.json": "09b91d9a483b72356f631ff55736b4e86440b1c20ff1f15b2244c4187401852d",
+    "evidence_packs/operational_outlier.json": "97959664daa498ed8a30f60e00f38d91932bcb98998d0b99d0bbbc44f6a7cc81",
+    "state_logs/operational_outlier.csv": "88d4e8411e8758b6b8e03f5661673acada8b24bfbec44b77003988e8b56ed193",
+    "metrics/operational_outlier_metrics.json": "15f36f7f565e7a44da21659f5b3d3028a122f9e379b8abadf1d96d7ab84dbcb3",
+    "evidence_packs/operational_outlier_control.json": "1dd46a12856b95209ccddd58a1c17699fd150396d770bb5ae9c809d0717b25b6",
+    "state_logs/operational_outlier_control.csv": "e0af088fed50e0419cdb6ea14bc386a3ff6a2415b4320e1de8228eb45c9dadb5",
+    "metrics/operational_outlier_control_metrics.json": "a3c65b6b30ae47a42536f50743ed824445ffc6600b5f2905e9b2fe3b560369d0",
+    "evidence_packs/rapid_pivot.json": "6ddb71de689dbd033f3ac971fed634159d02df3c824202eb2d181533dcd8391c",
+    "state_logs/rapid_pivot.csv": "d19edd1a98c70922219b22bdfe95672cb51c7399485ad9a8012bc73c332e634c",
+    "metrics/rapid_pivot_metrics.json": "856758c9246c07fd88daa3784a87f981763916e8bbd1500d2ed99d7b3c902e80",
+    "evidence_packs/rapid_pivot_control.json": "6c9218ad6ca1670fd6bcc7dba39718008d5b080b750ae90131445996f3ebc65d",
+    "state_logs/rapid_pivot_control.csv": "8d4cf55d946ac9296adf362839df1e3ed553a7f3d563cf9789ce11e5d34cc516",
+    "metrics/rapid_pivot_control_metrics.json": "1aaa1255c582013cfeda913d5c2c6e82d60dbfef5f74aaa62e94e9a9afec09e9"
+  },
+  "generated_asset_hashes": {
+    "tables/stage5_scenario_summary.csv": "ca8711a13a4b2f9fbc5ce193a8a071d7dda339c063c09529e57a7b8f9e957373",
+    "tables/rapid_pivot_event_replay.csv": "3d3b6bc9dfff3da930c91a9f613978980a0907701dca3638ff348d6d6528e46c",
+    "tables/rapid_pivot_clock_comparison.csv": "36768508ba760b65832081b6c4148a38b77a1a9cb1eb309026be82b806bfb007",
+    "figures/rapid_pivot_clock_comparison.svg": "7c2a5183199fe2df8d51fb03679ec32c95ce0674c6f95c0750ad995e299719a7"
+  }
+}

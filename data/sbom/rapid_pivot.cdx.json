@@ -1,0 +1,51 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:9c691a7e-3f1a-4e93-8ac8-rapid-pivot-001",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-12-01T08:05:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "product:remote-operations-console:5.8.0",
+      "group": "example-remote-systems",
+      "name": "remote-operations-console",
+      "version": "5.8.0",
+      "purl": "pkg:generic/remote-operations-console@5.8.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/remote-session-core@6.0.0",
+      "name": "remote-session-core",
+      "version": "6.0.0",
+      "purl": "pkg:npm/remote-session-core@6.0.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "component:session-router:3.1.4",
+      "name": "session_router",
+      "version": "3.1.4",
+      "cpe": "cpe:2.3:a:example:session-router:3.1.4:*:*:*:*:*:*:*"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "product:remote-operations-console:5.8.0",
+      "dependsOn": [
+        "pkg:npm/remote-session-core@6.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/remote-session-core@6.0.0",
+      "dependsOn": [
+        "component:session-router:3.1.4"
+      ]
+    },
+    {
+      "ref": "component:session-router:3.1.4",
+      "dependsOn": []
+    }
+  ]
+}

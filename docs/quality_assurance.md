@@ -69,3 +69,7 @@ modules are merged.
 No automated check proves legal correctness, industrial fitness, or research validity.
 Every stage still requires review of the ADR, changed-file inventory, test report,
 coverage report, deterministic replay hashes, known limitations, and Colab checkpoint.
+
+## Stage 5 temporal-control safeguards
+
+Rapid Pivot adds paired-control assertions requiring the primary and control manifests to have identical source catalogs, targets, deadline profiles, and event timestamps. Tests verify that only the release event for the uncertainty-resolving artefacts differs. The release gate also checks that the main replay has exactly one eligible clock-safeguard opportunity and trigger, while the control has none. This prevents deadline-profile drift, hidden source changes, or a conflict event from being misreported as clock-aware escalation.

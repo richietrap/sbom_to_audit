@@ -1,0 +1,7 @@
+event_type: milestone_satisfaction
+event_id: SUB-RP-EARLY-001
+timestamp: '2026-12-02T06:00:00Z'
+milestone_id: early_warning
+evidence_id: EVID-RP-EARLY-001
+submission_reference: RP-EARLY-REF-001
+actor: psirt-reporting-operator-rp

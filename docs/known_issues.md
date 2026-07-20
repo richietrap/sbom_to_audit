@@ -6,9 +6,9 @@
 
 Stage 2 uses representative machine-readable artefacts but a controlled fictional CVE, supplier, deployment, telemetry, and decision history. It verifies implementation behaviour and format ingestion, not industrial effectiveness or legal correctness. The four-scenario evaluation, matched baseline, expert plausibility review, and public historical replay remain pending.
 
-### KI-002 — Identifier matching is intentionally narrow
+### KI-002 — Identifier matching remains intentionally narrow
 
-The pilot demonstrates an exact versioned PURL match and OSV alias bridge. Fuzzy, CPE, ambiguous-candidate, and multi-ecosystem resolution remain later evaluation work. The artefact must not be described as solving general PURL/CPE identity matching.
+The pilot now demonstrates exact versioned PURL matching, a unique normalized name/version fallback, an OSV alias bridge, and explicit CPE-confirmed resolution. It does not implement general fuzzy ranking, ambiguous-candidate adjudication, CPE interval logic, package-ecosystem equivalence, or ontology-complete identity resolution. The artefact must not be described as solving general PURL/CPE identity matching.
 
 ### KI-003 — Conflict semantics are scoped but not ontology-complete
 
@@ -48,3 +48,11 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 - CVSS is retained as technical-severity context and is not an input to the frozen state rule. The pilot must not imply that CVSS determines operational impact or legal reportability.
 - The Operational Outlier pair tests one configured impact contrast. The `I_t` thresholds and criticality/scope mappings remain design parameters requiring sensitivity analysis and expert plausibility review before evaluation freeze.
 - The control is matched within the artefact's declared fields, but it is not a real-world causal experiment or population-level estimate.
+
+## Stage 5 uncertainty and clock limitations
+
+- The uncertainty score remains the frozen missingness-plus-identity-confidence equation. It does not numerically model evidence age, telemetry coverage, analyst disagreement, or source reliability beyond the declared fields.
+- The `fuzzy_name_version` path requires exactly one normalized name/version candidate; ambiguous candidates fail closed rather than being ranked.
+- The CPE-confirmation artefact is controlled fictional evidence and demonstrates validation flow, not general vendor-identity truth.
+- `tau_E=18h` is an internal design safeguard. It is not a statutory deadline, a legal-awareness determination, or evidence that 18 hours is empirically optimal.
+- The early-resolution control isolates evidence-release timing within the declared model, but it is not a real-world causal experiment.

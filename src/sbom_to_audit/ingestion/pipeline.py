@@ -23,9 +23,14 @@ from sbom_to_audit.model.deadline_engine import (
 from sbom_to_audit.model.identity import identity_confidence
 from sbom_to_audit.model.scope import assertion_applies, canonicalize_scope, validate_scope
 from sbom_to_audit.model.scoring import compute_scores
-from sbom_to_audit.model.state_machine import recommend_state
+from sbom_to_audit.model.state_machine import Thresholds, recommend_state
 from sbom_to_audit.parsers.csaf_parser import product_scope_for, product_status_for
-from sbom_to_audit.parsers.cyclonedx_parser import component_by_purl, dependency_path
+from sbom_to_audit.parsers.cyclonedx_parser import (
+    component_by_name_version,
+    component_by_purl,
+    dependency_path,
+    dependency_path_by_bom_ref,
+)
 from sbom_to_audit.parsers.epss_client import extract_percentile
 from sbom_to_audit.parsers.kev_client import kev_entry
 from sbom_to_audit.parsers.nvd_client import extract_cvss_metrics
@@ -86,6 +91,13 @@ def _latest_source(registry: SourceRegistry, released: set[str], artifact_type: 
     return items[-1]
 
 
+def _latest_source_or_none(
+    registry: SourceRegistry, released: set[str], artifact_type: str
+) -> Any | None:
+    items = _sources_of_type(registry, released, artifact_type)
+    return items[-1] if items else None
+
+
 def _scope(
     target: dict[str, Any],
     *,
@@ -107,6 +119,82 @@ def _target_scope(target: dict[str, Any], asset_context: dict[str, Any]) -> dict
     return _scope(target, dimensions=asset_context)
 
 
+def _resolve_component_identity(
+    registry: SourceRegistry,
+    released: set[str],
+    sbom_data: dict[str, Any],
+    target: dict[str, Any],
+) -> dict[str, Any]:
+    """Resolve the target component without trusting a scenario-supplied score.
+
+    Exact versioned PURL identity is preferred. When a PURL is unavailable in the
+    SBOM, the engine may select one unique name/version candidate with the frozen
+    ``fuzzy_name_version`` confidence. A later identity-resolution artefact can
+    explicitly confirm the canonical component PURL using one of the approved
+    matching methods.
+    """
+
+    exact = component_by_purl(sbom_data, str(target["component_purl"]))
+    if exact is not None:
+        selected = exact
+        matching_method = "exact_versioned_purl"
+        resolution_artifact_id: str | None = None
+    else:
+        component_name = str(target.get("component_name") or "").strip()
+        component_version = str(target.get("component_version") or "").strip()
+        if not component_name:
+            raise ValueError(
+                "target component PURL is absent from the SBOM and component_name "
+                "was not supplied for evidence-based fallback resolution"
+            )
+        candidate = component_by_name_version(
+            sbom_data,
+            component_name,
+            component_version or None,
+        )
+        if candidate is None:
+            raise ValueError("target component could not be resolved from the released SBOM")
+        selected = candidate
+        matching_method = "fuzzy_name_version" if component_version else "name_only"
+        resolution_artifact_id = None
+
+    identity_source = _latest_source_or_none(registry, released, "identity_resolution")
+    if identity_source is not None:
+        assert isinstance(identity_source.data, dict)
+        mapping = identity_source.data
+        expected_bom_ref = str(selected.get("bom_ref") or selected.get("purl") or "")
+        if str(mapping.get("component_bom_ref") or "") != expected_bom_ref:
+            raise ValueError(
+                "identity-resolution artefact does not reference the selected component"
+            )
+        if str(mapping.get("resolved_component_purl") or "") != str(target["component_purl"]):
+            raise ValueError(
+                "identity-resolution artefact does not resolve the target component PURL"
+            )
+        method = str(mapping.get("matching_method") or "")
+        if method == "exact_cpe_confirmed":
+            confirmed_cpe = str(mapping.get("confirmed_cpe") or "")
+            if not confirmed_cpe or confirmed_cpe != str(selected.get("cpe") or ""):
+                raise ValueError("exact_cpe_confirmed requires the selected component CPE")
+        matching_method = method
+        resolution_artifact_id = identity_source.source.artifact_id
+
+    bom_ref = str(selected.get("bom_ref") or selected.get("purl") or "").strip()
+    path = dependency_path_by_bom_ref(sbom_data, bom_ref)
+    if path is None and selected.get("purl"):
+        path = dependency_path(sbom_data, str(selected["purl"]))
+    if not path:
+        raise ValueError("target component is not reachable in the SBOM dependency graph")
+
+    return {
+        "selected_component": selected,
+        "matching_method": matching_method,
+        "gamma_id": identity_confidence(matching_method),
+        "dependency_path": path,
+        "resolution_artifact_id": resolution_artifact_id,
+    }
+
+
 def _derive_claims(
     registry: SourceRegistry,
     released: set[str],
@@ -118,6 +206,9 @@ def _derive_claims(
     asset_context = asset_items[-1].data if asset_items else {}
     assert isinstance(asset_context, dict)
     deployment_scope = _target_scope(target, asset_context)
+    sbom_source = _latest_source(registry, released, "cyclonedx_sbom")
+    assert isinstance(sbom_source.data, dict)
+    identity = _resolve_component_identity(registry, released, sbom_source.data, target)
 
     for artifact_id in sorted(released):
         parsed = registry.parsed(artifact_id)
@@ -126,17 +217,16 @@ def _derive_claims(
 
         if source.artifact_type == "cyclonedx_sbom":
             assert isinstance(data, dict)
-            component = component_by_purl(data, target["component_purl"])
-            path = dependency_path(data, target["component_purl"])
+            path = identity["dependency_path"]
             claims.append(
                 _claim(
                     source,
                     suffix="COMPONENT-PRESENT",
                     proposition="component_present",
-                    value=component is not None,
-                    confidence=1.0,
+                    value=True,
+                    confidence=float(identity["gamma_id"]),
                     scope=general_scope,
-                    derivation_rule="exact_component_purl_presence",
+                    derivation_rule=f"component_identity:{identity['matching_method']}",
                 )
             )
             claims.append(
@@ -148,6 +238,24 @@ def _derive_claims(
                     confidence=1.0,
                     scope=general_scope,
                     derivation_rule="root_to_component_dependency_path",
+                )
+            )
+        elif source.artifact_type == "identity_resolution":
+            assert isinstance(data, dict)
+            claims.append(
+                _claim(
+                    source,
+                    suffix="IDENTITY-CONFIRMATION",
+                    proposition="component_identity_confirmed",
+                    value={
+                        "component_bom_ref": data.get("component_bom_ref"),
+                        "resolved_component_purl": data.get("resolved_component_purl"),
+                        "matching_method": data.get("matching_method"),
+                    },
+                    confidence=float(identity["gamma_id"]),
+                    scope=general_scope,
+                    timestamp=str(data.get("timestamp") or source.timestamp),
+                    derivation_rule="validated_identity_resolution_mapping",
                 )
             )
         elif source.artifact_type == "csaf_vex":
@@ -453,19 +561,16 @@ def _build_snapshot(
     sbom = _latest_source(registry, released, "cyclonedx_sbom")
     assert isinstance(sbom.data, dict)
     root = sbom.data.get("metadata_component") or {}
-    component = component_by_purl(sbom.data, target["component_purl"])
-    if component is None:
-        raise ValueError("target component PURL is absent from the released SBOM")
-    path = dependency_path(sbom.data, target["component_purl"])
-    if not path:
-        raise ValueError("target component is not reachable in the SBOM dependency graph")
+    identity = _resolve_component_identity(registry, released, sbom.data, target)
+    component = identity["selected_component"]
+    path = identity["dependency_path"]
 
     osv = _latest_source(registry, released, "osv_snapshot")
     nvd_items = _sources_of_type(registry, released, "nvd_snapshot")
     nvd = nvd_items[-1] if nvd_items else None
-    kev = _latest_source(registry, released, "kev_snapshot")
-    epss = _latest_source(registry, released, "epss_snapshot")
-    vex = _latest_source(registry, released, "csaf_vex")
+    kev = _latest_source_or_none(registry, released, "kev_snapshot")
+    epss = _latest_source_or_none(registry, released, "epss_snapshot")
+    vex = _latest_source_or_none(registry, released, "csaf_vex")
     asset = _latest_source(registry, released, "asset_context")
     mitigation = _latest_source(registry, released, "mitigation_context")
     telemetry_sources = _sources_of_type(registry, released, "runtime_telemetry")
@@ -473,9 +578,12 @@ def _build_snapshot(
     assert isinstance(osv.data, dict)
     if nvd is not None:
         assert isinstance(nvd.data, dict)
-    assert isinstance(kev.data, dict)
-    assert isinstance(epss.data, dict)
-    assert isinstance(vex.data, dict)
+    if kev is not None:
+        assert isinstance(kev.data, dict)
+    if epss is not None:
+        assert isinstance(epss.data, dict)
+    if vex is not None:
+        assert isinstance(vex.data, dict)
     assert isinstance(asset.data, dict)
     assert isinstance(mitigation.data, dict)
 
@@ -483,27 +591,32 @@ def _build_snapshot(
     for parsed in telemetry_sources:
         assert isinstance(parsed.data, list)
         telemetry_records.extend(parsed.data)
-    latest_telemetry = telemetry_sources[-1].source
+    latest_telemetry = telemetry_sources[-1].source if telemetry_sources else None
 
-    vex_status = product_status_for(
-        vex.data,
-        cve_id=target["cve_id"],
-        product_id=target["csaf_product_id"],
-    )
-    if vex_status is None:
-        raise ValueError("target VEX status could not be resolved")
-    supplier_scope = _scope(
-        target,
-        dimensions=product_scope_for(vex.data, target["csaf_product_id"]),
-    )
     deployed_scope = _target_scope(target, asset.data)
-    vex_applies = assertion_applies(supplier_scope, deployed_scope)
-    effective_vex_status = vex_status if vex_applies else "not_applicable_scope_mismatch"
+    vex_status: str | None = None
+    supplier_scope: dict[str, Any] = _scope(target)
+    vex_applies: bool | None = None
+    effective_vex_status: str | None = None
+    if vex is not None:
+        vex_status = product_status_for(
+            vex.data,
+            cve_id=target["cve_id"],
+            product_id=target["csaf_product_id"],
+        )
+        if vex_status is None:
+            raise ValueError("target VEX status could not be resolved")
+        supplier_scope = _scope(
+            target,
+            dimensions=product_scope_for(vex.data, target["csaf_product_id"]),
+        )
+        vex_applies = assertion_applies(supplier_scope, deployed_scope)
+        effective_vex_status = vex_status if vex_applies else "not_applicable_scope_mismatch"
     aliases = cve_aliases(osv.data)
     if target["cve_id"] not in aliases:
         raise ValueError("OSV snapshot did not bridge the component to the target CVE")
-    percentile = extract_percentile(epss.data)
-    if percentile is None:
+    percentile = extract_percentile(epss.data) if epss is not None else None
+    if epss is not None and percentile is None:
         raise ValueError("EPSS snapshot did not contain a percentile")
 
     return {
@@ -517,19 +630,22 @@ def _build_snapshot(
         },
         "identity_resolution": {
             "primary_identifier": target["component_purl"],
-            "matching_method": "exact_versioned_purl",
-            "gamma_id": identity_confidence("exact_versioned_purl"),
+            "matching_method": identity["matching_method"],
+            "gamma_id": identity["gamma_id"],
             "selected_component": component,
             "dependency_depth": len(path) - 1,
+            "resolution_artifact_id": identity["resolution_artifact_id"],
         },
         "vulnerability_intelligence": {
             "cve_id": target["cve_id"],
-            "cisa_kev_status": kev_entry(kev.data, target["cve_id"]) is not None,
+            "cisa_kev_status": (
+                kev_entry(kev.data, target["cve_id"]) is not None if kev is not None else None
+            ),
             "epss_percentile": percentile,
             "osv_aliases": aliases,
             "osv_reference": osv.source.relative_path,
-            "kev_reference": kev.source.relative_path,
-            "epss_reference": epss.source.relative_path,
+            "kev_reference": kev.source.relative_path if kev is not None else None,
+            "epss_reference": epss.source.relative_path if epss is not None else None,
             **(
                 {
                     "cvss_base_score": metrics["base_score"],
@@ -545,17 +661,31 @@ def _build_snapshot(
         "supplier_assertions": {
             "csaf_vex_status": effective_vex_status,
             "asserted_csaf_vex_status": vex_status,
-            "csaf_reference": vex.source.relative_path,
+            "csaf_reference": vex.source.relative_path if vex is not None else None,
             "csaf_product_id": target["csaf_product_id"],
             "assertion_scope": supplier_scope,
             "target_scope": deployed_scope,
-            "scope_applicability": "applicable" if vex_applies else "scope_mismatch",
+            "scope_applicability": (
+                "applicable"
+                if vex_applies is True
+                else "scope_mismatch"
+                if vex_applies is False
+                else "unknown_no_assertion"
+            ),
         },
         "local_evidence": {
-            "execution_observed": execution_observed(telemetry_records),
-            "reachability_confirmed": reachability_confirmed(telemetry_records),
-            "malicious_exploitation_observed": malicious_exploitation_observed(telemetry_records),
-            "telemetry_reference": latest_telemetry.relative_path,
+            "execution_observed": (
+                execution_observed(telemetry_records) if telemetry_sources else None
+            ),
+            "reachability_confirmed": (
+                reachability_confirmed(telemetry_records) if telemetry_sources else None
+            ),
+            "malicious_exploitation_observed": (
+                malicious_exploitation_observed(telemetry_records) if telemetry_sources else None
+            ),
+            "telemetry_reference": (
+                latest_telemetry.relative_path if latest_telemetry is not None else None
+            ),
             "telemetry_record_count": len(telemetry_records),
         },
         "asset_context": deepcopy(asset.data),
@@ -741,6 +871,13 @@ def replay_real_format_scenario(
         scores = score_obj.to_dict()
         event_delta = delta_hours(t0, event["timestamp"])
         recommended_state, rationale = recommend_state(scores, event_delta, previous_state)
+        safeguard_hours = Thresholds().tau_E_hours
+        clock_safeguard_triggered = bool(
+            previous_state == "Prepare"
+            and event_delta >= safeguard_hours
+            and recommended_state == "Escalate"
+            and not bool(scores["C_t"])
+        )
 
         for resolved_conflict in resolved_this_event:
             audit_log.append(
@@ -837,6 +974,8 @@ def replay_real_format_scenario(
                 "deadline_posture": json.dumps(deadline_posture, sort_keys=True),
                 "expected_deadline_posture": json.dumps(expected_deadline, sort_keys=True),
                 "deadline_match": deadline_posture == expected_deadline,
+                "clock_safeguard_triggered": clock_safeguard_triggered,
+                "clock_safeguard_hours": safeguard_hours,
                 "released_artifact_ids": json.dumps(sorted(released)),
                 "active_claim_ids": json.dumps(
                     sorted(str(claim["claim_id"]) for claim in active_claims(claims))
@@ -862,6 +1001,8 @@ def replay_real_format_scenario(
                 ),
                 "output_state": recommended_state,
                 "expected_state": event["expected_state"],
+                "clock_safeguard_triggered": clock_safeguard_triggered,
+                "clock_safeguard_hours": safeguard_hours,
                 "rationale": rationale,
             }
         )

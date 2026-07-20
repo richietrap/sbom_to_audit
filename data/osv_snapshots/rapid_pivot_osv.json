@@ -1,0 +1,31 @@
+{
+  "query": {
+    "package": {
+      "ecosystem": "npm",
+      "name": "session-router",
+      "version": "3.1.4"
+    }
+  },
+  "vulns": [
+    {
+      "id": "OSV-2026-RP44007",
+      "aliases": [
+        "CVE-2026-44007"
+      ],
+      "published": "2026-12-01T07:00:00Z",
+      "modified": "2026-12-01T07:00:00Z",
+      "affected": [
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "session-router",
+            "purl": "pkg:npm/session-router"
+          },
+          "versions": [
+            "3.1.4"
+          ]
+        }
+      ]
+    }
+  ]
+}

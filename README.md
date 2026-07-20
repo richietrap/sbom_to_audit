@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.4.0 implements Stage 4 Operational Outlier while preserving Ghost-Logger and False Comfort. It adds NVD-shaped CVSS context, correct handling of CSAF `under_investigation`, and an exact-source counterfactual lower-impact control. The controlled pair reuses the same non-asset source bytes, deployment identity, timestamps, and deadline profile while varying only asset criticality and deployment scope. All cases remain fictional and must not be described as industrial case studies.
+Version 0.5.0 implements Stage 5 Rapid Pivot while preserving Ghost-Logger, False Comfort, and Operational Outlier. It adds evidence-derived fuzzy identity fallback, explicit CPE-confirmed identity resolution, intermediate missing-evidence handling, clock-safeguard audit fields, and a matched early-resolution temporal control. All cases remain fictional and must not be described as industrial case studies.
 
 ## Research questions
 
@@ -37,6 +37,9 @@ python paper_assets/scripts/build_stage3_assets.py \
   --output-root outputs \
   --destination paper_assets
 python paper_assets/scripts/build_stage4_assets.py \
+  --output-root outputs \
+  --destination paper_assets
+python paper_assets/scripts/build_stage5_assets.py \
   --output-root outputs \
   --destination paper_assets
 python -m pytest
@@ -82,6 +85,13 @@ Scope reasoning is generic application logic. No scenario identifier or product 
 - **Counterfactual lower-impact control:** the same non-asset source files, deployment identity, timestamps, and deadline profile are replayed with only `asset_criticality=medium` and `deployment_scope=limited`; the case remains `Monitor`.
 
 The comparison preserves technical severity as contextual evidence and isolates the configured impact mechanism. `under_investigation` is retained as a supplier-assessment status rather than misrepresented as a not-affected conclusion.
+
+## Stage 5 uncertainty and clock-aware escalation
+
+- **Rapid Pivot:** KEV and high operational-impact context are available, but EPSS, VEX, telemetry and strong component identity evidence are initially missing. The case enters `Prepare`, remains unresolved, and reaches `Escalate` at the internal `tau_E=18h` safeguard.
+- **Early-resolution control:** byte-identical sources, target, deadline profile and event timestamps are used, but the same uncertainty-resolving evidence is released at T+12h. The case reaches `Report-Ready` before T+18h and does not trigger clock escalation.
+
+The initial `gamma_id=0.4` is derived from a unique name/version SBOM candidate whose PURL is absent. A later, validated CPE-confirmation artefact changes the matching method to `exact_cpe_confirmed` and `gamma_id=0.7`. The 18-hour safeguard remains an internal PSIRT control and must not be described as a statutory deadline.
 
 ## Research-evidence accumulation
 

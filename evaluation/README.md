@@ -10,3 +10,7 @@ Run classifications:
 - `NEGATIVE_CONTROL`, `SENSITIVITY`, `BASELINE`, and `PUBLIC_REPLAY`: specialised evaluation runs.
 
 Every frozen run must record an exact Git commit, environment identifier, input-manifest hash, output-manifest hash, and preservation location.
+
+## Stage 5
+
+Stage 5 adds `rapid_pivot` and `rapid_pivot_control`. Their source catalogs, target, deadline profile, source timestamps, and event clock are matched. The treatment is the release time of the identity, EPSS, VEX, and reachability artefacts. The primary replay exercises an eligible Clock-Aware Escalation opportunity; the control resolves uncertainty before the safeguard.

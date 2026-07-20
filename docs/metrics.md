@@ -61,3 +61,9 @@ EPG = 1  if evidence pack, state log, and conflict report are generated
 ## Baseline comparison
 
 The same applicable metrics are computed for the orchestration artefact and for the un-orchestrated PSIRT baseline. Identity uncertainty is reported alongside the frozen metric set as the observed `gamma_id` and `U_t`, rather than introduced as an unapproved eighth formal metric.
+
+## Stage 5 Clock-Aware Escalation interpretation
+
+Rapid Pivot creates one applicable CA opportunity: the prior state is `Prepare` and the matched event occurs at `delta_t=18h`. The observed state is `Escalate`, so the controlled pilot value is `CA=1.0`. Its early-resolution control has no event satisfying the denominator condition because the prior state at T+18h is `Report-Ready`; its serialized value therefore remains `null` with status `not_applicable`, not `0.0`.
+
+The metric evaluates conformance to the configured internal safeguard. It does not validate a statutory deadline, legal awareness, or the empirical optimality of the 18-hour parameter.

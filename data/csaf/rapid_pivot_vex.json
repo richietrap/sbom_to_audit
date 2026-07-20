@@ -1,0 +1,55 @@
+{
+  "document": {
+    "category": "csaf_vex",
+    "csaf_version": "2.0",
+    "publisher": {
+      "category": "vendor",
+      "name": "Example Remote Systems PSIRT",
+      "namespace": "https://example.invalid/remote-psirt"
+    },
+    "title": "Remote Operations Console investigation status",
+    "tracking": {
+      "current_release_date": "2026-12-01T19:00:00Z",
+      "id": "EXAMPLE-2026-RAPID-PIVOT",
+      "initial_release_date": "2026-12-01T19:00:00Z",
+      "revision_history": [
+        {
+          "date": "2026-12-01T19:00:00Z",
+          "number": "1",
+          "summary": "Initial investigation status"
+        }
+      ],
+      "status": "interim",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "full_product_names": [
+      {
+        "name": "Remote Operations Console 5.8.0",
+        "product_id": "CSAFPID-ROC-580",
+        "product_identification_helper": {
+          "purl": "pkg:generic/remote-operations-console@5.8.0"
+        }
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2026-44007",
+      "title": "Authentication-state confusion in session-router",
+      "product_status": {
+        "under_investigation": [
+          "CSAFPID-ROC-580"
+        ]
+      },
+      "notes": [
+        {
+          "category": "description",
+          "title": "Interim assessment",
+          "text": "Supplier analysis remains incomplete; no affectedness conclusion is asserted."
+        }
+      ]
+    }
+  ]
+}

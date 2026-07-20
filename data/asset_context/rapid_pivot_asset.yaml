@@ -1,0 +1,8 @@
+asset_id: remote-operations-control-plane
+asset_criticality: high
+deployment_scope: broad
+product_variant: edge-remote-profile
+deployment_id: remote-ops-prod
+environment: production
+internet_exposed: true
+context_timestamp: '2026-12-01T08:20:00Z'

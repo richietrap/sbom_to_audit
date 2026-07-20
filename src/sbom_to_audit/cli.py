@@ -18,6 +18,7 @@ from sbom_to_audit.model.metrics import (
     state_correctness,
     traceability_ratio,
 )
+from sbom_to_audit.model.state_machine import Thresholds
 from sbom_to_audit.utils.hashing import sha256_json
 from sbom_to_audit.utils.io import read_json, read_yaml, write_csv, write_json, write_jsonl
 
@@ -41,6 +42,8 @@ STATE_FIELDS = [
     "deadline_posture",
     "expected_deadline_posture",
     "deadline_match",
+    "clock_safeguard_triggered",
+    "clock_safeguard_hours",
     "released_artifact_ids",
     "active_claim_ids",
     "rationale",
@@ -127,10 +130,11 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
     write_json(source_manifest_path, result["source_manifest"])
     write_jsonl(audit_ledger_path, result["audit_ledger"])
 
+    safeguard_hours = Thresholds().tau_E_hours
     near_clock_events = [
         row
         for row in result["state_rows"]
-        if row.get("previous_state") == "Prepare" and float(row["delta_t_hours"]) >= 18.0
+        if row.get("previous_state") == "Prepare" and float(row["delta_t_hours"]) >= safeguard_hours
     ]
     primary_outputs = [evidence_pack_path, state_log_path, conflict_report_path]
     ca_value = clock_aware_escalation(near_clock_events)
@@ -161,6 +165,11 @@ def run(scenario_path: str | Path, output_root: str | Path | None = None) -> dic
             "source_count": len(source_records),
             "claim_count": len(result["pack"]["claims"]),
             "audit_event_count": len(result["pack"]["audit_log"]),
+            "clock_safeguard_hours": safeguard_hours,
+            "clock_safeguard_opportunities": len(near_clock_events),
+            "clock_safeguard_triggers": sum(
+                bool(row.get("clock_safeguard_triggered")) for row in result["state_rows"]
+            ),
         },
         "identity_uncertainty_context": {
             "gamma_id": result["pack"]["identity_resolution"]["gamma_id"],

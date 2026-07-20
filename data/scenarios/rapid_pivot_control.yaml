@@ -1,0 +1,157 @@
+schema_version: '0.2'
+scenario:
+  scenario_id: rapid_pivot_control
+  title: Rapid Pivot — Early Resolution Control
+  classification: controlled_fictional_temporal_control_real_format
+  evaluation_status: pilot_negative_control
+  purpose: Hold source bytes and event clock constant while releasing the uncertainty-resolving
+    evidence before the 18-hour safeguard.
+  seeded_conflicts: 0
+  expected_final_state: Report-Ready
+  expected_final_authorized_state: Report
+case_metadata:
+  case_id: CASE-RAPID-PIVOT-CONTROL-001
+  clock_start_time: '2026-12-01T08:00:00Z'
+  clock_basis: internal_awareness_proxy
+target:
+  product_purl: pkg:generic/remote-operations-console@5.8.0
+  component_purl: pkg:npm/session-router@3.1.4
+  component_name: session-router
+  component_version: 3.1.4
+  cve_id: CVE-2026-44007
+  csaf_product_id: CSAFPID-ROC-580
+deadline_profile:
+  milestones:
+    - milestone_id: early_warning
+      deadline_hours: 24
+      due_soon_lead_hours: 6
+      breach_imminent_lead_hours: 2
+      applicable: true
+    - milestone_id: full_notification
+      deadline_hours: 72
+      due_soon_lead_hours: 12
+      breach_imminent_lead_hours: 2
+      applicable: true
+source_catalog:
+  - artifact_id: ART-RP-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/sbom/rapid_pivot.cdx.json
+    timestamp: '2026-12-01T08:05:00Z'
+  - artifact_id: ART-RP-OSV-001
+    artifact_type: osv_snapshot
+    path: data/osv_snapshots/rapid_pivot_osv.json
+    timestamp: '2026-12-01T08:10:00Z'
+  - artifact_id: ART-RP-KEV-001
+    artifact_type: kev_snapshot
+    path: data/kev_snapshots/rapid_pivot_kev.json
+    timestamp: '2026-12-01T08:15:00Z'
+  - artifact_id: ART-RP-ASSET-001
+    artifact_type: asset_context
+    path: data/asset_context/rapid_pivot_asset.yaml
+    timestamp: '2026-12-01T08:20:00Z'
+  - artifact_id: ART-RP-MIT-INITIAL-001
+    artifact_type: mitigation_context
+    path: data/mitigation/rapid_pivot_initial.yaml
+    timestamp: '2026-12-01T08:25:00Z'
+  - artifact_id: ART-RP-ID-001
+    artifact_type: identity_resolution
+    path: data/decision_records/rapid_pivot_identity_resolution.yaml
+    timestamp: '2026-12-01T19:00:00Z'
+  - artifact_id: ART-RP-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/epss_snapshots/rapid_pivot_epss.json
+    timestamp: '2026-12-01T19:05:00Z'
+  - artifact_id: ART-RP-VEX-001
+    artifact_type: csaf_vex
+    path: data/csaf/rapid_pivot_vex.json
+    timestamp: '2026-12-01T19:10:00Z'
+  - artifact_id: ART-RP-TELEM-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/rapid_pivot_reachability.jsonl
+    timestamp: '2026-12-01T19:30:00Z'
+  - artifact_id: ART-RP-AUTH-001
+    artifact_type: human_authorization
+    path: data/decision_records/rapid_pivot_authorization.yaml
+    timestamp: '2026-12-02T06:00:00Z'
+  - artifact_id: ART-RP-SUB-EARLY-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/rapid_pivot_early_warning_submission.yaml
+    timestamp: '2026-12-02T06:00:00Z'
+  - artifact_id: ART-RP-MIT-VERIFIED-001
+    artifact_type: mitigation_context
+    path: data/mitigation/rapid_pivot_verified.yaml
+    timestamp: '2026-12-04T08:00:00Z'
+  - artifact_id: ART-RP-SUB-FULL-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/rapid_pivot_full_notification_submission.yaml
+    timestamp: '2026-12-04T08:00:00Z'
+replay_events:
+  - event_id: EVT-RPC-002H
+    timestamp: '2026-12-01T10:00:00Z'
+    description: The same incomplete initial evidence enters Prepare.
+    release_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+    expected_state: Prepare
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+  - event_id: EVT-RPC-012H
+    timestamp: '2026-12-01T20:00:00Z'
+    description: The exact same uncertainty-resolving evidence is released before the safeguard
+      and moves the case to Report-Ready.
+    release_artifact_ids:
+      - ART-RP-ID-001
+      - ART-RP-EPSS-001
+      - ART-RP-VEX-001
+      - ART-RP-TELEM-001
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+  - event_id: EVT-RPC-018H
+    timestamp: '2026-12-02T02:00:00Z'
+    description: Because the prior state is Report-Ready rather than Prepare, the clock safeguard
+      does not trigger.
+    release_artifact_ids: []
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: Due Soon
+      full_notification: On Track
+  - event_id: EVT-RPC-020H
+    timestamp: '2026-12-02T04:00:00Z'
+    description: The matched timeline remains Report-Ready.
+    release_artifact_ids: []
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: Due Soon
+      full_notification: On Track
+  - event_id: EVT-RPC-022H
+    timestamp: '2026-12-02T06:00:00Z'
+    description: The same human authorization and early-warning evidence are released.
+    release_artifact_ids:
+      - ART-RP-AUTH-001
+      - ART-RP-SUB-EARLY-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: On Track
+  - event_id: EVT-RPC-072H
+    timestamp: '2026-12-04T08:00:00Z'
+    description: The same mitigation and full-notification evidence complete the control.
+    release_artifact_ids:
+      - ART-RP-MIT-VERIFIED-001
+      - ART-RP-SUB-FULL-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: Satisfied

@@ -1,0 +1,7 @@
+event_type: milestone_satisfaction
+event_id: SUB-RP-FULL-001
+timestamp: '2026-12-04T08:00:00Z'
+milestone_id: full_notification
+evidence_id: EVID-RP-FULL-001
+submission_reference: RP-FULL-REF-001
+actor: psirt-reporting-operator-rp

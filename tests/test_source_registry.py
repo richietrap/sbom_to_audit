@@ -43,3 +43,30 @@ def test_registry_rejects_path_escape() -> None:
     registry = SourceRegistry(ROOT, target_cve=scenario["target"]["cve_id"])
     with pytest.raises(ValueError, match="escapes repository root"):
         registry.register(spec)
+
+
+def test_registry_rejects_unknown_identity_matching_method(tmp_path: Path) -> None:
+    identity = tmp_path / "identity.yaml"
+    identity.write_text(
+        "\n".join(
+            [
+                "event_type: identity_resolution",
+                "component_bom_ref: component:test:1.0",
+                "resolved_component_purl: pkg:generic/test@1.0",
+                "matching_method: invented_match",
+                "timestamp: '2026-12-01T00:00:00Z'",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    registry = SourceRegistry(tmp_path)
+    with pytest.raises(ValueError, match="unknown identity match type"):
+        registry.register(
+            {
+                "artifact_id": "ART-ID-INVALID",
+                "artifact_type": "identity_resolution",
+                "path": "identity.yaml",
+                "timestamp": "2026-12-01T00:00:00Z",
+            }
+        )

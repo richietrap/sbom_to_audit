@@ -86,3 +86,20 @@ Operational Outlier is paired with a counterfactual lower-impact control. The pa
 The main scenario uses `critical` plus `widespread` context and must reach `Report-Ready` once applicability is confirmed. The control uses `medium` plus `limited` context and must remain `Monitor` under otherwise matched evidence.
 
 CVSS is contextual evidence only and must not be silently added to the state equation. CSAF `under_investigation` must be retained as an assessment-status claim and must not be converted into `product_affectedness=false`.
+
+## Stage 5 Rapid Pivot requirements
+
+Rapid Pivot is paired with an early-resolution temporal control. The pair must use the same source catalog, target, deadline profile, source timestamps, and replay-event timestamps. The only changed treatment is the event at which identity confirmation, EPSS, supplier assessment, and reachability evidence are released.
+
+The primary replay must:
+
+1. derive initial identity confidence from a unique name/version SBOM candidate whose PURL is absent;
+2. represent unreleased EPSS, VEX, execution, reachability, and telemetry-reference fields as missing in intermediate scoring snapshots;
+3. enter `Prepare` under the frozen uncertainty equation;
+4. remain in `Prepare` until a T+18h event;
+5. move to `Escalate` through the internal `tau_E` safeguard without an active evidence conflict; and
+6. later move to `Report-Ready` after explicit identity confirmation and deployment-specific reachability evidence.
+
+The control must release the exact same resolving artefacts before T+18h and must not trigger the safeguard. Configured deadline posture must remain identical at matched timestamps so the comparison does not conflate the internal state safeguard with workflow-deadline status.
+
+The scenario must not provide `gamma_id`, `U_t`, a precomputed safeguard flag, or any state output. Identity confidence and missingness must be derived from registered source artefacts.

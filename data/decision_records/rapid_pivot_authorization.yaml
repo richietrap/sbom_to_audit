@@ -1,0 +1,8 @@
+event_type: human_authorization
+event_id: AUTH-RP-001
+timestamp: '2026-12-02T06:00:00Z'
+actor_id: psirt-lead-rp
+actor_role: PSIRT lead
+actor_type: human
+authorized_state: Report
+rationale: The resolved identity and confirmed reachability support reporting.

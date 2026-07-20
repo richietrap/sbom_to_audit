@@ -1,4 +1,5 @@
 import json
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from paper_assets.scripts.build_stage2_assets import build
@@ -90,3 +91,48 @@ def test_stage4_assets_compare_operational_impact_with_matched_evidence(tmp_path
     assert "Monitor" in comparison
     assert "critical" in comparison
     assert "medium" in comparison
+
+
+def test_stage5_assets_compare_clock_aware_escalation_with_temporal_control(
+    tmp_path: Path,
+) -> None:
+    from paper_assets.scripts.build_stage5_assets import build as build_stage5
+
+    output_root = tmp_path / "outputs"
+    for scenario_name in (
+        "ghost_logger",
+        "false_comfort",
+        "false_comfort_control",
+        "operational_outlier",
+        "operational_outlier_control",
+        "rapid_pivot",
+        "rapid_pivot_control",
+    ):
+        run(ROOT / "data" / "scenarios" / f"{scenario_name}.yaml", output_root)
+    destination = tmp_path / "stage5_assets"
+    generated = build_stage5(output_root, destination)
+    assert all(Path(path).is_file() for path in generated.values())
+
+    metadata = json.loads(
+        (destination / "data" / "stage5_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT"
+    assert metadata["manuscript_eligible"] is False
+    assert len(metadata["generated_asset_hashes"]) == 4
+    assert len(metadata["source_run_ids"]) == 7
+
+    comparison = (destination / "tables" / "rapid_pivot_clock_comparison.csv").read_text(
+        encoding="utf-8"
+    )
+    assert "Escalate" in comparison
+    assert "Report-Ready" in comparison
+    assert "True" in comparison
+    assert "False" in comparison
+
+    figure = (destination / "figures" / "rapid_pivot_clock_comparison.svg").read_text(
+        encoding="utf-8"
+    )
+    assert "τE = 18h" in figure
+    assert "Early-resolution control" in figure
+    assert "{y}" not in figure
+    ET.fromstring(figure)

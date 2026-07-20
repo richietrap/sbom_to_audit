@@ -201,3 +201,36 @@ All notable repository design and implementation changes are recorded here.
 - Operational Outlier and its control share byte-identical non-asset sources, deployment identity, timestamps, deadline profile, CVSS 6.5 MEDIUM, KEV, EPSS, supplier investigation status, and reachability evidence;
 - `critical` plus `widespread` context yields `I_t=1.0` and `Report-Ready`, while `medium` plus `limited` yields `I_t=0.5` and `Monitor`;
 - the pair demonstrates controlled rule conformance, not external decision accuracy, validated thresholds, or legal reportability.
+
+## [0.5.0] - 2026-07-20
+
+### Added
+
+- Rapid Pivot and a byte-identical early-resolution temporal control;
+- evidence-derived unique name/version component resolution and validated CPE-confirmed identity mapping;
+- support for unreleased optional EPSS, VEX, and telemetry evidence in intermediate replay snapshots while retaining final Schema v0.2 validation;
+- explicit `clock_safeguard_triggered` and `clock_safeguard_hours` state-log and audit properties;
+- Clock-Aware Escalation opportunity/trigger counts in the metrics sidecar;
+- Stage 5 regression, fail-closed identity, deterministic replay, notebook, and paper-asset tests;
+- ADR-008, a Stage 5 report, evaluation summaries, and data-driven Rapid Pivot figure and tables.
+
+### Changed
+
+- generalized CycloneDX identity selection to prefer exact versioned PURL and otherwise require one unique normalized name/version candidate;
+- allowed a registered identity-resolution artefact to raise confidence only after validating the selected BOM reference, target PURL, matching method, and CPE evidence;
+- generalized snapshot construction so missing optional evidence contributes to the frozen `U_t` equation rather than being fabricated as explicit false values;
+- expanded deterministic release replay from five to seven scenarios and from 30 to 42 generated outputs;
+- updated package, citation, repository, reproduction, scenario, paper-claim, and known-issues documentation to v0.5.0.
+
+### Preserved
+
+- EvidencePack Schema v0.2 and its 34-field Evidence Completeness denominator;
+- all frozen scoring thresholds and the `tau_E=18h` internal safeguard;
+- separation of recommendation, human authorization, milestone completion, and workflow-deadline posture;
+- Ghost-Logger conflict lifecycle, False Comfort scope reasoning, and Operational Outlier impact differentiation.
+
+### Pilot interpretation
+
+- the main Rapid Pivot replay yields `CA=1.0` from one eligible Prepare-at-18h opportunity and one Escalate transition;
+- the early-resolution control has no eligible clock opportunity and retains `CA=null/not_applicable`;
+- these are controlled rule-conformance results, not legal, empirical, or industrial validation.

@@ -1,0 +1,7 @@
+event_id,delta_t_hours,E_t,A_t,I_t,M_t,U_t,C_t,previous_state,observed_state,clock_safeguard_triggered,deadline_posture,state_match
+EVT-RP-002H,2.0,0.85,0.24,0.75,0.0,0.522222,False,,Prepare,False,"{""early_warning"": ""On Track"", ""full_notification"": ""On Track""}",True
+EVT-RP-012H,12.0,0.85,0.24,0.75,0.0,0.522222,False,Prepare,Prepare,False,"{""early_warning"": ""On Track"", ""full_notification"": ""On Track""}",True
+EVT-RP-018H,18.0,0.85,0.24,0.75,0.0,0.522222,False,Prepare,Escalate,True,"{""early_warning"": ""Due Soon"", ""full_notification"": ""On Track""}",True
+EVT-RP-020H,20.0,0.85,1.0,0.75,0.0,0.15,False,Escalate,Report-Ready,False,"{""early_warning"": ""Due Soon"", ""full_notification"": ""On Track""}",True
+EVT-RP-022H,22.0,0.85,1.0,0.75,0.0,0.15,False,Report-Ready,Report-Ready,False,"{""early_warning"": ""Satisfied"", ""full_notification"": ""On Track""}",True
+EVT-RP-072H,72.0,0.85,1.0,0.75,1.0,0.15,False,Report-Ready,Report-Ready,False,"{""early_warning"": ""Satisfied"", ""full_notification"": ""Satisfied""}",True

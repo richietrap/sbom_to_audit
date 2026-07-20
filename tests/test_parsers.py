@@ -12,6 +12,8 @@ from sbom_to_audit.parsers.nvd_client import extract_cvss_metrics
 from sbom_to_audit.parsers.osv_client import cve_aliases, query_osv
 from sbom_to_audit.parsers.telemetry_parser import execution_observed, parse_telemetry
 
+ROOT = Path(__file__).resolve().parents[1]
+
 
 def write_json(path: Path, value: object) -> Path:
     path.write_text(json.dumps(value), encoding="utf-8")
@@ -135,3 +137,22 @@ def test_nvd_cvss_metric_extraction() -> None:
     ] = 11.0
     with pytest.raises(ValueError, match="between 0 and 10"):
         extract_cvss_metrics(snapshot, "CVE-2026-0002")
+
+
+def test_cyclonedx_name_version_identity_and_bom_ref_path() -> None:
+    from sbom_to_audit.parsers.cyclonedx_parser import (
+        component_by_name_version,
+        dependency_path_by_bom_ref,
+        parse_cyclonedx,
+    )
+
+    document = parse_cyclonedx(ROOT / "data" / "sbom" / "rapid_pivot.cdx.json")
+    component = component_by_name_version(document, "session-router", "3.1.4")
+    assert component is not None
+    assert component["bom_ref"] == "component:session-router:3.1.4"
+    assert component["purl"] is None
+    assert dependency_path_by_bom_ref(document, component["bom_ref"]) == [
+        "product:remote-operations-console:5.8.0",
+        "pkg:npm/remote-session-core@6.0.0",
+        "component:session-router:3.1.4",
+    ]

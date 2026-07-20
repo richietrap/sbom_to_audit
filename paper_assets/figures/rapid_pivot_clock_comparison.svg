@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="510" viewBox="0 0 1120 510">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 z" fill="#222"/></marker></defs>
+<text x="45" y="42" font-family="sans-serif" font-size="23" font-weight="bold">Rapid Pivot: uncertainty resolution before versus after the 18-hour safeguard</text>
+<text x="1070" y="66" text-anchor="end" font-family="sans-serif" font-size="12">PILOT — not final paper evidence</text>
+<line x1="450" y1="75" x2="450" y2="430" stroke="#555" stroke-dasharray="6,5"/>
+<text x="450" y="67" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">τE = 18h</text>
+<text x="120" y="465" text-anchor="middle" font-family="sans-serif" font-size="12">T+2h</text>
+<text x="285" y="465" text-anchor="middle" font-family="sans-serif" font-size="12">T+12h</text>
+<text x="450" y="465" text-anchor="middle" font-family="sans-serif" font-size="12">T+18h</text>
+<text x="615" y="465" text-anchor="middle" font-family="sans-serif" font-size="12">T+20h</text>
+<text x="780" y="465" text-anchor="middle" font-family="sans-serif" font-size="12">T+22h</text>
+<text x="945" y="465" text-anchor="middle" font-family="sans-serif" font-size="12">T+72h</text>
+<text x="42" y="120" font-family="sans-serif" font-size="16" font-weight="bold">Rapid Pivot</text>
+<line x1="120" y1="155" x2="945" y2="155" stroke="#777"/>
+<rect x="55.0" y="130" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="120" y="152" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Prepare</text>
+<text x="120" y="170" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.522</text>
+<path d="M 186 155 L 217 155" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="220.0" y="130" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="285" y="152" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Prepare</text>
+<text x="285" y="170" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.522</text>
+<path d="M 351 155 L 382 155" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="385.0" y="130" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="450" y="152" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Escalate</text>
+<text x="450" y="170" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.522</text>
+<circle cx="450" cy="112" r="9" fill="white" stroke="#111"/>
+<text x="450" y="116" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold">!</text>
+<path d="M 516 155 L 547 155" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="550.0" y="130" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="615" y="152" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="615" y="170" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<path d="M 681 155 L 712 155" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="715.0" y="130" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="780" y="152" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="780" y="170" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<path d="M 846 155 L 877 155" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="880.0" y="130" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="945" y="152" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="945" y="170" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<text x="42" y="290" font-family="sans-serif" font-size="16" font-weight="bold">Early-resolution control</text>
+<line x1="120" y1="325" x2="945" y2="325" stroke="#777"/>
+<rect x="55.0" y="300" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="120" y="322" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Prepare</text>
+<text x="120" y="340" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.522</text>
+<path d="M 186 325 L 217 325" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="220.0" y="300" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="285" y="322" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="285" y="340" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<path d="M 351 325 L 382 325" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="385.0" y="300" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="450" y="322" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="450" y="340" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<path d="M 516 325 L 547 325" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="550.0" y="300" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="615" y="322" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="615" y="340" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<path d="M 681 325 L 712 325" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="715.0" y="300" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="780" y="322" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="780" y="340" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<path d="M 846 325 L 877 325" stroke="#222" marker-end="url(#arrow)"/>
+<rect x="880.0" y="300" width="130" height="50" rx="8" fill="#f4f4f4" stroke="#222"/>
+<text x="945" y="322" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">Report-Ready</text>
+<text x="945" y="340" text-anchor="middle" font-family="sans-serif" font-size="11">Uₜ=0.150</text>
+<text x="560" y="495" text-anchor="middle" font-family="sans-serif" font-size="12">Both replays use the same source bytes, target, deadline profile, and event clock; only the release time of uncertainty-resolving evidence differs.</text>
+</svg>

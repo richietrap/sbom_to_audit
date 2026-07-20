@@ -1,0 +1,11 @@
+event_type: identity_resolution
+event_id: ID-RP-CONFIRM-001
+timestamp: '2026-12-01T19:00:00Z'
+component_bom_ref: component:session-router:3.1.4
+resolved_component_purl: pkg:npm/session-router@3.1.4
+matching_method: exact_cpe_confirmed
+confirmed_cpe: cpe:2.3:a:example:session-router:3.1.4:*:*:*:*:*:*:*
+actor_id: psirt-identity-analyst
+actor_role: PSIRT analyst
+rationale: Vendor CPE mapping confirms that the name/version SBOM component is the
+  advisory component.

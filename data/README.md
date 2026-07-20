@@ -25,3 +25,7 @@ The False Comfort files are controlled fictional artefacts. The CSAF product hel
 ## Operational Outlier source family
 
 The Operational Outlier files are controlled fictional artefacts. The primary and negative-control replays share the same SBOM, OSV, NVD-shaped CVSS, KEV, EPSS, CSAF, and reachability evidence. Their asset-context files intentionally differ in criticality and deployment scope so the frozen `I_t` mechanism can be tested without changing technical severity or applicability.
+
+## Rapid Pivot source family
+
+The Rapid Pivot files are controlled fictional artefacts. The CycloneDX component intentionally omits a PURL but includes a unique normalized name/version and CPE. Initial replay events release no EPSS, CSAF/VEX, telemetry, or identity-confirmation source, allowing intermediate missingness to be measured by the frozen uncertainty equation. A later identity-resolution record confirms the canonical component PURL through the selected component's exact CPE. The main and temporal-control scenarios reuse the same source catalog and differ only in when the resolving artefacts are released.

@@ -1,0 +1,37 @@
+{
+  "run_id": "RPC-STAGE5-PILOT-001",
+  "scenario_id": "rapid_pivot_control",
+  "evaluation_status": "PILOT_NEGATIVE_CONTROL",
+  "input_manifest_hash": "814b42454c1633fcb18de3e028c5df0ae437fc30018a42226ef97841f2f53e9f",
+  "output_manifest_hash": "0076764ddd98a319c4901630808a95b62f7abbe98998616421c935ecbf082c1b",
+  "final_state": "Report-Ready",
+  "authorized_state": "Report",
+  "orchestration_metrics": {
+    "E_t": 0.85,
+    "A_t": 1.0,
+    "I_t": 0.75,
+    "M_t": 1.0,
+    "U_t": 0.15,
+    "C_t": false
+  },
+  "effectiveness_metrics": {
+    "EC": 1.0,
+    "TR": 1.0,
+    "CD": null,
+    "CA": null,
+    "AR": 1.0,
+    "SC": 1.0,
+    "EPG": 1
+  },
+  "clock_safeguard": {
+    "hours": 18.0,
+    "opportunities": 0,
+    "triggers": 0
+  },
+  "limitations": [
+    "Controlled fictional temporal replay",
+    "Not an industrial case study",
+    "The 18-hour safeguard is internal and not a statutory deadline",
+    "Uncertainty and identity-confidence parameters are not externally calibrated"
+  ]
+}

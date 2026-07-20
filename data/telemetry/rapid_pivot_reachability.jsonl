@@ -1,0 +1,1 @@
+{"event_id":"TEL-RP-REACH-001","timestamp":"2026-12-01T19:30:00Z","deployment_id":"remote-ops-prod","product_variant":"edge-remote-profile","environment":"production","component_purl":"pkg:npm/session-router@3.1.4","execution_observed":false,"reachability_confirmed":true,"malicious_exploitation_observed":false,"observation_type":"targeted_reachability_confirmation"}

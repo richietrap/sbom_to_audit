@@ -18,6 +18,8 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
         "ghost_logger": 15,
         "operational_outlier": 14,
         "operational_outlier_control": 10,
+        "rapid_pivot": 13,
+        "rapid_pivot_control": 13,
     }
 
 

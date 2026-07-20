@@ -3,5 +3,6 @@ ghost_logger,Silent Transitive / Ghost-Logger,controlled_fictional_scenario_real
 false_comfort,False Comfort,controlled_scenario_real_format,valid but stale or wrongly scoped supplier assertion,PILOT,PILOT
 operational_outlier,Operational Outlier,controlled_scenario_real_format,critical deployment context and impact,PILOT,PILOT
 operational_outlier_control,Operational Outlier — Counterfactual Lower-Impact Control,controlled_fictional_counterfactual_control_real_format,matched source evidence with only asset criticality and deployment scope lowered,PILOT_NEGATIVE_CONTROL,NOT_APPLICABLE
-rapid_pivot,Rapid Pivot,controlled_scenario_real_format,uncertainty and clock-aware escalation,PLANNED,PLANNED
+rapid_pivot,Rapid Pivot,controlled_scenario_real_format,uncertainty and clock-aware escalation,PILOT,PILOT
 cve_2024_3400,Operation MidnightEclipse,public_historical_replay,public evidence chronology and transferability,CANDIDATE,NOT_APPLICABLE
+rapid_pivot_control,Rapid Pivot — Early Resolution Control,controlled_fictional_temporal_control_real_format,matched evidence with uncertainty resolved before tau_E,PILOT_NEGATIVE_CONTROL,NOT_APPLICABLE

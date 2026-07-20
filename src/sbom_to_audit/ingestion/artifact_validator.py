@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from sbom_to_audit.model.identity import identity_confidence
 from sbom_to_audit.parsers.asset_context_parser import parse_asset_context
 from sbom_to_audit.parsers.csaf_parser import parse_csaf
 from sbom_to_audit.parsers.cyclonedx_parser import parse_cyclonedx
@@ -28,6 +29,7 @@ ARTIFACT_MEDIA_TYPES: dict[str, str] = {
     "conflict_resolution": "application/yaml",
     "human_authorization": "application/yaml",
     "milestone_satisfaction": "application/yaml",
+    "identity_resolution": "application/yaml",
 }
 
 
@@ -147,6 +149,23 @@ def validate_and_parse(
         raise ValueError(
             f"{path} declares event_type={declared_type!r}, expected {artifact_type!r}"
         )
+    if artifact_type == "identity_resolution":
+        required = {
+            "component_bom_ref",
+            "resolved_component_purl",
+            "matching_method",
+            "timestamp",
+        }
+        missing = sorted(required - set(event_data))
+        if missing:
+            raise ValueError(f"{path} identity resolution is missing fields: {missing}")
+        method = str(event_data.get("matching_method") or "")
+        identity_confidence(method)
+        if (
+            method == "exact_cpe_confirmed"
+            and not str(event_data.get("confirmed_cpe") or "").strip()
+        ):
+            raise ValueError(f"{path} exact_cpe_confirmed requires confirmed_cpe")
     return (
         ARTIFACT_MEDIA_TYPES[artifact_type],
         "read_yaml",

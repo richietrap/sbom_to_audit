@@ -1,0 +1,7 @@
+event_index,delta_t_hours,main_U_t,control_U_t,main_A_t,control_A_t,main_state,control_state,main_clock_safeguard,control_clock_safeguard,deadline_posture_equal
+1,2.0,0.522222,0.522222,0.24,0.24,Prepare,Prepare,False,False,True
+2,12.0,0.522222,0.15,0.24,1.0,Prepare,Report-Ready,False,False,True
+3,18.0,0.522222,0.15,0.24,1.0,Escalate,Report-Ready,True,False,True
+4,20.0,0.15,0.15,1.0,1.0,Report-Ready,Report-Ready,False,False,True
+5,22.0,0.15,0.15,1.0,1.0,Report-Ready,Report-Ready,False,False,True
+6,72.0,0.15,0.15,1.0,1.0,Report-Ready,Report-Ready,False,False,True

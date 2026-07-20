@@ -67,6 +67,54 @@ def component_by_purl(document: dict[str, Any], purl: str) -> dict[str, Any] | N
     return None
 
 
+def component_by_name_version(
+    document: dict[str, Any], name: str, version: str | None = None
+) -> dict[str, Any] | None:
+    """Return a unique component matching normalized name and optional version."""
+
+    normalized_name = str(name).strip().lower().replace("_", "-")
+    normalized_version = str(version).strip() if version is not None else None
+    matches: list[dict[str, Any]] = []
+    candidates = [*(document.get("components") or []), document.get("metadata_component") or {}]
+    for component in candidates:
+        if not isinstance(component, dict):
+            continue
+        candidate_name = str(component.get("name") or "").strip().lower().replace("_", "-")
+        candidate_version = str(component.get("version") or "").strip()
+        if candidate_name != normalized_name:
+            continue
+        if normalized_version is not None and candidate_version != normalized_version:
+            continue
+        matches.append(component)
+    if len(matches) > 1:
+        raise ValueError(f"component identity is ambiguous for name={name!r}, version={version!r}")
+    return matches[0] if matches else None
+
+
+def dependency_path_by_bom_ref(document: dict[str, Any], target_bom_ref: str) -> list[str] | None:
+    """Find the shortest root-to-component path using a selected BOM reference."""
+
+    metadata = document.get("metadata_component") or {}
+    root_ref = str(metadata.get("bom-ref") or metadata.get("purl") or "").strip()
+    target_ref = str(target_bom_ref or "").strip()
+    if not root_ref or not target_ref:
+        return None
+
+    graph = document.get("dependency_graph") or {}
+    queue: deque[tuple[str, list[str]]] = deque([(root_ref, [root_ref])])
+    visited: set[str] = set()
+    while queue:
+        current, path = queue.popleft()
+        if current == target_ref:
+            return path
+        if current in visited:
+            continue
+        visited.add(current)
+        for child in graph.get(current, []):
+            queue.append((str(child), [*path, str(child)]))
+    return None
+
+
 def dependency_path(document: dict[str, Any], target_purl: str) -> list[str] | None:
     """Find the shortest root-to-target dependency path using BOM references."""
 

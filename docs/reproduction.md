@@ -63,3 +63,7 @@ Use an isolated virtual environment inside Colab rather than Colab's global pack
 ## 6. Paper assets
 
 `paper_assets/scripts/build_stage2_assets.py`, `build_stage3_assets.py`, and `build_stage4_assets.py` generate pilot SVG figures and CSV tables from registered replay outputs. Assets remain `PILOT` until the exact Git commit, GitHub checks, Colab evidence bundle, and SHA-256 are preserved and the final evaluation is frozen.
+
+## Stage 5 checkpoint
+
+After GitHub regression and quality workflows pass, run `notebooks/stage5_colab_checkpoint.ipynb` from the exact GitHub reference. Download `stage5_colab_checkpoint_evidence.zip` and preserve both the 40-character tested commit and the printed SHA-256 digest. The bundle includes all seven scenario outputs, the Stage 5 release report, regenerated paper assets, and environment metadata. Do not mark Stage 5 assets manuscript-eligible solely because the notebook executed; checkpoint registration and later evaluation freeze remain separate steps.
