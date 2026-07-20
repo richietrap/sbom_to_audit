@@ -1,0 +1,25 @@
+{
+  "run_id": "OOC-STAGE4-PILOT-001",
+  "scenario_id": "operational_outlier_control",
+  "evaluation_status": "PILOT_NEGATIVE_CONTROL",
+  "input_manifest_hash": "5c56c371335421f5a64d7fd72794e2ff0181ecb6b1b60b2164af1642c13fae6e",
+  "output_manifest_hash": "05063e165e2ded432f1ff30f918e9f944cbdd5883d56153b2bd6ba686df96ac3",
+  "final_state": "Monitor",
+  "authorized_state": null,
+  "orchestration_metrics": {
+    "E_t": 0.85,
+    "A_t": 1.0,
+    "I_t": 0.5,
+    "M_t": 0.0,
+    "U_t": 0.0,
+    "C_t": false
+  },
+  "cvss_base_score": 6.5,
+  "cvss_base_severity": "MEDIUM",
+  "limitations": [
+    "Controlled fictional counterfactual scenario",
+    "Not an industrial case study",
+    "Not a legal reportability determination",
+    "Thresholds not externally validated"
+  ]
+}

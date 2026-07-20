@@ -5,7 +5,7 @@ This directory contains committed controlled inputs and frozen public-feed-shape
 - `sbom/` — CycloneDX or SPDX artefacts;
 - `csaf/` — CSAF/VEX advisories;
 - `osv_snapshots/` — frozen OSV response shapes;
-- `nvd_snapshots/` — optional NVD comparison snapshots;
+- `nvd_snapshots/` — frozen NVD API 2.0 response shapes used for contextual CVSS evidence;
 - `kev_snapshots/` — frozen CISA KEV catalogue shapes;
 - `epss_snapshots/` — frozen FIRST EPSS response shapes;
 - `telemetry/` — controlled local runtime and reachability records;
@@ -21,3 +21,7 @@ The scenario YAML must not contain source hashes or normalized results. Hashes a
 ## False Comfort source family
 
 The False Comfort files are controlled fictional artefacts. The CSAF product helper declares `standard-profile` through a model number; the primary asset and telemetry declare `legacy-plugin-profile`, while the negative-control asset declares `standard-profile`. These values are source data, not precomputed orchestration conclusions.
+
+## Operational Outlier source family
+
+The Operational Outlier files are controlled fictional artefacts. The primary and negative-control replays share the same SBOM, OSV, NVD-shaped CVSS, KEV, EPSS, CSAF, and reachability evidence. Their asset-context files intentionally differ in criticality and deployment scope so the frozen `I_t` mechanism can be tested without changing technical severity or applicability.

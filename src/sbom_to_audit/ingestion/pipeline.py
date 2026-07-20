@@ -28,6 +28,7 @@ from sbom_to_audit.parsers.csaf_parser import product_scope_for, product_status_
 from sbom_to_audit.parsers.cyclonedx_parser import component_by_purl, dependency_path
 from sbom_to_audit.parsers.epss_client import extract_percentile
 from sbom_to_audit.parsers.kev_client import kev_entry
+from sbom_to_audit.parsers.nvd_client import extract_cvss_metrics
 from sbom_to_audit.parsers.osv_client import cve_aliases
 from sbom_to_audit.parsers.telemetry_parser import (
     execution_observed,
@@ -158,22 +159,36 @@ def _derive_claims(
             )
             if status is None:
                 raise ValueError("CSAF/VEX did not contain a target product status")
-            affected_value = status in {"known_affected", "first_affected", "last_affected"}
             supplier_scope = _scope(
                 target,
                 dimensions=product_scope_for(data, target["csaf_product_id"]),
             )
-            claims.append(
-                _claim(
-                    source,
-                    suffix="AFFECTEDNESS",
-                    proposition="product_affectedness",
-                    value=affected_value,
-                    confidence=0.85,
-                    scope=supplier_scope,
-                    derivation_rule=f"csaf_product_status:{status}",
+            affected_statuses = {"known_affected", "first_affected", "last_affected"}
+            not_affected_statuses = {"known_not_affected", "first_fixed", "fixed"}
+            if status in affected_statuses | not_affected_statuses:
+                claims.append(
+                    _claim(
+                        source,
+                        suffix="AFFECTEDNESS",
+                        proposition="product_affectedness",
+                        value=status in affected_statuses,
+                        confidence=0.85,
+                        scope=supplier_scope,
+                        derivation_rule=f"csaf_product_status:{status}",
+                    )
                 )
-            )
+            else:
+                claims.append(
+                    _claim(
+                        source,
+                        suffix="ASSESSMENT-STATUS",
+                        proposition="supplier_assessment_status",
+                        value=status,
+                        confidence=0.85,
+                        scope=supplier_scope,
+                        derivation_rule=f"csaf_product_status:{status}",
+                    )
+                )
         elif source.artifact_type == "osv_snapshot":
             assert isinstance(data, dict)
             aliases = cve_aliases(data)
@@ -187,6 +202,33 @@ def _derive_claims(
                     scope=general_scope,
                     derivation_rule="osv_alias_contains_target_cve",
                 )
+            )
+        elif source.artifact_type == "nvd_snapshot":
+            assert isinstance(data, dict)
+            metrics = extract_cvss_metrics(data, target["cve_id"])
+            if metrics is None:
+                raise ValueError("NVD snapshot did not contain target CVSS metrics")
+            claims.extend(
+                [
+                    _claim(
+                        source,
+                        suffix="CVSS-BASE-SCORE",
+                        proposition="cvss_base_score",
+                        value=metrics["base_score"],
+                        confidence=0.95,
+                        scope=general_scope,
+                        derivation_rule="nvd_primary_cvss_metric",
+                    ),
+                    _claim(
+                        source,
+                        suffix="CVSS-BASE-SEVERITY",
+                        proposition="cvss_base_severity",
+                        value=metrics["base_severity"],
+                        confidence=0.95,
+                        scope=general_scope,
+                        derivation_rule="nvd_primary_cvss_metric",
+                    ),
+                ]
             )
         elif source.artifact_type == "kev_snapshot":
             assert isinstance(data, dict)
@@ -419,6 +461,8 @@ def _build_snapshot(
         raise ValueError("target component is not reachable in the SBOM dependency graph")
 
     osv = _latest_source(registry, released, "osv_snapshot")
+    nvd_items = _sources_of_type(registry, released, "nvd_snapshot")
+    nvd = nvd_items[-1] if nvd_items else None
     kev = _latest_source(registry, released, "kev_snapshot")
     epss = _latest_source(registry, released, "epss_snapshot")
     vex = _latest_source(registry, released, "csaf_vex")
@@ -427,6 +471,8 @@ def _build_snapshot(
     telemetry_sources = _sources_of_type(registry, released, "runtime_telemetry")
 
     assert isinstance(osv.data, dict)
+    if nvd is not None:
+        assert isinstance(nvd.data, dict)
     assert isinstance(kev.data, dict)
     assert isinstance(epss.data, dict)
     assert isinstance(vex.data, dict)
@@ -484,6 +530,17 @@ def _build_snapshot(
             "osv_reference": osv.source.relative_path,
             "kev_reference": kev.source.relative_path,
             "epss_reference": epss.source.relative_path,
+            **(
+                {
+                    "cvss_base_score": metrics["base_score"],
+                    "cvss_base_severity": metrics["base_severity"],
+                    "cvss_vector": metrics["vector_string"],
+                    "nvd_reference": nvd.source.relative_path,
+                }
+                if nvd is not None
+                and (metrics := extract_cvss_metrics(nvd.data, target["cve_id"])) is not None
+                else {}
+            ),
         },
         "supplier_assertions": {
             "csaf_vex_status": effective_vex_status,

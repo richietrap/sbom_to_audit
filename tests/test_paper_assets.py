@@ -57,3 +57,36 @@ def test_stage3_assets_compare_scope_mismatch_and_negative_control(tmp_path: Pat
     assert "applicable" in scope_table
     assert "legacy-plugin-profile" in scope_table
     assert "standard-profile" in scope_table
+
+
+def test_stage4_assets_compare_operational_impact_with_matched_evidence(tmp_path: Path) -> None:
+    from paper_assets.scripts.build_stage4_assets import build as build_stage4
+
+    output_root = tmp_path / "outputs"
+    for scenario_name in (
+        "ghost_logger",
+        "false_comfort",
+        "false_comfort_control",
+        "operational_outlier",
+        "operational_outlier_control",
+    ):
+        run(ROOT / "data" / "scenarios" / f"{scenario_name}.yaml", output_root)
+    destination = tmp_path / "stage4_assets"
+    generated = build_stage4(output_root, destination)
+    assert all(Path(path).is_file() for path in generated.values())
+    metadata = json.loads(
+        (destination / "data" / "stage4_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT"
+    assert metadata["manuscript_eligible"] is False
+    assert len(metadata["generated_asset_hashes"]) == 4
+
+    comparison = (destination / "tables" / "operational_impact_comparison.csv").read_text(
+        encoding="utf-8"
+    )
+    assert "6.5" in comparison
+    assert "MEDIUM" in comparison
+    assert "Report-Ready" in comparison
+    assert "Monitor" in comparison
+    assert "critical" in comparison
+    assert "medium" in comparison

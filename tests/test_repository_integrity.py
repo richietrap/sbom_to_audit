@@ -16,6 +16,8 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
         "false_comfort": 13,
         "false_comfort_control": 8,
         "ghost_logger": 15,
+        "operational_outlier": 14,
+        "operational_outlier_control": 10,
     }
 
 

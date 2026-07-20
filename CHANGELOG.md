@@ -173,3 +173,31 @@ All notable repository design and implementation changes are recorded here.
 - False Comfort demonstrates that a valid `known_not_affected` assertion for a standard product variant does not suppress evidence from a disjoint legacy-plugin deployment;
 - the negative control confirms that the same assertion is applied when the deployment scope matches and no contradictory local evidence exists;
 - these are controlled conformance replays, not industrial validation or legal reportability determinations.
+
+## [0.4.0] - 2026-07-20
+
+### Added
+
+- an offline NVD API 2.0 snapshot parser for target-CVE CVSS base score, severity, and vector context;
+- traceable CVSS contextual claims without changing the frozen orchestration equations;
+- the Operational Outlier controlled scenario and an exact-source counterfactual lower-impact control;
+- Stage 4 pilot comparison figure, temporal replay table, impact-comparison table, run records, and claim-matrix entries;
+- ADR-007 documenting the separation of technical severity and operational impact.
+
+### Corrected
+
+- CSAF `under_investigation` is now retained as a supplier-assessment-status claim rather than incorrectly converted into `product_affectedness=false`;
+- NVD source validation fails closed when the configured target CVE lacks a usable CVSS metric.
+
+### Preserved
+
+- EvidencePack Schema v0.2 and the 34-field Evidence Completeness denominator;
+- the frozen state thresholds and impact equation;
+- Ghost-Logger's conflict lifecycle and False Comfort's scope-aware assurance behaviour;
+- human authorization and milestone satisfaction as separate events.
+
+### Pilot interpretation
+
+- Operational Outlier and its control share byte-identical non-asset sources, deployment identity, timestamps, deadline profile, CVSS 6.5 MEDIUM, KEV, EPSS, supplier investigation status, and reachability evidence;
+- `critical` plus `widespread` context yields `I_t=1.0` and `Report-Ready`, while `medium` plus `limited` yields `I_t=0.5` and `Monitor`;
+- the pair demonstrates controlled rule conformance, not external decision accuracy, validated thresholds, or legal reportability.

@@ -17,13 +17,19 @@ python -m sbom_to_audit.cli --scenario data/scenarios/ghost_logger.yaml
 python paper_assets/scripts/build_stage2_assets.py \
   --output-root outputs \
   --destination paper_assets
+python paper_assets/scripts/build_stage3_assets.py \
+  --output-root outputs \
+  --destination paper_assets
+python paper_assets/scripts/build_stage4_assets.py \
+  --output-root outputs \
+  --destination paper_assets
 python -m pytest
 python scripts/release_check.py
 ```
 
 ## 3. Generated outputs
 
-The Stage 2 replay generates six deterministic products:
+Each scenario replay generates six deterministic products; for Ghost-Logger these are:
 
 ```text
 outputs/evidence_packs/ghost_logger.json
@@ -56,4 +62,4 @@ Use an isolated virtual environment inside Colab rather than Colab's global pack
 
 ## 6. Paper assets
 
-`paper_assets/scripts/build_stage2_assets.py` generates pilot SVG figures and CSV tables from the replay outputs. Stage 2 assets are labelled `PILOT` and are not eligible for final manuscript claims until regenerated from a `FROZEN_EVALUATION` run with an exact Git commit.
+`paper_assets/scripts/build_stage2_assets.py`, `build_stage3_assets.py`, and `build_stage4_assets.py` generate pilot SVG figures and CSV tables from registered replay outputs. Assets remain `PILOT` until the exact Git commit, GitHub checks, Colab evidence bundle, and SHA-256 are preserved and the final evaluation is frozen.

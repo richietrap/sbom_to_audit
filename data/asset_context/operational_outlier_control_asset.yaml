@@ -1,0 +1,8 @@
+asset_id: regional-water-control-plane
+asset_criticality: medium
+deployment_scope: limited
+product_variant: treatment-control-profile
+deployment_id: water-region-prod
+environment: production
+internet_exposed: false
+context_timestamp: '2026-11-01T08:40:00Z'

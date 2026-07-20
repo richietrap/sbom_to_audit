@@ -8,6 +8,7 @@ from sbom_to_audit.parsers.csaf_parser import parse_csaf
 from sbom_to_audit.parsers.cyclonedx_parser import parse_cyclonedx
 from sbom_to_audit.parsers.epss_client import extract_percentile, query_epss
 from sbom_to_audit.parsers.kev_client import kev_entry, load_kev_catalog
+from sbom_to_audit.parsers.nvd_client import extract_cvss_metrics
 from sbom_to_audit.parsers.osv_client import cve_aliases, query_osv
 from sbom_to_audit.parsers.telemetry_parser import execution_observed, parse_telemetry
 
@@ -98,3 +99,39 @@ def test_offline_public_intelligence_helpers(tmp_path: Path) -> None:
     epss = query_epss("CVE-2026-0001", snapshot_path=epss_path, offline=True)
     assert extract_percentile(epss) == 0.91
     assert extract_percentile({"data": []}) is None
+
+
+def test_nvd_cvss_metric_extraction() -> None:
+    snapshot = {
+        "vulnerabilities": [
+            {
+                "cve": {
+                    "id": "CVE-2026-0002",
+                    "metrics": {
+                        "cvssMetricV31": [
+                            {
+                                "type": "Primary",
+                                "source": "example",
+                                "cvssData": {
+                                    "baseScore": 6.5,
+                                    "baseSeverity": "MEDIUM",
+                                    "vectorString": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:H",
+                                },
+                            }
+                        ]
+                    },
+                }
+            }
+        ]
+    }
+    metrics = extract_cvss_metrics(snapshot, "CVE-2026-0002")
+    assert metrics is not None
+    assert metrics["base_score"] == 6.5
+    assert metrics["base_severity"] == "MEDIUM"
+    assert extract_cvss_metrics(snapshot, "CVE-2026-9999") is None
+
+    snapshot["vulnerabilities"][0]["cve"]["metrics"]["cvssMetricV31"][0]["cvssData"][
+        "baseScore"
+    ] = 11.0
+    with pytest.raises(ValueError, match="between 0 and 10"):
+        extract_cvss_metrics(snapshot, "CVE-2026-0002")

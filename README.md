@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.3.0 implements Stage 3 scope-aware evidence orchestration. It preserves the corrected Ghost-Logger vertical slice and adds False Comfort plus a scope-matched negative control. Supplier assurances are retained but only applied when their declared product-variant scope covers the active deployment. All cases remain controlled and fictional and must not be described as industrial case studies.
+Version 0.4.0 implements Stage 4 Operational Outlier while preserving Ghost-Logger and False Comfort. It adds NVD-shaped CVSS context, correct handling of CSAF `under_investigation`, and an exact-source counterfactual lower-impact control. The controlled pair reuses the same non-asset source bytes, deployment identity, timestamps, and deadline profile while varying only asset criticality and deployment scope. All cases remain fictional and must not be described as industrial case studies.
 
 ## Research questions
 
@@ -34,6 +34,9 @@ python paper_assets/scripts/build_stage2_assets.py \
   --output-root outputs \
   --destination paper_assets
 python paper_assets/scripts/build_stage3_assets.py \
+  --output-root outputs \
+  --destination paper_assets
+python paper_assets/scripts/build_stage4_assets.py \
   --output-root outputs \
   --destination paper_assets
 python -m pytest
@@ -72,6 +75,13 @@ The distinction between `Report-Ready` and human-authorized `Report` is intentio
 - **False Comfort negative control:** the same assertion applies to a matching `standard-profile` deployment and produces `Document No-Report` when no local reachability or execution is observed.
 
 Scope reasoning is generic application logic. No scenario identifier or product name is embedded in `src/`.
+
+## Stage 4 operational-impact scenario
+
+- **Operational Outlier:** a CVSS 6.5 MEDIUM vulnerability is KEV-listed and reachable in a critical, widespread operational deployment; the case reaches `Report-Ready` once applicability is confirmed.
+- **Counterfactual lower-impact control:** the same non-asset source files, deployment identity, timestamps, and deadline profile are replayed with only `asset_criticality=medium` and `deployment_scope=limited`; the case remains `Monitor`.
+
+The comparison preserves technical severity as contextual evidence and isolates the configured impact mechanism. `under_investigation` is retained as a supplier-assessment status rather than misrepresented as a not-affected conclusion.
 
 ## Research-evidence accumulation
 

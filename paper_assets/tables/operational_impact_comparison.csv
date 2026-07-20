@@ -1,0 +1,3 @@
+scenario_id,cvss_base_score,cvss_base_severity,kev_status,epss_percentile,E_t,A_t,asset_criticality,deployment_scope,I_t,state_after_reachability,final_state
+operational_outlier,6.5,MEDIUM,True,0.72,0.85,1.0,critical,widespread,1.0,Report-Ready,Report-Ready
+operational_outlier_control,6.5,MEDIUM,True,0.72,0.85,1.0,medium,limited,0.5,Monitor,Monitor

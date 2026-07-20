@@ -1,0 +1,10 @@
+event_type: human_authorization
+event_id: DEC-OO-AUTH-001
+timestamp: "2026-11-01T20:00:00Z"
+actor_id: psirt-legal-reviewer-03
+actor_role: psirt_legal_reviewer
+actor_type: human
+authorized_state: Report
+rationale: >-
+  High operational-impact evidence and confirmed applicability reviewed;
+  reporting authorized.

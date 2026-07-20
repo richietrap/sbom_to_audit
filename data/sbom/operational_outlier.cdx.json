@@ -1,0 +1,47 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:79688190-57cf-43fa-87d4-989d2db38041",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-01T08:05:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "product:municipal-water-controller:7.4.0",
+      "group": "example-civic-systems",
+      "name": "municipal-water-controller",
+      "version": "7.4.0",
+      "purl": "pkg:generic/municipal-water-controller@7.4.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/hydraulic-protocol@4.6.0",
+      "name": "hydraulic-protocol",
+      "version": "4.6.0",
+      "purl": "pkg:pypi/hydraulic-protocol@4.6.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/flow-parser@2.2.0",
+      "name": "flow-parser",
+      "version": "2.2.0",
+      "purl": "pkg:pypi/flow-parser@2.2.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "product:municipal-water-controller:7.4.0",
+      "dependsOn": ["pkg:pypi/hydraulic-protocol@4.6.0"]
+    },
+    {
+      "ref": "pkg:pypi/hydraulic-protocol@4.6.0",
+      "dependsOn": ["pkg:pypi/flow-parser@2.2.0"]
+    },
+    {
+      "ref": "pkg:pypi/flow-parser@2.2.0",
+      "dependsOn": []
+    }
+  ]
+}

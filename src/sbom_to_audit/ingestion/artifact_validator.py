@@ -10,6 +10,7 @@ from sbom_to_audit.parsers.csaf_parser import parse_csaf
 from sbom_to_audit.parsers.cyclonedx_parser import parse_cyclonedx
 from sbom_to_audit.parsers.epss_client import extract_percentile
 from sbom_to_audit.parsers.kev_client import kev_entry
+from sbom_to_audit.parsers.nvd_client import extract_cvss_metrics
 from sbom_to_audit.parsers.osv_client import cve_aliases
 from sbom_to_audit.parsers.telemetry_parser import parse_telemetry
 from sbom_to_audit.utils.io import read_json, read_yaml
@@ -18,6 +19,7 @@ ARTIFACT_MEDIA_TYPES: dict[str, str] = {
     "cyclonedx_sbom": "application/vnd.cyclonedx+json",
     "csaf_vex": "application/csaf+json",
     "osv_snapshot": "application/json",
+    "nvd_snapshot": "application/json",
     "kev_snapshot": "application/json",
     "epss_snapshot": "application/json",
     "runtime_telemetry": "application/x-ndjson",
@@ -78,6 +80,21 @@ def validate_and_parse(
             data,
             {
                 "cve_aliases": aliases,
+            },
+        )
+    if artifact_type == "nvd_snapshot":
+        data = _require_object(path)
+        metrics = extract_cvss_metrics(data, target_cve) if target_cve else None
+        if target_cve and metrics is None:
+            raise ValueError(f"{path} does not contain CVSS metrics for {target_cve}")
+        return (
+            ARTIFACT_MEDIA_TYPES[artifact_type],
+            "read_json+extract_cvss_metrics",
+            data,
+            {
+                "target_metrics_found": metrics is not None,
+                "base_score": metrics.get("base_score") if metrics else None,
+                "base_severity": metrics.get("base_severity") if metrics else None,
             },
         )
     if artifact_type == "kev_snapshot":

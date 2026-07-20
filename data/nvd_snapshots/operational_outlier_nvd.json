@@ -1,0 +1,35 @@
+{
+  "resultsPerPage": 1,
+  "startIndex": 0,
+  "totalResults": 1,
+  "format": "NVD_CVE",
+  "version": "2.0",
+  "timestamp": "2026-11-01T07:15:00.000Z",
+  "vulnerabilities": [
+    {
+      "cve": {
+        "id": "CVE-2026-43003",
+        "sourceIdentifier": "security@example.invalid",
+        "published": "2026-11-01T07:00:00.000Z",
+        "lastModified": "2026-11-01T07:00:00.000Z",
+        "vulnStatus": "Analyzed",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "source": "security@example.invalid",
+              "type": "Primary",
+              "cvssData": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:H",
+                "baseScore": 6.5,
+                "baseSeverity": "MEDIUM"
+              },
+              "exploitabilityScore": 1.8,
+              "impactScore": 4.7
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

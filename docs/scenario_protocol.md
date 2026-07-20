@@ -78,3 +78,11 @@ False Comfort is paired with a negative control:
 - the control uses a matching `standard-profile` deployment and no positive local applicability evidence.
 
 Both replays must use the same ingestion, scope, scoring, state, authorization, deadline, and output code. Scenario-specific identifiers are prohibited in application source.
+
+## Stage 4 Operational Outlier requirements
+
+Operational Outlier is paired with a counterfactual lower-impact control. The pair must reuse the exact same non-asset source files, target deployment identity, source timestamps, and deadline profile. The only changed evidence values are asset criticality and deployment scope, which produce different `I_t` values under the frozen impact equation.
+
+The main scenario uses `critical` plus `widespread` context and must reach `Report-Ready` once applicability is confirmed. The control uses `medium` plus `limited` context and must remain `Monitor` under otherwise matched evidence.
+
+CVSS is contextual evidence only and must not be silently added to the state equation. CSAF `under_investigation` must be retained as an assessment-status claim and must not be converted into `product_affectedness=false`.

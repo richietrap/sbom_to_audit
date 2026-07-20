@@ -1,0 +1,160 @@
+schema_version: "0.2"
+scenario:
+  scenario_id: operational_outlier
+  title: "Operational Outlier"
+  classification: controlled_fictional_scenario_real_format
+  evaluation_status: pilot
+  purpose: >-
+    Test whether high operational impact changes the recommendation when technical
+    severity is non-extreme but exploitation and deployment applicability evidence
+    are otherwise sufficient.
+  seeded_conflicts: 0
+  expected_final_state: Report-Ready
+  expected_final_authorized_state: Report
+
+case_metadata:
+  case_id: CASE-OPERATIONAL-OUTLIER-001
+  clock_start_time: "2026-11-01T08:00:00Z"
+  clock_basis: internal_awareness_proxy
+
+target:
+  product_purl: "pkg:generic/municipal-water-controller@7.4.0"
+  component_purl: "pkg:pypi/flow-parser@2.2.0"
+  cve_id: CVE-2026-43003
+  csaf_product_id: CSAFPID-MWC-740
+
+deadline_profile:
+  milestones:
+    - milestone_id: early_warning
+      deadline_hours: 24
+      due_soon_lead_hours: 6
+      breach_imminent_lead_hours: 2
+      applicable: true
+    - milestone_id: full_notification
+      deadline_hours: 72
+      due_soon_lead_hours: 12
+      breach_imminent_lead_hours: 2
+      applicable: true
+
+source_catalog:
+  - artifact_id: ART-OO-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/sbom/operational_outlier.cdx.json
+    timestamp: "2026-11-01T08:05:00Z"
+  - artifact_id: ART-OO-OSV-001
+    artifact_type: osv_snapshot
+    path: data/osv_snapshots/operational_outlier_osv.json
+    timestamp: "2026-11-01T08:10:00Z"
+  - artifact_id: ART-OO-NVD-001
+    artifact_type: nvd_snapshot
+    path: data/nvd_snapshots/operational_outlier_nvd.json
+    timestamp: "2026-11-01T08:12:00Z"
+  - artifact_id: ART-OO-KEV-001
+    artifact_type: kev_snapshot
+    path: data/kev_snapshots/operational_outlier_kev.json
+    timestamp: "2026-11-01T08:15:00Z"
+  - artifact_id: ART-OO-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/epss_snapshots/operational_outlier_epss.json
+    timestamp: "2026-11-01T08:18:00Z"
+  - artifact_id: ART-OO-VEX-001
+    artifact_type: csaf_vex
+    path: data/csaf/operational_outlier_vex.json
+    timestamp: "2026-11-01T09:00:00Z"
+  - artifact_id: ART-OO-ASSET-001
+    artifact_type: asset_context
+    path: data/asset_context/operational_outlier_asset.yaml
+    timestamp: "2026-11-01T08:40:00Z"
+  - artifact_id: ART-OO-MIT-INITIAL-001
+    artifact_type: mitigation_context
+    path: data/mitigation/operational_outlier_initial.yaml
+    timestamp: "2026-11-01T08:45:00Z"
+  - artifact_id: ART-OO-TELEM-INITIAL-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/operational_outlier_initial.jsonl
+    timestamp: "2026-11-01T09:30:00Z"
+  - artifact_id: ART-OO-TELEM-REACH-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/operational_outlier_reachability.jsonl
+    timestamp: "2026-11-01T14:00:00Z"
+  - artifact_id: ART-OO-AUTH-001
+    artifact_type: human_authorization
+    path: data/decision_records/operational_outlier_authorization.yaml
+    timestamp: "2026-11-01T20:00:00Z"
+  - artifact_id: ART-OO-SUB-EARLY-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/operational_outlier_early_warning_submission.yaml
+    timestamp: "2026-11-01T20:00:00Z"
+  - artifact_id: ART-OO-MIT-VERIFIED-001
+    artifact_type: mitigation_context
+    path: data/mitigation/operational_outlier_verified.yaml
+    timestamp: "2026-11-04T08:00:00Z"
+  - artifact_id: ART-OO-SUB-FULL-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/operational_outlier_full_notification_submission.yaml
+    timestamp: "2026-11-04T08:00:00Z"
+
+replay_events:
+  - event_id: EVT-OO-002H
+    timestamp: "2026-11-01T10:00:00Z"
+    description: >-
+      A medium-severity vulnerability is present and listed in KEV, but the
+      supplier remains under investigation and local reachability is not yet
+      confirmed.
+    release_artifact_ids:
+      - ART-OO-SBOM-001
+      - ART-OO-OSV-001
+      - ART-OO-NVD-001
+      - ART-OO-KEV-001
+      - ART-OO-EPSS-001
+      - ART-OO-VEX-001
+      - ART-OO-ASSET-001
+      - ART-OO-MIT-INITIAL-001
+      - ART-OO-TELEM-INITIAL-001
+    expected_state: Monitor
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+
+  - event_id: EVT-OO-006H
+    timestamp: "2026-11-01T14:00:00Z"
+    description: >-
+      Local telemetry confirms reachability in a critical, widespread water-control
+      deployment. Operational impact raises the case to Report-Ready despite the
+      non-extreme CVSS base severity.
+    release_artifact_ids:
+      - ART-OO-TELEM-REACH-001
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+
+  - event_id: EVT-OO-012H
+    timestamp: "2026-11-01T20:00:00Z"
+    description: >-
+      A human reviewer authorizes reporting and separate evidence satisfies the
+      configured early-warning milestone.
+    release_artifact_ids:
+      - ART-OO-AUTH-001
+      - ART-OO-SUB-EARLY-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: On Track
+
+  - event_id: EVT-OO-072H
+    timestamp: "2026-11-04T08:00:00Z"
+    description: >-
+      Verified mitigation and full-notification evidence complete the controlled
+      replay without changing the recommendation or human authorization.
+    release_artifact_ids:
+      - ART-OO-MIT-VERIFIED-001
+      - ART-OO-SUB-FULL-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: Satisfied

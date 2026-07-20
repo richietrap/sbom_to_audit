@@ -1,0 +1,25 @@
+{
+  "query": {
+    "package": {
+      "purl": "pkg:pypi/flow-parser@2.2.0"
+    }
+  },
+  "vulns": [
+    {
+      "id": "OSV-2026-OO43003",
+      "aliases": ["CVE-2026-43003"],
+      "published": "2026-11-01T07:10:00Z",
+      "modified": "2026-11-01T07:10:00Z",
+      "affected": [
+        {
+          "package": {
+            "ecosystem": "PyPI",
+            "name": "flow-parser",
+            "purl": "pkg:pypi/flow-parser"
+          },
+          "versions": ["2.2.0"]
+        }
+      ]
+    }
+  ]
+}

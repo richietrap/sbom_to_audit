@@ -1,0 +1,1 @@
+{"event_id":"TEL-OO-INITIAL-001","timestamp":"2026-11-01T09:30:00Z","deployment_id":"water-region-prod","product_variant":"treatment-control-profile","environment":"production","component_purl":"pkg:pypi/flow-parser@2.2.0","execution_observed":false,"reachability_confirmed":false,"malicious_exploitation_observed":false,"observation_type":"initial_runtime_observation"}

@@ -1,0 +1,6 @@
+scenario_id,event_count,source_count,cvss_base_score,final_state,authorized_state,E_t,A_t,I_t,C_t,SC,TR
+ghost_logger,5,15,,Report-Ready,Report,0.85,1.0,0.75,False,1.0,1.0
+false_comfort,4,13,,Report-Ready,Report,0.85,1.0,0.75,False,1.0,1.0
+false_comfort_control,1,8,,Document No-Report,,0.85,0.1,0.75,False,1.0,1.0
+operational_outlier,4,14,6.5,Report-Ready,Report,0.85,1.0,1.0,False,1.0,1.0
+operational_outlier_control,2,10,6.5,Monitor,,0.85,1.0,0.5,False,1.0,1.0

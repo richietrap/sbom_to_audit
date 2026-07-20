@@ -1,0 +1,36 @@
+{
+  "asset_status": "PILOT",
+  "manuscript_eligible": false,
+  "source_run_ids": [
+    "GL-STAGE2-0-1-PILOT-001",
+    "FC-STAGE3-PILOT-001",
+    "FCC-STAGE3-PILOT-001",
+    "OO-STAGE4-PILOT-001",
+    "OOC-STAGE4-PILOT-001"
+  ],
+  "generation_script": "paper_assets/scripts/build_stage4_assets.py",
+  "generation_script_hash": "c3e6b0da61ae38680ff26e474137b74710dafe805981db334c843a09d56ecb15",
+  "source_data_hashes": {
+    "evidence_packs/ghost_logger.json": "6254cf7f9fc6a35fb7cb6203ecf5d57db7c16084988ac93836864b150b274393",
+    "state_logs/ghost_logger.csv": "a2473bc1eebd10a1b4c31c6f885737bb6e6944c3fa89ecc7206d5551072fbb57",
+    "metrics/ghost_logger_metrics.json": "403777aa00e87bd859df568037d0a9fea73628e6d1474095ee3ea6415a588f47",
+    "evidence_packs/false_comfort.json": "c1ccfda94b2739f1b8bdadd6b222fc330563398eb2334e37fac906683ea618f4",
+    "state_logs/false_comfort.csv": "27f29c7f6699425bb5d105e754471e21008ec7217a88ca3db849da7f5be02bbf",
+    "metrics/false_comfort_metrics.json": "6c801f65bbae112a37d61dbf8913621ec6ab942af7a9ad6d9f6eb51a5fbdd28f",
+    "evidence_packs/false_comfort_control.json": "e2ec67df666c55898b26e886c7986a242702c1328ceb5a638d5f1df44770b701",
+    "state_logs/false_comfort_control.csv": "7f8ecf53554a35873a54fc230b9cb482de9f2f0834e6ba89677c468978ab8fd9",
+    "metrics/false_comfort_control_metrics.json": "6fb6905f236295a12b082297e2a2b2a8da9b75673f562c2b177c4d160c13dd7d",
+    "evidence_packs/operational_outlier.json": "e83230e19520106d080eb2264f566252dc762f136fb7212ecbcf43931a67867c",
+    "state_logs/operational_outlier.csv": "20a41e4cf849ac33ad446b6ebdc7f785d345514cd20813decc199e05107d765d",
+    "metrics/operational_outlier_metrics.json": "f75c61f333052fd411b61bed37e0a6f04c6ebca5e15a0ad41c9d6447cd75aed9",
+    "evidence_packs/operational_outlier_control.json": "2ae87209197b62b2dfd3af476638870bd9b37cd8558ccc0cc65f3ab370b59af9",
+    "state_logs/operational_outlier_control.csv": "a233cf30d1fe945662d2110165b461f4cecbec3941244688b216179fc971578f",
+    "metrics/operational_outlier_control_metrics.json": "7216fe8ef0e72fbe293ec3c8e723982767799c509c256d24abf5136ae676e480"
+  },
+  "generated_asset_hashes": {
+    "tables/stage4_scenario_summary.csv": "f242d59ae23fd3634cd05cc7285c250ef24ad7125242a31e30d28a4d5c7ab9d7",
+    "tables/operational_outlier_event_replay.csv": "b92c3d8ea05eca757771fd6b3e7d499405e359209d7e6d944270df03a10da284",
+    "tables/operational_impact_comparison.csv": "07b7de5b163ecad3dca37423e0b4e873d5d798923a49b55f7a0d083157aaacb7",
+    "figures/operational_outlier_impact_comparison.svg": "6e503871c8ebf88790e35892010dbf2cc05b8fcff8bd234517251cc6a717984b"
+  }
+}

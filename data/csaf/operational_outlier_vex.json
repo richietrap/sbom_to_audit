@@ -1,0 +1,53 @@
+{
+  "document": {
+    "category": "csaf_vex",
+    "csaf_version": "2.0",
+    "publisher": {
+      "category": "vendor",
+      "name": "Example Civic Systems PSIRT",
+      "namespace": "https://example.invalid/civic-psirt"
+    },
+    "title": "Municipal Water Controller investigation status",
+    "tracking": {
+      "current_release_date": "2026-11-01T09:00:00Z",
+      "id": "EXAMPLE-2026-OPERATIONAL-OUTLIER",
+      "initial_release_date": "2026-11-01T09:00:00Z",
+      "revision_history": [
+        {
+          "date": "2026-11-01T09:00:00Z",
+          "number": "1",
+          "summary": "Initial investigation status"
+        }
+      ],
+      "status": "interim",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "full_product_names": [
+      {
+        "name": "Municipal Water Controller 7.4.0",
+        "product_id": "CSAFPID-MWC-740",
+        "product_identification_helper": {
+          "purl": "pkg:generic/municipal-water-controller@7.4.0"
+        }
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2026-43003",
+      "title": "Crafted-frame denial of service in flow-parser",
+      "product_status": {
+        "under_investigation": ["CSAFPID-MWC-740"]
+      },
+      "notes": [
+        {
+          "category": "description",
+          "title": "Interim assessment",
+          "text": "Supplier analysis is ongoing; this status is not an affectedness conclusion."
+        }
+      ]
+    }
+  ]
+}

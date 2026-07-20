@@ -1,0 +1,25 @@
+{
+  "run_id": "OO-STAGE4-PILOT-001",
+  "scenario_id": "operational_outlier",
+  "evaluation_status": "PILOT",
+  "input_manifest_hash": "1650f4ab61f7dc1f79fcd982cd685b682045c35c8a6e77167d6144088211fa08",
+  "output_manifest_hash": "8b0881dd05693f6e9402a8d23cf4caf7aec6680b5b4cca7851898168e48e3782",
+  "final_state": "Report-Ready",
+  "authorized_state": "Report",
+  "orchestration_metrics": {
+    "E_t": 0.85,
+    "A_t": 1.0,
+    "I_t": 1.0,
+    "M_t": 1.0,
+    "U_t": 0.0,
+    "C_t": false
+  },
+  "cvss_base_score": 6.5,
+  "cvss_base_severity": "MEDIUM",
+  "limitations": [
+    "Controlled fictional counterfactual scenario",
+    "Not an industrial case study",
+    "Not a legal reportability determination",
+    "Thresholds not externally validated"
+  ]
+}

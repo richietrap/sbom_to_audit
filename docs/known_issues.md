@@ -41,3 +41,10 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 - Temporal staleness and expiry of otherwise applicable supplier assertions are not implemented in Stage 3.
 - Geographic scope, serial-number ranges, CPE version intervals, and ontology-based equivalence remain deferred.
 - Under the frozen v0.2 uncertainty equation, an explicit `not_applicable_scope_mismatch` VEX status is populated rather than missing, so the mismatch does not itself increase `U_t`; applicability falls back to identity-supported evidence instead. Any future uncertainty penalty for scope mismatch requires an explicit semantic decision rather than a silent scoring change.
+
+## Stage 4 operational-impact limitations
+
+- The NVD record is a controlled NVD API 2.0-shaped snapshot for a fictional CVE; it demonstrates parser and lineage behaviour rather than live-feed correctness.
+- CVSS is retained as technical-severity context and is not an input to the frozen state rule. The pilot must not imply that CVSS determines operational impact or legal reportability.
+- The Operational Outlier pair tests one configured impact contrast. The `I_t` thresholds and criticality/scope mappings remain design parameters requiring sensitivity analysis and expert plausibility review before evaluation freeze.
+- The control is matched within the artefact's declared fields, but it is not a real-world causal experiment or population-level estimate.

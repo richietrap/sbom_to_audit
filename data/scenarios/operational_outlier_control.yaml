@@ -1,0 +1,116 @@
+schema_version: "0.2"
+scenario:
+  scenario_id: operational_outlier_control
+  title: "Operational Outlier — Counterfactual Lower-Impact Control"
+  classification: controlled_fictional_counterfactual_control_real_format
+  evaluation_status: pilot_negative_control
+  purpose: >-
+    Confirm that the same source evidence, target deployment identity, deadline
+    profile, technical severity, supplier status, and reachability do not produce
+    Report-Ready when only the two frozen operational-impact inputs are lowered.
+  seeded_conflicts: 0
+  expected_final_state: Monitor
+  expected_final_authorized_state: null
+
+case_metadata:
+  case_id: CASE-OPERATIONAL-OUTLIER-CONTROL-001
+  clock_start_time: "2026-11-01T08:00:00Z"
+  clock_basis: internal_awareness_proxy
+
+target:
+  product_purl: "pkg:generic/municipal-water-controller@7.4.0"
+  component_purl: "pkg:pypi/flow-parser@2.2.0"
+  cve_id: CVE-2026-43003
+  csaf_product_id: CSAFPID-MWC-740
+
+deadline_profile:
+  milestones:
+    - milestone_id: early_warning
+      deadline_hours: 24
+      due_soon_lead_hours: 6
+      breach_imminent_lead_hours: 2
+      applicable: true
+    - milestone_id: full_notification
+      deadline_hours: 72
+      due_soon_lead_hours: 12
+      breach_imminent_lead_hours: 2
+      applicable: true
+
+source_catalog:
+  - artifact_id: ART-OOC-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/sbom/operational_outlier.cdx.json
+    timestamp: "2026-11-01T08:05:00Z"
+  - artifact_id: ART-OOC-OSV-001
+    artifact_type: osv_snapshot
+    path: data/osv_snapshots/operational_outlier_osv.json
+    timestamp: "2026-11-01T08:10:00Z"
+  - artifact_id: ART-OOC-NVD-001
+    artifact_type: nvd_snapshot
+    path: data/nvd_snapshots/operational_outlier_nvd.json
+    timestamp: "2026-11-01T08:12:00Z"
+  - artifact_id: ART-OOC-KEV-001
+    artifact_type: kev_snapshot
+    path: data/kev_snapshots/operational_outlier_kev.json
+    timestamp: "2026-11-01T08:15:00Z"
+  - artifact_id: ART-OOC-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/epss_snapshots/operational_outlier_epss.json
+    timestamp: "2026-11-01T08:18:00Z"
+  - artifact_id: ART-OOC-VEX-001
+    artifact_type: csaf_vex
+    path: data/csaf/operational_outlier_vex.json
+    timestamp: "2026-11-01T09:00:00Z"
+  - artifact_id: ART-OOC-ASSET-001
+    artifact_type: asset_context
+    path: data/asset_context/operational_outlier_control_asset.yaml
+    timestamp: "2026-11-01T08:40:00Z"
+  - artifact_id: ART-OOC-MIT-001
+    artifact_type: mitigation_context
+    path: data/mitigation/operational_outlier_initial.yaml
+    timestamp: "2026-11-01T08:45:00Z"
+  - artifact_id: ART-OOC-TELEM-INITIAL-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/operational_outlier_initial.jsonl
+    timestamp: "2026-11-01T09:30:00Z"
+  - artifact_id: ART-OOC-TELEM-REACH-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/operational_outlier_reachability.jsonl
+    timestamp: "2026-11-01T14:00:00Z"
+
+replay_events:
+  - event_id: EVT-OOC-002H
+    timestamp: "2026-11-01T10:00:00Z"
+    description: >-
+      The counterfactual control begins with the exact same vulnerability,
+      supplier, telemetry, target-deployment, and deadline evidence, while only
+      asset criticality and deployment scope are encoded below the impact threshold.
+    release_artifact_ids:
+      - ART-OOC-SBOM-001
+      - ART-OOC-OSV-001
+      - ART-OOC-NVD-001
+      - ART-OOC-KEV-001
+      - ART-OOC-EPSS-001
+      - ART-OOC-VEX-001
+      - ART-OOC-ASSET-001
+      - ART-OOC-MIT-001
+      - ART-OOC-TELEM-INITIAL-001
+    expected_state: Monitor
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+
+  - event_id: EVT-OOC-006H
+    timestamp: "2026-11-01T14:00:00Z"
+    description: >-
+      The exact same reachability artefact becomes available as in the main
+      scenario, but lower asset criticality and deployment scope keep the
+      recommendation at Monitor.
+    release_artifact_ids:
+      - ART-OOC-TELEM-REACH-001
+    expected_state: Monitor
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
