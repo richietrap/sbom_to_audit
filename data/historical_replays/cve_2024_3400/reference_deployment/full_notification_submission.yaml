@@ -1,0 +1,10 @@
+event_type: milestone_satisfaction
+event_id: DEC-HIST-REF-SUB-FULL-001
+milestone_id: full_notification
+timestamp: '2024-04-14T23:59:59Z'
+actor_id: synthetic-reporting-operator
+actor_role: reporting_operator
+evidence_id: SYN-HIST-FULL-001
+submission_reference: SYNTHETIC-REFERENCE-FULL-NOTIFICATION
+rationale: Synthetic full-notification completion evidence.
+actor: synthetic-reporting-operator

@@ -8,6 +8,7 @@ from typing import Any
 from sbom_to_audit.ingestion.artifact_validator import validate_and_parse
 from sbom_to_audit.ingestion.ingestion_result import ParsedSource, RegisteredSource
 from sbom_to_audit.utils.hashing import sha256_file
+from sbom_to_audit.utils.time import parse_timestamp
 
 
 class SourceRegistry:
@@ -48,6 +49,12 @@ class SourceRegistry:
             artifact_type,
             target_cve=self.target_cve,
         )
+        if artifact_type == "public_exploitation_report":
+            assert isinstance(data, dict)
+            if parse_timestamp(timestamp) < parse_timestamp(str(data["published_at"])):
+                raise ValueError(
+                    "public exploitation report catalog timestamp must not precede published_at"
+                )
         registered = RegisteredSource(
             artifact_id=artifact_id,
             artifact_type=artifact_type,

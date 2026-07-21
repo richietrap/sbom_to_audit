@@ -14,3 +14,15 @@ Every frozen run must record an exact Git commit, environment identifier, input-
 ## Stage 5
 
 Stage 5 adds `rapid_pivot` and `rapid_pivot_control`. Their source catalogs, target, deadline profile, source timestamps, and event clock are matched. The treatment is the release time of the identity, EPSS, VEX, and reachability artefacts. The primary replay exercises an eligible Clock-Aware Escalation opportunity; the control resolves uncertainty before the safeguard.
+
+## Stage 5.5
+
+Stage 5.5 adds a publication-aware CVE-2024-3400 public replay and a separately
+classified synthetic reference deployment. The public replay does not generate a
+full EvidencePack because public reporting cannot establish organisation-local
+reachability, execution, impact, authorization, submission, or legal applicability.
+The historical EPSS value remains provisional and blocks manuscript eligibility.
+
+The repository validator now checks run-to-scenario and run-to-environment references,
+duplicate IDs, commit markers, and SHA-256 formatting so a pilot cannot silently refer
+to an unregistered execution environment.

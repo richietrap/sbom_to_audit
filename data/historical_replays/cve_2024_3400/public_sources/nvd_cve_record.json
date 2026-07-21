@@ -1,0 +1,14 @@
+{
+  "record_type": "research_normalized_public_fact_extract",
+  "cve_id": "CVE-2024-3400",
+  "publisher": "National Vulnerability Database",
+  "published_at": "2024-04-12T08:15:06Z",
+  "facts": {
+    "description": "Unauthenticated command injection in PAN-OS GlobalProtect may allow root code execution.",
+    "cvss_version": "3.1",
+    "cvss_base_score": 10.0,
+    "cvss_base_severity": "CRITICAL",
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "affected_context": "Specific PAN-OS versions and GlobalProtect feature configurations."
+  }
+}

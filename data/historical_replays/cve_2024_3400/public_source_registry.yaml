@@ -1,0 +1,83 @@
+registry_version: '0.1'
+replay_id: cve_2024_3400_public
+classification: historical_public_replay
+cve_id: CVE-2024-3400
+sources:
+  - source_id: HIST-NVD-001
+    kind: nvd_record
+    path: data/historical_replays/cve_2024_3400/public_sources/nvd_cve_record.json
+    publisher: National Vulnerability Database
+    observed_at: '2024-04-12T08:15:06Z'
+    published_at: '2024-04-12T08:15:06Z'
+    available_at: '2024-04-12T08:15:06Z'
+    publication_precision: exact
+    verification_status: verified_primary
+    source_urls:
+      - https://nvd.nist.gov/vuln/detail/CVE-2024-3400
+  - source_id: HIST-PAN-ADV-001
+    kind: vendor_advisory
+    path: data/historical_replays/cve_2024_3400/public_sources/palo_alto_advisory.yaml
+    publisher: Palo Alto Networks PSIRT
+    observed_at: '2024-04-10T00:00:00Z'
+    published_at: '2024-04-12T23:59:59Z'
+    available_at: '2024-04-12T23:59:59Z'
+    publication_precision: date_only_end_of_day_normalization
+    verification_status: verified_primary
+    source_urls:
+      - https://security.paloaltonetworks.com/CVE-2024-3400
+  - source_id: HIST-VOLEXITY-001
+    kind: threat_research
+    path: data/historical_replays/cve_2024_3400/public_sources/volexity_report.yaml
+    publisher: Volexity
+    observed_at: '2024-03-26T00:00:00Z'
+    published_at: '2024-04-12T23:59:59Z'
+    available_at: '2024-04-12T23:59:59Z'
+    publication_precision: date_only_end_of_day_normalization
+    verification_status: verified_primary
+    source_urls:
+      - https://www.volexity.com/blog/2024/04/12/zero-day-exploitation-of-unauthenticated-remote-code-execution-vulnerability-in-globalprotect-cve-2024-3400/
+  - source_id: HIST-UNIT42-001
+    kind: threat_research
+    path: data/historical_replays/cve_2024_3400/public_sources/unit42_report.yaml
+    publisher: Palo Alto Networks Unit 42
+    observed_at: '2024-04-10T00:00:00Z'
+    published_at: '2024-04-12T23:59:59Z'
+    available_at: '2024-04-12T23:59:59Z'
+    publication_precision: date_only_end_of_day_normalization
+    verification_status: verified_primary
+    source_urls:
+      - https://unit42.paloaltonetworks.com/cve-2024-3400/
+  - source_id: HIST-KEV-001
+    kind: kev_record
+    path: data/historical_replays/cve_2024_3400/public_sources/cisa_kev_record.json
+    publisher: CISA
+    observed_at: '2024-04-13T01:00:01Z'
+    published_at: '2024-04-13T01:00:01Z'
+    available_at: '2024-04-13T01:00:01Z'
+    publication_precision: exact_change_record_time
+    verification_status: verified_primary
+    source_urls:
+      - https://nvd.nist.gov/vuln/detail/CVE-2024-3400
+  - source_id: HIST-PAN-HOTFIX-001
+    kind: vendor_update
+    path: data/historical_replays/cve_2024_3400/public_sources/vendor_hotfix_update.yaml
+    publisher: Palo Alto Networks PSIRT
+    observed_at: '2024-04-14T00:00:00Z'
+    published_at: '2024-04-14T23:59:59Z'
+    available_at: '2024-04-14T23:59:59Z'
+    publication_precision: date_only_end_of_day_normalization
+    verification_status: verified_primary
+    source_urls:
+      - https://security.paloaltonetworks.com/CVE-2024-3400
+  - source_id: HIST-EPSS-001
+    kind: epss_snapshot
+    path: data/historical_replays/cve_2024_3400/public_sources/epss_2024_04_15.json
+    publisher: FIRST EPSS
+    observed_at: '2024-04-15T00:00:00Z'
+    published_at: '2024-04-15T23:59:59Z'
+    available_at: '2024-04-15T23:59:59Z'
+    publication_precision: date_only_end_of_day_normalization
+    verification_status: provisional_secondary_reconstruction
+    source_urls:
+      - https://api.first.org/data/v1/epss?cve=CVE-2024-3400&date=2024-04-15
+      - https://api.first.org/epss/

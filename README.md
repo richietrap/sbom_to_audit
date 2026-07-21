@@ -105,3 +105,18 @@ Pilot assets are not final paper results. They must be regenerated from a tagged
 ## License and citation
 
 Code is released under the MIT License. Citation metadata is provided in `CITATION.cff`.
+
+
+## Stage 5.5 historical replay
+
+The repository now includes a CVE-2024-3400 / Operation MidnightEclipse historical reconstruction.
+`data/historical_replays/cve_2024_3400/` contains public-source fact extracts, a source registry,
+and a chronology that prevents retrospective occurrence dates from being treated as earlier public
+knowledge. `scripts/run_historical_replay.py` generates a public-only evidence bundle without
+fabricating organisation-local facts.
+
+`data/scenarios/historical_cve_2024_3400_reference.yaml` is a separate synthetic reference
+deployment that exercises the full EvidencePack pipeline. It is not a fifth controlled scenario
+family and must not be interpreted as evidence about a real organisation.
+
+The historical EPSS reconstruction remains provisional and blocks manuscript eligibility.

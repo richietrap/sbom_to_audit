@@ -1,0 +1,5 @@
+mitigation_status: verified
+patch_available: true
+verification_status: verified_in_synthetic_reference
+timestamp: '2024-04-14T23:59:59Z'
+evidence_classification: synthetic_reference_deployment

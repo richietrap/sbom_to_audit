@@ -1,0 +1,9 @@
+{
+  "environment_id": "stage5.5-local-build",
+  "evaluation_status": "PILOT_PROVISIONAL",
+  "python": "3.13.5 (main, Jun 25 2025, 18:55:22) [GCC 14.2.0]",
+  "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+  "repository_version": "0.5.5",
+  "generated_at": "2026-07-20T00:00:00Z",
+  "notes": "Local development/export environment. Historical EPSS remains provisional; GitHub and Colab checkpoint preservation required before manuscript eligibility."
+}

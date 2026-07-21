@@ -1,0 +1,167 @@
+schema_version: '0.2'
+scenario:
+  scenario_id: historical_cve_2024_3400_reference
+  title: CVE-2024-3400 synthetic reference deployment
+  classification: historical_reference_deployment
+  evaluation_status: pilot_not_manuscript_eligible
+  purpose: Exercise the full EvidencePack pipeline using public CVE-2024-3400 chronology plus
+    explicitly synthetic deployment evidence.
+  seeded_conflicts: 0
+  expected_final_state: Report-Ready
+  expected_final_authorized_state: Report
+  primary_controlled_family: false
+case_metadata:
+  case_id: CASE-HIST-CVE-2024-3400-REF-001
+  clock_start_time: '2024-04-12T08:15:06Z'
+  clock_basis: public_cve_disclosure_proxy
+target:
+  product_purl: pkg:generic/pan-os-reference-firewall@10.2.8
+  component_purl: pkg:generic/globalprotect-feature@10.2.8
+  cve_id: CVE-2024-3400
+  csaf_product_id: CSAFPID-PANOS-REF-1028
+deadline_profile:
+  milestones:
+    - milestone_id: early_warning
+      deadline_hours: 24
+      due_soon_lead_hours: 6
+      breach_imminent_lead_hours: 2
+      applicable: true
+    - milestone_id: full_notification
+      deadline_hours: 72
+      due_soon_lead_hours: 12
+      breach_imminent_lead_hours: 2
+      applicable: true
+source_catalog:
+  - artifact_id: ART-HIST-REF-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/historical_replays/cve_2024_3400/reference_deployment/panos_reference.cdx.json
+    timestamp: '2024-04-12T08:20:00Z'
+  - artifact_id: ART-HIST-REF-OSV-001
+    artifact_type: osv_snapshot
+    path: data/historical_replays/cve_2024_3400/reference_deployment/cve_alias.json
+    timestamp: '2024-04-12T08:20:00Z'
+  - artifact_id: ART-HIST-REF-NVD-001
+    artifact_type: nvd_snapshot
+    path: data/historical_replays/cve_2024_3400/reference_deployment/nvd_snapshot.json
+    timestamp: '2024-04-12T08:20:00Z'
+  - artifact_id: ART-HIST-REF-ASSET-001
+    artifact_type: asset_context
+    path: data/historical_replays/cve_2024_3400/reference_deployment/asset.yaml
+    timestamp: '2024-04-12T08:25:00Z'
+  - artifact_id: ART-HIST-REF-TELEM-001
+    artifact_type: runtime_telemetry
+    path: data/historical_replays/cve_2024_3400/reference_deployment/local_observation.jsonl
+    timestamp: '2024-04-12T08:28:00Z'
+  - artifact_id: ART-HIST-REF-MIT-INITIAL-001
+    artifact_type: mitigation_context
+    path: data/historical_replays/cve_2024_3400/reference_deployment/mitigation_initial.yaml
+    timestamp: '2024-04-12T08:30:00Z'
+  - artifact_id: ART-HIST-REF-VEX-001
+    artifact_type: csaf_vex
+    path: data/historical_replays/cve_2024_3400/reference_deployment/vex_normalization.json
+    timestamp: '2024-04-12T23:59:59Z'
+  - artifact_id: ART-HIST-REF-PUBLIC-EXP-001
+    artifact_type: public_exploitation_report
+    path: data/historical_replays/cve_2024_3400/reference_deployment/public_exploitation_report.yaml
+    timestamp: '2024-04-12T23:59:59Z'
+  - artifact_id: ART-HIST-REF-KEV-001
+    artifact_type: kev_snapshot
+    path: data/historical_replays/cve_2024_3400/reference_deployment/kev_snapshot.json
+    timestamp: '2024-04-13T01:00:01Z'
+  - artifact_id: ART-HIST-REF-AUTH-001
+    artifact_type: human_authorization
+    path: data/historical_replays/cve_2024_3400/reference_deployment/authorization.yaml
+    timestamp: '2024-04-13T02:00:00Z'
+  - artifact_id: ART-HIST-REF-SUB-EARLY-001
+    artifact_type: milestone_satisfaction
+    path: data/historical_replays/cve_2024_3400/reference_deployment/early_warning_submission.yaml
+    timestamp: '2024-04-13T02:00:00Z'
+  - artifact_id: ART-HIST-REF-MIT-VERIFIED-001
+    artifact_type: mitigation_context
+    path: data/historical_replays/cve_2024_3400/reference_deployment/mitigation_verified.yaml
+    timestamp: '2024-04-14T23:59:59Z'
+  - artifact_id: ART-HIST-REF-SUB-FULL-001
+    artifact_type: milestone_satisfaction
+    path: "data/historical_replays/cve_2024_3400/reference_deployment/\
+      full_notification_submission.yaml"
+    timestamp: '2024-04-14T23:59:59Z'
+  - artifact_id: ART-HIST-REF-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/historical_replays/cve_2024_3400/reference_deployment/epss_snapshot.json
+    timestamp: '2024-04-15T23:59:59Z'
+replay_events:
+  - event_id: EVT-HIST-REF-DISCLOSURE
+    timestamp: '2024-04-12T08:30:00Z'
+    description: >-
+      Public CVE data and synthetic deployment context are available, but public
+      exploitation and affectedness publications are not yet released.
+    release_artifact_ids:
+      - ART-HIST-REF-SBOM-001
+      - ART-HIST-REF-OSV-001
+      - ART-HIST-REF-NVD-001
+      - ART-HIST-REF-ASSET-001
+      - ART-HIST-REF-TELEM-001
+      - ART-HIST-REF-MIT-INITIAL-001
+    expected_state: Monitor
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+  - event_id: EVT-HIST-REF-PUBLIC-EXP
+    timestamp: '2024-04-12T23:59:59Z'
+    description: Public reporting establishes exploitation and the normalized vendor assertion
+      applies to the synthetic deployment.
+    release_artifact_ids:
+      - ART-HIST-REF-VEX-001
+      - ART-HIST-REF-PUBLIC-EXP-001
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+  - event_id: EVT-HIST-REF-KEV
+    timestamp: '2024-04-13T01:00:01Z'
+    description: CISA KEV inclusion reinforces exploitation evidence.
+    release_artifact_ids:
+      - ART-HIST-REF-KEV-001
+    expected_state: Report-Ready
+    expected_authorized_state: null
+    expected_deadline_posture:
+      early_warning: On Track
+      full_notification: On Track
+  - event_id: EVT-HIST-REF-AUTH
+    timestamp: '2024-04-13T02:00:00Z'
+    description: Synthetic human authorization and separate early-warning completion evidence
+      are released.
+    release_artifact_ids:
+      - ART-HIST-REF-AUTH-001
+      - ART-HIST-REF-SUB-EARLY-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: On Track
+  - event_id: EVT-HIST-REF-HOTFIX
+    timestamp: '2024-04-14T23:59:59Z'
+    description: >-
+      Synthetic verified mitigation and full-notification completion evidence are
+      released.
+    release_artifact_ids:
+      - ART-HIST-REF-MIT-VERIFIED-001
+      - ART-HIST-REF-SUB-FULL-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: Satisfied
+  - event_id: EVT-HIST-REF-EPSS
+    timestamp: '2024-04-15T23:59:59Z'
+    description: The provisional historical EPSS reconstruction becomes available; it is retained
+      with an eligibility warning.
+    release_artifact_ids:
+      - ART-HIST-REF-EPSS-001
+    expected_state: Report-Ready
+    expected_authorized_state: Report
+    expected_deadline_posture:
+      early_warning: Satisfied
+      full_notification: Satisfied

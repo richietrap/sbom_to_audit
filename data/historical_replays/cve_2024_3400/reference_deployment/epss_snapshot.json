@@ -1,0 +1,18 @@
+{
+  "status": "OK",
+  "status-code": 200,
+  "version": "1.0",
+  "access": "public",
+  "total": 1,
+  "offset": 0,
+  "limit": 100,
+  "verification_status": "provisional_secondary_reconstruction",
+  "data": [
+    {
+      "cve": "CVE-2024-3400",
+      "epss": "0.95732",
+      "percentile": "0.99721",
+      "date": "2024-04-15"
+    }
+  ]
+}

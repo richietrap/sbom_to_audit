@@ -1,0 +1,31 @@
+{
+  "run_id": "HIST-CVE-2024-3400-REF-PILOT-001",
+  "scenario_id": "historical_cve_2024_3400_reference",
+  "evaluation_status": "PILOT_PROVISIONAL",
+  "input_manifest_hash": "e191d3ff639dd8b9020c4fe79c8b528c44a27fb84a44674eaa8d395728229c3d",
+  "output_manifest_hash": "e733ed59d30a1f08761c219f011f734beed91a69eee90dcf277dfe8cad5f6997",
+  "final_state": "Report-Ready",
+  "authorized_state": "Report",
+  "orchestration_metrics": {
+    "E_t": 1.0,
+    "A_t": 0.8,
+    "I_t": 0.875,
+    "M_t": 1.0,
+    "U_t": 0.0,
+    "C_t": false
+  },
+  "effectiveness_metrics": {
+    "EC": 1.0,
+    "TR": 1.0,
+    "CD": null,
+    "CA": null,
+    "AR": 1.0,
+    "SC": 1.0,
+    "EPG": 1
+  },
+  "manuscript_eligible": false,
+  "limitations": [
+    "Organisation-local evidence is explicitly synthetic and is not evidence about any real affected organisation.",
+    "The historical EPSS value remains provisional pending authoritative verification."
+  ]
+}

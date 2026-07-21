@@ -1,0 +1,18 @@
+{
+  "run_id": "HIST-CVE-2024-3400-PUBLIC-PILOT-001",
+  "scenario_id": "cve_2024_3400_public",
+  "evaluation_status": "PILOT_PROVISIONAL",
+  "input_manifest_hash": "c7af2cf972a244cf17bd151f84465bdbe58ade6ea55d95c6d8a7266f806d5ab1",
+  "output_manifest_hash": "1b0c44baa8f16070ea8326c4645bb4121590cab06afbb7c746e540d579550f1b",
+  "full_evidencepack_generated": false,
+  "source_count": 7,
+  "timeline_event_count": 8,
+  "provisional_source_ids": [
+    "HIST-EPSS-001"
+  ],
+  "manuscript_eligible": false,
+  "limitations": [
+    "Public evidence cannot establish organisation-local reachability, execution, impact, authorization, submission, or legal applicability.",
+    "The historical EPSS value remains provisional pending authoritative verification."
+  ]
+}

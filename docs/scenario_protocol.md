@@ -103,3 +103,18 @@ The primary replay must:
 The control must release the exact same resolving artefacts before T+18h and must not trigger the safeguard. Configured deadline posture must remain identical at matched timestamps so the comparison does not conflate the internal state safeguard with workflow-deadline status.
 
 The scenario must not provide `gamma_id`, `U_t`, a precomputed safeguard flag, or any state output. Identity confidence and missingness must be derived from registered source artefacts.
+
+## Stage 5.5 historical replay requirements
+
+The historical replay is external-plausibility evidence and is not a fifth controlled scenario
+family. Its public-only mode must distinguish occurrence time from publication and availability
+time, reject temporal leakage, preserve source hashes and URLs, and explicitly refuse to generate
+organisation-local facts.
+
+The executable reference-deployment manifest may use the common EvidencePack pipeline only when
+all organisation-local inputs are visibly classified as synthetic. Public exploitation reporting
+may contribute a traceable exploitation claim after publication, but it must not populate the
+`local_evidence` block.
+
+Any provisional historical source blocks frozen-evaluation and manuscript eligibility until it is
+authoritatively verified or removed from the eligible run.

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 import sys
@@ -13,6 +14,7 @@ from typing import Any
 
 import yaml
 
+from sbom_to_audit.historical.public_replay import run_public_historical_replay
 from sbom_to_audit.ingestion.source_registry import SourceRegistry
 from sbom_to_audit.model.metrics import MANDATORY_FIELDS
 
@@ -244,6 +246,105 @@ def validate_scenarios(report: ValidationReport, strict_sources: bool) -> None:
     report.checks["scenarios"] = summaries
 
 
+def validate_historical_replay(report: ValidationReport, strict_sources: bool) -> None:
+    try:
+        result = run_public_historical_replay(ROOT)
+    except (FileNotFoundError, KeyError, TypeError, ValueError) as exc:
+        if strict_sources:
+            report.error(f"historical public replay validation failed: {exc}")
+        else:
+            report.warning(f"historical public replay validation warning: {exc}")
+        return
+    bundle = result["bundle"]
+    boundaries = bundle["evidence_boundaries"]
+    if boundaries.get("full_evidencepack_generated") is not False:
+        report.error("public historical replay must not generate a full EvidencePack")
+    if bundle.get("manuscript_eligibility") is not False:
+        report.error("provisional historical replay must remain manuscript-ineligible")
+    report.checks["historical_public_replay"] = {
+        "replay_id": bundle["replay_id"],
+        "source_count": bundle["source_manifest"]["source_count"],
+        "timeline_events": len(bundle["timeline"]),
+        "provisional_source_ids": bundle["provisional_source_ids"],
+        "manuscript_eligibility": bundle["manuscript_eligibility"],
+    }
+
+
+def validate_evaluation_registry(report: ValidationReport) -> None:
+    scenario_registry_path = ROOT / "evaluation" / "scenario_registry.csv"
+    run_registry_path = ROOT / "evaluation" / "run_registry.csv"
+    environment_dir = ROOT / "evaluation" / "environments"
+    try:
+        with scenario_registry_path.open(encoding="utf-8", newline="") as handle:
+            scenario_rows = list(csv.DictReader(handle))
+        with run_registry_path.open(encoding="utf-8", newline="") as handle:
+            run_rows = list(csv.DictReader(handle))
+    except OSError as exc:
+        report.error(f"evaluation registry cannot be loaded: {exc}")
+        return
+
+    scenario_ids = [str(row.get("scenario_id", "")) for row in scenario_rows]
+    duplicate_scenarios = _duplicates(scenario_ids)
+    if duplicate_scenarios:
+        report.error(f"duplicate evaluation scenario IDs: {duplicate_scenarios}")
+
+    environments: dict[str, str] = {}
+    for path in sorted(environment_dir.glob("*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            report.error(f"evaluation environment cannot be loaded ({path.name}): {exc}")
+            continue
+        environment_id = str(payload.get("environment_id", ""))
+        if not environment_id:
+            report.error(f"{path.name}: environment_id is required")
+        elif environment_id in environments:
+            report.error(
+                f"duplicate evaluation environment ID {environment_id!r}: "
+                f"{environments[environment_id]} and {path.name}"
+            )
+        else:
+            environments[environment_id] = path.name
+
+    run_ids = [str(row.get("run_id", "")) for row in run_rows]
+    duplicate_runs = _duplicates(run_ids)
+    if duplicate_runs:
+        report.error(f"duplicate evaluation run IDs: {duplicate_runs}")
+
+    hash_pattern = re.compile(r"^[0-9a-f]{64}$")
+    commit_pattern = re.compile(r"^[0-9a-f]{40}$")
+    known_scenarios = set(scenario_ids)
+    for row in run_rows:
+        run_id = str(row.get("run_id", "<missing>"))
+        scenario_id = str(row.get("scenario_id", ""))
+        environment_id = str(row.get("environment_id", ""))
+        if scenario_id not in known_scenarios:
+            report.error(f"{run_id}: unknown scenario_id {scenario_id!r}")
+        if environment_id not in environments:
+            report.error(f"{run_id}: unknown environment_id {environment_id!r}")
+        for field_name in ("input_manifest_hash", "output_manifest_hash"):
+            value = str(row.get(field_name, ""))
+            if not hash_pattern.fullmatch(value):
+                report.error(f"{run_id}: {field_name} must be a lowercase SHA-256 digest")
+        commit = str(row.get("git_commit", ""))
+        if not (commit_pattern.fullmatch(commit) or commit.startswith("not_recorded_")):
+            report.error(
+                f"{run_id}: git_commit must be a 40-character digest or an explicit "
+                "not_recorded_* pilot marker"
+            )
+        if scenario_id in {
+            "cve_2024_3400_public",
+            "historical_cve_2024_3400_reference",
+        } and "PROVISIONAL" not in str(row.get("evaluation_status", "")):
+            report.error(f"{run_id}: Stage 5.5 historical runs must remain provisional")
+
+    report.checks["evaluation_registry"] = {
+        "scenarios": len(scenario_rows),
+        "runs": len(run_rows),
+        "environments": len(environments),
+    }
+
+
 def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
@@ -280,6 +381,8 @@ def run_validation(strict_sources: bool = False) -> ValidationReport:
     validate_manifest(report)
     validate_schema(report)
     validate_scenarios(report, strict_sources)
+    validate_historical_replay(report, strict_sources)
+    validate_evaluation_registry(report)
     validate_text_integrity(report)
     return report
 

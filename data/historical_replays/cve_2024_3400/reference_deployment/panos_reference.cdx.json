@@ -1,0 +1,39 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:3e132ff1-a956-4fd2-946c-bf04ef06f6e2",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-04-12T08:20:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "product:pan-os-reference-firewall:10.2.8",
+      "group": "research-reference",
+      "name": "pan-os-reference-firewall",
+      "version": "10.2.8",
+      "purl": "pkg:generic/pan-os-reference-firewall@10.2.8"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/globalprotect-feature@10.2.8",
+      "name": "globalprotect-feature",
+      "version": "10.2.8",
+      "purl": "pkg:generic/globalprotect-feature@10.2.8",
+      "cpe": "cpe:2.3:a:paloaltonetworks:pan-os:10.2.8:*:*:*:*:*:*:*"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "product:pan-os-reference-firewall:10.2.8",
+      "dependsOn": [
+        "pkg:generic/globalprotect-feature@10.2.8"
+      ]
+    },
+    {
+      "ref": "pkg:generic/globalprotect-feature@10.2.8",
+      "dependsOn": []
+    }
+  ]
+}

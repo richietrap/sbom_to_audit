@@ -1,0 +1,7 @@
+event_id,timestamp,delta_t_hours,E_t,A_t,I_t,M_t,U_t,C_t,observed_state,authorized_state,deadline_posture
+EVT-HIST-REF-DISCLOSURE,2024-04-12T08:30:00Z,0.248333,0.0,0.6,0.875,0.0,0.133333,False,Monitor,,"{""early_warning"": ""On Track"", ""full_notification"": ""On Track""}"
+EVT-HIST-REF-PUBLIC-EXP,2024-04-12T23:59:59Z,15.748056,1.0,0.8,0.875,0.0,0.088889,False,Report-Ready,,"{""early_warning"": ""On Track"", ""full_notification"": ""On Track""}"
+EVT-HIST-REF-KEV,2024-04-13T01:00:01Z,16.748611,1.0,0.8,0.875,0.0,0.044444,False,Report-Ready,,"{""early_warning"": ""On Track"", ""full_notification"": ""On Track""}"
+EVT-HIST-REF-AUTH,2024-04-13T02:00:00Z,17.748333,1.0,0.8,0.875,0.0,0.044444,False,Report-Ready,Report,"{""early_warning"": ""Satisfied"", ""full_notification"": ""On Track""}"
+EVT-HIST-REF-HOTFIX,2024-04-14T23:59:59Z,63.748056,1.0,0.8,0.875,1.0,0.044444,False,Report-Ready,Report,"{""early_warning"": ""Satisfied"", ""full_notification"": ""Satisfied""}"
+EVT-HIST-REF-EPSS,2024-04-15T23:59:59Z,87.748056,1.0,0.8,0.875,1.0,0.0,False,Report-Ready,Report,"{""early_warning"": ""Satisfied"", ""full_notification"": ""Satisfied""}"

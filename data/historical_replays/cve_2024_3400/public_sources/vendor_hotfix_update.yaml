@@ -1,0 +1,9 @@
+record_type: research_normalized_public_fact_extract
+cve_id: CVE-2024-3400
+publisher: Palo Alto Networks PSIRT
+published_at: '2024-04-14T23:59:59Z'
+publication_precision: date_only_end_of_day_normalization
+facts:
+  hotfixes_available: true
+  update_date: '2024-04-14'
+  guidance: Apply the relevant PAN-OS hotfix and review vendor remediation guidance.

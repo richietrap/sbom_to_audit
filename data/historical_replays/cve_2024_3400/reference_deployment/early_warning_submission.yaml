@@ -1,0 +1,10 @@
+event_type: milestone_satisfaction
+event_id: DEC-HIST-REF-SUB-EARLY-001
+milestone_id: early_warning
+timestamp: '2024-04-13T02:00:00Z'
+actor_id: synthetic-reporting-operator
+actor_role: reporting_operator
+evidence_id: SYN-HIST-EARLY-001
+submission_reference: SYNTHETIC-REFERENCE-EARLY-WARNING
+rationale: Synthetic early-warning completion evidence.
+actor: synthetic-reporting-operator

@@ -29,3 +29,11 @@ The Operational Outlier files are controlled fictional artefacts. The primary an
 ## Rapid Pivot source family
 
 The Rapid Pivot files are controlled fictional artefacts. The CycloneDX component intentionally omits a PURL but includes a unique normalized name/version and CPE. Initial replay events release no EPSS, CSAF/VEX, telemetry, or identity-confirmation source, allowing intermediate missingness to be measured by the frozen uncertainty equation. A later identity-resolution record confirms the canonical component PURL through the selected component's exact CPE. The main and temporal-control scenarios reuse the same source catalog and differ only in when the resolving artefacts are released.
+
+
+## Historical replay data
+
+`historical_replays/cve_2024_3400/` separates normalized public fact extracts from a synthetic
+reference deployment. Public files retain upstream URLs and temporal metadata. Reference-deployment
+files are explicitly fictional. Do not move them into the controlled scenario folders without
+preserving their classification.

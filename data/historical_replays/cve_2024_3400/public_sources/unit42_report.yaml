@@ -1,0 +1,15 @@
+record_type: research_normalized_public_fact_extract
+cve_id: CVE-2024-3400
+publisher: Palo Alto Networks Unit 42
+published_at: '2024-04-12T23:59:59Z'
+publication_precision: date_only_end_of_day_normalization
+facts:
+  campaign_name: Operation MidnightEclipse
+  malicious_exploitation_observed: true
+  cvss_base_score: 10.0
+  applicable_versions:
+    - PAN-OS 10.2
+    - PAN-OS 11.0
+    - PAN-OS 11.1
+  applicable_configuration: GlobalProtect gateway or portal
+  recommended_action: Monitor for abnormal activity and investigate unexpected network activity.

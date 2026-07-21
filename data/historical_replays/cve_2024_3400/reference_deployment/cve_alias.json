@@ -1,0 +1,29 @@
+{
+  "query": {
+    "package": {
+      "purl": "pkg:generic/globalprotect-feature@10.2.8"
+    }
+  },
+  "vulns": [
+    {
+      "id": "CVE-2024-3400",
+      "aliases": [
+        "CVE-2024-3400"
+      ],
+      "published": "2024-04-12T08:15:06Z",
+      "modified": "2024-04-12T08:15:06Z",
+      "affected": [
+        {
+          "package": {
+            "ecosystem": "Generic",
+            "name": "globalprotect-feature",
+            "purl": "pkg:generic/globalprotect-feature"
+          },
+          "versions": [
+            "10.2.8"
+          ]
+        }
+      ]
+    }
+  ]
+}

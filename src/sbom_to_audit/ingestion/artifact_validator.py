@@ -15,6 +15,7 @@ from sbom_to_audit.parsers.nvd_client import extract_cvss_metrics
 from sbom_to_audit.parsers.osv_client import cve_aliases
 from sbom_to_audit.parsers.telemetry_parser import parse_telemetry
 from sbom_to_audit.utils.io import read_json, read_yaml
+from sbom_to_audit.utils.time import parse_timestamp
 
 ARTIFACT_MEDIA_TYPES: dict[str, str] = {
     "cyclonedx_sbom": "application/vnd.cyclonedx+json",
@@ -30,6 +31,7 @@ ARTIFACT_MEDIA_TYPES: dict[str, str] = {
     "human_authorization": "application/yaml",
     "milestone_satisfaction": "application/yaml",
     "identity_resolution": "application/yaml",
+    "public_exploitation_report": "application/yaml",
 }
 
 
@@ -149,6 +151,30 @@ def validate_and_parse(
         raise ValueError(
             f"{path} declares event_type={declared_type!r}, expected {artifact_type!r}"
         )
+    if artifact_type == "public_exploitation_report":
+        required = {
+            "event_type",
+            "cve_id",
+            "observed_at",
+            "published_at",
+            "publisher",
+            "malicious_exploitation_observed",
+            "source_urls",
+        }
+        missing = sorted(required - set(event_data))
+        if missing:
+            raise ValueError(f"{path} public exploitation report is missing fields: {missing}")
+        if target_cve and str(event_data.get("cve_id") or "") != target_cve:
+            raise ValueError(f"{path} public exploitation report does not match {target_cve}")
+        observed = parse_timestamp(str(event_data["observed_at"]))
+        published = parse_timestamp(str(event_data["published_at"]))
+        if observed > published:
+            raise ValueError(f"{path} observed_at must not follow published_at")
+        urls = event_data.get("source_urls")
+        if not isinstance(urls, list) or not urls or not all(str(url).strip() for url in urls):
+            raise ValueError(f"{path} source_urls must be a non-empty list")
+        if event_data.get("local_telemetry") is not False:
+            raise ValueError(f"{path} must explicitly declare local_telemetry=false")
     if artifact_type == "identity_resolution":
         required = {
             "component_bom_ref",

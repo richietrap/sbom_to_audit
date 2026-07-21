@@ -1,0 +1,9 @@
+asset_id: synthetic-edge-firewall-cluster
+asset_criticality: critical
+deployment_scope: broad
+product_variant: globalprotect-enabled
+deployment_id: synthetic-reference-edge
+environment: synthetic_reference
+internet_exposed: true
+context_timestamp: '2024-04-12T08:25:00Z'
+evidence_classification: synthetic_reference_deployment

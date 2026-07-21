@@ -56,3 +56,11 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 - The CPE-confirmation artefact is controlled fictional evidence and demonstrates validation flow, not general vendor-identity truth.
 - `tau_E=18h` is an internal design safeguard. It is not a statutory deadline, a legal-awareness determination, or evidence that 18 hours is empirically optimal.
 - The early-resolution control isolates evidence-release timing within the declared model, but it is not a real-world causal experiment.
+
+## Stage 5.5 historical-replay limitations
+
+- Public chronology cannot establish organisation-local reachability, execution, impact, mitigation, authorization, submission, or legal applicability. The public-only replay therefore does not generate an EvidencePack.
+- Date-only publications use conservative end-of-day UTC availability. This avoids premature evidence release but reduces within-day temporal precision.
+- The reference deployment is synthetic and must not be described as a real Palo Alto Networks customer or incident case study.
+- The 2024-04-15 EPSS value is a provisional secondary reconstruction. It blocks frozen-evaluation and manuscript eligibility until directly verified from a FIRST historical API response or daily archive; alternatively, the value must be removed from the eligible replay.
+- Research-normalized NVD, KEV, advisory, OSV, CycloneDX, and CSAF-shaped extracts preserve provenance but are not substitutes for complete official archive exports or official vendor CSAF publication.

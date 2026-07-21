@@ -1,0 +1,12 @@
+{
+  "record_type": "research_normalized_public_fact_extract",
+  "cve_id": "CVE-2024-3400",
+  "publisher": "Cybersecurity and Infrastructure Security Agency",
+  "published_at": "2024-04-13T01:00:01Z",
+  "facts": {
+    "date_added": "2024-04-12",
+    "due_date": "2024-04-19",
+    "known_exploited": true,
+    "required_action": "Apply vendor mitigations or disable device telemetry until patches are available, following vendor instructions."
+  }
+}

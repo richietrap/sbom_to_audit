@@ -1,0 +1,56 @@
+chronology_version: '0.1'
+replay_id: cve_2024_3400_public
+cve_id: CVE-2024-3400
+availability_policy: A source is released only at or after available_at. Date-only publications
+  use end-of-day UTC normalization to avoid premature availability.
+events:
+  - event_id: HIST-EVT-20240326
+    timestamp: '2024-03-26T00:00:00Z'
+    event_class: occurrence_only_retrospective
+    description: Earliest activity later identified by Volexity. No public source is available
+      at this time.
+    release_source_ids: []
+  - event_id: HIST-EVT-20240410
+    timestamp: '2024-04-10T00:00:00Z'
+    event_class: private_observation
+    description: Initial direct incident observation. It is not public evidence yet.
+    release_source_ids: []
+  - event_id: HIST-EVT-20240411
+    timestamp: '2024-04-11T00:00:00Z'
+    event_class: private_observation
+    description: Further exploitation observed before public disclosure.
+    release_source_ids: []
+  - event_id: HIST-EVT-NVD
+    timestamp: '2024-04-12T08:15:06Z'
+    event_class: public_disclosure
+    description: The CVE record becomes publicly available.
+    release_source_ids:
+      - HIST-NVD-001
+  - event_id: HIST-EVT-DISCLOSURE
+    timestamp: '2024-04-12T23:59:59Z'
+    event_class: public_disclosure
+    description: >-
+      Vendor and threat-research publications make affected configuration and
+      exploitation evidence public.
+    release_source_ids:
+      - HIST-PAN-ADV-001
+      - HIST-VOLEXITY-001
+      - HIST-UNIT42-001
+  - event_id: HIST-EVT-KEV
+    timestamp: '2024-04-13T01:00:01Z'
+    event_class: public_catalog_update
+    description: CISA KEV inclusion becomes publicly recorded.
+    release_source_ids:
+      - HIST-KEV-001
+  - event_id: HIST-EVT-HOTFIX
+    timestamp: '2024-04-14T23:59:59Z'
+    event_class: vendor_update
+    description: Hotfix availability is reflected in the vendor guidance.
+    release_source_ids:
+      - HIST-PAN-HOTFIX-001
+  - event_id: HIST-EVT-EPSS
+    timestamp: '2024-04-15T23:59:59Z'
+    event_class: predictive_update
+    description: A provisionally reconstructed historical EPSS value is introduced.
+    release_source_ids:
+      - HIST-EPSS-001

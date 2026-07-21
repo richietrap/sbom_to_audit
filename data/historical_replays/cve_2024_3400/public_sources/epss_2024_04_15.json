@@ -1,0 +1,16 @@
+{
+  "record_type": "research_normalized_public_fact_extract",
+  "cve_id": "CVE-2024-3400",
+  "publisher": "FIRST EPSS (value provisionally reconstructed)",
+  "published_at": "2024-04-15T23:59:59Z",
+  "verification_status": "provisional_secondary_reconstruction",
+  "data": [
+    {
+      "cve": "CVE-2024-3400",
+      "epss": "0.95732",
+      "percentile": "0.99721",
+      "date": "2024-04-15"
+    }
+  ],
+  "limitation": "Exact historical value must be reverified from FIRST before frozen evaluation."
+}

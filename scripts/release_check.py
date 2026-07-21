@@ -125,6 +125,34 @@ def _deterministic_replay(report: ReleaseReport) -> None:
                 report.deterministic_hashes[f"{scenario_id}/{relative}"] = left_hash
 
 
+def _deterministic_historical_public_replay(report: ReleaseReport) -> None:
+    output_files = (
+        "historical_public/cve_2024_3400_public_bundle.json",
+        "historical_public/cve_2024_3400_public_timeline.csv",
+        "historical_public/cve_2024_3400_public_sources.json",
+    )
+    with tempfile.TemporaryDirectory(prefix="sbom-audit-historical-") as temp:
+        base = Path(temp)
+        first = base / "first"
+        second = base / "second"
+        command = [sys.executable, "scripts/run_historical_replay.py", "--output-root"]
+        _run(report, "historical public replay A", command + [str(first)])
+        _run(report, "historical public replay B", command + [str(second)])
+        if report.status == "FAIL":
+            return
+        for relative in output_files:
+            left = first / relative
+            right = second / relative
+            if not left.is_file() or not right.is_file():
+                report.fail(f"historical deterministic output missing: {relative}")
+                continue
+            left_hash = _sha256(left)
+            right_hash = _sha256(right)
+            if left_hash != right_hash:
+                report.fail(f"non-deterministic historical output: {relative}")
+            report.deterministic_hashes[f"historical_public/{relative}"] = left_hash
+
+
 def run_release_check() -> ReleaseReport:
     report = ReleaseReport()
     commands = [
@@ -166,6 +194,8 @@ def run_release_check() -> ReleaseReport:
         _run(report, name, command)
     if report.status == "PASS":
         _deterministic_replay(report)
+    if report.status == "PASS":
+        _deterministic_historical_public_replay(report)
     return report
 
 

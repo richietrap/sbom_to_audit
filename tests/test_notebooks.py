@@ -83,3 +83,33 @@ def test_stage5_colab_notebook_preserves_clock_checkpoint_lineage() -> None:
     ):
         assert required in text
     assert ("<YOUR-" + "GITHUB-USERNAME>") not in text
+
+
+STAGE55_NOTEBOOK = ROOT / "notebooks" / "stage55_colab_checkpoint.ipynb"
+
+
+def test_stage55_colab_notebook_code_cells_compile() -> None:
+    notebook = json.loads(STAGE55_NOTEBOOK.read_text(encoding="utf-8"))
+    assert notebook["nbformat"] == 4
+    code_cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
+    assert code_cells
+    for index, cell in enumerate(code_cells, 1):
+        source = "".join(cell["source"])
+        ast.parse(source, filename=f"stage55_colab_cell_{index}.py")
+
+
+def test_stage55_colab_notebook_preserves_historical_boundaries_and_lineage() -> None:
+    text = STAGE55_NOTEBOOK.read_text(encoding="utf-8")
+    for required in (
+        "sbom_to_audit_stage55_venv",
+        "scripts/release_check.py",
+        "run_historical_replay.py",
+        "historical_cve_2024_3400_reference",
+        "full_evidencepack_generated",
+        "public_exploitation_observed",
+        "stage55_colab_checkpoint_evidence.zip",
+        "Tested Git commit",
+        "Colab evidence bundle SHA-256",
+    ):
+        assert required in text
+    assert ("<YOUR-" + "GITHUB-USERNAME>") not in text

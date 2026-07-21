@@ -1,0 +1,24 @@
+{
+  "asset_status": "PILOT_PROVISIONAL",
+  "manuscript_eligible": false,
+  "eligibility_blockers": [
+    "Historical EPSS value remains provisional and requires authoritative verification."
+  ],
+  "source_run_ids": [
+    "HIST-CVE-2024-3400-PUBLIC-PILOT-001",
+    "HIST-CVE-2024-3400-REF-PILOT-001"
+  ],
+  "generation_script": "paper_assets/scripts/build_stage55_assets.py",
+  "generation_script_hash": "63736987345dcfced641fae7092b82c56f23403dbe0a93ab039762a5d35eb4bf",
+  "source_data_hashes": {
+    "historical_public/cve_2024_3400_public_timeline.csv": "77414e35f9a295f3c5a61ca40667a3955a82c019fd2dab75527bdb7e2a0e468f",
+    "historical_public/cve_2024_3400_public_bundle.json": "1b0c44baa8f16070ea8326c4645bb4121590cab06afbb7c746e540d579550f1b",
+    "state_logs/historical_cve_2024_3400_reference.csv": "dfa3a99548a35311dca1028c122e973fdca5f130611a5a962a44000bb7495928"
+  },
+  "generated_asset_hashes": {
+    "tables/cve_2024_3400_public_chronology.csv": "1f6970841836ae638a2800872b1d3cc6473339ecc27ff8c17edd379508df2739",
+    "tables/historical_evidence_boundary.csv": "9db8de60fb9b2e74f2f82ae35effb6c9ac32d3da2b74749ffea06268bb4182c2",
+    "tables/historical_reference_event_replay.csv": "8709392909abf8e71ab13ed484e164597f91bd2dea311aae271de776c62e7043",
+    "figures/cve_2024_3400_public_timeline.svg": "ca13c79b124e9d5bb9aaf9c70d97095c9ee2568e34e77d50b4aa08a5c64e61ef"
+  }
+}

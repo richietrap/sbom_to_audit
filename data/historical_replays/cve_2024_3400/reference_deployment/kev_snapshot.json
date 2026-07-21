@@ -1,0 +1,19 @@
+{
+  "title": "Research-normalized CISA KEV record for CVE-2024-3400",
+  "catalogVersion": "historical-2024-04-12",
+  "dateReleased": "2024-04-13T01:00:01Z",
+  "count": 1,
+  "vulnerabilities": [
+    {
+      "cveID": "CVE-2024-3400",
+      "vendorProject": "Palo Alto Networks",
+      "product": "PAN-OS",
+      "vulnerabilityName": "PAN-OS Command Injection Vulnerability",
+      "dateAdded": "2024-04-12",
+      "shortDescription": "Research-normalized historical KEV entry.",
+      "requiredAction": "Follow vendor mitigations and remediation guidance.",
+      "dueDate": "2024-04-19",
+      "knownRansomwareCampaignUse": "Unknown"
+    }
+  ]
+}

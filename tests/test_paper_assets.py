@@ -136,3 +136,29 @@ def test_stage5_assets_compare_clock_aware_escalation_with_temporal_control(
     assert "Early-resolution control" in figure
     assert "{y}" not in figure
     ET.fromstring(figure)
+
+
+def test_stage55_historical_assets_are_generated_from_registered_outputs(tmp_path: Path) -> None:
+    from paper_assets.scripts.build_stage55_assets import build
+    from scripts.run_historical_replay import run as run_historical
+
+    output_root = tmp_path / "outputs"
+    destination = tmp_path / "assets"
+    run(
+        ROOT / "data" / "scenarios" / "historical_cve_2024_3400_reference.yaml",
+        output_root,
+    )
+    run_historical(output_root)
+    hashes = build(output_root, destination)
+    assert len(hashes) == 5
+    figure = destination / "figures" / "cve_2024_3400_public_timeline.svg"
+    assert figure.is_file()
+    import xml.etree.ElementTree as ET
+
+    ET.parse(figure)
+    metadata = json.loads(
+        (destination / "data" / "stage55_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT_PROVISIONAL"
+    assert metadata["manuscript_eligible"] is False
+    assert metadata["eligibility_blockers"]

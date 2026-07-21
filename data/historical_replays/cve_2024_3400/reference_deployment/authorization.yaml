@@ -1,0 +1,9 @@
+event_type: human_authorization
+event_id: DEC-HIST-REF-AUTH-001
+timestamp: '2024-04-13T02:00:00Z'
+actor_id: synthetic-psirt-reviewer
+actor_role: psirt_legal_reviewer
+actor_type: human
+authorized_state: Report
+rationale: Synthetic reference-deployment review authorized reporting after public exploitation and
+  affectedness evidence became available.

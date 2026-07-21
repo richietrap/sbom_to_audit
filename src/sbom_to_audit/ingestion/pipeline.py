@@ -365,6 +365,20 @@ def _derive_claims(
                     derivation_rule="first_epss_record_percentile",
                 )
             )
+        elif source.artifact_type == "public_exploitation_report":
+            assert isinstance(data, dict)
+            claims.append(
+                _claim(
+                    source,
+                    suffix="PUBLIC-MALICIOUS-EXPLOITATION",
+                    proposition="malicious_exploitation_observed",
+                    value=bool(data.get("malicious_exploitation_observed")),
+                    confidence=0.98,
+                    scope=general_scope,
+                    timestamp=str(data.get("published_at") or source.timestamp),
+                    derivation_rule="public_campaign_reporting_malicious_exploitation",
+                )
+            )
         elif source.artifact_type == "runtime_telemetry":
             assert isinstance(data, list)
             for index, record in enumerate(data, 1):
@@ -571,6 +585,7 @@ def _build_snapshot(
     kev = _latest_source_or_none(registry, released, "kev_snapshot")
     epss = _latest_source_or_none(registry, released, "epss_snapshot")
     vex = _latest_source_or_none(registry, released, "csaf_vex")
+    public_exploitation = _latest_source_or_none(registry, released, "public_exploitation_report")
     asset = _latest_source(registry, released, "asset_context")
     mitigation = _latest_source(registry, released, "mitigation_context")
     telemetry_sources = _sources_of_type(registry, released, "runtime_telemetry")
@@ -584,6 +599,8 @@ def _build_snapshot(
         assert isinstance(epss.data, dict)
     if vex is not None:
         assert isinstance(vex.data, dict)
+    if public_exploitation is not None:
+        assert isinstance(public_exploitation.data, dict)
     assert isinstance(asset.data, dict)
     assert isinstance(mitigation.data, dict)
 
@@ -646,6 +663,26 @@ def _build_snapshot(
             "osv_reference": osv.source.relative_path,
             "kev_reference": kev.source.relative_path if kev is not None else None,
             "epss_reference": epss.source.relative_path if epss is not None else None,
+            "public_exploitation_observed": (
+                bool(public_exploitation.data.get("malicious_exploitation_observed"))
+                if public_exploitation is not None
+                else None
+            ),
+            "public_exploitation_reference": (
+                public_exploitation.source.relative_path
+                if public_exploitation is not None
+                else None
+            ),
+            "public_exploitation_observed_at": (
+                public_exploitation.data.get("observed_at")
+                if public_exploitation is not None
+                else None
+            ),
+            "public_exploitation_published_at": (
+                public_exploitation.data.get("published_at")
+                if public_exploitation is not None
+                else None
+            ),
             **(
                 {
                     "cvss_base_score": metrics["base_score"],

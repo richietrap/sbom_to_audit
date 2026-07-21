@@ -234,3 +234,22 @@ All notable repository design and implementation changes are recorded here.
 - the main Rapid Pivot replay yields `CA=1.0` from one eligible Prepare-at-18h opportunity and one Escalate transition;
 - the early-resolution control has no eligible clock opportunity and retains `CA=null/not_applicable`;
 - these are controlled rule-conformance results, not legal, empirical, or industrial validation.
+
+
+## 0.5.5 — Stage 5.5 public historical replay
+
+- Added a publication-aware CVE-2024-3400 / Operation MidnightEclipse public replay.
+- Added fail-closed occurrence-versus-publication temporal leakage checks.
+- Added a separate synthetic reference-deployment EvidencePack replay.
+- Added `public_exploitation_report` ingestion without conflating public reporting and local telemetry.
+- Added historical paper assets, provenance, tests, and deterministic release outputs.
+- Marked the historical EPSS value provisional and manuscript-ineligible pending FIRST verification.
+- Preserved EvidencePack Schema v0.2 and the 34-field completeness denominator.
+
+### Stage 5.5 pre-release quality correction
+
+- Added referential-integrity validation across evaluation runs, scenarios, and execution environments.
+- Added the missing Stage 5.5 local environment record and two historical pilot summaries.
+- Regenerated historical source-manifest, EvidencePack, paper-asset, and registry hashes after YAML normalization.
+- Registered the omission as `BUG-006`; it was corrected before packaging, GitHub upload, Colab execution, or manuscript eligibility.
+- Added the missing `false_comfort_control` scenario-registry row after the new referential-integrity gate exposed the pre-existing omission; registered as `BUG-007` before packaging.
