@@ -44,6 +44,22 @@ jobs:
           codespell
           yamllint .github data .pre-commit-config.yaml .yamllint.yml
 
+      - name: Verify historical EPSS against authoritative sources
+        run: |
+          python scripts/verify_historical_epss.py \
+            --online \
+            --output-dir "$RUNNER_TEMP/historical-epss" \
+            --report "$RUNNER_TEMP/historical-epss/report.json"
+
+      - name: Validate verified historical replay eligibility
+        run: |
+          python scripts/run_historical_replay.py \
+            --output-root "$RUNNER_TEMP/historical-replay-verified" \
+            --epss-verification-report "$RUNNER_TEMP/historical-epss/report.json"
+          bundle_dir="$RUNNER_TEMP/historical-replay-verified/historical_public"
+          python scripts/assert_verified_historical_replay.py \
+            "$bundle_dir/cve_2024_3400_public_bundle.json"
+
       - name: Validate repository integrity
         run: python scripts/validate_repository.py --strict-sources
 

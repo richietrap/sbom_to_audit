@@ -24,8 +24,8 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
     }
     assert report.checks["evaluation_registry"] == {
         "scenarios": 9,
-        "runs": 10,
-        "environments": 6,
+        "runs": 12,
+        "environments": 7,
     }
 
 

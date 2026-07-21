@@ -1,0 +1,18 @@
+{
+  "run_id": "HIST-CVE-2024-3400-PUBLIC-STAGE551-CANDIDATE-001",
+  "scenario_id": "cve_2024_3400_public",
+  "evaluation_status": "PILOT_VERIFICATION_CANDIDATE",
+  "input_manifest_hash": "b372e031f9282135386d9a40ffd1359a31182375ac803da03f582ecc02e03934",
+  "output_manifest_hash": "b585c87bf3b3972c1b154d223d5ddc484ba5d5234f7820ecaaf462f62a69404b",
+  "full_evidencepack_generated": false,
+  "source_count": 7,
+  "timeline_event_count": 8,
+  "provisional_source_ids": [],
+  "epss_verification_status": "verification_contract_valid_online_gate_required",
+  "manuscript_eligible_for_later_freeze": false,
+  "limitations": [
+    "Public evidence cannot establish organisation-local facts.",
+    "Acceptance requires the required online GitHub and Colab EPSS verification gates."
+  ],
+  "online_verification_required": true
+}

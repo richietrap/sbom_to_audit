@@ -26,3 +26,15 @@ The historical EPSS value remains provisional and blocks manuscript eligibility.
 The repository validator now checks run-to-scenario and run-to-environment references,
 duplicate IDs, commit markers, and SHA-256 formatting so a pilot cannot silently refer
 to an unregistered execution environment.
+
+## Stage 5.5.1 verification runs
+
+The Stage 5.5.1 historical rows preserve the earlier provisional Stage 5.5
+runs and add verified-not-frozen runs. Acceptance requires the online GitHub and
+Colab dual-source EPSS checks. The run registry intentionally retains both
+states rather than rewriting the provisional development history.
+
+## Stage 5.5.1 aggregate hash convention
+
+For Stage 5.5.1 candidate runs, `input_manifest_hash` is SHA-256 over the source-manifest JSON serialized with sorted keys and compact separators. `output_manifest_hash` is SHA-256 over a sorted JSON mapping from each registered output path to that file's SHA-256, serialized the same way. This convention is deterministic and excludes timestamps external to the generated outputs.
+

@@ -113,3 +113,32 @@ def test_stage55_colab_notebook_preserves_historical_boundaries_and_lineage() ->
     ):
         assert required in text
     assert ("<YOUR-" + "GITHUB-USERNAME>") not in text
+
+
+STAGE551_NOTEBOOK = ROOT / "notebooks" / "stage551_colab_checkpoint.ipynb"
+
+
+def test_stage551_colab_notebook_code_cells_compile() -> None:
+    notebook = json.loads(STAGE551_NOTEBOOK.read_text(encoding="utf-8"))
+    assert notebook["nbformat"] == 4
+    code_cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
+    assert code_cells
+    for index, cell in enumerate(code_cells, 1):
+        ast.parse("".join(cell["source"]), filename=f"stage551_colab_cell_{index}.py")
+
+
+def test_stage551_colab_notebook_preserves_authoritative_epss_evidence() -> None:
+    text = STAGE551_NOTEBOOK.read_text(encoding="utf-8")
+    for required in (
+        "verify_historical_epss.py",
+        "--online",
+        "authoritative_dual_source_verified",
+        "epss_scores-2024-04-15.csv.gz",
+        "state_trajectory_changed",
+        "stage551_colab_checkpoint_evidence.zip",
+        "Tested Git commit",
+        "Colab evidence-bundle SHA-256",
+    ):
+        assert required in text
+    assert ("<YOUR-" + "GITHUB-USERNAME>") not in text
+    assert "authoritative_dual_source_verified_by_required_online_gate" not in text

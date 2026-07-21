@@ -29,7 +29,7 @@ def _write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> Non
         writer.writerows(rows)
 
 
-def _timeline_svg(path: Path, rows: list[dict[str, str]]) -> None:
+def _timeline_svg(path: Path, rows: list[dict[str, str]], manuscript_eligible: bool) -> None:
     width, height = 1220, 520
     left, right = 80, 1140
     count = len(rows)
@@ -38,7 +38,15 @@ def _timeline_svg(path: Path, rows: list[dict[str, str]]) -> None:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="white"/>',
         '<text x="45" y="38" font-family="sans-serif" font-size="23" font-weight="bold">CVE-2024-3400: occurrence versus public availability</text>',
-        '<text x="1170" y="62" text-anchor="end" font-family="sans-serif" font-size="12">PILOT — provisional EPSS blocks manuscript eligibility</text>',
+        (
+            '<text x="1170" y="62" text-anchor="end" font-family="sans-serif" font-size="12">'
+            + (
+                "PILOT — authoritative EPSS verified; evaluation not yet frozen"
+                if manuscript_eligible
+                else "PILOT — online EPSS verification gate still required"
+            )
+            + "</text>"
+        ),
         '<line x1="80" y1="245" x2="1140" y2="245" stroke="#222" stroke-width="2"/>',
     ]
     for index, row in enumerate(rows):
@@ -152,13 +160,17 @@ def build(output_root: Path, destination: Path) -> dict[str, str]:
     )
 
     figure_out = destination / "figures" / "cve_2024_3400_public_timeline.svg"
-    _timeline_svg(figure_out, rows)
+    _timeline_svg(figure_out, rows, bool(bundle["manuscript_eligibility"]))
 
     generated = (chronology_out, boundary_out, reference_out, figure_out)
     sources = (timeline_path, bundle_path, reference_state_path)
     metadata = {
-        "asset_status": "PILOT_PROVISIONAL",
-        "manuscript_eligible": False,
+        "asset_status": (
+            "PILOT_VERIFIED_NOT_FROZEN"
+            if bundle["manuscript_eligibility"]
+            else "PILOT_VERIFICATION_CANDIDATE"
+        ),
+        "manuscript_eligible": bool(bundle["manuscript_eligibility"]),
         "eligibility_blockers": bundle["eligibility_blockers"],
         "source_run_ids": [
             "HIST-CVE-2024-3400-PUBLIC-PILOT-001",

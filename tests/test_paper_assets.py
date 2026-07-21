@@ -1,3 +1,4 @@
+import csv
 import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -159,6 +160,40 @@ def test_stage55_historical_assets_are_generated_from_registered_outputs(tmp_pat
     metadata = json.loads(
         (destination / "data" / "stage55_asset_manifest.json").read_text(encoding="utf-8")
     )
-    assert metadata["asset_status"] == "PILOT_PROVISIONAL"
+    assert metadata["asset_status"] == "PILOT_VERIFICATION_CANDIDATE"
     assert metadata["manuscript_eligible"] is False
     assert metadata["eligibility_blockers"]
+
+
+def test_stage551_epss_assets_are_generated_from_verified_outputs(tmp_path: Path) -> None:
+    from paper_assets.scripts.build_stage551_assets import build
+    from scripts.run_historical_replay import run as run_historical
+
+    output_root = tmp_path / "outputs"
+    destination = tmp_path / "assets"
+    run(
+        ROOT / "data" / "scenarios" / "historical_cve_2024_3400_reference.yaml",
+        output_root,
+    )
+    run_historical(output_root)
+    hashes = build(output_root, destination)
+    assert len(hashes) == 4
+    figure = destination / "figures" / "cve_2024_3400_epss_verification.svg"
+    assert figure.is_file()
+    import xml.etree.ElementTree as ET
+
+    ET.parse(figure)
+    metadata = json.loads(
+        (destination / "data" / "stage551_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT_VERIFICATION_CANDIDATE"
+    assert metadata["manuscript_eligible"] is False
+    ablation_rows = list(
+        csv.DictReader(
+            (destination / "tables" / "cve_2024_3400_epss_ablation.csv").open(
+                encoding="utf-8", newline=""
+            )
+        )
+    )
+    assert ablation_rows
+    assert not any(row["state_changed"] == "True" for row in ablation_rows)

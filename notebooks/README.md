@@ -22,3 +22,7 @@ Before a run is treated as manuscript-eligible, set `REF` to an immutable Git ta
 `stage3_colab_checkpoint.ipynb` clones a clean GitHub reference, installs the project in an isolated environment, runs the complete multi-scenario release gate, checks Ghost-Logger conflict preservation, verifies False Comfort scope mismatch and its scope-matched negative control, regenerates Stage 3 pilot assets, and emits a hashed evidence bundle.
 
 - `stage5_colab_checkpoint.ipynb` — clean-room Stage 5 verification for Rapid Pivot, its temporal control, 42 deterministic outputs, clock-aware escalation, and checkpoint lineage preservation.
+
+- `stage551_colab_checkpoint.ipynb` performs the authoritative online historical
+  EPSS comparison, complete release gate, EPSS ablation and raw-evidence bundle
+  preservation for Stage 5.5.1.

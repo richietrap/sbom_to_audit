@@ -1,0 +1,19 @@
+{
+  "verification_contract_version": "0.1",
+  "status": "verification_contract_pending_online_gate",
+  "target_cve": "CVE-2024-3400",
+  "target_date": "2024-04-15",
+  "expected_record": {
+    "cve": "CVE-2024-3400",
+    "date": "2024-04-15",
+    "epss": "0.95732",
+    "percentile": "0.99721",
+    "model_version": "v2023.03.01"
+  },
+  "api_url": "https://api.first.org/data/v1/epss?cve=CVE-2024-3400&date=2024-04-15&envelope=true&pretty=true",
+  "archive_url": "https://raw.githubusercontent.com/empiricalsec/epss_scores/ca26ecd7b9b806badabd6aedffdc8c4472ce6e85/2024/epss_scores-2024-04-15.csv.gz",
+  "archive_commit": "ca26ecd7b9b806badabd6aedffdc8c4472ce6e85",
+  "acceptance_rule": "The required online quality and Colab gates must independently download the FIRST API response and pinned official archive and verify exact agreement with this record.",
+  "raw_evidence_policy": "Raw API and gzip files are retained in the Colab checkpoint evidence bundle rather than committed to the source repository.",
+  "fail_closed": true
+}

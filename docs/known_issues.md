@@ -62,5 +62,6 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 - Public chronology cannot establish organisation-local reachability, execution, impact, mitigation, authorization, submission, or legal applicability. The public-only replay therefore does not generate an EvidencePack.
 - Date-only publications use conservative end-of-day UTC availability. This avoids premature evidence release but reduces within-day temporal precision.
 - The reference deployment is synthetic and must not be described as a real Palo Alto Networks customer or incident case study.
-- The 2024-04-15 EPSS value is a provisional secondary reconstruction. It blocks frozen-evaluation and manuscript eligibility until directly verified from a FIRST historical API response or daily archive; alternatively, the value must be removed from the eligible replay.
+- The 2024-04-15 EPSS record is governed by a fail-closed dual-source verification contract. The GitHub quality gate and isolated Colab checkpoint must download and compare the FIRST API record and pinned official daily archive before the exact commit can be frozen or cited.
+- Raw authoritative EPSS downloads are preserved in the Colab evidence bundle rather than committed to the source tree; loss of that bundle would weaken run-level provenance but can be recovered by rerunning the pinned verification gate.
 - Research-normalized NVD, KEV, advisory, OSV, CycloneDX, and CSAF-shaped extracts preserve provenance but are not substitutes for complete official archive exports or official vendor CSAF publication.

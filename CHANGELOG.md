@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.6 — Stage 5.5.1 historical EPSS verification
+
+- Added fail-closed comparison of the FIRST date-specific EPSS API response and the official daily archive pinned to commit `ca26ecd7b9b806badabd6aedffdc8c4472ce6e85`.
+- Added offline verification-contract validation and a mandatory online GitHub quality gate.
+- Added preservation of raw API, gzip, extracted-row and verification-report evidence in the Colab checkpoint bundle.
+- Reclassified the CVE-2024-3400 historical replay as `PILOT_VERIFICATION_CANDIDATE`; it is eligible for later evaluation freezing only after the online GitHub and Colab gates pass.
+- Added a with/without-EPSS ablation showing no state-trajectory or final-`E_t` change in the synthetic reference deployment.
+- Added verification and ablation tests, ADR-010, updated evaluation records, paper claims, figures, tables and provenance manifests.
+- Corrected the pre-release online eligibility assertion and Colab status oracle to use the final `online_report_hash` and `authoritative_dual_source_verified` fields; registered as BUG-009 before remote execution.
+- Preserved EvidencePack Schema v0.2 and its 34-field completeness denominator.
+
 All notable repository design and implementation changes are recorded here.
 
 ## [0.2.1] - 2026-07-17

@@ -34,10 +34,15 @@ def test_occurrence_time_does_not_create_public_knowledge_before_publication() -
     assert timeline[4]["public_exploitation_known"] is True
 
 
-def test_provisional_epss_blocks_manuscript_eligibility() -> None:
+def test_offline_replay_retains_required_online_gate_blocker() -> None:
     bundle = run_public_historical_replay(ROOT)["bundle"]
-    assert bundle["provisional_source_ids"] == ["HIST-EPSS-001"]
+    assert bundle["provisional_source_ids"] == []
+    assert bundle["epss_verification_contract_source_ids"] == ["HIST-EPSS-001"]
+    assert bundle["historical_epss_verification"]["status"] == (
+        "verification_contract_valid_online_gate_required"
+    )
     assert bundle["manuscript_eligibility"] is False
+    assert bundle["evaluation_status"] == "PILOT_VERIFICATION_CANDIDATE"
     assert bundle["eligibility_blockers"]
 
 

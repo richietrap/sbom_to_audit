@@ -1,0 +1,7 @@
+event_index,event_id,timestamp,state_with_epss,state_without_epss,state_changed,E_t_with_epss,E_t_without_epss
+0,EVT-HIST-REF-DISCLOSURE,2024-04-12T08:30:00Z,Monitor,Monitor,False,0.0,0.0
+1,EVT-HIST-REF-PUBLIC-EXP,2024-04-12T23:59:59Z,Report-Ready,Report-Ready,False,1.0,1.0
+2,EVT-HIST-REF-KEV,2024-04-13T01:00:01Z,Report-Ready,Report-Ready,False,1.0,1.0
+3,EVT-HIST-REF-AUTH,2024-04-13T02:00:00Z,Report-Ready,Report-Ready,False,1.0,1.0
+4,EVT-HIST-REF-HOTFIX,2024-04-14T23:59:59Z,Report-Ready,Report-Ready,False,1.0,1.0
+5,EVT-HIST-REF-EPSS,2024-04-15T23:59:59Z,Report-Ready,Report-Ready,False,1.0,1.0

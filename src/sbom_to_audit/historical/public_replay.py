@@ -12,6 +12,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+from sbom_to_audit.historical.epss_verification import expected_record
 from sbom_to_audit.utils.hashing import sha256_file, sha256_json
 from sbom_to_audit.utils.io import read_json, read_yaml
 from sbom_to_audit.utils.time import delta_hours, parse_timestamp
@@ -96,15 +97,49 @@ def _source_manifest(
     return manifest, by_id
 
 
+def _validate_online_epss_report(path: str | Path | None) -> dict[str, Any] | None:
+    if path is None:
+        return None
+    report_path = Path(path).resolve()
+    if not report_path.is_file():
+        raise FileNotFoundError(f"historical EPSS verification report not found: {report_path}")
+    value = read_json(report_path)
+    if not isinstance(value, dict):
+        raise ValueError("historical EPSS verification report must contain an object")
+    expected = expected_record()
+    if value.get("status") != "authoritative_dual_source_verified":
+        raise ValueError("historical EPSS report is not authoritatively verified")
+    checks = value.get("checks")
+    if not isinstance(checks, dict) or not checks or not all(checks.values()):
+        raise ValueError("historical EPSS report contains failed or missing checks")
+    for record_name in ("api_record", "archive_record"):
+        record = value.get(record_name)
+        if not isinstance(record, dict):
+            raise ValueError(f"historical EPSS report lacks {record_name}")
+        for key in ("cve", "date", "epss", "percentile"):
+            if str(record.get(key)) != str(getattr(expected, key)):
+                raise ValueError(f"historical EPSS {record_name} {key} mismatch")
+    archive = value["archive_record"]
+    if archive.get("model_version") != expected.model_version:
+        raise ValueError("historical EPSS archive model version mismatch")
+    for field in ("api_sha256", "archive_sha256", "extracted_row_sha256"):
+        digest = str(value.get(field) or "")
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise ValueError(f"historical EPSS report has invalid {field}")
+    return value
+
+
 def run_public_historical_replay(
     repository_root: str | Path,
     *,
     registry_path: str | Path = "data/historical_replays/cve_2024_3400/public_source_registry.yaml",
     chronology_path: str | Path = "data/historical_replays/cve_2024_3400/chronology.yaml",
+    epss_verification_report_path: str | Path | None = None,
 ) -> dict[str, Any]:
     """Validate and replay public evidence without creating local facts."""
 
     root = Path(repository_root).resolve()
+    online_epss_report = _validate_online_epss_report(epss_verification_report_path)
     registry_file = _confined(root, str(registry_path))
     chronology_file = _confined(root, str(chronology_path))
     registry = _load_object(registry_file)
@@ -186,6 +221,16 @@ def run_public_historical_replay(
         for item in by_id.values()
         if item["verification_status"].startswith("provisional")
     )
+    epss_contract_sources = sorted(
+        item["source_id"]
+        for item in by_id.values()
+        if item["kind"] == "epss_snapshot"
+        and item["verification_status"] == "authoritative_dual_source_verification_contract"
+    )
+    verification_contract_path = _confined(
+        root,
+        "data/historical_replays/cve_2024_3400/epss/verification_manifest.json",
+    )
     boundaries = {
         "full_evidencepack_generated": False,
         "organisation_local_reachability": "unavailable",
@@ -216,12 +261,34 @@ def run_public_historical_replay(
         "timeline": deepcopy(snapshots),
         "evidence_boundaries": boundaries,
         "provisional_source_ids": provisional_all,
-        "evaluation_status": "PILOT_PROVISIONAL",
-        "manuscript_eligibility": False,
-        "eligibility_blockers": [
-            "Historical EPSS value remains provisional and requires authoritative verification."
-        ]
-        if provisional_all
-        else [],
+        "epss_verification_contract_source_ids": epss_contract_sources,
+        "historical_epss_verification": {
+            "status": (
+                "authoritative_dual_source_verified"
+                if online_epss_report is not None
+                else "verification_contract_valid_online_gate_required"
+            ),
+            "verification_contract_hash": sha256_file(verification_contract_path),
+            "online_report_hash": (
+                sha256_file(Path(epss_verification_report_path).resolve())
+                if online_epss_report is not None and epss_verification_report_path is not None
+                else None
+            ),
+            "acceptance_gate": "GitHub online quality gate plus isolated Colab online verification",
+        },
+        "evaluation_status": (
+            "PILOT_VERIFIED_NOT_FROZEN"
+            if online_epss_report is not None
+            else "PILOT_VERIFICATION_CANDIDATE"
+        ),
+        "manuscript_eligibility": online_epss_report is not None,
+        "eligibility_blockers": (
+            []
+            if online_epss_report is not None
+            else [
+                "The required authoritative online EPSS verification report was not supplied "
+                "to this replay."
+            ]
+        ),
     }
     return {"bundle": bundle, "timeline_rows": rows, "source_manifest": source_manifest}

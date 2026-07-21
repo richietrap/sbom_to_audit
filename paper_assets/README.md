@@ -22,3 +22,10 @@ Rules:
 - `tables/stage5_scenario_summary.csv` summarizes all seven controlled replay manifests.
 
 These remain `PILOT / NOT_ELIGIBLE` until regenerated from a tagged commit and preserved through the Stage 5 Colab checkpoint.
+
+## Stage 5.5.1 assets
+
+Stage 5.5.1 adds a dual-source historical EPSS verification figure and tables
+for the verified record and with/without-EPSS ablation. These assets are marked
+`PILOT_VERIFICATION_CANDIDATE` and become eligible for evaluation freezing only
+after the exact GitHub commit passes the online quality and Colab gates.

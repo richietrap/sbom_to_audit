@@ -120,3 +120,25 @@ deployment that exercises the full EvidencePack pipeline. It is not a fifth cont
 family and must not be interpreted as evidence about a real organisation.
 
 The historical EPSS reconstruction remains provisional and blocks manuscript eligibility.
+
+## Stage 5.5.1 historical EPSS verification
+
+The CVE-2024-3400 replay uses a fail-closed verification contract for the
+2024-04-15 EPSS record. The GitHub quality workflow and isolated Colab
+checkpoint independently download the date-specific FIRST API response and a
+pinned official daily archive, compare the CVE/date/score/percentile and verify
+the archive model metadata. Raw authoritative evidence is retained in the
+Colab checkpoint bundle. A matched ablation confirms that omitting EPSS does not
+change the historical reference state trajectory.
+
+Run the offline contract check with:
+
+```bash
+python scripts/verify_historical_epss.py
+```
+
+The online acceptance gate is:
+
+```bash
+python scripts/verify_historical_epss.py --online --output-dir /tmp/epss-verification
+```

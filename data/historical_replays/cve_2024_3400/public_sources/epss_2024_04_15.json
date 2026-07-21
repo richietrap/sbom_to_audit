@@ -1,16 +1,18 @@
 {
   "record_type": "research_normalized_public_fact_extract",
   "cve_id": "CVE-2024-3400",
-  "publisher": "FIRST EPSS (value provisionally reconstructed)",
+  "publisher": "FIRST EPSS",
   "published_at": "2024-04-15T23:59:59Z",
-  "verification_status": "provisional_secondary_reconstruction",
+  "verification_status": "authoritative_dual_source_verification_contract",
+  "verification_contract": "data/historical_replays/cve_2024_3400/epss/verification_manifest.json",
   "data": [
     {
       "cve": "CVE-2024-3400",
       "epss": "0.95732",
       "percentile": "0.99721",
-      "date": "2024-04-15"
+      "date": "2024-04-15",
+      "model_version": "v2023.03.01"
     }
   ],
-  "limitation": "Exact historical value must be reverified from FIRST before frozen evaluation."
+  "interpretation": "EPSS is predictive context and is not evidence of observed exploitation."
 }

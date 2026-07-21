@@ -67,3 +67,19 @@ Use an isolated virtual environment inside Colab rather than Colab's global pack
 ## Stage 5 checkpoint
 
 After GitHub regression and quality workflows pass, run `notebooks/stage5_colab_checkpoint.ipynb` from the exact GitHub reference. Download `stage5_colab_checkpoint_evidence.zip` and preserve both the 40-character tested commit and the printed SHA-256 digest. The bundle includes all seven scenario outputs, the Stage 5 release report, regenerated paper assets, and environment metadata. Do not mark Stage 5 assets manuscript-eligible solely because the notebook executed; checkpoint registration and later evaluation freeze remain separate steps.
+
+## Stage 5.5.1 online historical EPSS gate
+
+The local release checker validates the committed verification contract. The
+remote acceptance workflow must additionally run:
+
+```bash
+python scripts/verify_historical_epss.py \
+  --online \
+  --output-dir /tmp/historical-epss \
+  --report /tmp/historical-epss/report.json
+```
+
+The Stage 5.5.1 Colab checkpoint preserves the raw API response, complete pinned
+gzip archive, extracted CVE row, hashes and online report in its downloadable
+evidence bundle. Record the exact Git commit and evidence-bundle SHA-256.

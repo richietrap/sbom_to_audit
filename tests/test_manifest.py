@@ -43,7 +43,10 @@ def _repository_files_requiring_manifest_entry() -> set[str]:
             continue
         if path.suffix == ".pyc" or relative.name.startswith(".coverage"):
             continue
-        if relative.parent in GENERATED_OUTPUT_DIRS and relative.name != ".gitkeep":
+        if (
+            any(relative.is_relative_to(directory) for directory in GENERATED_OUTPUT_DIRS)
+            and relative.name != ".gitkeep"
+        ):
             continue
         files.add(relative.as_posix())
     return files

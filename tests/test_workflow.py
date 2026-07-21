@@ -33,6 +33,10 @@ def test_quality_workflow_runs_independent_quality_gates() -> None:
         "codespell",
         "yamllint",
         "scripts/validate_repository.py",
+        "scripts/verify_historical_epss.py",
+        "--online",
+        "--epss-verification-report",
+        "scripts/assert_verified_historical_replay.py",
         "--cov=sbom_to_audit",
     ):
         assert required in text

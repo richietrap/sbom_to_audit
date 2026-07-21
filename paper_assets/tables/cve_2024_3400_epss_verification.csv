@@ -1,0 +1,2 @@
+cve,score_date,epss,percentile,model_version,verification_status,archive_commit,acceptance_gate
+CVE-2024-3400,2024-04-15,0.95732,0.99721,v2023.03.01,verification_contract_pending_online_gate,ca26ecd7b9b806badabd6aedffdc8c4472ce6e85,The required online quality and Colab gates must independently download the FIRST API response and pinned official archive and verify exact agreement with this record.

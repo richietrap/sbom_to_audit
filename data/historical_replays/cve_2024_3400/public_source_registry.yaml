@@ -77,7 +77,8 @@ sources:
     published_at: '2024-04-15T23:59:59Z'
     available_at: '2024-04-15T23:59:59Z'
     publication_precision: date_only_end_of_day_normalization
-    verification_status: provisional_secondary_reconstruction
+    verification_status: authoritative_dual_source_verification_contract
     source_urls:
       - https://api.first.org/data/v1/epss?cve=CVE-2024-3400&date=2024-04-15
-      - https://api.first.org/epss/
+      - https://github.com/empiricalsec/epss_scores/blob/ca26ecd7b9b806badabd6aedffdc8c4472ce6e85/2024/epss_scores-2024-04-15.csv.gz
+      - https://www.first.org/epss/data_stats

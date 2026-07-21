@@ -14,6 +14,7 @@ from typing import Any
 
 import yaml
 
+from sbom_to_audit.historical.epss_verification import verify_offline_contract
 from sbom_to_audit.historical.public_replay import run_public_historical_replay
 from sbom_to_audit.ingestion.source_registry import SourceRegistry
 from sbom_to_audit.model.metrics import MANDATORY_FIELDS
@@ -96,7 +97,10 @@ def _repository_files() -> set[str]:
             continue
         if path.suffix == ".pyc" or relative.name.startswith(".coverage"):
             continue
-        if relative.parent in GENERATED_OUTPUT_DIRS and relative.name != ".gitkeep":
+        if (
+            any(relative.is_relative_to(directory) for directory in GENERATED_OUTPUT_DIRS)
+            and relative.name != ".gitkeep"
+        ):
             continue
         files.add(relative.as_posix())
     return files
@@ -259,14 +263,28 @@ def validate_historical_replay(report: ValidationReport, strict_sources: bool) -
     boundaries = bundle["evidence_boundaries"]
     if boundaries.get("full_evidencepack_generated") is not False:
         report.error("public historical replay must not generate a full EvidencePack")
+    try:
+        offline = verify_offline_contract(
+            ROOT / "data/historical_replays/cve_2024_3400/epss/verification_manifest.json"
+        )
+    except (OSError, TypeError, ValueError) as exc:
+        report.error(f"historical EPSS offline contract validation failed: {exc}")
+        return
+    if bundle.get("provisional_source_ids"):
+        report.error("historical replay must not contain provisional EPSS sources")
     if bundle.get("manuscript_eligibility") is not False:
-        report.error("provisional historical replay must remain manuscript-ineligible")
+        report.error("offline validation must not imply that the online EPSS gate has passed")
+    verification = bundle.get("historical_epss_verification") or {}
+    if verification.get("status") != "verification_contract_valid_online_gate_required":
+        report.error("historical replay does not retain the required online EPSS gate")
     report.checks["historical_public_replay"] = {
         "replay_id": bundle["replay_id"],
         "source_count": bundle["source_manifest"]["source_count"],
         "timeline_events": len(bundle["timeline"]),
         "provisional_source_ids": bundle["provisional_source_ids"],
         "manuscript_eligibility": bundle["manuscript_eligibility"],
+        "epss_offline_contract_status": offline.status,
+        "online_gate_required": True,
     }
 
 
@@ -335,8 +353,16 @@ def validate_evaluation_registry(report: ValidationReport) -> None:
         if scenario_id in {
             "cve_2024_3400_public",
             "historical_cve_2024_3400_reference",
-        } and "PROVISIONAL" not in str(row.get("evaluation_status", "")):
-            report.error(f"{run_id}: Stage 5.5 historical runs must remain provisional")
+        }:
+            allowed = {
+                "PILOT_PROVISIONAL",
+                "PILOT_VERIFICATION_CANDIDATE",
+                "PILOT_VERIFIED_NOT_FROZEN",
+            }
+            if str(row.get("evaluation_status", "")) not in allowed:
+                report.error(
+                    f"{run_id}: historical evaluation status must be one of {sorted(allowed)}"
+                )
 
     report.checks["evaluation_registry"] = {
         "scenarios": len(scenario_rows),

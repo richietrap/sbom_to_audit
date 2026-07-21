@@ -48,7 +48,7 @@ def test_public_exploitation_increases_E_without_becoming_local_telemetry() -> N
     assert pack["local_evidence"]["telemetry_reference"].endswith("local_observation.jsonl")
 
 
-def test_reference_inputs_are_explicitly_synthetic_and_epss_is_provisional() -> None:
+def test_reference_inputs_are_explicitly_synthetic_and_epss_has_verification_contract() -> None:
     result = _result()
     pack = result["pack"]
     assert pack["asset_context"]["evidence_classification"] == "synthetic_reference_deployment"
@@ -61,3 +61,5 @@ def test_reference_inputs_are_explicitly_synthetic_and_epss_is_provisional() -> 
         if source["artifact_type"] == "epss_snapshot"
     )
     assert "epss_snapshot.json" in epss["relative_path"]
+    snapshot = __import__("json").loads((ROOT / epss["relative_path"]).read_text())
+    assert snapshot["verification_status"] == ("authoritative_dual_source_verification_contract")

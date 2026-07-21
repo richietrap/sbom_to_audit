@@ -130,6 +130,8 @@ def _deterministic_historical_public_replay(report: ReleaseReport) -> None:
         "historical_public/cve_2024_3400_public_bundle.json",
         "historical_public/cve_2024_3400_public_timeline.csv",
         "historical_public/cve_2024_3400_public_sources.json",
+        "historical_public/cve_2024_3400_epss_ablation.json",
+        "historical_public/cve_2024_3400_epss_ablation.csv",
     )
     with tempfile.TemporaryDirectory(prefix="sbom-audit-historical-") as temp:
         base = Path(temp)
@@ -173,6 +175,10 @@ def run_release_check() -> ReleaseReport:
                 ".pre-commit-config.yaml",
                 ".yamllint.yml",
             ],
+        ),
+        (
+            "historical EPSS offline contract",
+            [sys.executable, "scripts/verify_historical_epss.py"],
         ),
         (
             "repository validation",

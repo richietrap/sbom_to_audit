@@ -37,3 +37,10 @@ The Rapid Pivot files are controlled fictional artefacts. The CycloneDX componen
 reference deployment. Public files retain upstream URLs and temporal metadata. Reference-deployment
 files are explicitly fictional. Do not move them into the controlled scenario folders without
 preserving their classification.
+
+### Historical EPSS verification
+
+`data/historical_replays/cve_2024_3400/epss/` contains the normalized expected
+record and pinned dual-source verification contract. Raw API and gzip files are
+not committed; the mandatory online gates download them and the Colab evidence
+bundle preserves them with hashes.

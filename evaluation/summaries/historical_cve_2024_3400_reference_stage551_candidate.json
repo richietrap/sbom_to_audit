@@ -1,0 +1,16 @@
+{
+  "run_id": "HIST-CVE-2024-3400-REF-STAGE551-CANDIDATE-001",
+  "scenario_id": "historical_cve_2024_3400_reference",
+  "evaluation_status": "PILOT_VERIFICATION_CANDIDATE",
+  "input_manifest_hash": "ac815f26074c4dee6acf9a21c4dc8f4639f332d270f3e9b9a78fe68dcd94257c",
+  "output_manifest_hash": "2dbe28fae1f81121169bc542fcf00dd5634aea715bc3ff0ea50b6bdad4cc1acb",
+  "epss_verification_status": "verification_contract_valid_online_gate_required",
+  "epss_ablation_state_changed": false,
+  "final_state": "Report-Ready",
+  "limitations": [
+    "Synthetic reference deployment; not evidence about a real organisation.",
+    "Not frozen until remote checkpoint preservation."
+  ],
+  "manuscript_eligible_for_later_freeze": false,
+  "online_verification_required": true
+}

@@ -7,8 +7,8 @@ authors:
     given-names: Richard
     email: r.dosumu@gmail.com
     orcid: "https://orcid.org/0009-0000-5877-1295"
-version: 0.5.5
-date-released: 2026-07-20
+version: 0.5.6
+date-released: 2026-07-21
 license: MIT
 keywords:
   - SBOM
