@@ -56,3 +56,9 @@ outputs/audit_ledgers/*
 !outputs/audit_ledgers/.gitkeep
 outputs/validation/*
 !outputs/validation/.gitkeep
+
+# Root-level historical EPSS downloads are runtime evidence, not source files.
+/cve_2024_3400_epss_2024-04-15_api.json
+/cve_2024_3400_epss_2024-04-15_row.csv
+/epss_scores-2024-04-15.csv.gz
+/historical_epss_verification.json

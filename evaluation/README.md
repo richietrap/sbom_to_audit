@@ -21,7 +21,7 @@ Stage 5.5 adds a publication-aware CVE-2024-3400 public replay and a separately
 classified synthetic reference deployment. The public replay does not generate a
 full EvidencePack because public reporting cannot establish organisation-local
 reachability, execution, impact, authorization, submission, or legal applicability.
-The historical EPSS value remains provisional and blocks manuscript eligibility.
+The Stage 5.5 value was provisional and blocked manuscript eligibility.
 
 The repository validator now checks run-to-scenario and run-to-environment references,
 duplicate IDs, commit markers, and SHA-256 formatting so a pilot cannot silently refer
@@ -38,3 +38,10 @@ states rather than rewriting the provisional development history.
 
 For Stage 5.5.1 candidate runs, `input_manifest_hash` is SHA-256 over the source-manifest JSON serialized with sorted keys and compact separators. `output_manifest_hash` is SHA-256 over a sorted JSON mapping from each registered output path to that file's SHA-256, serialized the same way. This convention is deterministic and excludes timestamps external to the generated outputs.
 
+
+## Stage 5.5.2 corrected verification runs
+
+Stage 5.5.2 preserves the failed Stage 5.5.1 candidate as development history,
+corrects the normalized EPSS record to the values observed from both authoritative
+sources, and adds new corrected-candidate runs. The corrected rows remain
+non-eligible until GitHub and Colab repeat the dual-source online verification.

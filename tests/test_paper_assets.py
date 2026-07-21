@@ -197,3 +197,40 @@ def test_stage551_epss_assets_are_generated_from_verified_outputs(tmp_path: Path
     )
     assert ablation_rows
     assert not any(row["state_changed"] == "True" for row in ablation_rows)
+
+
+def test_stage552_corrected_epss_assets_use_corrected_run_lineage(tmp_path: Path) -> None:
+    from paper_assets.scripts.build_stage552_assets import build as build_stage552
+    from scripts.run_historical_replay import run as run_historical
+
+    output_root = tmp_path / "outputs"
+    destination = tmp_path / "assets"
+    run(
+        ROOT / "data" / "scenarios" / "historical_cve_2024_3400_reference.yaml",
+        output_root,
+    )
+    run_historical(output_root)
+    hashes = build_stage552(output_root, destination)
+    assert len(hashes) == 4
+    figure = destination / "figures" / "cve_2024_3400_epss_verification.svg"
+    ET.parse(figure)
+    assert "EPSS 0.00371; percentile 0.72343" in figure.read_text(encoding="utf-8")
+    table = list(
+        csv.DictReader(
+            (destination / "tables" / "cve_2024_3400_epss_verification.csv").open(
+                encoding="utf-8", newline=""
+            )
+        )
+    )
+    assert table[0]["epss"] == "0.00371"
+    assert table[0]["percentile"] == "0.72343"
+    metadata = json.loads(
+        (destination / "data" / "stage552_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT_VERIFICATION_CANDIDATE"
+    assert metadata["manuscript_eligible"] is False
+    assert metadata["source_run_ids"] == [
+        "HIST-CVE-2024-3400-PUBLIC-STAGE552-CORRECTED-CANDIDATE-001",
+        "HIST-CVE-2024-3400-REF-STAGE552-CORRECTED-CANDIDATE-001",
+    ]
+    assert metadata["generation_script"] == ("paper_assets/scripts/build_stage552_assets.py")

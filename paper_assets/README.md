@@ -23,9 +23,11 @@ Rules:
 
 These remain `PILOT / NOT_ELIGIBLE` until regenerated from a tagged commit and preserved through the Stage 5 Colab checkpoint.
 
-## Stage 5.5.1 assets
+## Stage 5.5.1 and Stage 5.5.2 assets
 
-Stage 5.5.1 adds a dual-source historical EPSS verification figure and tables
-for the verified record and with/without-EPSS ablation. These assets are marked
-`PILOT_VERIFICATION_CANDIDATE` and become eligible for evaluation freezing only
-after the exact GitHub commit passes the online quality and Colab gates.
+The Stage 5.5.1 online gate rejected an incorrect normalized EPSS candidate.
+Stage 5.5.2 regenerates the verification figure and ablation tables from the
+corrected normalized record (`0.00371`, percentile `0.72343`) and records them
+under `stage552_asset_manifest.json`. They remain
+`PILOT_CORRECTED_VERIFICATION_CANDIDATE` until the exact GitHub commit passes
+the authoritative online quality and Colab gates.

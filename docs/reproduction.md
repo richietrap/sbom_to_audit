@@ -83,3 +83,32 @@ python scripts/verify_historical_epss.py \
 The Stage 5.5.1 Colab checkpoint preserves the raw API response, complete pinned
 gzip archive, extracted CVE row, hashes and online report in its downloadable
 evidence bundle. Record the exact Git commit and evidence-bundle SHA-256.
+
+
+## Stage 5.5.2 corrected historical EPSS gate
+
+The normalized 2024-04-15 record is `0.00371` with percentile `0.72343`.
+Online acceptance still requires the date-specific FIRST API and pinned daily
+archive to agree exactly with each other and with the normalized record.
+
+Verification downloads belong under `outputs/validation` or in an external
+checkpoint bundle. Do not place or commit them at repository root. A failed
+comparison writes a diagnostic JSON report containing the observed records and
+failed checks before returning a non-zero exit code.
+
+## Stage 5.5.2 repository replacement
+
+Stage 5.5.1 left a mutable FIRST API download at repository root. Replace the
+repository using deletion-aware synchronization so files absent from the
+corrected release are removed while `.git/` is preserved:
+
+```bash
+rsync -a --delete --exclude='.git/' /tmp/sbom-stage552/sbom-to-audit/ ~/sbom_to_audit/
+cd ~/sbom_to_audit
+git add -A
+git status
+```
+
+The root-level API JSON, extracted row, gzip archive and verification report are
+runtime evidence. They must be stored under `outputs/validation/` or in a Colab
+checkpoint bundle, never as source-controlled root files.

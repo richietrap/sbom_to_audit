@@ -12,7 +12,7 @@
   "generation_script_hash": "52956de6d21e421eecc1fc63c4d8639b3c9804293dff80c7936d847672691cb9",
   "source_data_hashes": {
     "historical_public/cve_2024_3400_public_timeline.csv": "b4facf9a8ccdf2f58ac5cbf7168abb0eefdd618d86e07c356045bc17f1839afb",
-    "historical_public/cve_2024_3400_public_bundle.json": "4363acd24f04199e2b5b6cf458f81c9327c9b4c9d0262eaf4ff45918eadf9db4",
+    "historical_public/cve_2024_3400_public_bundle.json": "d7c8c3eea346789ef80bf2d4c86fdf8279624726ea27cdaffb97beb04b2e11ae",
     "state_logs/historical_cve_2024_3400_reference.csv": "dfa3a99548a35311dca1028c122e973fdca5f130611a5a962a44000bb7495928"
   },
   "generated_asset_hashes": {

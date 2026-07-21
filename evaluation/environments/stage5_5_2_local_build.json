@@ -1,0 +1,10 @@
+{
+  "environment_id": "stage5.5.2-local-build",
+  "environment_class": "development_validation",
+  "stage": "5.5.2",
+  "package_version": "0.5.7",
+  "python_policy": "clean virtual environment; exact runtime captured in release report",
+  "online_verification_policy": "GitHub quality gate and isolated Colab checkpoint must download and compare the FIRST API and pinned official EPSS archive against the corrected normalized record.",
+  "evaluation_status": "PILOT_CORRECTED_VERIFICATION_CANDIDATE",
+  "recorded_at": "2026-07-21T00:00:00Z"
+}

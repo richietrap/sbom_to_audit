@@ -1,0 +1,22 @@
+{
+  "asset_status": "PILOT_VERIFICATION_CANDIDATE",
+  "manuscript_eligible": false,
+  "source_run_ids": [
+    "HIST-CVE-2024-3400-PUBLIC-STAGE552-CORRECTED-CANDIDATE-001",
+    "HIST-CVE-2024-3400-REF-STAGE552-CORRECTED-CANDIDATE-001"
+  ],
+  "generation_script": "paper_assets/scripts/build_stage552_assets.py",
+  "generation_script_hash": "2d9f574475f1a1e2b3c6337b326e6392f1f4a23b92072950ba9bfd3df52d26ae",
+  "source_data_hashes": {
+    "verification_manifest.json": "f7b92f3bfcb9a19bdc9249a65fbcf5c1a610a78e26aca8fa3fc04d13b6411933",
+    "cve_2024_3400_public_bundle.json": "d7c8c3eea346789ef80bf2d4c86fdf8279624726ea27cdaffb97beb04b2e11ae",
+    "cve_2024_3400_epss_ablation.json": "559ef6ff39da2bb1d18bc5ac4e179b55ab6dec7674a83f939523beb99ab1fbba",
+    "cve_2024_3400_epss_ablation.csv": "9940f08f5aca91dbf77c3e042c4f67b4c2bd0b7e4cfd9a6039b14b454725d1e9"
+  },
+  "generated_asset_hashes": {
+    "tables/cve_2024_3400_epss_verification.csv": "a384e4807a4d9d76f82d7f975f03734bcac51da1d1762ba1ecde550b72872ec7",
+    "tables/cve_2024_3400_epss_ablation.csv": "9940f08f5aca91dbf77c3e042c4f67b4c2bd0b7e4cfd9a6039b14b454725d1e9",
+    "figures/cve_2024_3400_epss_verification.svg": "fe11662e4ab2c0bc42ccd73e11f6b3bc8c9a34cfff6c27d424b17feb51b6fb6c"
+  },
+  "eligibility_note": "Corrected candidate only until required GitHub and Colab online verification gates pass."
+}

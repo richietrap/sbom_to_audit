@@ -12,6 +12,7 @@ from sbom_to_audit.historical.epss_verification import (
     EXPECTED_MODEL_VERSION,
     TARGET_CVE,
     TARGET_DATE,
+    HistoricalEpssVerificationError,
     parse_api_payload,
     parse_archive_payload,
     verify_offline_contract,
@@ -23,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data/historical_replays/cve_2024_3400/epss/verification_manifest.json"
 
 
-def _api(epss: str = "0.957320000", percentile: str = "0.997210000") -> bytes:
+def _api(epss: str = "0.003710000", percentile: str = "0.723430000") -> bytes:
     return json.dumps(
         {
             "status": "OK",
@@ -46,8 +47,8 @@ def _api(epss: str = "0.957320000", percentile: str = "0.997210000") -> bytes:
 
 
 def _archive(
-    epss: str = "0.957320000",
-    percentile: str = "0.997210000",
+    epss: str = "0.003710000",
+    percentile: str = "0.723430000",
     model: str = EXPECTED_MODEL_VERSION,
     date: str = TARGET_DATE,
 ) -> bytes:
@@ -73,8 +74,8 @@ def test_api_and_archive_dual_source_verification_agree() -> None:
     assert result.api_record == {
         "cve": TARGET_CVE,
         "date": TARGET_DATE,
-        "epss": "0.95732",
-        "percentile": "0.99721",
+        "epss": "0.00371",
+        "percentile": "0.72343",
     }
     assert result.archive_record["model_version"] == EXPECTED_MODEL_VERSION
     assert result.api_sha256 and result.archive_sha256 and result.extracted_row_sha256
@@ -82,10 +83,23 @@ def test_api_and_archive_dual_source_verification_agree() -> None:
 
 
 def test_epss_or_percentile_disagreement_fails_closed() -> None:
-    with pytest.raises(ValueError, match="verification failed"):
+    with pytest.raises(HistoricalEpssVerificationError, match="verification failed") as epss:
         verify_payloads(_api(epss="0.95"), _archive())
-    with pytest.raises(ValueError, match="verification failed"):
+    assert epss.value.result.status == "verification_failed"
+    assert epss.value.result.api_record == {
+        "cve": TARGET_CVE,
+        "date": TARGET_DATE,
+        "epss": "0.95",
+        "percentile": "0.72343",
+    }
+    assert epss.value.result.checks["api_archive_epss_agree"] is False
+    assert epss.value.result.checks["normalized_epss_matches"] is False
+
+    with pytest.raises(HistoricalEpssVerificationError, match="verification failed") as percentile:
         verify_payloads(_api(percentile="0.99"), _archive())
+    assert percentile.value.result.archive_record is not None
+    assert percentile.value.result.checks["api_archive_percentile_agree"] is False
+    assert percentile.value.result.checks["normalized_percentile_matches"] is False
 
 
 def test_archive_model_and_date_mismatch_fail_closed() -> None:
@@ -131,3 +145,43 @@ def test_invalid_online_report_fails_closed(tmp_path: Path) -> None:
     report.write_text(json.dumps(payload))
     with pytest.raises(ValueError, match="API_record|api_record|mismatch"):
         run_public_historical_replay(ROOT, epss_verification_report_path=report)
+
+
+def test_online_cli_preserves_structured_mismatch_report(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    import sys
+
+    from scripts import verify_historical_epss as verification_cli
+
+    try:
+        verify_payloads(_api(epss="0.95"), _archive())
+    except HistoricalEpssVerificationError as exc:
+        mismatch = exc
+    else:  # pragma: no cover - the test setup must fail closed.
+        raise AssertionError("mismatch fixture unexpectedly verified")
+
+    def fail_online(_output_dir: Path) -> None:
+        raise mismatch
+
+    report = tmp_path / "diagnostic.json"
+    monkeypatch.setattr(verification_cli, "verify_online", fail_online)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "verify_historical_epss.py",
+            "--online",
+            "--output-dir",
+            str(tmp_path / "raw"),
+            "--report",
+            str(report),
+        ],
+    )
+    assert verification_cli.main() == 1
+    payload = json.loads(report.read_text(encoding="utf-8"))
+    assert payload["status"] == "verification_failed"
+    assert payload["api_record"]["epss"] == "0.95"
+    assert payload["archive_record"]["epss"] == "0.00371"
+    assert payload["checks"]["api_archive_epss_agree"] is False
+    assert "historical EPSS verification failed" in payload["error"]

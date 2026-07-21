@@ -26,3 +26,7 @@ Before a run is treated as manuscript-eligible, set `REF` to an immutable Git ta
 - `stage551_colab_checkpoint.ipynb` performs the authoritative online historical
   EPSS comparison, complete release gate, EPSS ablation and raw-evidence bundle
   preservation for Stage 5.5.1.
+
+- `stage552_colab_checkpoint.ipynb` repeats the Stage 5.5.2 corrected online
+  comparison, preserves raw API/archive evidence, runs the complete release gate,
+  regenerates corrected paper assets, and emits a hashed checkpoint bundle.

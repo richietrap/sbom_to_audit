@@ -1,0 +1,26 @@
+{
+  "run_id": "HIST-CVE-2024-3400-PUBLIC-STAGE552-CORRECTED-CANDIDATE-001",
+  "scenario_id": "cve_2024_3400_public",
+  "evaluation_status": "PILOT_VERIFICATION_CANDIDATE",
+  "correction_status": "STAGE_5_5_1_REJECTED_SUPERSEDED_BY_STAGE_5_5_2",
+  "input_manifest_hash": "17f2516e4417794cbcd7471a13273d0843896f257c5c8b2eced19b8c68c29e5b",
+  "output_manifest_hash": "03bb5b58a0ef7419f1e08657b6e25e87318a322c6ef449cdbb0118c5e20e02eb",
+  "full_evidencepack_generated": false,
+  "source_count": 7,
+  "timeline_event_count": 8,
+  "provisional_source_ids": [],
+  "corrected_expected_record": {
+    "cve": "CVE-2024-3400",
+    "date": "2024-04-15",
+    "epss": "0.00371",
+    "percentile": "0.72343",
+    "model_version": "v2023.03.01"
+  },
+  "epss_verification_status": "verification_contract_valid_online_gate_required",
+  "manuscript_eligible_for_later_freeze": false,
+  "online_verification_required": true,
+  "limitations": [
+    "Public evidence cannot establish organisation-local facts.",
+    "The corrected record requires a new GitHub and Colab dual-source online verification for the exact commit."
+  ]
+}

@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.5.0 implements Stage 5 Rapid Pivot while preserving Ghost-Logger, False Comfort, and Operational Outlier. It adds evidence-derived fuzzy identity fallback, explicit CPE-confirmed identity resolution, intermediate missing-evidence handling, clock-safeguard audit fields, and a matched early-resolution temporal control. All cases remain fictional and must not be described as industrial case studies.
+Version 0.5.7 implements the Stage 5.5.2 historical EPSS correction while preserving the four controlled scenario families, their matched controls, and the publication-aware CVE-2024-3400 historical replay. The corrected historical record remains a verification candidate until the exact GitHub commit passes the online quality gate and isolated Colab checkpoint. Controlled deployments remain fictional and must not be described as industrial case studies.
 
 ## Research questions
 
@@ -119,11 +119,11 @@ fabricating organisation-local facts.
 deployment that exercises the full EvidencePack pipeline. It is not a fifth controlled scenario
 family and must not be interpreted as evidence about a real organisation.
 
-The historical EPSS reconstruction remains provisional and blocks manuscript eligibility.
+The historical EPSS record is subject to a mandatory online API/archive verification gate.
 
-## Stage 5.5.1 historical EPSS verification
+## Stage 5.5.1 historical EPSS verification — rejected candidate
 
-The CVE-2024-3400 replay uses a fail-closed verification contract for the
+The first online run rejected the prefilled normalized score and percentile. The failed run is retained as development evidence that the fail-closed gate worked and must not be cited as a verified result. The CVE-2024-3400 replay uses a fail-closed verification contract for the
 2024-04-15 EPSS record. The GitHub quality workflow and isolated Colab
 checkpoint independently download the date-specific FIRST API response and a
 pinned official daily archive, compare the CVE/date/score/percentile and verify
@@ -142,3 +142,20 @@ The online acceptance gate is:
 ```bash
 python scripts/verify_historical_epss.py --online --output-dir /tmp/epss-verification
 ```
+
+## Stage 5.5.2 historical EPSS correction
+
+The Stage 5.5.1 online gate correctly rejected the prefilled candidate values.
+The date-specific FIRST API response and pinned daily archive agreed on:
+
+```text
+EPSS       0.00371
+percentile 0.72343
+model      v2023.03.01
+```
+
+Stage 5.5.2 updates the normalized fixtures and keeps the same mandatory online
+gate. Failed verification now preserves raw downloads and a structured
+diagnostic report. Mutable API/archive downloads must remain under
+`outputs/validation` or in a checkpoint bundle; repository-root copies are
+ignored and rejected by repository validation.

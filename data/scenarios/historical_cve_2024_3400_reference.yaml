@@ -4,8 +4,9 @@ scenario:
   title: CVE-2024-3400 synthetic reference deployment
   classification: historical_reference_deployment
   evaluation_status: pilot_verification_candidate
-  purpose: Exercise the full EvidencePack pipeline using public CVE-2024-3400 chronology plus explicitly
-    synthetic deployment evidence.
+  purpose: >-
+    Exercise the full EvidencePack pipeline using public CVE-2024-3400
+    chronology plus explicitly synthetic deployment evidence.
   seeded_conflicts: 0
   expected_final_state: Report-Ready
   expected_final_authorized_state: Report
@@ -82,19 +83,22 @@ source_catalog:
     timestamp: '2024-04-14T23:59:59Z'
   - artifact_id: ART-HIST-REF-SUB-FULL-001
     artifact_type: milestone_satisfaction
-    path: data/historical_replays/cve_2024_3400/reference_deployment/full_notification_submission.yaml
+    path: "data/historical_replays/cve_2024_3400/reference_deployment/\
+      full_notification_submission.yaml"
     timestamp: '2024-04-14T23:59:59Z'
   - artifact_id: ART-HIST-REF-EPSS-001
     artifact_type: epss_snapshot
     path: data/historical_replays/cve_2024_3400/reference_deployment/epss_snapshot.json
     timestamp: '2024-04-15T23:59:59Z'
-    description: Historical FIRST EPSS verification-contract snapshot; online dual-source verification
-      is required before manuscript use.
+    description: >-
+      Historical FIRST EPSS verification-contract snapshot; online dual-source
+      verification is required before manuscript use.
 replay_events:
   - event_id: EVT-HIST-REF-DISCLOSURE
     timestamp: '2024-04-12T08:30:00Z'
-    description: Public CVE data and synthetic deployment context are available, but public exploitation
-      and affectedness publications are not yet released.
+    description: >-
+      Public CVE data and synthetic deployment context are available, but
+      public exploitation and affectedness publications are not yet released.
     release_artifact_ids:
       - ART-HIST-REF-SBOM-001
       - ART-HIST-REF-OSV-001
@@ -109,8 +113,9 @@ replay_events:
       full_notification: On Track
   - event_id: EVT-HIST-REF-PUBLIC-EXP
     timestamp: '2024-04-12T23:59:59Z'
-    description: Public reporting establishes exploitation and the normalized vendor assertion applies
-      to the synthetic deployment.
+    description: >-
+      Public reporting establishes exploitation and the normalized vendor
+      assertion applies to the synthetic deployment.
     release_artifact_ids:
       - ART-HIST-REF-VEX-001
       - ART-HIST-REF-PUBLIC-EXP-001
@@ -143,7 +148,9 @@ replay_events:
       full_notification: On Track
   - event_id: EVT-HIST-REF-HOTFIX
     timestamp: '2024-04-14T23:59:59Z'
-    description: Synthetic verified mitigation and full-notification completion evidence are released.
+    description: >-
+      Synthetic verified mitigation and full-notification completion evidence
+      are released.
     release_artifact_ids:
       - ART-HIST-REF-MIT-VERIFIED-001
       - ART-HIST-REF-SUB-FULL-001

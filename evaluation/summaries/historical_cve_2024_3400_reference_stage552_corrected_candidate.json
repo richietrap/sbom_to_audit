@@ -1,0 +1,17 @@
+{
+  "run_id": "HIST-CVE-2024-3400-REF-STAGE552-CORRECTED-CANDIDATE-001",
+  "scenario_id": "historical_cve_2024_3400_reference",
+  "evaluation_status": "PILOT_VERIFICATION_CANDIDATE",
+  "correction_status": "STAGE_5_5_1_REJECTED_SUPERSEDED_BY_STAGE_5_5_2",
+  "input_manifest_hash": "de478033743d869f94add2443401d05416806404d87706cab5b71f06adb6cb5e",
+  "output_manifest_hash": "df2534a563db12cfa3a00de40150d4ca6737645842d6f3c9b3496605365f500b",
+  "epss_verification_status": "verification_contract_valid_online_gate_required",
+  "epss_ablation_state_changed": false,
+  "final_state": "Report-Ready",
+  "manuscript_eligible_for_later_freeze": false,
+  "online_verification_required": true,
+  "limitations": [
+    "Synthetic reference deployment; not evidence about a real organisation.",
+    "The corrected EPSS record is not accepted until the new remote gates pass."
+  ]
+}

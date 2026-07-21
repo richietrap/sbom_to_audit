@@ -1,15 +1,16 @@
 """Authoritative historical EPSS verification for the CVE-2024-3400 replay.
 
-The verifier compares three independent representations of the same historical
-record:
+The verifier compares three representations of the same historical record:
 
 * the date-specific FIRST EPSS API response;
 * the pinned official daily EPSS archive; and
-* the repository's normalized expected record.
+* the repository's normalized verification record.
 
 Online verification fails closed on missing records, metadata drift, or any
-score/percentile disagreement. Offline verification validates the committed
-verification contract without pretending that it replaces the online check.
+score/percentile disagreement. Raw online evidence is written before semantic
+comparison so a failed gate remains diagnosable. Offline verification validates
+the committed verification contract without pretending that it replaces the
+online check.
 """
 
 from __future__ import annotations
@@ -29,8 +30,8 @@ import requests
 
 TARGET_CVE = "CVE-2024-3400"
 TARGET_DATE = "2024-04-15"
-EXPECTED_EPSS = Decimal("0.95732")
-EXPECTED_PERCENTILE = Decimal("0.99721")
+EXPECTED_EPSS = Decimal("0.00371")
+EXPECTED_PERCENTILE = Decimal("0.72343")
 EXPECTED_MODEL_VERSION = "v2023.03.01"
 ARCHIVE_COMMIT = "ca26ecd7b9b806badabd6aedffdc8c4472ce6e85"
 API_URL = (
@@ -71,6 +72,15 @@ class VerificationResult:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+
+class HistoricalEpssVerificationError(ValueError):
+    """Fail-closed mismatch carrying the complete observed verification record."""
+
+    def __init__(self, result: VerificationResult) -> None:
+        self.result = result
+        failed = sorted(key for key, passed in result.checks.items() if not passed)
+        super().__init__(f"historical EPSS verification failed: {failed}")
 
 
 def _sha256_bytes(value: bytes) -> str:
@@ -196,17 +206,15 @@ def verify_payloads(api_payload: bytes, archive_payload: bytes) -> VerificationR
         == _decimal(archive.epss, "archive EPSS"),
         "api_archive_percentile_agree": _decimal(api.percentile, "API percentile")
         == _decimal(archive.percentile, "archive percentile"),
-        "expected_epss_matches": _decimal(api.epss, "API EPSS")
-        == _decimal(expected.epss, "expected EPSS"),
-        "expected_percentile_matches": _decimal(api.percentile, "API percentile")
-        == _decimal(expected.percentile, "expected percentile"),
+        "normalized_epss_matches": _decimal(api.epss, "API EPSS")
+        == _decimal(expected.epss, "normalized EPSS"),
+        "normalized_percentile_matches": _decimal(api.percentile, "API percentile")
+        == _decimal(expected.percentile, "normalized percentile"),
         "archive_model_matches": archive.model_version == expected.model_version,
     }
-    if not all(checks.values()):
-        failed = sorted(key for key, passed in checks.items() if not passed)
-        raise ValueError(f"historical EPSS verification failed: {failed}")
-    return VerificationResult(
-        status="authoritative_dual_source_verified",
+    status = "authoritative_dual_source_verified" if all(checks.values()) else "verification_failed"
+    result = VerificationResult(
+        status=status,
         target_cve=TARGET_CVE,
         target_date=TARGET_DATE,
         expected_record=_record_dict(expected) or {},
@@ -224,6 +232,9 @@ def verify_payloads(api_payload: bytes, archive_payload: bytes) -> VerificationR
             "verified from the pinned daily archive metadata and FIRST's model schedule."
         ],
     )
+    if status != "authoritative_dual_source_verified":
+        raise HistoricalEpssVerificationError(result)
+    return result
 
 
 def verify_offline_contract(path: str | Path) -> VerificationResult:
@@ -277,7 +288,7 @@ def _download(url: str, *, attempts: int = 4, timeout: int = 45) -> bytes:
             response = requests.get(
                 url,
                 timeout=timeout,
-                headers={"User-Agent": "sbom-to-audit-historical-epss-verifier/0.5.6"},
+                headers={"User-Agent": "sbom-to-audit-historical-epss-verifier/0.5.7"},
             )
             response.raise_for_status()
             if not response.content:
@@ -295,9 +306,15 @@ def verify_online(output_dir: str | Path) -> VerificationResult:
     destination.mkdir(parents=True, exist_ok=True)
     api_payload = _download(API_URL)
     archive_payload = _download(ARCHIVE_URL)
-    result = verify_payloads(api_payload, archive_payload)
-    _, extracted = parse_archive_payload(archive_payload)
+
+    # Preserve raw evidence before comparison so a fail-closed mismatch is diagnosable.
     (destination / "cve_2024_3400_epss_2024-04-15_api.json").write_bytes(api_payload)
     (destination / "epss_scores-2024-04-15.csv.gz").write_bytes(archive_payload)
-    (destination / "cve_2024_3400_epss_2024-04-15_row.csv").write_bytes(extracted)
-    return result
+    try:
+        _, extracted = parse_archive_payload(archive_payload)
+    except ValueError:
+        extracted = None
+    if extracted is not None:
+        (destination / "cve_2024_3400_epss_2024-04-15_row.csv").write_bytes(extracted)
+
+    return verify_payloads(api_payload, archive_payload)

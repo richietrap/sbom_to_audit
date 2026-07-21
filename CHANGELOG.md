@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.7 — Stage 5.5.2 historical EPSS correction
+
+- Corrected the 2024-04-15 CVE-2024-3400 EPSS record from the rejected candidate values `0.95732` / `0.99721` to the dual-source-observed values `0.00371` / `0.72343`.
+- Preserved the pinned EPSS v3 model metadata and archive commit while retaining the mandatory online API/archive agreement gate.
+- Changed mismatch handling so raw downloads and a diagnostic report containing the observed API, archive and normalized records are preserved before the gate exits non-zero.
+- Added root-only ignore rules and repository validation for mutable historical EPSS download artefacts.
+- Added regression tests for diagnostic mismatch records and misplaced root downloads.
+- Wrapped historical YAML lines that produced quality annotations without changing parsed semantics.
+- Recorded the rejected Stage 5.5.1 candidate and accidental root-file commit as BUG-010 and BUG-011.
+- Preserved EvidencePack Schema v0.2, its 34-field completeness denominator and all scenario state trajectories.
+
 ## 0.5.6 — Stage 5.5.1 historical EPSS verification
 
 - Added fail-closed comparison of the FIRST date-specific EPSS API response and the official daily archive pinned to commit `ca26ecd7b9b806badabd6aedffdc8c4472ce6e85`.

@@ -142,3 +142,35 @@ def test_stage551_colab_notebook_preserves_authoritative_epss_evidence() -> None
         assert required in text
     assert ("<YOUR-" + "GITHUB-USERNAME>") not in text
     assert "authoritative_dual_source_verified_by_required_online_gate" not in text
+
+
+STAGE552_NOTEBOOK = ROOT / "notebooks" / "stage552_colab_checkpoint.ipynb"
+
+
+def test_stage552_colab_notebook_code_cells_compile() -> None:
+    notebook = json.loads(STAGE552_NOTEBOOK.read_text(encoding="utf-8"))
+    assert notebook["nbformat"] == 4
+    code_cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
+    assert code_cells
+    for index, cell in enumerate(code_cells, 1):
+        ast.parse("".join(cell["source"]), filename=f"stage552_colab_cell_{index}.py")
+
+
+def test_stage552_colab_notebook_uses_corrected_authoritative_record() -> None:
+    text = STAGE552_NOTEBOOK.read_text(encoding="utf-8")
+    for required in (
+        "verify_historical_epss.py",
+        "--online",
+        "authoritative_dual_source_verified",
+        "0.00371",
+        "0.72343",
+        "epss_scores-2024-04-15.csv.gz",
+        "build_stage552_assets.py",
+        "stage552_colab_checkpoint_evidence.zip",
+        "Tested Git commit",
+        "Colab evidence-bundle SHA-256",
+    ):
+        assert required in text
+    assert "0.95732" not in text
+    assert "0.99721" not in text
+    assert ("<YOUR-" + "GITHUB-USERNAME>") not in text

@@ -57,6 +57,13 @@ LOCKED_REQUIRED_TOP_LEVEL = {
     "source_artifacts",
     "audit_log",
 }
+
+FORBIDDEN_ROOT_VERIFICATION_ARTIFACTS = {
+    "cve_2024_3400_epss_2024-04-15_api.json",
+    "cve_2024_3400_epss_2024-04-15_row.csv",
+    "epss_scores-2024-04-15.csv.gz",
+    "historical_epss_verification.json",
+}
 LOCKED_RECOMMENDED_STATES = {
     "Monitor",
     "Prepare",
@@ -121,6 +128,18 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError(f"{path.relative_to(ROOT)} must contain a YAML object")
     return data
+
+
+def validate_generated_artifact_placement(report: ValidationReport, root: Path = ROOT) -> None:
+    """Reject mutable online verification downloads at repository root."""
+
+    found = sorted(name for name in FORBIDDEN_ROOT_VERIFICATION_ARTIFACTS if (root / name).exists())
+    report.checks["root_verification_artifacts"] = found
+    if found:
+        report.error(
+            "historical EPSS verification downloads must be stored under "
+            f"outputs/validation or a checkpoint bundle, not repository root: {found}"
+        )
 
 
 def validate_manifest(report: ValidationReport) -> None:
@@ -404,6 +423,7 @@ def validate_text_integrity(report: ValidationReport) -> None:
 
 def run_validation(strict_sources: bool = False) -> ValidationReport:
     report = ValidationReport()
+    validate_generated_artifact_placement(report)
     validate_manifest(report)
     validate_schema(report)
     validate_scenarios(report, strict_sources)

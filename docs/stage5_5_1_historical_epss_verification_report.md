@@ -11,8 +11,8 @@ Target record:
 
 - CVE: `CVE-2024-3400`
 - score date: `2024-04-15`
-- EPSS: `0.95732`
-- percentile: `0.99721`
+- EPSS: `0.00371`
+- percentile: `0.72343`
 - model version: `v2023.03.01`
 - archive commit: `ca26ecd7b9b806badabd6aedffdc8c4472ce6e85`
 

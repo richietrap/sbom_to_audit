@@ -29,8 +29,9 @@ events:
   - event_id: HIST-EVT-DISCLOSURE
     timestamp: '2024-04-12T23:59:59Z'
     event_class: public_disclosure
-    description: Vendor and threat-research publications make affected configuration and exploitation
-      evidence public.
+    description: >-
+      Vendor and threat-research publications make affected configuration and
+      exploitation evidence public.
     release_source_ids:
       - HIST-PAN-ADV-001
       - HIST-VOLEXITY-001
