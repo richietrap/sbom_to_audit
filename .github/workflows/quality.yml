@@ -42,7 +42,9 @@ jobs:
           ruff format --check .
           python -m mypy src
           codespell
-          yamllint .github data .pre-commit-config.yaml .yamllint.yml
+          yamllint \
+            .github data evaluation/baseline_protocol_v0.1.yaml \
+            .pre-commit-config.yaml .yamllint.yml
 
       - name: Verify historical EPSS against authoritative sources
         run: |

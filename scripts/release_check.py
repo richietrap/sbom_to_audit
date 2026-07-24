@@ -155,6 +155,33 @@ def _deterministic_historical_public_replay(report: ReleaseReport) -> None:
             report.deterministic_hashes[f"historical_public/{relative}"] = left_hash
 
 
+def _deterministic_stage6_baseline(report: ReleaseReport) -> None:
+    with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-baseline-") as temp:
+        base = Path(temp)
+        first = base / "first"
+        second = base / "second"
+        command = [sys.executable, "scripts/run_baseline_comparison.py", "--output-root"]
+        _run(report, "Stage 6 matched baseline A", command + [str(first)])
+        _run(report, "Stage 6 matched baseline B", command + [str(second)])
+        if report.status == "FAIL":
+            return
+        first_files = sorted(path.relative_to(first) for path in first.rglob("*") if path.is_file())
+        second_files = sorted(
+            path.relative_to(second) for path in second.rglob("*") if path.is_file()
+        )
+        if first_files != second_files:
+            report.fail("Stage 6 baseline output inventories differ")
+            return
+        for relative in first_files:
+            left = first / relative
+            right = second / relative
+            left_hash = _sha256(left)
+            right_hash = _sha256(right)
+            if left_hash != right_hash:
+                report.fail(f"non-deterministic Stage 6 baseline output: {relative}")
+            report.deterministic_hashes[f"stage6_baseline/{relative.as_posix()}"] = left_hash
+
+
 def run_release_check() -> ReleaseReport:
     report = ReleaseReport()
     commands = [
@@ -172,6 +199,7 @@ def run_release_check() -> ReleaseReport:
                 "yamllint",
                 ".github",
                 "data",
+                "evaluation/baseline_protocol_v0.1.yaml",
                 ".pre-commit-config.yaml",
                 ".yamllint.yml",
             ],
@@ -202,6 +230,8 @@ def run_release_check() -> ReleaseReport:
         _deterministic_replay(report)
     if report.status == "PASS":
         _deterministic_historical_public_replay(report)
+    if report.status == "PASS":
+        _deterministic_stage6_baseline(report)
     return report
 
 

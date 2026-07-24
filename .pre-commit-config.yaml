@@ -24,7 +24,9 @@ repos:
         pass_filenames: false
       - id: yamllint
         name: YAML lint
-        entry: yamllint .github data .pre-commit-config.yaml .yamllint.yml
+        entry: >-
+          yamllint .github data evaluation/baseline_protocol_v0.1.yaml
+          .pre-commit-config.yaml .yamllint.yml
         language: system
         pass_filenames: false
       - id: repository-validation

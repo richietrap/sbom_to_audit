@@ -1,0 +1,40 @@
+protocol_version: "0.1"
+protocol_id: matched_unorchestrated_psirt_worksheet
+classification: deterministic_computational_baseline_proxy
+scenario_ids:
+  - ghost_logger
+  - false_comfort
+  - false_comfort_control
+  - operational_outlier
+  - operational_outlier_control
+  - rapid_pivot
+  - rapid_pivot_control
+shared_conditions:
+  - The baseline receives the same committed source bytes as the artefact.
+  - The baseline receives sources at the same replay events and timestamps.
+  - Source validation and format parsing are shared to avoid a parser-quality confound.
+  - Expected-state oracles are used only for evaluation after each baseline decision.
+baseline_exclusions:
+  - No normalized claim graph or claim-level confidence model.
+  - No scope-overlap or product-variant applicability engine.
+  - No numerical E_t, A_t, I_t, M_t, U_t, or C_t calculation.
+  - No automated conflict lifecycle or provenance-linked adjudication.
+  - No automatic tau_E Prepare-to-Escalate safeguard.
+  - No EvidencePack generation.
+decision_categories:
+  high_impact_criticalities:
+    - critical
+    - high
+  broad_deployment_scopes:
+    - widespread
+    - broad
+  not_affected_statuses:
+    - known_not_affected
+    - first_fixed
+    - fixed
+limitations:
+  - This is a deterministic structured-workflow proxy, not a human analyst study.
+  - It does not estimate analyst cognition, elapsed labour time, or legal accuracy.
+  - Shared parsing isolates orchestration effects but understates real manual extraction effort.
+  - State correctness measures agreement with controlled scenario oracles, not external truth.
+  - The comparison cannot establish industrial effectiveness without practitioner evaluation.

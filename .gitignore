@@ -62,3 +62,5 @@ outputs/validation/*
 /cve_2024_3400_epss_2024-04-15_row.csv
 /epss_scores-2024-04-15.csv.gz
 /historical_epss_verification.json
+outputs/stage6_baseline/*
+!outputs/stage6_baseline/.gitkeep

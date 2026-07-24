@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.5.7 implements the Stage 5.5.2 historical EPSS correction while preserving the four controlled scenario families, their matched controls, and the publication-aware CVE-2024-3400 historical replay. The corrected historical record remains a verification candidate until the exact GitHub commit passes the online quality gate and isolated Colab checkpoint. Controlled deployments remain fictional and must not be described as industrial case studies.
+Version 0.6.0 adds the Stage 6 matched structured-but-unorchestrated PSIRT baseline comparison while preserving the four controlled scenario families, their matched controls, and the publication-aware CVE-2024-3400 historical replay. Stage 6 is a controlled computational proxy, not a human analyst study or industrial effectiveness evaluation. Controlled deployments remain fictional and must not be described as industrial case studies.
 
 ## Research questions
 
@@ -41,6 +41,11 @@ python paper_assets/scripts/build_stage4_assets.py \
   --destination paper_assets
 python paper_assets/scripts/build_stage5_assets.py \
   --output-root outputs \
+  --destination paper_assets
+python scripts/run_baseline_comparison.py \
+  --output-root outputs/stage6_baseline
+python paper_assets/scripts/build_stage6_assets.py \
+  --output-root outputs/stage6_baseline \
   --destination paper_assets
 python -m pytest
 python scripts/release_check.py
@@ -159,3 +164,9 @@ gate. Failed verification now preserves raw downloads and a structured
 diagnostic report. Mutable API/archive downloads must remain under
 `outputs/validation` or in a checkpoint bundle; repository-root copies are
 ignored and rejected by repository validation.
+## Stage 6 matched baseline comparison
+
+`evaluation/baseline_protocol_v0.1.yaml` defines a deterministic structured-but-unorchestrated PSIRT worksheet proxy. It receives the same source bytes, release chronology, validation, and parser-derived observations as the artefact. It retains source registers, deadline tracking, authorization, and event logs, but does not use the claim graph, scope-overlap engine, numerical orchestration variables, conflict lifecycle, automatic `tau_E` safeguard, or EvidencePack generation.
+
+Across the four primary controlled families, the pilot comparison reports higher artefact values for EC, TR, CA, SC, and EPG; equal AR and seeded-conflict recall; and higher conflict precision once the scope-blind False Comfort baseline false positive is counted. These are controlled functional results, not evidence of human time savings, legal correctness, or industrial effectiveness.
+

@@ -67,3 +67,14 @@ The same applicable metrics are computed for the orchestration artefact and for 
 Rapid Pivot creates one applicable CA opportunity: the prior state is `Prepare` and the matched event occurs at `delta_t=18h`. The observed state is `Escalate`, so the controlled pilot value is `CA=1.0`. Its early-resolution control has no event satisfying the denominator condition because the prior state at T+18h is `Report-Ready`; its serialized value therefore remains `null` with status `not_applicable`, not `0.0`.
 
 The metric evaluates conformance to the configured internal safeguard. It does not validate a statutory deadline, legal awareness, or the empirical optimality of the 18-hour parameter.
+
+## Stage 6 matched baseline interpretation
+
+The Stage 6 baseline is defined in `evaluation/baseline_protocol_v0.1.yaml`. It shares source validation and format parsing with the artefact so that parser quality is not a confound, but it does not use the orchestration claim graph, scope engine, numerical evidence variables, conflict lifecycle, `tau_E` safeguard, or EvidencePack generation.
+
+The locked metrics remain unchanged. Two supplemental measures are reported:
+
+- **partial traceability ratio:** the proportion of the five traceability fields populated across baseline observations. It contextualizes strict `TR` without replacing it;
+- **conflict precision:** true seeded conflict episodes divided by all detected episodes across the controlled suite. This exposes scope-blind false positives that conflict recall alone cannot show.
+
+A cumulative source-review operation count is also reported as a deterministic process proxy. It must not be interpreted as analyst time or cognitive workload.

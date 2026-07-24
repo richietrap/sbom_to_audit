@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0 — Stage 6 matched PSIRT baseline comparison
+
+- Added a frozen structured-but-unorchestrated PSIRT worksheet protocol using identical source bytes, release times, validation, and parsers.
+- Added generic baseline replay logic without normalized claims, scope-overlap reasoning, numerical orchestration scores, conflict lifecycle, automatic `tau_E` escalation, or EvidencePack generation.
+- Added deterministic matched comparison across four primary scenario families and three controls.
+- Reported ties in audit reconstructability and seeded-conflict recall rather than designing a uniformly weak baseline.
+- Added conflict precision, partial traceability, and a clearly bounded source-review operation proxy as supplemental measures.
+- Added Stage 6 figures, tables, run records, protocol provenance, ADR-012, tests, CI replay, release checks, and Colab checkpoint support.
+- Preserved EvidencePack Schema v0.2, its 34-field completeness denominator, all prior scenario trajectories, and the historical EPSS online-verification boundary.
+
 ## 0.5.7 — Stage 5.5.2 historical EPSS correction
 
 - Corrected the 2024-04-15 CVE-2024-3400 EPSS record from the rejected candidate values `0.95732` / `0.99721` to the dual-source-observed values `0.00371` / `0.72343`.

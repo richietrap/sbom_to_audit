@@ -45,3 +45,7 @@ Stage 5.5.2 preserves the failed Stage 5.5.1 candidate as development history,
 corrects the normalized EPSS record to the values observed from both authoritative
 sources, and adds new corrected-candidate runs. The corrected rows remain
 non-eligible until GitHub and Colab repeat the dual-source online verification.
+
+## Stage 6 matched baseline
+
+Stage 6 adds a deterministic structured-but-unorchestrated PSIRT worksheet baseline. The baseline receives the same source bytes, release chronology, validation, and parser-derived observations as the artefact. It retains source registers, event logs, deadlines, authorization, and direct evidence review, but excludes the claim graph, scope-overlap reasoning, numerical orchestration variables, conflict lifecycle, automatic `tau_E` safeguard, and EvidencePack construction. It is a controlled computational proxy rather than a human analyst study.

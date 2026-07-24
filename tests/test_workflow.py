@@ -40,3 +40,10 @@ def test_quality_workflow_runs_independent_quality_gates() -> None:
         "--cov=sbom_to_audit",
     ):
         assert required in text
+
+
+def test_regression_workflow_runs_deterministic_stage6_baseline() -> None:
+    text = REGRESSION_WORKFLOW.read_text(encoding="utf-8")
+    assert "scripts/run_baseline_comparison.py" in text
+    assert "stage6-baseline-first" in text
+    assert "stage6-baseline-second" in text

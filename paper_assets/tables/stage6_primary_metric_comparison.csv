@@ -1,0 +1,8 @@
+metric,orchestrated_primary_mean,baseline_primary_mean,difference,applicable_primary_scenarios,interpretation
+EC,1.0,0.764706,0.235294,4,Completeness of the final decision record against the frozen 34-field denominator.
+TR,1.0,0.0,1.0,4,Strict claim-level traceability; the baseline records sources but no standardized confidence.
+CD,1.0,1.0,0.0,1,Recall of the intentionally seeded Ghost-Logger conflict; precision is reported separately.
+CA,1.0,0.0,1.0,1,Escalation at an eligible Prepare-at-18h safeguard opportunity.
+AR,1.0,1.0,0.0,4,Presence of the minimum event fields needed to reconstruct the decision sequence.
+SC,1.0,0.708333,0.291667,4,Agreement with controlled state oracles; not external legal or operational truth.
+EPG,1.0,0.0,1.0,4,Generation of the defined EvidencePack outputs.

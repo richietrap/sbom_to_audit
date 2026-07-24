@@ -1,0 +1,6 @@
+scenario_id,event_id,timestamp,expected_state,orchestrated_state,baseline_state,orchestrated_match,baseline_match,baseline_conflict_flag,baseline_rationale
+false_comfort,EVT-FC-002H,2026-10-01T10:00:00Z,Monitor,Monitor,Document No-Report,True,False,False,The supplier records a not-affected or fixed status and no positive local runtime evidence is present; assertion scope is not independently adjudicated.
+false_comfort,EVT-FC-008H,2026-10-01T16:00:00Z,Report-Ready,Report-Ready,Escalate,True,False,True,The worksheet records a direct supplier-versus-local contradiction but does not evaluate product-variant scope.
+false_comfort,EVT-FC-012H,2026-10-01T20:00:00Z,Report-Ready,Report-Ready,Escalate,True,False,True,The worksheet records a direct supplier-versus-local contradiction but does not evaluate product-variant scope.
+false_comfort,EVT-FC-072H,2026-10-04T08:00:00Z,Report-Ready,Report-Ready,Escalate,True,False,True,The worksheet records a direct supplier-versus-local contradiction but does not evaluate product-variant scope.
+rapid_pivot,EVT-RP-018H,2026-12-02T02:00:00Z,Escalate,Escalate,Prepare,True,False,False,"Exploitation intelligence is present, but the worksheet still lacks one or more supplier, runtime, or exact-identity inputs."

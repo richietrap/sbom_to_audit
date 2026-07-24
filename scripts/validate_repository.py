@@ -14,6 +14,7 @@ from typing import Any
 
 import yaml
 
+from sbom_to_audit.baseline.protocol import load_protocol
 from sbom_to_audit.historical.epss_verification import verify_offline_contract
 from sbom_to_audit.historical.public_replay import run_public_historical_replay
 from sbom_to_audit.ingestion.source_registry import SourceRegistry
@@ -28,6 +29,7 @@ GENERATED_OUTPUT_DIRS = {
     Path("outputs/source_manifests"),
     Path("outputs/audit_ledgers"),
     Path("outputs/validation"),
+    Path("outputs/stage6_baseline"),
 }
 IGNORED_NAMES = {
     ".git",
@@ -390,6 +392,27 @@ def validate_evaluation_registry(report: ValidationReport) -> None:
     }
 
 
+def validate_baseline_protocol(report: ValidationReport) -> None:
+    protocol_path = ROOT / "evaluation" / "baseline_protocol_v0.1.yaml"
+    try:
+        protocol = load_protocol(protocol_path)
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
+        report.error(f"Stage 6 baseline protocol validation failed: {exc}")
+        return
+    executable = {path.stem for path in (ROOT / "data" / "scenarios").glob("*.yaml")}
+    missing = sorted(set(protocol.scenario_ids) - executable)
+    if missing:
+        report.error(f"baseline protocol references missing scenarios: {missing}")
+    if "historical_cve_2024_3400_reference" in protocol.scenario_ids:
+        report.error("historical reference replay must remain outside the primary baseline suite")
+    report.checks["baseline_protocol"] = {
+        "protocol_id": protocol.protocol_id,
+        "protocol_version": protocol.protocol_version,
+        "scenario_count": len(protocol.scenario_ids),
+        "limitations": len(protocol.limitations),
+    }
+
+
 def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
@@ -429,6 +452,7 @@ def run_validation(strict_sources: bool = False) -> ValidationReport:
     validate_scenarios(report, strict_sources)
     validate_historical_replay(report, strict_sources)
     validate_evaluation_registry(report)
+    validate_baseline_protocol(report)
     validate_text_integrity(report)
     return report
 

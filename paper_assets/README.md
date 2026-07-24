@@ -31,3 +31,7 @@ corrected normalized record (`0.00371`, percentile `0.72343`) and records them
 under `stage552_asset_manifest.json`. They remain
 `PILOT_CORRECTED_VERIFICATION_CANDIDATE` until the exact GitHub commit passes
 the authoritative online quality and Colab gates.
+
+## Stage 6 pilot assets
+
+`build_stage6_assets.py` consumes the matched orchestrated and baseline outputs. It generates the primary metric comparison, scenario-level results, state divergences, conflict-precision table, source-review operation proxy, and an SVG metric figure. These remain `PILOT_BASELINE_NOT_FROZEN / NOT_ELIGIBLE`; the operation proxy must not be described as analyst time or cognitive workload.

@@ -30,3 +30,7 @@ Before a run is treated as manuscript-eligible, set `REF` to an immutable Git ta
 - `stage552_colab_checkpoint.ipynb` repeats the Stage 5.5.2 corrected online
   comparison, preserves raw API/archive evidence, runs the complete release gate,
   regenerates corrected paper assets, and emits a hashed checkpoint bundle.
+
+## Stage 6
+
+`stage6_colab_checkpoint.ipynb` reproduces the matched comparison between the temporal orchestration artefact and the frozen structured-but-unorchestrated PSIRT worksheet proxy. It retains the authoritative historical EPSS gate, executes the canonical release check, regenerates the Stage 6 figure and tables, verifies the controlled pilot metrics and limitations, and packages exact Git-commit lineage in `stage6_colab_checkpoint_evidence.zip`.

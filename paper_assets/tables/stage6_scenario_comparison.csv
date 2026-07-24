@@ -1,0 +1,8 @@
+scenario_id,scenario_role,event_count,orchestrated_final_state,baseline_final_state,orchestrated_EC,baseline_EC,orchestrated_TR,baseline_TR,orchestrated_CD,baseline_CD,orchestrated_CA,baseline_CA,orchestrated_AR,baseline_AR,orchestrated_SC,baseline_SC,orchestrated_EPG,baseline_EPG,orchestrated_conflict_count,baseline_conflict_episode_count,baseline_false_positive_conflict_count,baseline_partial_traceability_ratio,baseline_cumulative_source_review_count,baseline_unique_source_count
+ghost_logger,primary,5,Report-Ready,Report-Ready,1.0,0.764706,1.0,0.0,1.0,1.0,,,1.0,1.0,1.0,1.0,1,0,1,1,0,0.8,56,15
+false_comfort,primary,4,Report-Ready,Escalate,1.0,0.764706,1.0,0.0,,,,,1.0,1.0,1.0,0.0,1,0,0,1,1,0.8,41,13
+false_comfort_control,matched_control,1,Document No-Report,Document No-Report,1.0,0.764706,1.0,0.0,,,,,1.0,1.0,1.0,1.0,1,0,0,0,0,0.8,8,8
+operational_outlier,primary,4,Report-Ready,Report-Ready,1.0,0.764706,1.0,0.0,,,,,1.0,1.0,1.0,1.0,1,0,0,0,0,0.8,45,14
+operational_outlier_control,matched_control,2,Monitor,Monitor,1.0,0.764706,1.0,0.0,,,,,1.0,1.0,1.0,1.0,1,0,0,0,0,0.8,19,10
+rapid_pivot,primary,6,Report-Ready,Report-Ready,1.0,0.764706,1.0,0.0,,,1.0,0.0,1.0,1.0,1.0,0.833333,1,0,0,0,0,0.622222,48,13
+rapid_pivot_control,matched_control,6,Report-Ready,Report-Ready,1.0,0.764706,1.0,0.0,,,,,1.0,1.0,1.0,1.0,1,0,0,0,0,0.740741,56,13

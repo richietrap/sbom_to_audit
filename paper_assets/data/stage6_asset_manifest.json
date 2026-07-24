@@ -1,0 +1,31 @@
+{
+  "asset_status": "PILOT_BASELINE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "source_run_ids": [
+    "STAGE6-MATCHED-BASELINE-PILOT-001"
+  ],
+  "generation_script": "paper_assets/scripts/build_stage6_assets.py",
+  "generation_script_hash": "65ad7df996b33b1d73d35b86657e29f60473150962009af96f1e2153d3e56a48",
+  "source_data_hashes": {
+    "comparison/stage6_metric_summary.csv": "dafe466a8a713c545633da89ace3c85a5d2177d5538e4b710e566d1b2f8e9316",
+    "comparison/stage6_scenario_comparison.csv": "4891017842e0da75514c8649b275ebf156905a7e058817817b926b4387fa6e67",
+    "comparison/stage6_decision_divergence.csv": "06b1a6179a25d77addf8270ecc22604c10ae38149998198a2c9003bafbaeef18",
+    "comparison/stage6_baseline_report.json": "ef82991c6265fb0244864e977f0a0ee61754a40ac3d9e14d431fc904849b3c2e"
+  },
+  "generated_asset_hashes": {
+    "tables/stage6_primary_metric_comparison.csv": "dafe466a8a713c545633da89ace3c85a5d2177d5538e4b710e566d1b2f8e9316",
+    "tables/stage6_decision_divergence.csv": "06b1a6179a25d77addf8270ecc22604c10ae38149998198a2c9003bafbaeef18",
+    "tables/stage6_conflict_precision.csv": "f8f409434e5bc5b2b7106d32a22ee4f46c9dcc1c345d2ec235343acec1279543",
+    "tables/stage6_source_review_operation_proxy.csv": "be6c4238d7a71bb054d8eb1a0cc98a241956142e4490301911159c5f8765ce32",
+    "tables/stage6_scenario_comparison.csv": "4891017842e0da75514c8649b275ebf156905a7e058817817b926b4387fa6e67",
+    "figures/stage6_metric_comparison.svg": "07498cb6e3d8905512db12f13f28ce89a21efa99e97147681794d7e0d1ba614d"
+  },
+  "interpretation_boundary": "The comparison supports controlled functional differences attributable to the orchestration layer. It does not measure human analyst speed, legal correctness, or industrial effectiveness.",
+  "limitations": [
+    "This is a deterministic structured-workflow proxy, not a human analyst study.",
+    "It does not estimate analyst cognition, elapsed labour time, or legal accuracy.",
+    "Shared parsing isolates orchestration effects but understates real manual extraction effort.",
+    "State correctness measures agreement with controlled scenario oracles, not external truth.",
+    "The comparison cannot establish industrial effectiveness without practitioner evaluation."
+  ]
+}

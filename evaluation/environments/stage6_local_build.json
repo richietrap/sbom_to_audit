@@ -1,0 +1,11 @@
+{
+  "environment_id": "stage6-local-build",
+  "environment_class": "development_validation",
+  "stage": "6",
+  "package_version": "0.6.0",
+  "python_policy": "clean virtual environment; exact runtime captured in release report",
+  "baseline_protocol": "evaluation/baseline_protocol_v0.1.yaml",
+  "comparison_scope": "four primary controlled scenario families and three matched controls",
+  "evaluation_status": "PILOT_BASELINE_NOT_FROZEN",
+  "recorded_at": "2026-07-21T00:00:00Z"
+}

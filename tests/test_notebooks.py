@@ -174,3 +174,34 @@ def test_stage552_colab_notebook_uses_corrected_authoritative_record() -> None:
     assert "0.95732" not in text
     assert "0.99721" not in text
     assert ("<YOUR-" + "GITHUB-USERNAME>") not in text
+
+
+STAGE6_NOTEBOOK = ROOT / "notebooks" / "stage6_colab_checkpoint.ipynb"
+
+
+def test_stage6_colab_notebook_code_cells_compile() -> None:
+    notebook = json.loads(STAGE6_NOTEBOOK.read_text(encoding="utf-8"))
+    assert notebook["nbformat"] == 4
+    code_cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
+    assert code_cells
+    for index, cell in enumerate(code_cells, 1):
+        ast.parse("".join(cell["source"]), filename=f"stage6_colab_cell_{index}.py")
+
+
+def test_stage6_colab_notebook_preserves_matched_baseline_lineage() -> None:
+    text = STAGE6_NOTEBOOK.read_text(encoding="utf-8")
+    for required in (
+        "sbom_to_audit_stage6_venv",
+        "verify_historical_epss.py",
+        "authoritative_dual_source_verified",
+        "scripts/release_check.py",
+        "scripts/run_baseline_comparison.py",
+        "build_stage6_assets.py",
+        "PILOT_BASELINE_NOT_FROZEN",
+        "state_divergence_count",
+        "stage6_colab_checkpoint_evidence.zip",
+        "Tested Git commit",
+        "Colab evidence-bundle SHA-256",
+    ):
+        assert required in text
+    assert ("<YOUR-" + "GITHUB-USERNAME>") not in text

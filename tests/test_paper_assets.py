@@ -234,3 +234,40 @@ def test_stage552_corrected_epss_assets_use_corrected_run_lineage(tmp_path: Path
         "HIST-CVE-2024-3400-REF-STAGE552-CORRECTED-CANDIDATE-001",
     ]
     assert metadata["generation_script"] == ("paper_assets/scripts/build_stage552_assets.py")
+
+
+def test_stage6_assets_compare_orchestrated_and_structured_baseline(tmp_path: Path) -> None:
+    from paper_assets.scripts.build_stage6_assets import build as build_stage6
+    from scripts.run_baseline_comparison import run as run_baseline
+
+    output_root = tmp_path / "stage6_outputs"
+    destination = tmp_path / "stage6_assets"
+    run_baseline(output_root)
+    generated = build_stage6(output_root, destination)
+    assert all(Path(path).is_file() for path in generated.values())
+
+    metadata = json.loads(
+        (destination / "data" / "stage6_asset_manifest.json").read_text(encoding="utf-8")
+    )
+    assert metadata["asset_status"] == "PILOT_BASELINE_NOT_FROZEN"
+    assert metadata["manuscript_eligible"] is False
+    assert metadata["source_run_ids"] == ["STAGE6-MATCHED-BASELINE-PILOT-001"]
+    assert len(metadata["generated_asset_hashes"]) == 6
+
+    figure = destination / "figures" / "stage6_metric_comparison.svg"
+    ET.parse(figure)
+    figure_text = figure.read_text(encoding="utf-8")
+    assert "Orchestrated artefact" in figure_text
+    assert "Structured un-orchestrated baseline" in figure_text
+
+    metrics = list(
+        csv.DictReader(
+            (destination / "tables" / "stage6_primary_metric_comparison.csv").open(
+                encoding="utf-8", newline=""
+            )
+        )
+    )
+    by_metric = {row["metric"]: row for row in metrics}
+    assert by_metric["AR"]["difference"] == "0.0"
+    assert by_metric["CD"]["difference"] == "0.0"
+    assert by_metric["SC"]["difference"] == "0.291667"

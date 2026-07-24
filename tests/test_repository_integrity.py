@@ -27,9 +27,15 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
         "rapid_pivot_control": 13,
     }
     assert report.checks["evaluation_registry"] == {
-        "scenarios": 9,
-        "runs": 14,
-        "environments": 8,
+        "scenarios": 10,
+        "runs": 29,
+        "environments": 9,
+    }
+    assert report.checks["baseline_protocol"] == {
+        "protocol_id": "matched_unorchestrated_psirt_worksheet",
+        "protocol_version": "0.1",
+        "scenario_count": 7,
+        "limitations": 5,
     }
 
 
@@ -47,6 +53,7 @@ def test_gitignore_excludes_generated_outputs_and_local_quality_caches() -> None
         "outputs/source_manifests/*",
         "outputs/audit_ledgers/*",
         "outputs/validation/*",
+        "outputs/stage6_baseline/*",
         "/cve_2024_3400_epss_2024-04-15_api.json",
         "/cve_2024_3400_epss_2024-04-15_row.csv",
         "/epss_scores-2024-04-15.csv.gz",

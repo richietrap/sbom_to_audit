@@ -52,3 +52,11 @@ jobs:
               --output-root "$second"
             diff -ru "$first" "$second"
           done
+
+      - name: Run deterministic Stage 6 baseline comparison
+        run: |
+          first="${RUNNER_TEMP}/stage6-baseline-first"
+          second="${RUNNER_TEMP}/stage6-baseline-second"
+          python scripts/run_baseline_comparison.py --output-root "$first"
+          python scripts/run_baseline_comparison.py --output-root "$second"
+          diff -ru "$first" "$second"

@@ -1,0 +1,91 @@
+{
+  "summary_id": "STAGE6-MATCHED-BASELINE-PILOT-001",
+  "evaluation_status": "PILOT_BASELINE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "protocol": {
+    "path": "evaluation/baseline_protocol_v0.1.yaml",
+    "sha256": "bdc555a31ddbe8447c2e39710ef3b7c48baf2efa3695ba573db167bc447750c4",
+    "protocol_id": "matched_unorchestrated_psirt_worksheet",
+    "protocol_version": "0.1",
+    "classification": "deterministic_computational_baseline_proxy"
+  },
+  "primary_metrics": [
+    {
+      "metric": "EC",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 0.764706,
+      "difference": 0.235294,
+      "applicable_primary_scenarios": 4,
+      "interpretation": "Completeness of the final decision record against the frozen 34-field denominator."
+    },
+    {
+      "metric": "TR",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 0.0,
+      "difference": 1.0,
+      "applicable_primary_scenarios": 4,
+      "interpretation": "Strict claim-level traceability; the baseline records sources but no standardized confidence."
+    },
+    {
+      "metric": "CD",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 1.0,
+      "difference": 0.0,
+      "applicable_primary_scenarios": 1,
+      "interpretation": "Recall of the intentionally seeded Ghost-Logger conflict; precision is reported separately."
+    },
+    {
+      "metric": "CA",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 0.0,
+      "difference": 1.0,
+      "applicable_primary_scenarios": 1,
+      "interpretation": "Escalation at an eligible Prepare-at-18h safeguard opportunity."
+    },
+    {
+      "metric": "AR",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 1.0,
+      "difference": 0.0,
+      "applicable_primary_scenarios": 4,
+      "interpretation": "Presence of the minimum event fields needed to reconstruct the decision sequence."
+    },
+    {
+      "metric": "SC",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 0.708333,
+      "difference": 0.291667,
+      "applicable_primary_scenarios": 4,
+      "interpretation": "Agreement with controlled state oracles; not external legal or operational truth."
+    },
+    {
+      "metric": "EPG",
+      "orchestrated_primary_mean": 1.0,
+      "baseline_primary_mean": 0.0,
+      "difference": 1.0,
+      "applicable_primary_scenarios": 4,
+      "interpretation": "Generation of the defined EvidencePack outputs."
+    }
+  ],
+  "state_divergence_count": 5,
+  "conflict_precision": {
+    "orchestrated": 1.0,
+    "baseline": 0.5,
+    "true_conflict_episodes": 1,
+    "orchestrated_total_detected": 1,
+    "baseline_total_detected": 2
+  },
+  "source_review_operation_proxy": {
+    "definition": "The orchestrated count is unique source ingestion; the baseline count is the sum of all sources visible at each repeated worksheet review. This is not human time or cognitive workload.",
+    "orchestrated_unique_source_ingestions": 86,
+    "baseline_cumulative_source_reviews": 273
+  },
+  "limitations": [
+    "This is a deterministic structured-workflow proxy, not a human analyst study.",
+    "It does not estimate analyst cognition, elapsed labour time, or legal accuracy.",
+    "Shared parsing isolates orchestration effects but understates real manual extraction effort.",
+    "State correctness measures agreement with controlled scenario oracles, not external truth.",
+    "The comparison cannot establish industrial effectiveness without practitioner evaluation."
+  ],
+  "comparison_output_hash": "ef82991c6265fb0244864e977f0a0ee61754a40ac3d9e14d431fc904849b3c2e"
+}

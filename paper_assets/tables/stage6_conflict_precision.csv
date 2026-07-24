@@ -1,0 +1,3 @@
+workflow,true_conflict_episodes,total_detected_episodes,precision
+orchestrated_artefact,1,1,1.0
+structured_unorchestrated_baseline,1,2,0.5
