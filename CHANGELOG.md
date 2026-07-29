@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.1.3 — Stage 6.1.3 final formatter and checkpoint-metadata correction — 2026-07-29
+
+- Applied the final Ruff formatter change to `tests/test_stage6_1_notebook.py`, adding the required top-level definition spacing and removing the excess trailing blank line.
+- Recorded the post-packaging formatter regression as BUG-019.
+- Corrected the Stage 6.1.2 Colab checkpoint report field from `stage: 6.1.1` to `stage: 6.1.2` and recorded the metadata defect as BUG-020.
+- Added a Stage 6.1.3 immutable-reference Colab checkpoint with internally consistent stage and package metadata.
+- Added regression assertions for the Stage 6.1.2 and Stage 6.1.3 checkpoint stage fields.
+- Required the full-repository `ruff format --check .` gate to run only after all version, notebook, test, manifest, and governance edits are complete.
+- Preserved the Stage 6.1 protocol, freeze hashes, independent oracles, fairness mappings, EvidencePack v0.2, the 34-field EC denominator, and all locked metrics unchanged.
+
 ## 0.6.1.2 — Stage 6.1.2 Ruff-format correction — 2026-07-29
 
 - Applied the repository-declared Ruff formatter output to all 13 files reported by the Stage 6.1.1 GitHub quality gate.

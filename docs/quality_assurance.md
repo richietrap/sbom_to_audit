@@ -106,3 +106,7 @@ Mypy, Codespell, Yamllint, and Hypothesis. A blocked package registry yields
 ## Stage 6.1.2 formatter-gate enforcement
 
 Ruff lint and Ruff formatting are independent release gates. `ruff check .` verifies the configured lint rules, while `ruff format --check .` verifies canonical formatter output. A successful lint result does not satisfy the formatter gate. Packaging evidence must record both commands and outcomes separately, and either failure blocks release acceptance. Stage 6.1.2 records the formatter-only failure as BUG-018 and preserves all research semantics unchanged.
+
+## Stage 6.1.3 final-edit formatter invalidation rule
+
+Formatter evidence applies only to the exact repository tree on which it was generated. Any Python edit made after a successful formatter run, including a version-test or notebook-test edit, invalidates that evidence. The complete repository must therefore run `ruff check .` and `ruff format --check .` after all code, tests, notebooks, version markers, ADRs, changelog entries, and manifest updates are final. Packaging must occur only after those terminal gates pass. Checkpoint tests also assert the internal stage field so a copied notebook cannot retain a superseded checkpoint identity.
