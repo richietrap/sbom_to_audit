@@ -4,8 +4,8 @@ from pathlib import Path
 from sbom_to_audit import __version__
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "0.6.1.1"
-EXPECTED_STAGE = "Stage 6.1.1"
+EXPECTED_VERSION = "0.6.1.2"
+EXPECTED_STAGE = "Stage 6.1.2"
 
 
 def test_release_version_markers_are_consistent() -> None:
@@ -23,6 +23,7 @@ def test_release_version_markers_are_consistent() -> None:
     assert f"package v{EXPECTED_VERSION}" in manifest
 
 
-def test_bug_017_is_assigned_to_corrective_release() -> None:
+def test_corrective_bugs_are_assigned_to_their_releases() -> None:
     register = (ROOT / "docs/bug_register.csv").read_text(encoding="utf-8")
     assert re.search(r"^BUG-017,2026-07-29,0\.6\.1\.1,", register, re.MULTILINE)
+    assert re.search(r"^BUG-018,2026-07-29,0\.6\.1\.2,", register, re.MULTILINE)

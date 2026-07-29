@@ -115,9 +115,7 @@ def normalize_manual_results(
         scenario = read_yaml(root / "data" / "scenarios" / f"{scenario_id}.yaml")
         if not isinstance(scenario, dict):
             raise ValueError(f"scenario must contain an object: {scenario_id}")
-        order = {
-            event["event_id"]: index for index, event in enumerate(scenario["replay_events"])
-        }
+        order = {event["event_id"]: index for index, event in enumerate(scenario["replay_events"])}
         scenario_decisions.sort(key=lambda row: order[row["event_id"]])
         scenario_observations = by_scenario_observations[scenario_id]
         scenario_accesses = by_scenario_accesses[scenario_id]
@@ -171,10 +169,9 @@ def normalize_manual_results(
             mapped = FIELD_MAP.get(row["proposition"])
             if mapped:
                 _set_path(record, mapped, _coerce(row["value"]))
-        record["identity_resolution"]["matching_method"] = (
-            final_decision["identity_matching_method"]
-            or record["identity_resolution"].get("matching_method")
-        )
+        record["identity_resolution"]["matching_method"] = final_decision[
+            "identity_matching_method"
+        ] or record["identity_resolution"].get("matching_method")
         identity_confidence = _coerce(final_decision["identity_confidence"])
         if identity_confidence is not None:
             record["identity_resolution"]["gamma_id"] = identity_confidence
@@ -231,9 +228,7 @@ def normalize_manual_results(
             {
                 "event_id": row["event_id"],
                 "observed_state": row["recommended_state"],
-                "expected_state": state_oracle[(scenario_id, row["event_id"])][
-                    "expected_state"
-                ],
+                "expected_state": state_oracle[(scenario_id, row["event_id"])]["expected_state"],
             }
             for row in scenario_decisions
         ]
@@ -262,8 +257,7 @@ def normalize_manual_results(
                 )
             }
             for key, row in clock_oracle.items()
-            if key[0] == scenario_id
-            and bool(row.get("eligible_prepare_to_escalate_opportunity"))
+            if key[0] == scenario_id and bool(row.get("eligible_prepare_to_escalate_opportunity"))
         ]
         ratios = traceability_ratios(claims)
         time_values = [
@@ -286,9 +280,7 @@ def normalize_manual_results(
                 "SC": state_correctness(state_rows),
                 "EPG": 0,
                 "supplemental": {
-                    "common_field_completeness": common_field_completeness(
-                        record, common_fields
-                    ),
+                    "common_field_completeness": common_field_completeness(record, common_fields),
                     "partial_lineage_ratio": ratios["partial_lineage"],
                     "source_access": summarize_source_accesses(scenario_accesses),
                     "human_time_to_decision_minutes": round(sum(time_values), 6),

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.1.2 — Stage 6.1.2 Ruff-format correction — 2026-07-29
+
+- Applied the repository-declared Ruff formatter output to all 13 files reported by the Stage 6.1.1 GitHub quality gate.
+- Recorded the missed formatter gate as BUG-018 and documented the packaging-process correction in ADR-018.
+- Preserved the Stage 6.1 protocol, independent oracles, mappings, worksheet schema, freeze hashes, locked metrics, EvidencePack v0.2, and research outputs unchanged.
+- Incremented the corrective checkpoint to Stage 6.1.2 / package v0.6.1.2.
+- Added a Stage 6.1.2 immutable-reference Colab checkpoint while preserving the Stage 6.1 and Stage 6.1.1 notebooks as history.
+- Required packaging evidence to include both `ruff check .` and `ruff format --check .`; a successful lint pass alone is insufficient.
+
 ## 0.6.1.1 — Stage 6.1.1 quality-gate correction — 2026-07-29
 
 - Corrected five Ruff `E702` violations in `tests/stage6_1_helpers.py` by separating CSV header and row writes into individual statements.

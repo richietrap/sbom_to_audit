@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.1.1 is the Stage 6.1.1 quality-corrected checkpoint for the Stage 6.1 pre-execution package. It preserves the hardened manual-assisted matched PSIRT baseline protocol, independent event-level oracles, fairness controls, analyst worksheets, freeze record, and manuscript-eligibility boundary unchanged while correcting the seven Ruff violations detected by GitHub Actions. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
+Version 0.6.1.2 is the Stage 6.1.2 formatter-corrected checkpoint for the Stage 6.1 pre-execution package. It preserves the hardened manual-assisted matched PSIRT baseline protocol, independent event-level oracles, fairness controls, analyst worksheets, freeze record, and manuscript-eligibility boundary unchanged while applying the repository-declared Ruff formatter to the 13 files identified by the GitHub quality gate. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
 
 ## Research questions
 

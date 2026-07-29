@@ -28,9 +28,9 @@ def _figure(path: Path, rows: list[dict[str, str]]) -> None:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
         '<rect width="100%" height="100%" fill="white"/>',
         '<text x="40" y="42" font-family="sans-serif" font-size="23" font-weight="bold">'
-        'Stage 6.1 matched manual-assisted baseline candidate</text>',
+        "Stage 6.1 matched manual-assisted baseline candidate</text>",
         '<text x="1080" y="66" text-anchor="end" font-family="sans-serif" font-size="12">'
-        'CANDIDATE — not manuscript-frozen</text>',
+        "CANDIDATE — not manuscript-frozen</text>",
     ]
     for tick in range(6):
         value = tick / 5
@@ -64,7 +64,7 @@ def _figure(path: Path, rows: list[dict[str, str]]) -> None:
             '<text x="794" y="513" font-family="sans-serif" font-size="12">Orchestrated</text>',
             '<rect x="895" y="500" width="16" height="16" fill="#777777"/>',
             '<text x="919" y="513" font-family="sans-serif" font-size="12">Manual baseline</text>',
-            '</svg>',
+            "</svg>",
         ]
     )
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")

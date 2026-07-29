@@ -50,9 +50,7 @@ def import_bundle(bundle: Path, destination: Path) -> dict[str, Path]:
         raise ValueError(f"Stage 6.1 protocol freeze drifted: {freeze_errors}")
     protocol = load_manual_protocol(ROOT / "evaluation" / "baseline_protocol_v0.2.yaml")
     state = load_state_oracle(ROOT / "evaluation" / "oracles" / "state_oracle_v0.1.yaml")
-    conflicts = load_conflict_oracle(
-        ROOT / "evaluation" / "oracles" / "conflict_oracle_v0.1.yaml"
-    )
+    conflicts = load_conflict_oracle(ROOT / "evaluation" / "oracles" / "conflict_oracle_v0.1.yaml")
     clock = load_clock_oracle(
         ROOT / "evaluation" / "oracles" / "clock_opportunity_oracle_v0.1.yaml"
     )

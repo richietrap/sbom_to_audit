@@ -24,15 +24,11 @@ ROOT = Path(__file__).resolve().parents[1]
 def validate(comparison_report: Path | None = None) -> dict[str, object]:
     protocol = load_manual_protocol(ROOT / "evaluation" / "baseline_protocol_v0.2.yaml")
     state = load_state_oracle(ROOT / "evaluation" / "oracles" / "state_oracle_v0.1.yaml")
-    conflicts = load_conflict_oracle(
-        ROOT / "evaluation" / "oracles" / "conflict_oracle_v0.1.yaml"
-    )
+    conflicts = load_conflict_oracle(ROOT / "evaluation" / "oracles" / "conflict_oracle_v0.1.yaml")
     clock = load_clock_oracle(
         ROOT / "evaluation" / "oracles" / "clock_opportunity_oracle_v0.1.yaml"
     )
-    errors = verify_freeze(
-        ROOT, ROOT / "evaluation" / "freeze" / "stage6_1_protocol_freeze.json"
-    )
+    errors = verify_freeze(ROOT, ROOT / "evaluation" / "freeze" / "stage6_1_protocol_freeze.json")
     try:
         validate_oracle_coverage(state, conflicts, clock)
     except ValueError as exc:

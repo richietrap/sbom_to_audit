@@ -76,9 +76,7 @@ def run(normalized_manual: Path, destination: Path) -> dict[str, Path]:
     orchestrated_root.mkdir(parents=True)
     comparison_root.mkdir(parents=True)
     for scenario_id in scenario_ids:
-        run_orchestrated(
-            ROOT / "data" / "scenarios" / f"{scenario_id}.yaml", orchestrated_root
-        )
+        run_orchestrated(ROOT / "data" / "scenarios" / f"{scenario_id}.yaml", orchestrated_root)
 
     common_fields = _common_fields()
     scenario_rows: list[dict[str, Any]] = []
@@ -86,25 +84,18 @@ def run(normalized_manual: Path, destination: Path) -> dict[str, Path]:
         orchestrated_metrics = read_json(
             orchestrated_root / "metrics" / f"{scenario_id}_metrics.json"
         )
-        evidence_pack = read_json(
-            orchestrated_root / "evidence_packs" / f"{scenario_id}.json"
-        )
+        evidence_pack = read_json(orchestrated_root / "evidence_packs" / f"{scenario_id}.json")
         manual_metrics = manual_result["metrics"]
-        orchestrated_access = summarize_source_accesses(
-            _orchestrated_source_accesses(scenario_id)
-        )
+        orchestrated_access = summarize_source_accesses(_orchestrated_source_accesses(scenario_id))
         manual_access = manual_metrics["supplemental"]["source_access"]
         scenario_rows.append(
             {
                 "scenario_id": scenario_id,
                 "scenario_role": "primary" if scenario_id in PRIMARY else "matched_control",
                 **{
-                    f"orchestrated_{metric}": orchestrated_metrics.get(metric)
-                    for metric in METRICS
+                    f"orchestrated_{metric}": orchestrated_metrics.get(metric) for metric in METRICS
                 },
-                **{
-                    f"manual_{metric}": manual_metrics.get(metric) for metric in METRICS
-                },
+                **{f"manual_{metric}": manual_metrics.get(metric) for metric in METRICS},
                 "orchestrated_common_field_completeness": common_field_completeness(
                     evidence_pack, common_fields
                 ),

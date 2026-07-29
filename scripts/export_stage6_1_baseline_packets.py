@@ -57,9 +57,7 @@ def export(destination: Path) -> Path:
                 "event_id": event_id,
                 "event_timestamp": release["timestamp"],
                 "released_artifacts": copied,
-                "cumulative_available_artifact_ids": release[
-                    "cumulative_available_artifact_ids"
-                ],
+                "cumulative_available_artifact_ids": release["cumulative_available_artifact_ids"],
                 "blinding_boundary": (
                     "No expected state, conflict oracle, automated score, or "
                     "generated claim is included."

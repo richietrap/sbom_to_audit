@@ -74,3 +74,8 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 - The locked EC, TR, CA, and EPG metrics retain schema- and mechanism-specific meanings. Supplemental fairness controls contextualize but do not replace them.
 - The Excel workbook is an analyst interface; the adjacent CSV/YAML files are the canonical machine-readable exchange.
 - Final manuscript eligibility still requires a completed manual run, exact Git commit, GitHub quality gates, clean Colab reproduction, preserved evidence-bundle hash, and evaluation freeze.
+
+## Stage 6.1.2 corrective-release boundary
+
+- Stage 6.1.2 applies formatter-only corrections reported by GitHub Actions. It does not create or change any Stage 6.1 comparison result.
+- Acceptance still requires both `ruff check .` and `ruff format --check .` to pass on the exact pushed commit, followed by the remaining static, regression, repository, freeze, and immutable Colab gates.

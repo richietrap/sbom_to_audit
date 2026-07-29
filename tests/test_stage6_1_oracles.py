@@ -20,9 +20,7 @@ def test_stage6_1_oracles_cover_the_same_event_universe() -> None:
     assert len(state) == 28
     assert conflicts[("ghost_logger", "EVT-GL-010H")]["expected_conflict"] is True
     assert conflicts[("false_comfort", "EVT-FC-008H")]["expected_conflict"] is False
-    assert clock[("rapid_pivot", "EVT-RP-018H")][
-        "eligible_prepare_to_escalate_opportunity"
-    ] is True
+    assert clock[("rapid_pivot", "EVT-RP-018H")]["eligible_prepare_to_escalate_opportunity"] is True
 
 
 def test_conflict_precision_uses_event_ground_truth_not_detected_counts() -> None:

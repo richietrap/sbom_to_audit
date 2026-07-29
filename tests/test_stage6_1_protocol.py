@@ -18,9 +18,7 @@ def test_stage6_1_manual_protocol_is_frozen_and_preserves_locked_metrics() -> No
 
 
 def test_stage6_1_protocol_rejects_mutable_status(tmp_path: Path) -> None:
-    text = PROTOCOL.read_text(encoding="utf-8").replace(
-        "PRE_EXECUTION_PROTOCOL_FROZEN", "DRAFT"
-    )
+    text = PROTOCOL.read_text(encoding="utf-8").replace("PRE_EXECUTION_PROTOCOL_FROZEN", "DRAFT")
     path = tmp_path / "protocol.yaml"
     path.write_text(text, encoding="utf-8")
     with pytest.raises(ValueError, match="pre-execution frozen"):

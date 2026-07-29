@@ -156,9 +156,7 @@ def validate_manual_bundle(
             _confidence(row["identity_confidence"], f"{label}/identity", report)
             _confidence(row["analyst_confidence"], f"{label}/analyst", report)
             start = _timestamp(row["review_started_at"], f"{label}/review_started", report)
-            decision = _timestamp(
-                row["decision_recorded_at"], f"{label}/decision_recorded", report
-            )
+            decision = _timestamp(row["decision_recorded_at"], f"{label}/decision_recorded", report)
             if start is not None and decision is not None and decision < start:
                 report.errors.append(f"decision precedes review start for {label}")
             if not row["rationale"].strip():
@@ -219,8 +217,7 @@ def validate_manual_bundle(
             report.errors.append(f"source access references unknown artifact: {key}/{artifact_id}")
         if row["tool"].strip() not in protocol.allowed_tools:
             report.errors.append(
-                "source access uses a tool outside the allowlist: "
-                f"{row['tool']!r}"
+                f"source access uses a tool outside the allowlist: {row['tool']!r}"
             )
         _timestamp(row["accessed_at"], f"{access_id}/accessed_at", report)
 
@@ -299,8 +296,7 @@ def validate_manual_bundle(
         missing_access_events = expected_keys - accessed_events
         if missing_access_events:
             report.errors.append(
-                "events without source-access records: "
-                f"{sorted(missing_access_events)}"
+                f"events without source-access records: {sorted(missing_access_events)}"
             )
 
     report.checks = {

@@ -47,3 +47,7 @@ from an exact Git commit or immutable tag. It installs the declared `.[dev]` env
 checks package version `0.6.1.1`, reruns all quality and regression safeguards, verifies the
 unchanged Stage 6.1 protocol freeze, and emits `stage611_colab_checkpoint_evidence.zip`.
 The Stage 6.1 notebook remains preserved as the superseded pre-correction checkpoint.
+
+## Stage 6.1.2 checkpoint
+
+`stage6_1_2_colab_checkpoint.ipynb` reproduces the formatter-corrected Stage 6.1.2 package from an exact immutable Git reference. It checks package version `0.6.1.2`, reruns all quality and regression safeguards, verifies the unchanged Stage 6.1 protocol freeze, and emits `stage612_colab_checkpoint_evidence.zip`.

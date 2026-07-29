@@ -47,12 +47,10 @@ def traceability_ratios(observations: list[dict[str, Any]]) -> dict[str, float]:
     if not observations:
         return {"strict": 0.0, "partial_lineage": 0.0}
     strict = sum(
-        all(populated(row.get(field)) for field in TRACEABILITY_ELEMENTS)
-        for row in observations
+        all(populated(row.get(field)) for field in TRACEABILITY_ELEMENTS) for row in observations
     )
     partial = sum(
-        all(populated(row.get(field)) for field in PARTIAL_LINEAGE_ELEMENTS)
-        for row in observations
+        all(populated(row.get(field)) for field in PARTIAL_LINEAGE_ELEMENTS) for row in observations
     )
     count = len(observations)
     return {

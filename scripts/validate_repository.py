@@ -431,9 +431,7 @@ def validate_stage6_1_controls(report: ValidationReport) -> None:
     protocol_path = ROOT / "evaluation" / "baseline_protocol_v0.2.yaml"
     try:
         protocol = load_manual_protocol(protocol_path)
-        state_oracle = load_state_oracle(
-            ROOT / "evaluation/oracles/state_oracle_v0.1.yaml"
-        )
+        state_oracle = load_state_oracle(ROOT / "evaluation/oracles/state_oracle_v0.1.yaml")
         conflict_oracle = load_conflict_oracle(
             ROOT / "evaluation/oracles/conflict_oracle_v0.1.yaml"
         )
@@ -480,30 +478,19 @@ def validate_stage6_1_controls(report: ValidationReport) -> None:
         scenario_id
         for scenario_id in protocol.scenario_ids
         if not (
-            ROOT
-            / "data/baseline_release_packets"
-            / scenario_id
-            / "release_manifest.yaml"
+            ROOT / "data/baseline_release_packets" / scenario_id / "release_manifest.yaml"
         ).is_file()
     )
     if missing_release_manifests:
-        report.error(
-            "Stage 6.1 release manifests are missing for: "
-            f"{missing_release_manifests}"
-        )
+        report.error(f"Stage 6.1 release manifests are missing for: {missing_release_manifests}")
 
-    freeze_errors = verify_freeze(
-        ROOT, ROOT / "evaluation/freeze/stage6_1_protocol_freeze.json"
-    )
+    freeze_errors = verify_freeze(ROOT, ROOT / "evaluation/freeze/stage6_1_protocol_freeze.json")
     if freeze_errors:
         report.error(f"Stage 6.1 pre-execution freeze failed: {freeze_errors}")
 
-    true_conflicts = sum(
-        bool(row.get("expected_conflict")) for row in conflict_oracle.values()
-    )
+    true_conflicts = sum(bool(row.get("expected_conflict")) for row in conflict_oracle.values())
     clock_opportunities = sum(
-        bool(row.get("eligible_prepare_to_escalate_opportunity"))
-        for row in clock_oracle.values()
+        bool(row.get("eligible_prepare_to_escalate_opportunity")) for row in clock_oracle.values()
     )
     report.checks["stage6_1_controls"] = {
         "protocol_id": protocol.protocol_id,

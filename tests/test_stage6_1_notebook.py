@@ -29,3 +29,12 @@ def test_stage6_1_1_notebook_rejects_mutable_ref_and_checks_version() -> None:
     assert 'sbom_to_audit.__version__ == "0.6.1.1"' in source
     assert "freeze_stage6_1_protocol.py" in source
     assert "--verify" in source
+
+def test_stage6_1_2_notebook_rejects_mutable_ref_and_checks_version() -> None:
+    source = _code_source(ROOT / "notebooks" / "stage6_1_2_colab_checkpoint.ipynb")
+    assert 'REF = "STAGE612_REF_REQUIRED"' in source
+    assert 'REF in {"main", "master", "STAGE612_REF_REQUIRED"}' in source
+    assert 'sbom_to_audit.__version__ == "0.6.1.2"' in source
+    assert "freeze_stage6_1_protocol.py" in source
+    assert "--verify" in source
+

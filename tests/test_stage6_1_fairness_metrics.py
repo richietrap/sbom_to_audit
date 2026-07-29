@@ -14,9 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_common_field_completeness_keeps_false_and_zero_populated() -> None:
     record = {"a": {"value": False}, "b": {"value": 0}, "c": {"value": None}}
-    assert common_field_completeness(
-        record, ["a.value", "b.value", "c.value"]
-    ) == 0.666667
+    assert common_field_completeness(record, ["a.value", "b.value", "c.value"]) == 0.666667
 
 
 def test_traceability_confidence_is_not_forced_to_zero_or_imputed() -> None:
@@ -44,7 +42,10 @@ def test_equivalent_record_bundle_has_a_distinct_supplemental_contract(tmp_path:
         ROOT / "evaluation" / "mappings" / "equivalent_record_bundle_v0.1.yaml"
     )
     assert set(mapping.record_classes) == {
-        "case_record", "decision_history", "conflict_history", "source_register"
+        "case_record",
+        "decision_history",
+        "conflict_history",
+        "source_register",
     }
     paths = {}
     for name in mapping.record_classes:
