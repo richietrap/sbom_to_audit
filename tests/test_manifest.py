@@ -12,6 +12,9 @@ GENERATED_OUTPUT_DIRS = {
     Path("outputs/audit_ledgers"),
     Path("outputs/validation"),
     Path("outputs/stage6_baseline"),
+    Path("outputs/stage6_1_manual_baseline"),
+    Path("outputs/stage6_1_comparison"),
+    Path("outputs/stage6_1_validation"),
 }
 IGNORED_DIRECTORY_NAMES = {
     ".git",

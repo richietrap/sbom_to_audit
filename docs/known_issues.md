@@ -65,3 +65,12 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 - The corrected 2024-04-15 EPSS record (`0.00371`, percentile `0.72343`) is governed by a fail-closed dual-source verification contract. The Stage 5.5.1 candidate was rejected; the Stage 5.5.2 GitHub quality gate and isolated Colab checkpoint must download and compare the FIRST API record and pinned official daily archive before the exact commit can be frozen or cited.
 - Raw authoritative EPSS downloads are preserved in the Colab evidence bundle rather than committed to the source tree; loss of that bundle would weaken run-level provenance but can be recovered by rerunning the pinned verification gate.
 - Research-normalized NVD, KEV, advisory, OSV, CycloneDX, and CSAF-shaped extracts preserve provenance but are not substitutes for complete official archive exports or official vendor CSAF publication.
+
+## Stage 6.1 pre-execution limitations
+
+- The manual-assisted baseline has not yet been executed. Stage 6.1 currently establishes the protocol, materials, freeze, and validation pipeline only.
+- A researcher-executed baseline cannot be represented as independent practitioner validation. Any prior exposure to Stage 6 outputs must be recorded, not hidden.
+- Expected states remain rule-conformance oracles and do not establish external PSIRT or legal correctness.
+- The locked EC, TR, CA, and EPG metrics retain schema- and mechanism-specific meanings. Supplemental fairness controls contextualize but do not replace them.
+- The Excel workbook is an analyst interface; the adjacent CSV/YAML files are the canonical machine-readable exchange.
+- Final manuscript eligibility still requires a completed manual run, exact Git commit, GitHub quality gates, clean Colab reproduction, preserved evidence-bundle hash, and evaluation freeze.

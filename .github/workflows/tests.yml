@@ -60,3 +60,16 @@ jobs:
           python scripts/run_baseline_comparison.py --output-root "$first"
           python scripts/run_baseline_comparison.py --output-root "$second"
           diff -ru "$first" "$second"
+      - name: Validate deterministic Stage 6.1 pre-execution package
+        run: |
+          python scripts/freeze_stage6_1_protocol.py --verify
+          python scripts/validate_stage6_1_evaluation.py
+          python scripts/validate_manual_baseline_worksheet.py data/baseline_templates
+          python scripts/export_stage6_1_baseline_packets.py \
+            --destination "${RUNNER_TEMP}/stage6-1-packets-first"
+          python scripts/export_stage6_1_baseline_packets.py \
+            --destination "${RUNNER_TEMP}/stage6-1-packets-second"
+          diff -ru \
+            "${RUNNER_TEMP}/stage6-1-packets-first" \
+            "${RUNNER_TEMP}/stage6-1-packets-second"
+

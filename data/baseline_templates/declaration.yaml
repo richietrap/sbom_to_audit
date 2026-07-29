@@ -1,0 +1,10 @@
+protocol_id: matched_manual_assisted_psirt_baseline
+protocol_version: '0.2'
+analyst_id_or_pseudonym: ''
+execution_role: researcher_executed_or_practitioner_executed
+automated_outputs_seen_before_execution: null
+baseline_execution_started_at: ''
+baseline_execution_completed_at: ''
+declaration: I confirm that the worksheet records my review of the released evidence
+  and that I did not alter entries to match an expected or automated result.
+signed_name_or_pseudonym: ''

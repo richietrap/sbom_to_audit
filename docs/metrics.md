@@ -78,3 +78,15 @@ The locked metrics remain unchanged. Two supplemental measures are reported:
 - **conflict precision:** true seeded conflict episodes divided by all detected episodes across the controlled suite. This exposes scope-blind false positives that conflict recall alone cannot show.
 
 A cumulative source-review operation count is also reported as a deterministic process proxy. It must not be interpreted as analyst time or cognitive workload.
+
+## Stage 6.1 fairness controls
+
+The seven effectiveness metrics above remain unchanged. Stage 6.1 adds only supplemental controls:
+
+- **Common-Field Completeness:** completeness over the frozen field subset both workflows are reasonably expected to record. It contextualizes EC and does not change its 34-field denominator.
+- **Partial Lineage Ratio:** populated provenance elements divided by five per observation. Strict TR still requires all five elements, including confidence.
+- **Conflict Precision:** event-level true positives divided by all detected conflict events using the independent frozen conflict oracle.
+- **Equivalent Record-Bundle Generation:** whether each workflow generated its frozen functionally equivalent case, decision-history, conflict-history, and source-register records. It does not change EPG.
+- **Source-Access Accounting:** distinct source artefacts and total access events are calculated using the same units for both workflows.
+- **Human Time to Decision:** elapsed analyst review minutes recorded separately from machine execution latency.
+- **Automatic Clock-Safeguard Ablation:** the configured `tau_E` mechanism is evaluated separately from claims about human clock awareness.

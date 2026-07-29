@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.1 — Stage 6.1 matched baseline protocol hardening
+
+- Preserved the Stage 6 deterministic worksheet proxy and ADR-012 as development and ablation history.
+- Added a pre-registered manual-assisted baseline protocol with identical scenario releases, ordinary-tool policy, chronology controls, explicit blinding disclosure, and unedited-original preservation.
+- Added independent exhaustive state, conflict, and automatic clock-opportunity oracles; conflict precision and recall no longer derive ground truth from either evaluated workflow.
+- Added supplemental fairness controls for common-field completeness, partial lineage, equivalent record-bundle generation, and like-for-like source-access accounting while preserving EC, TR, CD, CA, AR, SC, EPG, EvidencePack v0.2, and the 34-field EC denominator.
+- Added a structured Excel workbook plus canonical CSV/YAML exchange templates, schema validation, import provenance, source hashes, and manual Time-to-Decision records.
+- Added pre-execution hashing for protocols, mappings, oracles, worksheet schema, and all seven scenario files.
+- Added ADR-013 through ADR-016, Stage 6.1 reports, tests, packet export, comparison and paper-asset builders, and an exact-reference Colab checkpoint.
+- Marked Stage 6.1 as an implementation candidate awaiting real manual execution; no comparison results are generated or manuscript-eligible at this checkpoint.
+
 ## 0.6.0 — Stage 6 matched PSIRT baseline comparison
 
 - Added a frozen structured-but-unorchestrated PSIRT worksheet protocol using identical source bytes, release times, validation, and parsers.

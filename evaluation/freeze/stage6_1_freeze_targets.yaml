@@ -1,0 +1,18 @@
+freeze_target_version: "0.1"
+paths:
+  - evaluation/baseline_protocol_v0.2.yaml
+  - evaluation/oracles/state_oracle_v0.1.yaml
+  - evaluation/oracles/conflict_oracle_v0.1.yaml
+  - evaluation/oracles/clock_opportunity_oracle_v0.1.yaml
+  - evaluation/mappings/common_field_set_v0.1.yaml
+  - evaluation/mappings/traceability_element_mapping_v0.1.yaml
+  - evaluation/mappings/equivalent_record_bundle_v0.1.yaml
+  - evaluation/mappings/source_access_accounting_v0.1.yaml
+  - data/baseline_templates/manual_psirt_worksheet.schema.json
+  - data/scenarios/ghost_logger.yaml
+  - data/scenarios/false_comfort.yaml
+  - data/scenarios/false_comfort_control.yaml
+  - data/scenarios/operational_outlier.yaml
+  - data/scenarios/operational_outlier_control.yaml
+  - data/scenarios/rapid_pivot.yaml
+  - data/scenarios/rapid_pivot_control.yaml

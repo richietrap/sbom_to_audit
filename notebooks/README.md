@@ -34,3 +34,8 @@ Before a run is treated as manuscript-eligible, set `REF` to an immutable Git ta
 ## Stage 6
 
 `stage6_colab_checkpoint.ipynb` reproduces the matched comparison between the temporal orchestration artefact and the frozen structured-but-unorchestrated PSIRT worksheet proxy. It retains the authoritative historical EPSS gate, executes the canonical release check, regenerates the Stage 6 figure and tables, verifies the controlled pilot metrics and limitations, and packages exact Git-commit lineage in `stage6_colab_checkpoint_evidence.zip`.
+
+
+## Stage 6.1
+
+`stage6_1_colab_checkpoint.ipynb` verifies the pre-execution freeze, complete repository safeguards, and baseline packet export from an immutable Git reference. After a genuine manual result bundle exists, the notebook validates and imports it, regenerates the comparison and candidate paper assets, and emits `stage61_colab_checkpoint_evidence.zip`. It rejects mutable references such as `main` for the final checkpoint.

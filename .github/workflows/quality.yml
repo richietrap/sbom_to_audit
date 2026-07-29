@@ -43,7 +43,7 @@ jobs:
           python -m mypy src
           codespell
           yamllint \
-            .github data evaluation/baseline_protocol_v0.1.yaml \
+            .github data evaluation \
             .pre-commit-config.yaml .yamllint.yml
 
       - name: Verify historical EPSS against authoritative sources
@@ -61,6 +61,12 @@ jobs:
           bundle_dir="$RUNNER_TEMP/historical-replay-verified/historical_public"
           python scripts/assert_verified_historical_replay.py \
             "$bundle_dir/cve_2024_3400_public_bundle.json"
+
+      - name: Verify Stage 6.1 pre-execution controls
+        run: |
+          python scripts/freeze_stage6_1_protocol.py --verify
+          python scripts/validate_stage6_1_evaluation.py
+          python scripts/validate_manual_baseline_worksheet.py data/baseline_templates
 
       - name: Validate repository integrity
         run: python scripts/validate_repository.py --strict-sources

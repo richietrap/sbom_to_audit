@@ -1,0 +1,21 @@
+protocol_version: '0.2'
+allowed:
+- jq
+- grep
+- sed
+- awk
+- text_editor
+- spreadsheet
+- json_viewer
+- csv_viewer
+- yaml_viewer
+- archive_utility
+- sha256_utility
+prohibited:
+- sbom_to_audit_prototype
+- prototype_generated_claims
+- prototype_conflict_reports
+- expected_state_oracles
+- custom_orchestration_scripts
+- integrated_evidence_orchestration_platform
+recording_rule: Every tool and command or method used must be entered in source_access_log.csv.

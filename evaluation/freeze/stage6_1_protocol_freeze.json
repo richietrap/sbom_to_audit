@@ -1,0 +1,71 @@
+{
+  "freeze_id": "STAGE6-1-PRE-EXECUTION-FREEZE-001",
+  "freeze_status": "PRE_EXECUTION_FROZEN",
+  "generated_at": "2026-07-24T13:07:50.834377Z",
+  "records": [
+    {
+      "path": "evaluation/baseline_protocol_v0.2.yaml",
+      "sha256": "ed5f73456ab98e9d67f4e48f893d925425d90ef427a5b04d4fcaf2f808a2b10a"
+    },
+    {
+      "path": "evaluation/oracles/state_oracle_v0.1.yaml",
+      "sha256": "023d10dc10c11925c22bfcfeb2d0f9bfe898f90b59aab63e40cc0cf23ecc6528"
+    },
+    {
+      "path": "evaluation/oracles/conflict_oracle_v0.1.yaml",
+      "sha256": "d2476c810cd6e21c3650df1ce32263f9b3f9b29245084166d84dcc9a0be8f4e3"
+    },
+    {
+      "path": "evaluation/oracles/clock_opportunity_oracle_v0.1.yaml",
+      "sha256": "15898962379dd84d7675046425cc146f1ff28d9b13437e1254456b73ba892cf6"
+    },
+    {
+      "path": "evaluation/mappings/common_field_set_v0.1.yaml",
+      "sha256": "68771872a9946be8a1eb45209e0897cfa795450121e689e7a109dc17ec4bcd57"
+    },
+    {
+      "path": "evaluation/mappings/traceability_element_mapping_v0.1.yaml",
+      "sha256": "4497121d783d2fd2d481774756fbf32d29a82ba322f19de8c17c1d3585aeebce"
+    },
+    {
+      "path": "evaluation/mappings/equivalent_record_bundle_v0.1.yaml",
+      "sha256": "44e4f8b031484f126c606ea18928402b212527563c1a0de1db0afd4d6233a94b"
+    },
+    {
+      "path": "evaluation/mappings/source_access_accounting_v0.1.yaml",
+      "sha256": "ef6f9e7b32e67cc437e412174592d3f3f3e1d725b687e5fc37e21f04d9fc2d7f"
+    },
+    {
+      "path": "data/baseline_templates/manual_psirt_worksheet.schema.json",
+      "sha256": "ab01679452217f83a01c26b6110b2b814e5b5e36c93b0c196e0f3af1901ec19a"
+    },
+    {
+      "path": "data/scenarios/ghost_logger.yaml",
+      "sha256": "418753c6677348a05a91fb2f2ccad6d763a122f00d6f8be2238a1203d6281cd1"
+    },
+    {
+      "path": "data/scenarios/false_comfort.yaml",
+      "sha256": "6b99d0d769302b6a304273d669a368ea6e75677fc5dfabd9622d93e0d619bfe3"
+    },
+    {
+      "path": "data/scenarios/false_comfort_control.yaml",
+      "sha256": "e0917a50cd6844781728e832d5663ce1ee45bfde27890b4ab063c61d9a412868"
+    },
+    {
+      "path": "data/scenarios/operational_outlier.yaml",
+      "sha256": "61970ea24db5434d7b5d6e5c9be311f1e1ebf15ff70b627f1dcf4b1b83a51f6a"
+    },
+    {
+      "path": "data/scenarios/operational_outlier_control.yaml",
+      "sha256": "05add8618bdfba0c403846700b07fbea62db09d87d5c51c3b251b4750666ea5e"
+    },
+    {
+      "path": "data/scenarios/rapid_pivot.yaml",
+      "sha256": "c10ee2e9121ccce683937c6050cf4b7dc7a8be392250ef706731a978747ab82a"
+    },
+    {
+      "path": "data/scenarios/rapid_pivot_control.yaml",
+      "sha256": "d1b1ca30c450a053b35253223efe6e28df2888805464b644ab6e879fe938a1cf"
+    }
+  ]
+}

@@ -112,3 +112,14 @@ git status
 The root-level API JSON, extracted row, gzip archive and verification report are
 runtime evidence. They must be stored under `outputs/validation/` or in a Colab
 checkpoint bundle, never as source-controlled root files.
+
+## Stage 6.1 pre-execution and clean-room procedure
+
+1. Verify the frozen protocol and oracle hashes with `python scripts/freeze_stage6_1_protocol.py --verify`.
+2. Validate the Stage 6.1 controls with `python scripts/validate_stage6_1_evaluation.py` and the blank analyst materials with `python scripts/validate_manual_baseline_worksheet.py data/baseline_templates`.
+3. Export blinded scenario packets with `python scripts/export_stage6_1_baseline_packets.py --destination <directory>`.
+4. Complete the manual review chronologically and preserve the original workbook and canonical CSV/YAML exports unchanged.
+5. Validate and import the completed bundle with `validate_manual_baseline_worksheet.py` and `import_manual_baseline_results.py`.
+6. Run `run_stage6_1_comparison.py` and `build_stage6_1_paper_assets.py`.
+7. Push the exact candidate commit, run GitHub quality gates, and execute `notebooks/stage6_1_colab_checkpoint.ipynb` with an immutable commit SHA or tag.
+8. Preserve the Colab evidence ZIP and its SHA-256 before changing any candidate status.

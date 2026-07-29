@@ -39,3 +39,6 @@ This matrix prevents implementation observations from entering the manuscript wi
 | PC-030 | The artefact generates the defined EvidencePack outputs; the structured baseline generates worksheets and logs but no EvidencePack. | PILOT_BASELINE_NOT_FROZEN | `STAGE6-MATCHED-BASELINE-PILOT-001` | T18; baseline output inventory | Output-generation difference does not by itself prove operational utility |
 
 > **Stage 6 boundary:** these claims answer RQ5 only within the controlled computational suite. They do not support claims of human time savings, reduced cognitive workload, legal accuracy, or industrial effectiveness.
+
+
+> **Stage 6.1 pre-execution boundary:** version 0.6.1 adds evaluation controls and no new comparative result claim. PC-025 through PC-030 remain Stage 6 pilot claims. They may be replaced or narrowed only after a genuine manual-assisted run, independent-oracle scoring, immutable Git/Colab reproduction, and final evaluation freeze.

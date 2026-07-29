@@ -12,3 +12,6 @@ The CLI writes deterministic replay products into six directories:
 `validation/` is reserved for machine-readable release and checkpoint reports.
 
 Generated files are ignored by Git. Frozen evaluation outputs should be preserved in a tagged research archive together with the exact Git commit, source-manifest hash, output-manifest hash, and environment record.
+
+
+Stage 6.1 reserves `stage6_1_manual_baseline/`, `stage6_1_comparison/`, and `stage6_1_validation/` for generated and imported evaluation evidence. Original analyst files must remain unchanged under the manual-baseline preservation structure. These directories are generated-output locations and are excluded from the repository manifest except for `.gitkeep` placeholders.

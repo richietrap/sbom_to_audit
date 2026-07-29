@@ -73,3 +73,9 @@ coverage report, deterministic replay hashes, known limitations, and Colab check
 ## Stage 5 temporal-control safeguards
 
 Rapid Pivot adds paired-control assertions requiring the primary and control manifests to have identical source catalogs, targets, deadline profiles, and event timestamps. Tests verify that only the release event for the uncertainty-resolving artefacts differs. The release gate also checks that the main replay has exactly one eligible clock-safeguard opportunity and trigger, while the control has none. This prevents deadline-profile drift, hidden source changes, or a conflict event from being misreported as clock-aware escalation.
+
+## Stage 6.1 baseline-evaluation safeguards
+
+Stage 6.1 separates protocol construction from result execution. Protocol v0.2, the worksheet schema, scenario inputs, fairness mappings, and independent oracles are hashed before any final manual run. Neither evaluated workflow may define conflict truth, state expectations, or clock opportunities. Original analyst files are retained unchanged and normalized only into separately hashed evaluation views. The final Colab checkpoint must use an immutable commit or tag and rejects `main` and `master`.
+
+The manual worksheet records confidence explicitly; missing confidence remains missing. Locked metrics remain unchanged, while common-field completeness, partial lineage, equivalent record-bundle generation, source accesses, and human Time to Decision are reported as supplemental controls. Automatic clock-safeguard ablation must not be described as proof that a human analyst would miss a deadline.

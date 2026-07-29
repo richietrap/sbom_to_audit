@@ -46,14 +46,20 @@ class ReleaseReport:
 
 
 def _run(report: ReleaseReport, name: str, command: list[str]) -> None:
-    completed = subprocess.run(
-        command,
-        cwd=ROOT,
-        text=True,
-        capture_output=True,
-        check=False,
-        env={**os.environ, "PYTHONHASHSEED": "0"},
-    )
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+            env={**os.environ, "PYTHONHASHSEED": "0"},
+        )
+    except OSError as exc:
+        result = CheckResult(name, command, 127, "", str(exc))
+        report.checks.append(result)
+        report.fail(f"{name} could not start: {exc}")
+        return
     result = CheckResult(name, command, completed.returncode, completed.stdout, completed.stderr)
     report.checks.append(result)
     if completed.returncode != 0:
@@ -182,6 +188,35 @@ def _deterministic_stage6_baseline(report: ReleaseReport) -> None:
             report.deterministic_hashes[f"stage6_baseline/{relative.as_posix()}"] = left_hash
 
 
+def _deterministic_stage6_1_packets(report: ReleaseReport) -> None:
+    with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-1-packets-") as temp:
+        base = Path(temp)
+        first = base / "first"
+        second = base / "second"
+        command = [
+            sys.executable,
+            "scripts/export_stage6_1_baseline_packets.py",
+            "--destination",
+        ]
+        _run(report, "Stage 6.1 packet export A", command + [str(first)])
+        _run(report, "Stage 6.1 packet export B", command + [str(second)])
+        if report.status == "FAIL":
+            return
+        first_files = sorted(path.relative_to(first) for path in first.rglob("*") if path.is_file())
+        second_files = sorted(
+            path.relative_to(second) for path in second.rglob("*") if path.is_file()
+        )
+        if first_files != second_files:
+            report.fail("Stage 6.1 packet inventories differ")
+            return
+        for relative in first_files:
+            left_hash = _sha256(first / relative)
+            right_hash = _sha256(second / relative)
+            if left_hash != right_hash:
+                report.fail(f"non-deterministic Stage 6.1 packet: {relative}")
+            report.deterministic_hashes[f"stage6_1_packets/{relative.as_posix()}"] = left_hash
+
+
 def run_release_check() -> ReleaseReport:
     report = ReleaseReport()
     commands = [
@@ -199,7 +234,7 @@ def run_release_check() -> ReleaseReport:
                 "yamllint",
                 ".github",
                 "data",
-                "evaluation/baseline_protocol_v0.1.yaml",
+                "evaluation",
                 ".pre-commit-config.yaml",
                 ".yamllint.yml",
             ],
@@ -207,6 +242,22 @@ def run_release_check() -> ReleaseReport:
         (
             "historical EPSS offline contract",
             [sys.executable, "scripts/verify_historical_epss.py"],
+        ),
+        (
+            "Stage 6.1 freeze verification",
+            [sys.executable, "scripts/freeze_stage6_1_protocol.py", "--verify"],
+        ),
+        (
+            "Stage 6.1 control validation",
+            [sys.executable, "scripts/validate_stage6_1_evaluation.py"],
+        ),
+        (
+            "Stage 6.1 blank worksheet validation",
+            [
+                sys.executable,
+                "scripts/validate_manual_baseline_worksheet.py",
+                "data/baseline_templates",
+            ],
         ),
         (
             "repository validation",
@@ -232,6 +283,8 @@ def run_release_check() -> ReleaseReport:
         _deterministic_historical_public_replay(report)
     if report.status == "PASS":
         _deterministic_stage6_baseline(report)
+    if report.status == "PASS":
+        _deterministic_stage6_1_packets(report)
     return report
 
 

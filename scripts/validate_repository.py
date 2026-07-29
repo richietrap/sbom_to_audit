@@ -14,7 +14,15 @@ from typing import Any
 
 import yaml
 
-from sbom_to_audit.baseline.protocol import load_protocol
+from sbom_to_audit.baseline.evaluation_freeze import verify_freeze
+from sbom_to_audit.baseline.evaluation_oracles import (
+    load_clock_oracle,
+    load_conflict_oracle,
+    load_state_oracle,
+    validate_oracle_coverage,
+)
+from sbom_to_audit.baseline.manual_worksheet import BUNDLE_SCHEMAS, DECLARATION_FILE
+from sbom_to_audit.baseline.protocol import load_manual_protocol, load_protocol
 from sbom_to_audit.historical.epss_verification import verify_offline_contract
 from sbom_to_audit.historical.public_replay import run_public_historical_replay
 from sbom_to_audit.ingestion.source_registry import SourceRegistry
@@ -30,6 +38,9 @@ GENERATED_OUTPUT_DIRS = {
     Path("outputs/audit_ledgers"),
     Path("outputs/validation"),
     Path("outputs/stage6_baseline"),
+    Path("outputs/stage6_1_manual_baseline"),
+    Path("outputs/stage6_1_comparison"),
+    Path("outputs/stage6_1_validation"),
 }
 IGNORED_NAMES = {
     ".git",
@@ -413,6 +424,99 @@ def validate_baseline_protocol(report: ValidationReport) -> None:
     }
 
 
+def validate_stage6_1_controls(report: ValidationReport) -> None:
+    """Validate the pre-execution Stage 6.1 protocol, oracles, templates, and freeze."""
+
+    protocol_path = ROOT / "evaluation" / "baseline_protocol_v0.2.yaml"
+    try:
+        protocol = load_manual_protocol(protocol_path)
+        state_oracle = load_state_oracle(
+            ROOT / "evaluation/oracles/state_oracle_v0.1.yaml"
+        )
+        conflict_oracle = load_conflict_oracle(
+            ROOT / "evaluation/oracles/conflict_oracle_v0.1.yaml"
+        )
+        clock_oracle = load_clock_oracle(
+            ROOT / "evaluation/oracles/clock_opportunity_oracle_v0.1.yaml"
+        )
+        validate_oracle_coverage(state_oracle, conflict_oracle, clock_oracle)
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
+        report.error(f"Stage 6.1 control validation failed: {exc}")
+        return
+
+    executable = {path.stem for path in (ROOT / "data/scenarios").glob("*.yaml")}
+    missing_scenarios = sorted(set(protocol.scenario_ids) - executable)
+    if missing_scenarios:
+        report.error(f"Stage 6.1 protocol references missing scenarios: {missing_scenarios}")
+
+    scenario_events: set[tuple[str, str]] = set()
+    for scenario_id in protocol.scenario_ids:
+        try:
+            scenario = _load_yaml(ROOT / "data/scenarios" / f"{scenario_id}.yaml")
+        except (OSError, ValueError, yaml.YAMLError) as exc:
+            report.error(f"Stage 6.1 scenario cannot be loaded ({scenario_id}): {exc}")
+            continue
+        for event in scenario.get("replay_events") or []:
+            scenario_events.add((scenario_id, str(event.get("event_id") or "")))
+    if set(state_oracle) != scenario_events:
+        report.error("Stage 6.1 oracle event universe drifted from the executable scenarios")
+
+    required_templates = {
+        *BUNDLE_SCHEMAS,
+        DECLARATION_FILE,
+        "manual_psirt_worksheet.xlsx",
+        "manual_psirt_worksheet.schema.json",
+    }
+    missing_templates = sorted(
+        name
+        for name in required_templates
+        if not (ROOT / "data/baseline_templates" / name).is_file()
+    )
+    if missing_templates:
+        report.error(f"Stage 6.1 baseline templates are missing: {missing_templates}")
+
+    missing_release_manifests = sorted(
+        scenario_id
+        for scenario_id in protocol.scenario_ids
+        if not (
+            ROOT
+            / "data/baseline_release_packets"
+            / scenario_id
+            / "release_manifest.yaml"
+        ).is_file()
+    )
+    if missing_release_manifests:
+        report.error(
+            "Stage 6.1 release manifests are missing for: "
+            f"{missing_release_manifests}"
+        )
+
+    freeze_errors = verify_freeze(
+        ROOT, ROOT / "evaluation/freeze/stage6_1_protocol_freeze.json"
+    )
+    if freeze_errors:
+        report.error(f"Stage 6.1 pre-execution freeze failed: {freeze_errors}")
+
+    true_conflicts = sum(
+        bool(row.get("expected_conflict")) for row in conflict_oracle.values()
+    )
+    clock_opportunities = sum(
+        bool(row.get("eligible_prepare_to_escalate_opportunity"))
+        for row in clock_oracle.values()
+    )
+    report.checks["stage6_1_controls"] = {
+        "protocol_id": protocol.protocol_id,
+        "protocol_version": protocol.protocol_version,
+        "evaluation_status": protocol.evaluation_status,
+        "scenario_count": len(protocol.scenario_ids),
+        "event_count": len(state_oracle),
+        "true_conflicts": true_conflicts,
+        "automatic_clock_opportunities": clock_opportunities,
+        "locked_metrics": list(protocol.locked_metrics),
+        "freeze_verified": not freeze_errors,
+    }
+
+
 def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
@@ -453,6 +557,7 @@ def run_validation(strict_sources: bool = False) -> ValidationReport:
     validate_historical_replay(report, strict_sources)
     validate_evaluation_registry(report)
     validate_baseline_protocol(report)
+    validate_stage6_1_controls(report)
     validate_text_integrity(report)
     return report
 

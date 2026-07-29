@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.0 adds the Stage 6 matched structured-but-unorchestrated PSIRT baseline comparison while preserving the four controlled scenario families, their matched controls, and the publication-aware CVE-2024-3400 historical replay. Stage 6 is a controlled computational proxy, not a human analyst study or industrial effectiveness evaluation. Controlled deployments remain fictional and must not be described as industrial case studies.
+Version 0.6.1 adds the Stage 6.1 pre-execution package for a hardened manual-assisted matched PSIRT baseline. It preserves the Stage 6 deterministic proxy as development and ablation history while adding independent event-level oracles, fairness controls, analyst worksheets, protocol freezing, import provenance, and an immutable-reference Colab checkpoint. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
 
 ## Research questions
 
@@ -47,6 +47,11 @@ python scripts/run_baseline_comparison.py \
 python paper_assets/scripts/build_stage6_assets.py \
   --output-root outputs/stage6_baseline \
   --destination paper_assets
+python scripts/freeze_stage6_1_protocol.py --verify
+python scripts/validate_stage6_1_evaluation.py
+python scripts/validate_manual_baseline_worksheet.py data/baseline_templates
+python scripts/export_stage6_1_baseline_packets.py \
+  --destination /tmp/stage6_1_baseline_packets
 python -m pytest
 python scripts/release_check.py
 ```
@@ -170,3 +175,11 @@ ignored and rejected by repository validation.
 
 Across the four primary controlled families, the pilot comparison reports higher artefact values for EC, TR, CA, SC, and EPG; equal AR and seeded-conflict recall; and higher conflict precision once the scope-blind False Comfort baseline false positive is counted. These are controlled functional results, not evidence of human time savings, legal correctness, or industrial effectiveness.
 
+
+## Stage 6.1 hardened manual-assisted baseline
+
+`evaluation/baseline_protocol_v0.2.yaml` defines the pre-registered manual-assisted comparison. The analyst receives the same scenario releases and may use ordinary inspection tools, but does not receive the prototype, generated claims, automated scores, conflict reports, or expected-state oracles. The completed worksheet records analyst confidence, source access, decisions, conflicts, and elapsed review time.
+
+Independent state, conflict, and clock-opportunity oracles are stored under `evaluation/oracles/` and are hashed with the protocol, mappings, worksheet schema, and scenario files in `evaluation/freeze/stage6_1_protocol_freeze.json`. The seven locked metrics and EvidencePack v0.2 remain unchanged. Common-field completeness, partial lineage, equivalent record-bundle generation, like-for-like source-access accounting, conflict precision, and human Time to Decision are supplemental fairness controls.
+
+Stage 6.1 is currently an implementation candidate awaiting genuine manual execution. The blank workbook is `data/baseline_templates/manual_psirt_worksheet.xlsx`; the canonical exchange files are the adjacent CSV/YAML templates. The final Colab checkpoint rejects mutable branch references such as `main`.

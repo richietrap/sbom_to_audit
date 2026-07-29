@@ -1,0 +1,141 @@
+manifest_version: '0.1'
+scenario_id: ghost_logger
+case_id: CASE-GHOST-LOGGER-001
+clock_start_time: '2026-09-12T08:00:00Z'
+releases:
+- event_id: EVT-GL-002H
+  timestamp: '2026-09-12T10:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/sbom/ghost_logger.cdx.json
+    source_timestamp: '2026-09-12T08:05:00Z'
+  - artifact_id: ART-OSV-001
+    artifact_type: osv_snapshot
+    path: data/osv_snapshots/ghost_logger_osv.json
+    source_timestamp: '2026-09-12T08:10:00Z'
+  - artifact_id: ART-KEV-001
+    artifact_type: kev_snapshot
+    path: data/kev_snapshots/ghost_logger_kev.json
+    source_timestamp: '2026-09-12T08:12:00Z'
+  - artifact_id: ART-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/epss_snapshots/ghost_logger_epss.json
+    source_timestamp: '2026-09-12T08:14:00Z'
+  - artifact_id: ART-VEX-001
+    artifact_type: csaf_vex
+    path: data/csaf/ghost_logger_vex.json
+    source_timestamp: '2026-09-12T09:00:00Z'
+  - artifact_id: ART-ASSET-001
+    artifact_type: asset_context
+    path: data/asset_context/ghost_logger_asset.yaml
+    source_timestamp: '2026-09-12T08:40:00Z'
+  - artifact_id: ART-MIT-INITIAL-001
+    artifact_type: mitigation_context
+    path: data/mitigation/ghost_logger_initial.yaml
+    source_timestamp: '2026-09-12T08:45:00Z'
+  - artifact_id: ART-TELEM-INITIAL-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/ghost_logger_initial.jsonl
+    source_timestamp: '2026-09-12T08:30:00Z'
+  cumulative_available_artifact_ids:
+  - ART-SBOM-001
+  - ART-OSV-001
+  - ART-KEV-001
+  - ART-EPSS-001
+  - ART-VEX-001
+  - ART-ASSET-001
+  - ART-MIT-INITIAL-001
+  - ART-TELEM-INITIAL-001
+- event_id: EVT-GL-010H
+  timestamp: '2026-09-12T18:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-TELEM-EXEC-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/ghost_logger_execution.jsonl
+    source_timestamp: '2026-09-12T18:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-SBOM-001
+  - ART-OSV-001
+  - ART-KEV-001
+  - ART-EPSS-001
+  - ART-VEX-001
+  - ART-ASSET-001
+  - ART-MIT-INITIAL-001
+  - ART-TELEM-INITIAL-001
+  - ART-TELEM-EXEC-001
+- event_id: EVT-GL-014H
+  timestamp: '2026-09-12T22:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-TELEM-REPRO-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/ghost_logger_reproduction.jsonl
+    source_timestamp: '2026-09-12T22:00:00Z'
+  - artifact_id: ART-DEC-RESOLVE-001
+    artifact_type: conflict_resolution
+    path: data/decision_records/ghost_logger_conflict_resolution.yaml
+    source_timestamp: '2026-09-12T22:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-SBOM-001
+  - ART-OSV-001
+  - ART-KEV-001
+  - ART-EPSS-001
+  - ART-VEX-001
+  - ART-ASSET-001
+  - ART-MIT-INITIAL-001
+  - ART-TELEM-INITIAL-001
+  - ART-TELEM-EXEC-001
+  - ART-TELEM-REPRO-001
+  - ART-DEC-RESOLVE-001
+- event_id: EVT-GL-020H
+  timestamp: '2026-09-13T04:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-DEC-AUTH-001
+    artifact_type: human_authorization
+    path: data/decision_records/ghost_logger_authorization.yaml
+    source_timestamp: '2026-09-13T04:00:00Z'
+  - artifact_id: ART-SUB-EARLY-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/ghost_logger_early_warning_submission.yaml
+    source_timestamp: '2026-09-13T04:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-SBOM-001
+  - ART-OSV-001
+  - ART-KEV-001
+  - ART-EPSS-001
+  - ART-VEX-001
+  - ART-ASSET-001
+  - ART-MIT-INITIAL-001
+  - ART-TELEM-INITIAL-001
+  - ART-TELEM-EXEC-001
+  - ART-TELEM-REPRO-001
+  - ART-DEC-RESOLVE-001
+  - ART-DEC-AUTH-001
+  - ART-SUB-EARLY-001
+- event_id: EVT-GL-072H
+  timestamp: '2026-09-15T08:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-MIT-VERIFIED-001
+    artifact_type: mitigation_context
+    path: data/mitigation/ghost_logger_verified.yaml
+    source_timestamp: '2026-09-15T08:00:00Z'
+  - artifact_id: ART-SUB-FULL-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/ghost_logger_full_notification_submission.yaml
+    source_timestamp: '2026-09-15T08:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-SBOM-001
+  - ART-OSV-001
+  - ART-KEV-001
+  - ART-EPSS-001
+  - ART-VEX-001
+  - ART-ASSET-001
+  - ART-MIT-INITIAL-001
+  - ART-TELEM-INITIAL-001
+  - ART-TELEM-EXEC-001
+  - ART-TELEM-REPRO-001
+  - ART-DEC-RESOLVE-001
+  - ART-DEC-AUTH-001
+  - ART-SUB-EARLY-001
+  - ART-MIT-VERIFIED-001
+  - ART-SUB-FULL-001

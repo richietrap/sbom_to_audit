@@ -1,0 +1,36 @@
+mapping_version: '0.1'
+mapping_id: stage6_1_common_field_set
+purpose: Fields both workflows are reasonably expected to record without numerical
+  orchestration.
+field_paths:
+- case_metadata.case_id
+- case_metadata.generated_at
+- case_metadata.clock_start_time
+- case_metadata.delta_t_hours
+- product_context.product_id
+- product_context.product_version
+- product_context.purl
+- product_context.sbom_reference
+- identity_resolution.primary_identifier
+- identity_resolution.matching_method
+- identity_resolution.gamma_id
+- vulnerability_intelligence.cve_id
+- vulnerability_intelligence.cisa_kev_status
+- vulnerability_intelligence.epss_percentile
+- supplier_assertions.csaf_vex_status
+- supplier_assertions.csaf_reference
+- local_evidence.execution_observed
+- local_evidence.reachability_confirmed
+- local_evidence.telemetry_reference
+- asset_context.asset_criticality
+- asset_context.deployment_scope
+- mitigation_context.mitigation_status
+- decision_state.recommended_state
+- decision_state.human_authorization_required
+- decision_state.rationale
+- claims[]
+- source_artifacts[]
+- audit_log[]
+interpretation: This supplemental denominator does not replace the locked 34-field
+  EC denominator. It isolates shared recordability from orchestration-specific numerical
+  variables.

@@ -1,0 +1,87 @@
+protocol_version: '0.2'
+protocol_id: matched_manual_assisted_psirt_baseline
+classification: pre_registered_manual_assisted_evaluation_candidate
+evaluation_status: PRE_EXECUTION_PROTOCOL_FROZEN
+scenario_ids:
+- ghost_logger
+- false_comfort
+- false_comfort_control
+- operational_outlier
+- operational_outlier_control
+- rapid_pivot
+- rapid_pivot_control
+shared_conditions:
+- Both workflows receive identical committed source bytes.
+- Both workflows receive evidence at identical replay events and timestamps.
+- Both workflows receive the same deadline profile, decision task, and evidence requirements.
+- Ordinary parsing and inspection tools are permitted so parsing skill is not the
+  experimental intervention.
+- Expected-state, conflict, and clock-opportunity oracles are withheld until decisions
+  are recorded.
+allowed_tools:
+- jq
+- grep
+- sed
+- awk
+- text_editor
+- spreadsheet
+- json_viewer
+- csv_viewer
+- yaml_viewer
+- archive_utility
+- sha256_utility
+prohibited_tools:
+- sbom_to_audit_prototype
+- prototype_generated_claims
+- prototype_conflict_reports
+- expected_state_oracles
+- custom_orchestration_scripts
+- integrated_evidence_orchestration_platform
+required_records:
+- case_decisions.csv
+- evidence_observations.csv
+- source_access_log.csv
+- conflict_log.csv
+- timing_log.csv
+- declaration.yaml
+blinding:
+  required: true
+  record_prior_exposure: true
+  final_evaluation_rule: A baseline execution exposed to automated outputs remains
+    usable only with explicit non_blinded classification and limitation disclosure.
+confidence_recording:
+  required_for_traceable_observations: true
+  range:
+  - 0.0
+  - 1.0
+  missing_confidence_is_not_imputed: true
+metric_controls:
+  locked_metrics_unchanged:
+  - EC
+  - TR
+  - CD
+  - CA
+  - AR
+  - SC
+  - EPG
+  supplemental_controls:
+  - common_field_completeness
+  - partial_lineage_ratio
+  - conflict_precision
+  - equivalent_record_bundle_generation
+  - distinct_source_artifacts_accessed
+  - human_time_to_decision
+  - automatic_clock_safeguard_ablation
+freeze_requirements:
+- Protocol, worksheet schema, scenario files, mappings, and evaluation oracles are
+  hashed before execution.
+- Final expected labels may not be changed after baseline execution without a new
+  protocol version and full rerun.
+- Original analyst records are retained unchanged and hashed before normalization.
+limitations:
+- A researcher-executed baseline is not independent practitioner validation.
+- State correctness is rule-conformance against frozen controlled oracles, not legal
+  accuracy.
+- The 34-field EC and EPG metrics remain schema-specific and are interpreted beside
+  supplemental fairness controls.
+- The evaluation cannot establish industrial effectiveness or statutory compliance.

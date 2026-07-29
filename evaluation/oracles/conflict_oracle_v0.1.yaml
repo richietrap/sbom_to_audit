@@ -1,0 +1,201 @@
+oracle_version: '0.1'
+oracle_id: stage6_1_conflict_oracle
+status: FROZEN_BEFORE_FINAL_EXECUTION
+events:
+- scenario_id: ghost_logger
+  event_id: EVT-GL-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: ghost_logger
+  event_id: EVT-GL-010H
+  expected_conflict: true
+  conflict_id: GL-CONFLICT-001
+  category: supplier_versus_local
+  proposition: product_affectedness
+  rationale: The supplier not-affected assertion and deployment-specific local execution
+    claim overlap in product, component, vulnerability, deployment, and time scope.
+- scenario_id: ghost_logger
+  event_id: EVT-GL-014H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: ghost_logger
+  event_id: EVT-GL-020H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: ghost_logger
+  event_id: EVT-GL-072H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: false_comfort
+  event_id: EVT-FC-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: false_comfort
+  event_id: EVT-FC-008H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: false_comfort
+  event_id: EVT-FC-012H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: false_comfort
+  event_id: EVT-FC-072H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: false_comfort_control
+  event_id: EVT-FCC-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: operational_outlier
+  event_id: EVT-OO-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: operational_outlier
+  event_id: EVT-OO-006H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: operational_outlier
+  event_id: EVT-OO-012H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: operational_outlier
+  event_id: EVT-OO-072H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: operational_outlier_control
+  event_id: EVT-OOC-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: operational_outlier_control
+  event_id: EVT-OOC-006H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot
+  event_id: EVT-RP-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot
+  event_id: EVT-RP-012H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot
+  event_id: EVT-RP-018H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot
+  event_id: EVT-RP-020H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot
+  event_id: EVT-RP-022H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot
+  event_id: EVT-RP-072H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot_control
+  event_id: EVT-RPC-002H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot_control
+  event_id: EVT-RPC-012H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot_control
+  event_id: EVT-RPC-018H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot_control
+  event_id: EVT-RPC-020H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot_control
+  event_id: EVT-RPC-022H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.
+- scenario_id: rapid_pivot_control
+  event_id: EVT-RPC-072H
+  expected_conflict: false
+  conflict_id: null
+  category: null
+  proposition: null
+  rationale: No material overlapping contradiction is seeded for this event.

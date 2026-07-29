@@ -1,0 +1,16 @@
+mapping_version: '0.1'
+required_elements:
+- source_artifact_id
+- source_uri
+- source_hash
+- timestamp
+- confidence
+partial_lineage_elements:
+- source_artifact_id
+- source_uri
+- source_hash
+- timestamp
+rules:
+- Confidence must be explicitly recorded by the analyst and must not be imputed.
+- Boolean false and numeric zero are populated values.
+- Blank, unavailable, and unknown values remain unpopulated for metric purposes.

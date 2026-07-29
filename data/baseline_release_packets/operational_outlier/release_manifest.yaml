@@ -1,0 +1,122 @@
+manifest_version: '0.1'
+scenario_id: operational_outlier
+case_id: CASE-OPERATIONAL-OUTLIER-001
+clock_start_time: '2026-11-01T08:00:00Z'
+releases:
+- event_id: EVT-OO-002H
+  timestamp: '2026-11-01T10:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-OO-SBOM-001
+    artifact_type: cyclonedx_sbom
+    path: data/sbom/operational_outlier.cdx.json
+    source_timestamp: '2026-11-01T08:05:00Z'
+  - artifact_id: ART-OO-OSV-001
+    artifact_type: osv_snapshot
+    path: data/osv_snapshots/operational_outlier_osv.json
+    source_timestamp: '2026-11-01T08:10:00Z'
+  - artifact_id: ART-OO-NVD-001
+    artifact_type: nvd_snapshot
+    path: data/nvd_snapshots/operational_outlier_nvd.json
+    source_timestamp: '2026-11-01T08:12:00Z'
+  - artifact_id: ART-OO-KEV-001
+    artifact_type: kev_snapshot
+    path: data/kev_snapshots/operational_outlier_kev.json
+    source_timestamp: '2026-11-01T08:15:00Z'
+  - artifact_id: ART-OO-EPSS-001
+    artifact_type: epss_snapshot
+    path: data/epss_snapshots/operational_outlier_epss.json
+    source_timestamp: '2026-11-01T08:18:00Z'
+  - artifact_id: ART-OO-VEX-001
+    artifact_type: csaf_vex
+    path: data/csaf/operational_outlier_vex.json
+    source_timestamp: '2026-11-01T09:00:00Z'
+  - artifact_id: ART-OO-ASSET-001
+    artifact_type: asset_context
+    path: data/asset_context/operational_outlier_asset.yaml
+    source_timestamp: '2026-11-01T08:40:00Z'
+  - artifact_id: ART-OO-MIT-INITIAL-001
+    artifact_type: mitigation_context
+    path: data/mitigation/operational_outlier_initial.yaml
+    source_timestamp: '2026-11-01T08:45:00Z'
+  - artifact_id: ART-OO-TELEM-INITIAL-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/operational_outlier_initial.jsonl
+    source_timestamp: '2026-11-01T09:30:00Z'
+  cumulative_available_artifact_ids:
+  - ART-OO-SBOM-001
+  - ART-OO-OSV-001
+  - ART-OO-NVD-001
+  - ART-OO-KEV-001
+  - ART-OO-EPSS-001
+  - ART-OO-VEX-001
+  - ART-OO-ASSET-001
+  - ART-OO-MIT-INITIAL-001
+  - ART-OO-TELEM-INITIAL-001
+- event_id: EVT-OO-006H
+  timestamp: '2026-11-01T14:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-OO-TELEM-REACH-001
+    artifact_type: runtime_telemetry
+    path: data/telemetry/operational_outlier_reachability.jsonl
+    source_timestamp: '2026-11-01T14:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-OO-SBOM-001
+  - ART-OO-OSV-001
+  - ART-OO-NVD-001
+  - ART-OO-KEV-001
+  - ART-OO-EPSS-001
+  - ART-OO-VEX-001
+  - ART-OO-ASSET-001
+  - ART-OO-MIT-INITIAL-001
+  - ART-OO-TELEM-INITIAL-001
+  - ART-OO-TELEM-REACH-001
+- event_id: EVT-OO-012H
+  timestamp: '2026-11-01T20:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-OO-AUTH-001
+    artifact_type: human_authorization
+    path: data/decision_records/operational_outlier_authorization.yaml
+    source_timestamp: '2026-11-01T20:00:00Z'
+  - artifact_id: ART-OO-SUB-EARLY-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/operational_outlier_early_warning_submission.yaml
+    source_timestamp: '2026-11-01T20:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-OO-SBOM-001
+  - ART-OO-OSV-001
+  - ART-OO-NVD-001
+  - ART-OO-KEV-001
+  - ART-OO-EPSS-001
+  - ART-OO-VEX-001
+  - ART-OO-ASSET-001
+  - ART-OO-MIT-INITIAL-001
+  - ART-OO-TELEM-INITIAL-001
+  - ART-OO-TELEM-REACH-001
+  - ART-OO-AUTH-001
+  - ART-OO-SUB-EARLY-001
+- event_id: EVT-OO-072H
+  timestamp: '2026-11-04T08:00:00Z'
+  release_artifacts:
+  - artifact_id: ART-OO-MIT-VERIFIED-001
+    artifact_type: mitigation_context
+    path: data/mitigation/operational_outlier_verified.yaml
+    source_timestamp: '2026-11-04T08:00:00Z'
+  - artifact_id: ART-OO-SUB-FULL-001
+    artifact_type: milestone_satisfaction
+    path: data/decision_records/operational_outlier_full_notification_submission.yaml
+    source_timestamp: '2026-11-04T08:00:00Z'
+  cumulative_available_artifact_ids:
+  - ART-OO-SBOM-001
+  - ART-OO-OSV-001
+  - ART-OO-NVD-001
+  - ART-OO-KEV-001
+  - ART-OO-EPSS-001
+  - ART-OO-VEX-001
+  - ART-OO-ASSET-001
+  - ART-OO-MIT-INITIAL-001
+  - ART-OO-TELEM-INITIAL-001
+  - ART-OO-TELEM-REACH-001
+  - ART-OO-AUTH-001
+  - ART-OO-SUB-EARLY-001
+  - ART-OO-MIT-VERIFIED-001
+  - ART-OO-SUB-FULL-001
