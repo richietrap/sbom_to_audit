@@ -36,12 +36,20 @@ jobs:
       - name: Lint GitHub Actions workflows
         run: actionlint
 
-      - name: Run static quality checks
+      - name: Run Ruff lint
+        run: ruff check .
+
+      - name: Check Ruff formatting
+        run: ruff format --check .
+
+      - name: Run Mypy
+        run: python -m mypy src
+
+      - name: Run Codespell
+        run: codespell
+
+      - name: Run Yamllint
         run: |
-          ruff check .
-          ruff format --check .
-          python -m mypy src
-          codespell
           yamllint \
             .github data evaluation \
             .pre-commit-config.yaml .yamllint.yml

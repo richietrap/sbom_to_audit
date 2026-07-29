@@ -110,3 +110,9 @@ Ruff lint and Ruff formatting are independent release gates. `ruff check .` veri
 ## Stage 6.1.3 final-edit formatter invalidation rule
 
 Formatter evidence applies only to the exact repository tree on which it was generated. Any Python edit made after a successful formatter run, including a version-test or notebook-test edit, invalidates that evidence. The complete repository must therefore run `ruff check .` and `ruff format --check .` after all code, tests, notebooks, version markers, ADRs, changelog entries, and manifest updates are final. Packaging must occur only after those terminal gates pass. Checkpoint tests also assert the internal stage field so a copied notebook cannot retain a superseded checkpoint identity.
+
+## Stage 6.1.4 YAML-quality and gate-parity rule
+
+Syntactic YAML parsing is not equivalent to passing the repository's Yamllint contract. Sequence indentation, trailing whitespace, and end-of-file blank-line rules are release-blocking even when PyYAML loads the document successfully. Before packaging, the exact Yamllint scope from GitHub Actions must run against the final repository tree.
+
+Where a pre-execution frozen YAML document requires formatting-only correction, the parsed object before and after the change must be identical, the evidence must be recorded, and the byte-level freeze must receive a new revision before any manual data are collected. Ruff lint, Ruff formatting, Mypy, Codespell, and Yamllint are reported as separate CI steps so no tool's result is hidden behind another command in a combined shell block.

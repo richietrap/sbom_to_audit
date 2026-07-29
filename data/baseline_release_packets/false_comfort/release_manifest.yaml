@@ -3,112 +3,112 @@ scenario_id: false_comfort
 case_id: CASE-FALSE-COMFORT-001
 clock_start_time: '2026-10-01T08:00:00Z'
 releases:
-- event_id: EVT-FC-002H
-  timestamp: '2026-10-01T10:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-FC-SBOM-001
-    artifact_type: cyclonedx_sbom
-    path: data/sbom/false_comfort.cdx.json
-    source_timestamp: '2026-10-01T08:05:00Z'
-  - artifact_id: ART-FC-OSV-001
-    artifact_type: osv_snapshot
-    path: data/osv_snapshots/false_comfort_osv.json
-    source_timestamp: '2026-10-01T08:10:00Z'
-  - artifact_id: ART-FC-KEV-001
-    artifact_type: kev_snapshot
-    path: data/kev_snapshots/false_comfort_kev.json
-    source_timestamp: '2026-10-01T08:12:00Z'
-  - artifact_id: ART-FC-EPSS-001
-    artifact_type: epss_snapshot
-    path: data/epss_snapshots/false_comfort_epss.json
-    source_timestamp: '2026-10-01T08:14:00Z'
-  - artifact_id: ART-FC-VEX-001
-    artifact_type: csaf_vex
-    path: data/csaf/false_comfort_vex.json
-    source_timestamp: '2026-10-01T09:00:00Z'
-  - artifact_id: ART-FC-ASSET-001
-    artifact_type: asset_context
-    path: data/asset_context/false_comfort_asset.yaml
-    source_timestamp: '2026-10-01T08:40:00Z'
-  - artifact_id: ART-FC-MIT-INITIAL-001
-    artifact_type: mitigation_context
-    path: data/mitigation/false_comfort_initial.yaml
-    source_timestamp: '2026-10-01T08:45:00Z'
-  - artifact_id: ART-FC-TELEM-INITIAL-001
-    artifact_type: runtime_telemetry
-    path: data/telemetry/false_comfort_initial.jsonl
-    source_timestamp: '2026-10-01T08:30:00Z'
-  cumulative_available_artifact_ids:
-  - ART-FC-SBOM-001
-  - ART-FC-OSV-001
-  - ART-FC-KEV-001
-  - ART-FC-EPSS-001
-  - ART-FC-VEX-001
-  - ART-FC-ASSET-001
-  - ART-FC-MIT-INITIAL-001
-  - ART-FC-TELEM-INITIAL-001
-- event_id: EVT-FC-008H
-  timestamp: '2026-10-01T16:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-FC-TELEM-REACH-001
-    artifact_type: runtime_telemetry
-    path: data/telemetry/false_comfort_reachability.jsonl
-    source_timestamp: '2026-10-01T16:00:00Z'
-  cumulative_available_artifact_ids:
-  - ART-FC-SBOM-001
-  - ART-FC-OSV-001
-  - ART-FC-KEV-001
-  - ART-FC-EPSS-001
-  - ART-FC-VEX-001
-  - ART-FC-ASSET-001
-  - ART-FC-MIT-INITIAL-001
-  - ART-FC-TELEM-INITIAL-001
-  - ART-FC-TELEM-REACH-001
-- event_id: EVT-FC-012H
-  timestamp: '2026-10-01T20:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-FC-AUTH-001
-    artifact_type: human_authorization
-    path: data/decision_records/false_comfort_authorization.yaml
-    source_timestamp: '2026-10-01T20:00:00Z'
-  - artifact_id: ART-FC-SUB-EARLY-001
-    artifact_type: milestone_satisfaction
-    path: data/decision_records/false_comfort_early_warning_submission.yaml
-    source_timestamp: '2026-10-01T20:00:00Z'
-  cumulative_available_artifact_ids:
-  - ART-FC-SBOM-001
-  - ART-FC-OSV-001
-  - ART-FC-KEV-001
-  - ART-FC-EPSS-001
-  - ART-FC-VEX-001
-  - ART-FC-ASSET-001
-  - ART-FC-MIT-INITIAL-001
-  - ART-FC-TELEM-INITIAL-001
-  - ART-FC-TELEM-REACH-001
-  - ART-FC-AUTH-001
-  - ART-FC-SUB-EARLY-001
-- event_id: EVT-FC-072H
-  timestamp: '2026-10-04T08:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-FC-MIT-VERIFIED-001
-    artifact_type: mitigation_context
-    path: data/mitigation/false_comfort_verified.yaml
-    source_timestamp: '2026-10-04T08:00:00Z'
-  - artifact_id: ART-FC-SUB-FULL-001
-    artifact_type: milestone_satisfaction
-    path: data/decision_records/false_comfort_full_notification_submission.yaml
-    source_timestamp: '2026-10-04T08:00:00Z'
-  cumulative_available_artifact_ids:
-  - ART-FC-SBOM-001
-  - ART-FC-OSV-001
-  - ART-FC-KEV-001
-  - ART-FC-EPSS-001
-  - ART-FC-VEX-001
-  - ART-FC-ASSET-001
-  - ART-FC-MIT-INITIAL-001
-  - ART-FC-TELEM-INITIAL-001
-  - ART-FC-TELEM-REACH-001
-  - ART-FC-AUTH-001
-  - ART-FC-SUB-EARLY-001
-  - ART-FC-MIT-VERIFIED-001
-  - ART-FC-SUB-FULL-001
+  - event_id: EVT-FC-002H
+    timestamp: '2026-10-01T10:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-FC-SBOM-001
+        artifact_type: cyclonedx_sbom
+        path: data/sbom/false_comfort.cdx.json
+        source_timestamp: '2026-10-01T08:05:00Z'
+      - artifact_id: ART-FC-OSV-001
+        artifact_type: osv_snapshot
+        path: data/osv_snapshots/false_comfort_osv.json
+        source_timestamp: '2026-10-01T08:10:00Z'
+      - artifact_id: ART-FC-KEV-001
+        artifact_type: kev_snapshot
+        path: data/kev_snapshots/false_comfort_kev.json
+        source_timestamp: '2026-10-01T08:12:00Z'
+      - artifact_id: ART-FC-EPSS-001
+        artifact_type: epss_snapshot
+        path: data/epss_snapshots/false_comfort_epss.json
+        source_timestamp: '2026-10-01T08:14:00Z'
+      - artifact_id: ART-FC-VEX-001
+        artifact_type: csaf_vex
+        path: data/csaf/false_comfort_vex.json
+        source_timestamp: '2026-10-01T09:00:00Z'
+      - artifact_id: ART-FC-ASSET-001
+        artifact_type: asset_context
+        path: data/asset_context/false_comfort_asset.yaml
+        source_timestamp: '2026-10-01T08:40:00Z'
+      - artifact_id: ART-FC-MIT-INITIAL-001
+        artifact_type: mitigation_context
+        path: data/mitigation/false_comfort_initial.yaml
+        source_timestamp: '2026-10-01T08:45:00Z'
+      - artifact_id: ART-FC-TELEM-INITIAL-001
+        artifact_type: runtime_telemetry
+        path: data/telemetry/false_comfort_initial.jsonl
+        source_timestamp: '2026-10-01T08:30:00Z'
+    cumulative_available_artifact_ids:
+      - ART-FC-SBOM-001
+      - ART-FC-OSV-001
+      - ART-FC-KEV-001
+      - ART-FC-EPSS-001
+      - ART-FC-VEX-001
+      - ART-FC-ASSET-001
+      - ART-FC-MIT-INITIAL-001
+      - ART-FC-TELEM-INITIAL-001
+  - event_id: EVT-FC-008H
+    timestamp: '2026-10-01T16:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-FC-TELEM-REACH-001
+        artifact_type: runtime_telemetry
+        path: data/telemetry/false_comfort_reachability.jsonl
+        source_timestamp: '2026-10-01T16:00:00Z'
+    cumulative_available_artifact_ids:
+      - ART-FC-SBOM-001
+      - ART-FC-OSV-001
+      - ART-FC-KEV-001
+      - ART-FC-EPSS-001
+      - ART-FC-VEX-001
+      - ART-FC-ASSET-001
+      - ART-FC-MIT-INITIAL-001
+      - ART-FC-TELEM-INITIAL-001
+      - ART-FC-TELEM-REACH-001
+  - event_id: EVT-FC-012H
+    timestamp: '2026-10-01T20:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-FC-AUTH-001
+        artifact_type: human_authorization
+        path: data/decision_records/false_comfort_authorization.yaml
+        source_timestamp: '2026-10-01T20:00:00Z'
+      - artifact_id: ART-FC-SUB-EARLY-001
+        artifact_type: milestone_satisfaction
+        path: data/decision_records/false_comfort_early_warning_submission.yaml
+        source_timestamp: '2026-10-01T20:00:00Z'
+    cumulative_available_artifact_ids:
+      - ART-FC-SBOM-001
+      - ART-FC-OSV-001
+      - ART-FC-KEV-001
+      - ART-FC-EPSS-001
+      - ART-FC-VEX-001
+      - ART-FC-ASSET-001
+      - ART-FC-MIT-INITIAL-001
+      - ART-FC-TELEM-INITIAL-001
+      - ART-FC-TELEM-REACH-001
+      - ART-FC-AUTH-001
+      - ART-FC-SUB-EARLY-001
+  - event_id: EVT-FC-072H
+    timestamp: '2026-10-04T08:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-FC-MIT-VERIFIED-001
+        artifact_type: mitigation_context
+        path: data/mitigation/false_comfort_verified.yaml
+        source_timestamp: '2026-10-04T08:00:00Z'
+      - artifact_id: ART-FC-SUB-FULL-001
+        artifact_type: milestone_satisfaction
+        path: data/decision_records/false_comfort_full_notification_submission.yaml
+        source_timestamp: '2026-10-04T08:00:00Z'
+    cumulative_available_artifact_ids:
+      - ART-FC-SBOM-001
+      - ART-FC-OSV-001
+      - ART-FC-KEV-001
+      - ART-FC-EPSS-001
+      - ART-FC-VEX-001
+      - ART-FC-ASSET-001
+      - ART-FC-MIT-INITIAL-001
+      - ART-FC-TELEM-INITIAL-001
+      - ART-FC-TELEM-REACH-001
+      - ART-FC-AUTH-001
+      - ART-FC-SUB-EARLY-001
+      - ART-FC-MIT-VERIFIED-001
+      - ART-FC-SUB-FULL-001

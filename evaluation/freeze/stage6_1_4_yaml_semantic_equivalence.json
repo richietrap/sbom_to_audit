@@ -1,0 +1,162 @@
+{
+  "stage": "6.1.4",
+  "package_version": "0.6.1.4",
+  "comparison_basis": "Stage 6.1.3 repository archive versus Stage 6.1.4 corrected tree",
+  "affected_file_count": 17,
+  "all_parsed_semantics_equal": true,
+  "records": [
+    {
+      "path": ".github/workflows/tests.yml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "52904e9623474ffceecd61c12cc39f9fc0a1ea2f50ab1870a477d6210a2ac28b",
+      "after_file_sha256": "14acb503bd62d53e447a0bc0b2cfcdb86a6f4d93d8f55871ceff0af26987882c",
+      "before_semantic_sha256": "9aa95a8c83680d1361794770f2bdd683d782db528ac78f1355f2df8a92691da5",
+      "after_semantic_sha256": "9aa95a8c83680d1361794770f2bdd683d782db528ac78f1355f2df8a92691da5"
+    },
+    {
+      "path": "data/baseline_release_packets/false_comfort/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "2668fe1758caa5d37c1b5fcbcc60b398125984bd8919884b1356cdd4ec391209",
+      "after_file_sha256": "ab4f86641b149862fe7cb22de711c5df5a9479e0279531da5fce69aa5e5360f6",
+      "before_semantic_sha256": "b3a5d9e3769131c8e9b11008a89443b4bc9e210edff4593a6c1d08b34236cae0",
+      "after_semantic_sha256": "b3a5d9e3769131c8e9b11008a89443b4bc9e210edff4593a6c1d08b34236cae0"
+    },
+    {
+      "path": "data/baseline_release_packets/false_comfort_control/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "4ce6e50f3b9089b3a660360e02f80017ab6032b93166b27cbaf16600687000dc",
+      "after_file_sha256": "d753df49f48cd8bb436ffd4696936eacbe61b5497a2be6591ff7d61ffbefc455",
+      "before_semantic_sha256": "9208bff799163d72a65711252d12521982b86d59b7fe722582b5d5c000784401",
+      "after_semantic_sha256": "9208bff799163d72a65711252d12521982b86d59b7fe722582b5d5c000784401"
+    },
+    {
+      "path": "data/baseline_release_packets/ghost_logger/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "227a8701ea9672bbb695af9796e2a2fda7cb67175fc55a89b3d0683dfa31d156",
+      "after_file_sha256": "376e5cd6abdc237f1fa171b3cdc6703181760f1982b846e2e97c14acfb4e34e4",
+      "before_semantic_sha256": "6cc50e2dacefd4bd22bdeb93f4a31071016a2928561007193127f4b2633b80dd",
+      "after_semantic_sha256": "6cc50e2dacefd4bd22bdeb93f4a31071016a2928561007193127f4b2633b80dd"
+    },
+    {
+      "path": "data/baseline_release_packets/operational_outlier/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "f5a707a8b4fb535cb2144552435de630674214398a2bf0601e30be4b981d9a8b",
+      "after_file_sha256": "974db5bdb6ef6cf4e1f3ac9a8c75c29aa595b72257ee44a48fbfc40bb52eca7e",
+      "before_semantic_sha256": "7b36b5521d01df09a1ce0cc990fb2fc16b148deb67d9b381aea5246199b6fd7a",
+      "after_semantic_sha256": "7b36b5521d01df09a1ce0cc990fb2fc16b148deb67d9b381aea5246199b6fd7a"
+    },
+    {
+      "path": "data/baseline_release_packets/operational_outlier_control/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "d5f69ae8b3b2ede92c0fa1219894682184969e016cfc5bf63ff6e7c6162a43ad",
+      "after_file_sha256": "1464a47024ef0598a57c6c009bde761be3a4c2aeb3a9cb3695e0605ac0e7146b",
+      "before_semantic_sha256": "09db557872c1df5a735b0a2f68c0735cd660c49e12c54384e3d8c4093a1e7948",
+      "after_semantic_sha256": "09db557872c1df5a735b0a2f68c0735cd660c49e12c54384e3d8c4093a1e7948"
+    },
+    {
+      "path": "data/baseline_release_packets/rapid_pivot/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "73845b4194e7cc2c5ccbcb7f28256d9c6cf64fc6c7113631b323cc9f1dcca6e2",
+      "after_file_sha256": "287470025ad6e4b55c4a2e0e72a9f214ffaf54ddab225c55883cb7b5a1dac942",
+      "before_semantic_sha256": "94d51acc20d278b7369ba01cff4e3573e7a97fc1cfd3ddf8bf7fe544779092e4",
+      "after_semantic_sha256": "94d51acc20d278b7369ba01cff4e3573e7a97fc1cfd3ddf8bf7fe544779092e4"
+    },
+    {
+      "path": "data/baseline_release_packets/rapid_pivot_control/release_manifest.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "d5233debaa578f82fa5d9c5525e404816549db5eb6ad15f2ddda1c024abd8c40",
+      "after_file_sha256": "592ab3e50fff34e4f688b166f6225505907454f5a7db679035d5ccd3e5f834e0",
+      "before_semantic_sha256": "4b25015d3716996279e1143221adfc94357519a71b8c0709a18a062af5d52297",
+      "after_semantic_sha256": "4b25015d3716996279e1143221adfc94357519a71b8c0709a18a062af5d52297"
+    },
+    {
+      "path": "data/baseline_instructions/allowed_tools.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "0b0f41e564acdc7bc87a786a3d8f792b8880b87888b754f58785399c0595fb82",
+      "after_file_sha256": "ab862c42aad44263c242e7523ceed9e5c0a8bd02669e16048db462f86d202231",
+      "before_semantic_sha256": "b74fb88fe768e7e29cbb4d701355f58245b0a59d3b8114a51fad5f353b3b4d19",
+      "after_semantic_sha256": "b74fb88fe768e7e29cbb4d701355f58245b0a59d3b8114a51fad5f353b3b4d19"
+    },
+    {
+      "path": "evaluation/baseline_protocol_v0.2.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "ed5f73456ab98e9d67f4e48f893d925425d90ef427a5b04d4fcaf2f808a2b10a",
+      "after_file_sha256": "48a4bec27a131a6087f644736c30e9f54d3cf0041c0bc9552668d2f127942992",
+      "before_semantic_sha256": "ec016351a2480907bf63c568caf7a952a78ab499accf37ee7e22d6504fbb7867",
+      "after_semantic_sha256": "ec016351a2480907bf63c568caf7a952a78ab499accf37ee7e22d6504fbb7867"
+    },
+    {
+      "path": "evaluation/oracles/clock_opportunity_oracle_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "15898962379dd84d7675046425cc146f1ff28d9b13437e1254456b73ba892cf6",
+      "after_file_sha256": "9679fcac81acf23fb46c9f67720e14723f1d8b6502474dc0704aa2f38d820dd9",
+      "before_semantic_sha256": "f28d6af3f98458eb972e64c5f4bae2be9c56234937f9430005d2d35fab35b2f2",
+      "after_semantic_sha256": "f28d6af3f98458eb972e64c5f4bae2be9c56234937f9430005d2d35fab35b2f2"
+    },
+    {
+      "path": "evaluation/oracles/state_oracle_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "023d10dc10c11925c22bfcfeb2d0f9bfe898f90b59aab63e40cc0cf23ecc6528",
+      "after_file_sha256": "ab1e42fc95badf0e1bccd15de52c3798ce7d4b4f3be2317bbb41bc094856dcfa",
+      "before_semantic_sha256": "a2efbd550d5531ccab25835ce618e16f00e5aa916ecc59ef22560d73bd57d2b7",
+      "after_semantic_sha256": "a2efbd550d5531ccab25835ce618e16f00e5aa916ecc59ef22560d73bd57d2b7"
+    },
+    {
+      "path": "evaluation/oracles/conflict_oracle_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "d2476c810cd6e21c3650df1ce32263f9b3f9b29245084166d84dcc9a0be8f4e3",
+      "after_file_sha256": "2989a00ee7f64944bc7878aaecc282c794cbbb6a40af0d63596dcad309a14b32",
+      "before_semantic_sha256": "40f4d09642923dfdb5a1369a67aa880914021043c32007219b2839cab7a37735",
+      "after_semantic_sha256": "40f4d09642923dfdb5a1369a67aa880914021043c32007219b2839cab7a37735"
+    },
+    {
+      "path": "evaluation/mappings/common_field_set_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "68771872a9946be8a1eb45209e0897cfa795450121e689e7a109dc17ec4bcd57",
+      "after_file_sha256": "c60d254eb669d417ce5dd6b2a4bc1a84cbe26d8abe3b81cc5b2268e3d035943f",
+      "before_semantic_sha256": "3b6f6e1946e94b93b5a88c77a2326a4c44f59a32c888560107875373b5a70b69",
+      "after_semantic_sha256": "3b6f6e1946e94b93b5a88c77a2326a4c44f59a32c888560107875373b5a70b69"
+    },
+    {
+      "path": "evaluation/mappings/traceability_element_mapping_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "4497121d783d2fd2d481774756fbf32d29a82ba322f19de8c17c1d3585aeebce",
+      "after_file_sha256": "edd261e13fbbe4003fece804a56068d5f9fe3adb844b4e3e0c2f6dd3269cd02c",
+      "before_semantic_sha256": "47c57a430ff3723afb2fcdc7beb7b8d6c6841c32d36aedaf48756fc0f8f2ddc5",
+      "after_semantic_sha256": "47c57a430ff3723afb2fcdc7beb7b8d6c6841c32d36aedaf48756fc0f8f2ddc5"
+    },
+    {
+      "path": "evaluation/mappings/source_access_accounting_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "ef6f9e7b32e67cc437e412174592d3f3f3e1d725b687e5fc37e21f04d9fc2d7f",
+      "after_file_sha256": "4ab31f5b2add8160d65cf9615bcf15a1ff79cfa4fa3aac29505f2de7ae4e9e04",
+      "before_semantic_sha256": "f6bdce8021e56bc9e1a10dd7224ebf7dcfcbc3f51aa948198cefc644527e353c",
+      "after_semantic_sha256": "f6bdce8021e56bc9e1a10dd7224ebf7dcfcbc3f51aa948198cefc644527e353c"
+    },
+    {
+      "path": "evaluation/mappings/equivalent_record_bundle_v0.1.yaml",
+      "byte_changed": true,
+      "parsed_semantic_equal": true,
+      "before_file_sha256": "44e4f8b031484f126c606ea18928402b212527563c1a0de1db0afd4d6233a94b",
+      "after_file_sha256": "76a7928824adac8a31724d4312f9f5d16997b6aead1f92090c1bdfbd92dda3f1",
+      "before_semantic_sha256": "d12148cfefa796c604005ccf06ee34c239fe34ce3eeb3854bea993973ba8ee7a",
+      "after_semantic_sha256": "d12148cfefa796c604005ccf06ee34c239fe34ce3eeb3854bea993973ba8ee7a"
+    }
+  ]
+}

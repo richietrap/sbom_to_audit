@@ -1,39 +1,39 @@
 {
-  "freeze_id": "STAGE6-1-PRE-EXECUTION-FREEZE-001",
+  "freeze_id": "STAGE6-1-PRE-EXECUTION-FREEZE-002",
   "freeze_status": "PRE_EXECUTION_FROZEN",
-  "generated_at": "2026-07-24T13:07:50.834377Z",
+  "generated_at": "2026-07-29T14:03:38.122317Z",
   "records": [
     {
       "path": "evaluation/baseline_protocol_v0.2.yaml",
-      "sha256": "ed5f73456ab98e9d67f4e48f893d925425d90ef427a5b04d4fcaf2f808a2b10a"
+      "sha256": "48a4bec27a131a6087f644736c30e9f54d3cf0041c0bc9552668d2f127942992"
     },
     {
       "path": "evaluation/oracles/state_oracle_v0.1.yaml",
-      "sha256": "023d10dc10c11925c22bfcfeb2d0f9bfe898f90b59aab63e40cc0cf23ecc6528"
+      "sha256": "ab1e42fc95badf0e1bccd15de52c3798ce7d4b4f3be2317bbb41bc094856dcfa"
     },
     {
       "path": "evaluation/oracles/conflict_oracle_v0.1.yaml",
-      "sha256": "d2476c810cd6e21c3650df1ce32263f9b3f9b29245084166d84dcc9a0be8f4e3"
+      "sha256": "2989a00ee7f64944bc7878aaecc282c794cbbb6a40af0d63596dcad309a14b32"
     },
     {
       "path": "evaluation/oracles/clock_opportunity_oracle_v0.1.yaml",
-      "sha256": "15898962379dd84d7675046425cc146f1ff28d9b13437e1254456b73ba892cf6"
+      "sha256": "9679fcac81acf23fb46c9f67720e14723f1d8b6502474dc0704aa2f38d820dd9"
     },
     {
       "path": "evaluation/mappings/common_field_set_v0.1.yaml",
-      "sha256": "68771872a9946be8a1eb45209e0897cfa795450121e689e7a109dc17ec4bcd57"
+      "sha256": "c60d254eb669d417ce5dd6b2a4bc1a84cbe26d8abe3b81cc5b2268e3d035943f"
     },
     {
       "path": "evaluation/mappings/traceability_element_mapping_v0.1.yaml",
-      "sha256": "4497121d783d2fd2d481774756fbf32d29a82ba322f19de8c17c1d3585aeebce"
+      "sha256": "edd261e13fbbe4003fece804a56068d5f9fe3adb844b4e3e0c2f6dd3269cd02c"
     },
     {
       "path": "evaluation/mappings/equivalent_record_bundle_v0.1.yaml",
-      "sha256": "44e4f8b031484f126c606ea18928402b212527563c1a0de1db0afd4d6233a94b"
+      "sha256": "76a7928824adac8a31724d4312f9f5d16997b6aead1f92090c1bdfbd92dda3f1"
     },
     {
       "path": "evaluation/mappings/source_access_accounting_v0.1.yaml",
-      "sha256": "ef6f9e7b32e67cc437e412174592d3f3f3e1d725b687e5fc37e21f04d9fc2d7f"
+      "sha256": "4ab31f5b2add8160d65cf9615bcf15a1ff79cfa4fa3aac29505f2de7ae4e9e04"
     },
     {
       "path": "data/baseline_templates/manual_psirt_worksheet.schema.json",

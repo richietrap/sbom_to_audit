@@ -3,220 +3,220 @@ oracle_id: stage6_1_state_oracle
 status: FROZEN_BEFORE_FINAL_EXECUTION
 source: Controlled scenario expected-state declarations, independent of workflow outputs.
 scenarios:
-- scenario_id: ghost_logger
-  scenario_role: primary
-  events:
-  - event_id: EVT-GL-002H
-    timestamp: '2026-09-12T10:00:00Z'
-    expected_state: Document No-Report
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-GL-010H
-    timestamp: '2026-09-12T18:00:00Z'
-    expected_state: Escalate
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-GL-014H
-    timestamp: '2026-09-12T22:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-GL-020H
-    timestamp: '2026-09-13T04:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: On Track
-  - event_id: EVT-GL-072H
-    timestamp: '2026-09-15T08:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: Satisfied
-- scenario_id: false_comfort
-  scenario_role: primary
-  events:
-  - event_id: EVT-FC-002H
-    timestamp: '2026-10-01T10:00:00Z'
-    expected_state: Monitor
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-FC-008H
-    timestamp: '2026-10-01T16:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-FC-012H
-    timestamp: '2026-10-01T20:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: On Track
-  - event_id: EVT-FC-072H
-    timestamp: '2026-10-04T08:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: Satisfied
-- scenario_id: false_comfort_control
-  scenario_role: matched_control
-  events:
-  - event_id: EVT-FCC-002H
-    timestamp: '2026-10-01T10:00:00Z'
-    expected_state: Document No-Report
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: Not Applicable
-      full_notification: Not Applicable
-- scenario_id: operational_outlier
-  scenario_role: primary
-  events:
-  - event_id: EVT-OO-002H
-    timestamp: '2026-11-01T10:00:00Z'
-    expected_state: Monitor
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-OO-006H
-    timestamp: '2026-11-01T14:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-OO-012H
-    timestamp: '2026-11-01T20:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: On Track
-  - event_id: EVT-OO-072H
-    timestamp: '2026-11-04T08:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: Satisfied
-- scenario_id: operational_outlier_control
-  scenario_role: matched_control
-  events:
-  - event_id: EVT-OOC-002H
-    timestamp: '2026-11-01T10:00:00Z'
-    expected_state: Monitor
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-OOC-006H
-    timestamp: '2026-11-01T14:00:00Z'
-    expected_state: Monitor
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-- scenario_id: rapid_pivot
-  scenario_role: primary
-  events:
-  - event_id: EVT-RP-002H
-    timestamp: '2026-12-01T10:00:00Z'
-    expected_state: Prepare
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-RP-012H
-    timestamp: '2026-12-01T20:00:00Z'
-    expected_state: Prepare
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-RP-018H
-    timestamp: '2026-12-02T02:00:00Z'
-    expected_state: Escalate
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: Due Soon
-      full_notification: On Track
-  - event_id: EVT-RP-020H
-    timestamp: '2026-12-02T04:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: Due Soon
-      full_notification: On Track
-  - event_id: EVT-RP-022H
-    timestamp: '2026-12-02T06:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: On Track
-  - event_id: EVT-RP-072H
-    timestamp: '2026-12-04T08:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: Satisfied
-- scenario_id: rapid_pivot_control
-  scenario_role: matched_control
-  events:
-  - event_id: EVT-RPC-002H
-    timestamp: '2026-12-01T10:00:00Z'
-    expected_state: Prepare
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-RPC-012H
-    timestamp: '2026-12-01T20:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: On Track
-      full_notification: On Track
-  - event_id: EVT-RPC-018H
-    timestamp: '2026-12-02T02:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: Due Soon
-      full_notification: On Track
-  - event_id: EVT-RPC-020H
-    timestamp: '2026-12-02T04:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: null
-    expected_deadline_posture:
-      early_warning: Due Soon
-      full_notification: On Track
-  - event_id: EVT-RPC-022H
-    timestamp: '2026-12-02T06:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: On Track
-  - event_id: EVT-RPC-072H
-    timestamp: '2026-12-04T08:00:00Z'
-    expected_state: Report-Ready
-    expected_authorized_state: Report
-    expected_deadline_posture:
-      early_warning: Satisfied
-      full_notification: Satisfied
+  - scenario_id: ghost_logger
+    scenario_role: primary
+    events:
+      - event_id: EVT-GL-002H
+        timestamp: '2026-09-12T10:00:00Z'
+        expected_state: Document No-Report
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-GL-010H
+        timestamp: '2026-09-12T18:00:00Z'
+        expected_state: Escalate
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-GL-014H
+        timestamp: '2026-09-12T22:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-GL-020H
+        timestamp: '2026-09-13T04:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: On Track
+      - event_id: EVT-GL-072H
+        timestamp: '2026-09-15T08:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: Satisfied
+  - scenario_id: false_comfort
+    scenario_role: primary
+    events:
+      - event_id: EVT-FC-002H
+        timestamp: '2026-10-01T10:00:00Z'
+        expected_state: Monitor
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-FC-008H
+        timestamp: '2026-10-01T16:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-FC-012H
+        timestamp: '2026-10-01T20:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: On Track
+      - event_id: EVT-FC-072H
+        timestamp: '2026-10-04T08:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: Satisfied
+  - scenario_id: false_comfort_control
+    scenario_role: matched_control
+    events:
+      - event_id: EVT-FCC-002H
+        timestamp: '2026-10-01T10:00:00Z'
+        expected_state: Document No-Report
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: Not Applicable
+          full_notification: Not Applicable
+  - scenario_id: operational_outlier
+    scenario_role: primary
+    events:
+      - event_id: EVT-OO-002H
+        timestamp: '2026-11-01T10:00:00Z'
+        expected_state: Monitor
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-OO-006H
+        timestamp: '2026-11-01T14:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-OO-012H
+        timestamp: '2026-11-01T20:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: On Track
+      - event_id: EVT-OO-072H
+        timestamp: '2026-11-04T08:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: Satisfied
+  - scenario_id: operational_outlier_control
+    scenario_role: matched_control
+    events:
+      - event_id: EVT-OOC-002H
+        timestamp: '2026-11-01T10:00:00Z'
+        expected_state: Monitor
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-OOC-006H
+        timestamp: '2026-11-01T14:00:00Z'
+        expected_state: Monitor
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+  - scenario_id: rapid_pivot
+    scenario_role: primary
+    events:
+      - event_id: EVT-RP-002H
+        timestamp: '2026-12-01T10:00:00Z'
+        expected_state: Prepare
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-RP-012H
+        timestamp: '2026-12-01T20:00:00Z'
+        expected_state: Prepare
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-RP-018H
+        timestamp: '2026-12-02T02:00:00Z'
+        expected_state: Escalate
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: Due Soon
+          full_notification: On Track
+      - event_id: EVT-RP-020H
+        timestamp: '2026-12-02T04:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: Due Soon
+          full_notification: On Track
+      - event_id: EVT-RP-022H
+        timestamp: '2026-12-02T06:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: On Track
+      - event_id: EVT-RP-072H
+        timestamp: '2026-12-04T08:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: Satisfied
+  - scenario_id: rapid_pivot_control
+    scenario_role: matched_control
+    events:
+      - event_id: EVT-RPC-002H
+        timestamp: '2026-12-01T10:00:00Z'
+        expected_state: Prepare
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-RPC-012H
+        timestamp: '2026-12-01T20:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: On Track
+          full_notification: On Track
+      - event_id: EVT-RPC-018H
+        timestamp: '2026-12-02T02:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: Due Soon
+          full_notification: On Track
+      - event_id: EVT-RPC-020H
+        timestamp: '2026-12-02T04:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state:
+        expected_deadline_posture:
+          early_warning: Due Soon
+          full_notification: On Track
+      - event_id: EVT-RPC-022H
+        timestamp: '2026-12-02T06:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: On Track
+      - event_id: EVT-RPC-072H
+        timestamp: '2026-12-04T08:00:00Z'
+        expected_state: Report-Ready
+        expected_authorized_state: Report
+        expected_deadline_posture:
+          early_warning: Satisfied
+          full_notification: Satisfied

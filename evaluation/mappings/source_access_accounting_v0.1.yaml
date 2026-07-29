@@ -1,12 +1,10 @@
 mapping_version: '0.1'
 comparable_measure: distinct_source_artifacts_accessed
 definitions:
-  distinct_source_artifacts_accessed: Count each artifact ID once per workflow across
-    the evaluated run.
+  distinct_source_artifacts_accessed: Count each artifact ID once per workflow across the evaluated
+    run.
   event_source_accesses: Count unique scenario_id, event_id, artifact_id tuples.
-  repeat_accesses: Count accesses beyond the first access to the same artifact within
-    a workflow.
+  repeat_accesses: Count accesses beyond the first access to the same artifact within a workflow.
 prohibitions:
-- Do not compare unique machine ingestions with cumulative human reviews as the same
-  quantity.
-- Do not interpret access counts as cognitive workload or elapsed labour time.
+  - Do not compare unique machine ingestions with cumulative human reviews as the same quantity.
+  - Do not interpret access counts as cognitive workload or elapsed labour time.

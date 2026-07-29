@@ -42,6 +42,18 @@ def test_quality_workflow_runs_independent_quality_gates() -> None:
         assert required in text
 
 
+def test_quality_workflow_reports_static_gates_independently() -> None:
+    text = QUALITY_WORKFLOW.read_text(encoding="utf-8")
+    for step_name in (
+        "Run Ruff lint",
+        "Check Ruff formatting",
+        "Run Mypy",
+        "Run Codespell",
+        "Run Yamllint",
+    ):
+        assert f"- name: {step_name}" in text
+
+
 def test_regression_workflow_runs_deterministic_stage6_baseline() -> None:
     text = REGRESSION_WORKFLOW.read_text(encoding="utf-8")
     assert "scripts/run_baseline_comparison.py" in text

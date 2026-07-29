@@ -3,135 +3,135 @@ scenario_id: rapid_pivot_control
 case_id: CASE-RAPID-PIVOT-CONTROL-001
 clock_start_time: '2026-12-01T08:00:00Z'
 releases:
-- event_id: EVT-RPC-002H
-  timestamp: '2026-12-01T10:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-RP-SBOM-001
-    artifact_type: cyclonedx_sbom
-    path: data/sbom/rapid_pivot.cdx.json
-    source_timestamp: '2026-12-01T08:05:00Z'
-  - artifact_id: ART-RP-OSV-001
-    artifact_type: osv_snapshot
-    path: data/osv_snapshots/rapid_pivot_osv.json
-    source_timestamp: '2026-12-01T08:10:00Z'
-  - artifact_id: ART-RP-KEV-001
-    artifact_type: kev_snapshot
-    path: data/kev_snapshots/rapid_pivot_kev.json
-    source_timestamp: '2026-12-01T08:15:00Z'
-  - artifact_id: ART-RP-ASSET-001
-    artifact_type: asset_context
-    path: data/asset_context/rapid_pivot_asset.yaml
-    source_timestamp: '2026-12-01T08:20:00Z'
-  - artifact_id: ART-RP-MIT-INITIAL-001
-    artifact_type: mitigation_context
-    path: data/mitigation/rapid_pivot_initial.yaml
-    source_timestamp: '2026-12-01T08:25:00Z'
-  cumulative_available_artifact_ids:
-  - ART-RP-SBOM-001
-  - ART-RP-OSV-001
-  - ART-RP-KEV-001
-  - ART-RP-ASSET-001
-  - ART-RP-MIT-INITIAL-001
-- event_id: EVT-RPC-012H
-  timestamp: '2026-12-01T20:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-RP-ID-001
-    artifact_type: identity_resolution
-    path: data/decision_records/rapid_pivot_identity_resolution.yaml
-    source_timestamp: '2026-12-01T19:00:00Z'
-  - artifact_id: ART-RP-EPSS-001
-    artifact_type: epss_snapshot
-    path: data/epss_snapshots/rapid_pivot_epss.json
-    source_timestamp: '2026-12-01T19:05:00Z'
-  - artifact_id: ART-RP-VEX-001
-    artifact_type: csaf_vex
-    path: data/csaf/rapid_pivot_vex.json
-    source_timestamp: '2026-12-01T19:10:00Z'
-  - artifact_id: ART-RP-TELEM-001
-    artifact_type: runtime_telemetry
-    path: data/telemetry/rapid_pivot_reachability.jsonl
-    source_timestamp: '2026-12-01T19:30:00Z'
-  cumulative_available_artifact_ids:
-  - ART-RP-SBOM-001
-  - ART-RP-OSV-001
-  - ART-RP-KEV-001
-  - ART-RP-ASSET-001
-  - ART-RP-MIT-INITIAL-001
-  - ART-RP-ID-001
-  - ART-RP-EPSS-001
-  - ART-RP-VEX-001
-  - ART-RP-TELEM-001
-- event_id: EVT-RPC-018H
-  timestamp: '2026-12-02T02:00:00Z'
-  release_artifacts: []
-  cumulative_available_artifact_ids:
-  - ART-RP-SBOM-001
-  - ART-RP-OSV-001
-  - ART-RP-KEV-001
-  - ART-RP-ASSET-001
-  - ART-RP-MIT-INITIAL-001
-  - ART-RP-ID-001
-  - ART-RP-EPSS-001
-  - ART-RP-VEX-001
-  - ART-RP-TELEM-001
-- event_id: EVT-RPC-020H
-  timestamp: '2026-12-02T04:00:00Z'
-  release_artifacts: []
-  cumulative_available_artifact_ids:
-  - ART-RP-SBOM-001
-  - ART-RP-OSV-001
-  - ART-RP-KEV-001
-  - ART-RP-ASSET-001
-  - ART-RP-MIT-INITIAL-001
-  - ART-RP-ID-001
-  - ART-RP-EPSS-001
-  - ART-RP-VEX-001
-  - ART-RP-TELEM-001
-- event_id: EVT-RPC-022H
-  timestamp: '2026-12-02T06:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-RP-AUTH-001
-    artifact_type: human_authorization
-    path: data/decision_records/rapid_pivot_authorization.yaml
-    source_timestamp: '2026-12-02T06:00:00Z'
-  - artifact_id: ART-RP-SUB-EARLY-001
-    artifact_type: milestone_satisfaction
-    path: data/decision_records/rapid_pivot_early_warning_submission.yaml
-    source_timestamp: '2026-12-02T06:00:00Z'
-  cumulative_available_artifact_ids:
-  - ART-RP-SBOM-001
-  - ART-RP-OSV-001
-  - ART-RP-KEV-001
-  - ART-RP-ASSET-001
-  - ART-RP-MIT-INITIAL-001
-  - ART-RP-ID-001
-  - ART-RP-EPSS-001
-  - ART-RP-VEX-001
-  - ART-RP-TELEM-001
-  - ART-RP-AUTH-001
-  - ART-RP-SUB-EARLY-001
-- event_id: EVT-RPC-072H
-  timestamp: '2026-12-04T08:00:00Z'
-  release_artifacts:
-  - artifact_id: ART-RP-MIT-VERIFIED-001
-    artifact_type: mitigation_context
-    path: data/mitigation/rapid_pivot_verified.yaml
-    source_timestamp: '2026-12-04T08:00:00Z'
-  - artifact_id: ART-RP-SUB-FULL-001
-    artifact_type: milestone_satisfaction
-    path: data/decision_records/rapid_pivot_full_notification_submission.yaml
-    source_timestamp: '2026-12-04T08:00:00Z'
-  cumulative_available_artifact_ids:
-  - ART-RP-SBOM-001
-  - ART-RP-OSV-001
-  - ART-RP-KEV-001
-  - ART-RP-ASSET-001
-  - ART-RP-MIT-INITIAL-001
-  - ART-RP-ID-001
-  - ART-RP-EPSS-001
-  - ART-RP-VEX-001
-  - ART-RP-TELEM-001
-  - ART-RP-AUTH-001
-  - ART-RP-SUB-EARLY-001
-  - ART-RP-MIT-VERIFIED-001
-  - ART-RP-SUB-FULL-001
+  - event_id: EVT-RPC-002H
+    timestamp: '2026-12-01T10:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-RP-SBOM-001
+        artifact_type: cyclonedx_sbom
+        path: data/sbom/rapid_pivot.cdx.json
+        source_timestamp: '2026-12-01T08:05:00Z'
+      - artifact_id: ART-RP-OSV-001
+        artifact_type: osv_snapshot
+        path: data/osv_snapshots/rapid_pivot_osv.json
+        source_timestamp: '2026-12-01T08:10:00Z'
+      - artifact_id: ART-RP-KEV-001
+        artifact_type: kev_snapshot
+        path: data/kev_snapshots/rapid_pivot_kev.json
+        source_timestamp: '2026-12-01T08:15:00Z'
+      - artifact_id: ART-RP-ASSET-001
+        artifact_type: asset_context
+        path: data/asset_context/rapid_pivot_asset.yaml
+        source_timestamp: '2026-12-01T08:20:00Z'
+      - artifact_id: ART-RP-MIT-INITIAL-001
+        artifact_type: mitigation_context
+        path: data/mitigation/rapid_pivot_initial.yaml
+        source_timestamp: '2026-12-01T08:25:00Z'
+    cumulative_available_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+  - event_id: EVT-RPC-012H
+    timestamp: '2026-12-01T20:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-RP-ID-001
+        artifact_type: identity_resolution
+        path: data/decision_records/rapid_pivot_identity_resolution.yaml
+        source_timestamp: '2026-12-01T19:00:00Z'
+      - artifact_id: ART-RP-EPSS-001
+        artifact_type: epss_snapshot
+        path: data/epss_snapshots/rapid_pivot_epss.json
+        source_timestamp: '2026-12-01T19:05:00Z'
+      - artifact_id: ART-RP-VEX-001
+        artifact_type: csaf_vex
+        path: data/csaf/rapid_pivot_vex.json
+        source_timestamp: '2026-12-01T19:10:00Z'
+      - artifact_id: ART-RP-TELEM-001
+        artifact_type: runtime_telemetry
+        path: data/telemetry/rapid_pivot_reachability.jsonl
+        source_timestamp: '2026-12-01T19:30:00Z'
+    cumulative_available_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+      - ART-RP-ID-001
+      - ART-RP-EPSS-001
+      - ART-RP-VEX-001
+      - ART-RP-TELEM-001
+  - event_id: EVT-RPC-018H
+    timestamp: '2026-12-02T02:00:00Z'
+    release_artifacts: []
+    cumulative_available_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+      - ART-RP-ID-001
+      - ART-RP-EPSS-001
+      - ART-RP-VEX-001
+      - ART-RP-TELEM-001
+  - event_id: EVT-RPC-020H
+    timestamp: '2026-12-02T04:00:00Z'
+    release_artifacts: []
+    cumulative_available_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+      - ART-RP-ID-001
+      - ART-RP-EPSS-001
+      - ART-RP-VEX-001
+      - ART-RP-TELEM-001
+  - event_id: EVT-RPC-022H
+    timestamp: '2026-12-02T06:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-RP-AUTH-001
+        artifact_type: human_authorization
+        path: data/decision_records/rapid_pivot_authorization.yaml
+        source_timestamp: '2026-12-02T06:00:00Z'
+      - artifact_id: ART-RP-SUB-EARLY-001
+        artifact_type: milestone_satisfaction
+        path: data/decision_records/rapid_pivot_early_warning_submission.yaml
+        source_timestamp: '2026-12-02T06:00:00Z'
+    cumulative_available_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+      - ART-RP-ID-001
+      - ART-RP-EPSS-001
+      - ART-RP-VEX-001
+      - ART-RP-TELEM-001
+      - ART-RP-AUTH-001
+      - ART-RP-SUB-EARLY-001
+  - event_id: EVT-RPC-072H
+    timestamp: '2026-12-04T08:00:00Z'
+    release_artifacts:
+      - artifact_id: ART-RP-MIT-VERIFIED-001
+        artifact_type: mitigation_context
+        path: data/mitigation/rapid_pivot_verified.yaml
+        source_timestamp: '2026-12-04T08:00:00Z'
+      - artifact_id: ART-RP-SUB-FULL-001
+        artifact_type: milestone_satisfaction
+        path: data/decision_records/rapid_pivot_full_notification_submission.yaml
+        source_timestamp: '2026-12-04T08:00:00Z'
+    cumulative_available_artifact_ids:
+      - ART-RP-SBOM-001
+      - ART-RP-OSV-001
+      - ART-RP-KEV-001
+      - ART-RP-ASSET-001
+      - ART-RP-MIT-INITIAL-001
+      - ART-RP-ID-001
+      - ART-RP-EPSS-001
+      - ART-RP-VEX-001
+      - ART-RP-TELEM-001
+      - ART-RP-AUTH-001
+      - ART-RP-SUB-EARLY-001
+      - ART-RP-MIT-VERIFIED-001
+      - ART-RP-SUB-FULL-001

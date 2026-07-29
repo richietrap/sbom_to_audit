@@ -32,7 +32,7 @@ def build_freeze_payload(repository_root: str | Path, paths: tuple[str, ...]) ->
             raise FileNotFoundError(f"freeze target does not exist: {relative}")
         records.append({"path": relative, "sha256": sha256_file(target)})
     return {
-        "freeze_id": "STAGE6-1-PRE-EXECUTION-FREEZE-001",
+        "freeze_id": "STAGE6-1-PRE-EXECUTION-FREEZE-002",
         "freeze_status": "PRE_EXECUTION_FROZEN",
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "records": records,

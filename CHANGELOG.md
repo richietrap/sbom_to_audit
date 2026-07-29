@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.1.4 — Stage 6.1.4 YAML-quality and release-gate parity correction — 2026-07-29
+
+- Corrected all Yamllint indentation errors reported across the Stage 6.1 protocol, independent oracles, fairness mappings, analyst allowed-tool policy, and seven chronological release manifests.
+- Removed the excess trailing blank line from `.github/workflows/tests.yml`.
+- Verified parsed YAML semantic equivalence before and after canonical indentation for all 17 affected YAML or workflow files.
+- Refreshed the byte-level Stage 6.1 pre-execution freeze as `STAGE6-1-PRE-EXECUTION-FREEZE-002`; no manual baseline execution had begun and no oracle value, protocol rule, mapping, scenario, metric, or worksheet field changed.
+- Split Ruff lint, Ruff formatting, Mypy, Codespell, and Yamllint into separately named GitHub Actions steps so a failure identifies the exact gate immediately.
+- Recorded the missed YAML-quality gate as BUG-021 and documented the corrective decision in ADR-020.
+- Added a Stage 6.1.4 immutable-reference Colab checkpoint and corresponding version, workflow, and checkpoint regression assertions.
+- Preserved EvidencePack v0.2, the 34-field EC denominator, all seven locked metrics, and the Stage 6.1 manuscript-eligibility boundary.
+
 ## 0.6.1.3 — Stage 6.1.3 final formatter and checkpoint-metadata correction — 2026-07-29
 
 - Applied the final Ruff formatter change to `tests/test_stage6_1_notebook.py`, adding the required top-level definition spacing and removing the excess trailing blank line.

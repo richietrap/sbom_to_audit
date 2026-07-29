@@ -2,26 +2,25 @@ mapping_version: '0.1'
 record_classes:
   case_record:
     orchestrated:
-    - evidence_pack
+      - evidence_pack
     manual_baseline:
-    - case_decisions
-    - evidence_observations
+      - case_decisions
+      - evidence_observations
   decision_history:
     orchestrated:
-    - state_log
+      - state_log
     manual_baseline:
-    - case_decisions
-    - timing_log
+      - case_decisions
+      - timing_log
   conflict_history:
     orchestrated:
-    - conflict_report
+      - conflict_report
     manual_baseline:
-    - conflict_log
+      - conflict_log
   source_register:
     orchestrated:
-    - source_manifest
+      - source_manifest
     manual_baseline:
-    - source_access_log
-interpretation: Equivalent record-bundle generation is supplemental. It does not alter
-  the locked EPG definition, which remains specific to EvidencePack, state-log, and
-  conflict-report generation.
+      - source_access_log
+interpretation: Equivalent record-bundle generation is supplemental. It does not alter the locked
+  EPG definition, which remains specific to EvidencePack, state-log, and conflict-report generation.

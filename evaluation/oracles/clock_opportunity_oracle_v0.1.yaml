@@ -2,172 +2,172 @@ oracle_version: '0.1'
 oracle_id: stage6_1_clock_opportunity_oracle
 status: FROZEN_BEFORE_FINAL_EXECUTION
 events:
-- scenario_id: ghost_logger
-  event_id: EVT-GL-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: ghost_logger
-  event_id: EVT-GL-010H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: ghost_logger
-  event_id: EVT-GL-014H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: ghost_logger
-  event_id: EVT-GL-020H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: ghost_logger
-  event_id: EVT-GL-072H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: false_comfort
-  event_id: EVT-FC-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: false_comfort
-  event_id: EVT-FC-008H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: false_comfort
-  event_id: EVT-FC-012H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: false_comfort
-  event_id: EVT-FC-072H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: false_comfort_control
-  event_id: EVT-FCC-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: operational_outlier
-  event_id: EVT-OO-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: operational_outlier
-  event_id: EVT-OO-006H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: operational_outlier
-  event_id: EVT-OO-012H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: operational_outlier
-  event_id: EVT-OO-072H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: operational_outlier_control
-  event_id: EVT-OOC-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: operational_outlier_control
-  event_id: EVT-OOC-006H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot
-  event_id: EVT-RP-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot
-  event_id: EVT-RP-012H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot
-  event_id: EVT-RP-018H
-  eligible_prepare_to_escalate_opportunity: true
-  expected_automatic_state: Escalate
-  safeguard_hours: 18
-  interpretation: This oracle evaluates the automatic tau_E mechanism. Human clock
-    awareness is measured from the recorded manual decision and timing log.
-- scenario_id: rapid_pivot
-  event_id: EVT-RP-020H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot
-  event_id: EVT-RP-022H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot
-  event_id: EVT-RP-072H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot_control
-  event_id: EVT-RPC-002H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot_control
-  event_id: EVT-RPC-012H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot_control
-  event_id: EVT-RPC-018H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot_control
-  event_id: EVT-RPC-020H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot_control
-  event_id: EVT-RPC-022H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
-- scenario_id: rapid_pivot_control
-  event_id: EVT-RPC-072H
-  eligible_prepare_to_escalate_opportunity: false
-  expected_automatic_state: null
-  safeguard_hours: null
-  interpretation: null
+  - scenario_id: ghost_logger
+    event_id: EVT-GL-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: ghost_logger
+    event_id: EVT-GL-010H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: ghost_logger
+    event_id: EVT-GL-014H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: ghost_logger
+    event_id: EVT-GL-020H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: ghost_logger
+    event_id: EVT-GL-072H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: false_comfort
+    event_id: EVT-FC-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: false_comfort
+    event_id: EVT-FC-008H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: false_comfort
+    event_id: EVT-FC-012H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: false_comfort
+    event_id: EVT-FC-072H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: false_comfort_control
+    event_id: EVT-FCC-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: operational_outlier
+    event_id: EVT-OO-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: operational_outlier
+    event_id: EVT-OO-006H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: operational_outlier
+    event_id: EVT-OO-012H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: operational_outlier
+    event_id: EVT-OO-072H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: operational_outlier_control
+    event_id: EVT-OOC-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: operational_outlier_control
+    event_id: EVT-OOC-006H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot
+    event_id: EVT-RP-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot
+    event_id: EVT-RP-012H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot
+    event_id: EVT-RP-018H
+    eligible_prepare_to_escalate_opportunity: true
+    expected_automatic_state: Escalate
+    safeguard_hours: 18
+    interpretation: This oracle evaluates the automatic tau_E mechanism. Human clock awareness is
+      measured from the recorded manual decision and timing log.
+  - scenario_id: rapid_pivot
+    event_id: EVT-RP-020H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot
+    event_id: EVT-RP-022H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot
+    event_id: EVT-RP-072H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot_control
+    event_id: EVT-RPC-002H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot_control
+    event_id: EVT-RPC-012H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot_control
+    event_id: EVT-RPC-018H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot_control
+    event_id: EVT-RPC-020H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot_control
+    event_id: EVT-RPC-022H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:
+  - scenario_id: rapid_pivot_control
+    event_id: EVT-RPC-072H
+    eligible_prepare_to_escalate_opportunity: false
+    expected_automatic_state:
+    safeguard_hours:
+    interpretation:

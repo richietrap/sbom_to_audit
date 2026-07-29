@@ -72,4 +72,3 @@ jobs:
           diff -ru \
             "${RUNNER_TEMP}/stage6-1-packets-first" \
             "${RUNNER_TEMP}/stage6-1-packets-second"
-

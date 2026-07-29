@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.1.3 is the Stage 6.1.3 final-formatter and checkpoint-metadata corrective checkpoint for the Stage 6.1 pre-execution package. It preserves the hardened manual-assisted matched PSIRT baseline protocol, independent event-level oracles, fairness controls, analyst worksheets, freeze record, and manuscript-eligibility boundary unchanged. It corrects the final unformatted notebook test identified by GitHub and aligns the Stage 6.1.2 checkpoint report metadata. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
+Version 0.6.1.4 is the Stage 6.1.4 YAML-quality and release-gate parity correction for the Stage 6.1 pre-execution package. It canonicalises the Stage 6.1 protocol, oracle, mapping, analyst-policy, and release-manifest YAML indentation without changing their parsed content; removes the workflow trailing blank line reported by Yamllint; refreshes the pre-execution freeze as revision 002; and separates each static quality command into an independently reported GitHub Actions step. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
 
 ## Research questions
 
