@@ -1,0 +1,28 @@
+import re
+from pathlib import Path
+
+from sbom_to_audit import __version__
+
+ROOT = Path(__file__).resolve().parents[1]
+EXPECTED_VERSION = "0.6.1.1"
+EXPECTED_STAGE = "Stage 6.1.1"
+
+
+def test_release_version_markers_are_consistent() -> None:
+    pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    manifest = (ROOT / "MANIFEST.md").read_text(encoding="utf-8")
+
+    assert __version__ == EXPECTED_VERSION
+    assert f'version = "{EXPECTED_VERSION}"' in pyproject
+    assert f"version: {EXPECTED_VERSION}" in citation
+    assert EXPECTED_STAGE in readme
+    assert f"## {EXPECTED_VERSION} — {EXPECTED_STAGE}" in changelog
+    assert f"package v{EXPECTED_VERSION}" in manifest
+
+
+def test_bug_017_is_assigned_to_corrective_release() -> None:
+    register = (ROOT / "docs/bug_register.csv").read_text(encoding="utf-8")
+    assert re.search(r"^BUG-017,2026-07-29,0\.6\.1\.1,", register, re.MULTILINE)

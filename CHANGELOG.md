@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.1.1 — Stage 6.1.1 quality-gate correction — 2026-07-29
+
+- Corrected five Ruff `E702` violations in `tests/stage6_1_helpers.py` by separating CSV header and row writes into individual statements.
+- Corrected two Ruff `I001` import-order violations in the Stage 6.1 manual-results and worksheet tests.
+- Recorded the CI-only formatting defect as BUG-017.
+- Preserved all Stage 6.1 protocols, ADRs, oracles, schemas, metrics, fixture values, test semantics, and research outputs unchanged.
+- Incremented the corrective checkpoint to Stage 6.1.1 / package v0.6.1.1 in accordance with the established staged-correction workflow.
+- Added ADR-017 and a version-consistency regression test so future corrective packages cannot retain the superseded release number.
+- Added a fail-closed quality-environment bootstrap that installs `.[dev]`, verifies Ruff, Mypy, Codespell, Yamllint, and Hypothesis, and records `TOOLCHAIN_NOT_PROVISIONED` when package retrieval is unavailable.
+- Added a Stage 6.1.1 immutable-reference Colab checkpoint while preserving the Stage 6.1 notebook as history.
+
 ## 0.6.1 — Stage 6.1 matched baseline protocol hardening
 
 - Preserved the Stage 6 deterministic worksheet proxy and ADR-012 as development and ablation history.

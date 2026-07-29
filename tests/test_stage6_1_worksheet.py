@@ -1,10 +1,11 @@
 from pathlib import Path
 
+from stage6_1_helpers import build_completed_manual_bundle
+
 from sbom_to_audit.baseline.evaluation_oracles import load_state_oracle
 from sbom_to_audit.baseline.protocol import load_manual_protocol
 from sbom_to_audit.baseline.worksheet_validation import validate_manual_bundle
 from sbom_to_audit.utils.io import read_yaml
-from stage6_1_helpers import build_completed_manual_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
 

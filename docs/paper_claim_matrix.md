@@ -41,4 +41,4 @@ This matrix prevents implementation observations from entering the manuscript wi
 > **Stage 6 boundary:** these claims answer RQ5 only within the controlled computational suite. They do not support claims of human time savings, reduced cognitive workload, legal accuracy, or industrial effectiveness.
 
 
-> **Stage 6.1 pre-execution boundary:** version 0.6.1 adds evaluation controls and no new comparative result claim. PC-025 through PC-030 remain Stage 6 pilot claims. They may be replaced or narrowed only after a genuine manual-assisted run, independent-oracle scoring, immutable Git/Colab reproduction, and final evaluation freeze.
+> **Stage 6.1 pre-execution boundary:** version 0.6.1.1 is the quality-corrected checkpoint; it adds no new comparative result claim. PC-025 through PC-030 remain Stage 6 pilot claims. They may be replaced or narrowed only after a genuine manual-assisted run, independent-oracle scoring, immutable Git/Colab reproduction, and final evaluation freeze.

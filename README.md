@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.1 adds the Stage 6.1 pre-execution package for a hardened manual-assisted matched PSIRT baseline. It preserves the Stage 6 deterministic proxy as development and ablation history while adding independent event-level oracles, fairness controls, analyst worksheets, protocol freezing, import provenance, and an immutable-reference Colab checkpoint. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
+Version 0.6.1.1 is the Stage 6.1.1 quality-corrected checkpoint for the Stage 6.1 pre-execution package. It preserves the hardened manual-assisted matched PSIRT baseline protocol, independent event-level oracles, fairness controls, analyst worksheets, freeze record, and manuscript-eligibility boundary unchanged while correcting the seven Ruff violations detected by GitHub Actions. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
 
 ## Research questions
 

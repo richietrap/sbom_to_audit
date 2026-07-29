@@ -17,3 +17,4 @@ ignore: |
   .ruff_cache/
   .venv/
   .qa-venv/
+  .quality-venv/

@@ -50,6 +50,7 @@ IGNORED_NAMES = {
     ".ruff_cache",
     ".venv",
     ".qa-venv",
+    ".quality-venv",
     "__pycache__",
     "build",
     "dist",

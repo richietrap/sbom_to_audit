@@ -16,6 +16,7 @@ htmlcov/
 # Environments
 .venv/
 .qa-venv/
+.quality-venv/
 venv/
 env/
 

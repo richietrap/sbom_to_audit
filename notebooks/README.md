@@ -39,3 +39,11 @@ Before a run is treated as manuscript-eligible, set `REF` to an immutable Git ta
 ## Stage 6.1
 
 `stage6_1_colab_checkpoint.ipynb` verifies the pre-execution freeze, complete repository safeguards, and baseline packet export from an immutable Git reference. After a genuine manual result bundle exists, the notebook validates and imports it, regenerates the comparison and candidate paper assets, and emits `stage61_colab_checkpoint_evidence.zip`. It rejects mutable references such as `main` for the final checkpoint.
+
+## Stage 6.1.1 checkpoint
+
+`stage6_1_1_colab_checkpoint.ipynb` reproduces the quality-corrected Stage 6.1.1 package
+from an exact Git commit or immutable tag. It installs the declared `.[dev]` environment,
+checks package version `0.6.1.1`, reruns all quality and regression safeguards, verifies the
+unchanged Stage 6.1 protocol freeze, and emits `stage611_colab_checkpoint_evidence.zip`.
+The Stage 6.1 notebook remains preserved as the superseded pre-correction checkpoint.

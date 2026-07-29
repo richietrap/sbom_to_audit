@@ -4,17 +4,28 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_stage6_1_notebook_rejects_mutable_main_ref() -> None:
-    notebook = json.loads(
-        (ROOT / "notebooks" / "stage6_1_colab_checkpoint.ipynb").read_text(encoding="utf-8")
-    )
-    source = "\n".join(
+def _code_source(path: Path) -> str:
+    notebook = json.loads(path.read_text(encoding="utf-8"))
+    return "\n".join(
         line
         for cell in notebook["cells"]
         for line in cell.get("source", [])
         if cell.get("cell_type") == "code"
     )
+
+
+def test_stage6_1_notebook_rejects_mutable_main_ref() -> None:
+    source = _code_source(ROOT / "notebooks" / "stage6_1_colab_checkpoint.ipynb")
     assert 'REF = "STAGE61_REF_REQUIRED"' in source
-    assert "REF in {\"main\", \"master\", \"STAGE61_REF_REQUIRED\"}" in source
+    assert 'REF in {"main", "master", "STAGE61_REF_REQUIRED"}' in source
+    assert "freeze_stage6_1_protocol.py" in source
+    assert "--verify" in source
+
+
+def test_stage6_1_1_notebook_rejects_mutable_ref_and_checks_version() -> None:
+    source = _code_source(ROOT / "notebooks" / "stage6_1_1_colab_checkpoint.ipynb")
+    assert 'REF = "STAGE611_REF_REQUIRED"' in source
+    assert 'REF in {"main", "master", "STAGE611_REF_REQUIRED"}' in source
+    assert 'sbom_to_audit.__version__ == "0.6.1.1"' in source
     assert "freeze_stage6_1_protocol.py" in source
     assert "--verify" in source

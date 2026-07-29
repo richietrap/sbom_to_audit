@@ -79,3 +79,26 @@ Rapid Pivot adds paired-control assertions requiring the primary and control man
 Stage 6.1 separates protocol construction from result execution. Protocol v0.2, the worksheet schema, scenario inputs, fairness mappings, and independent oracles are hashed before any final manual run. Neither evaluated workflow may define conflict truth, state expectations, or clock opportunities. Original analyst files are retained unchanged and normalized only into separately hashed evaluation views. The final Colab checkpoint must use an immutable commit or tag and rejects `main` and `master`.
 
 The manual worksheet records confidence explicitly; missing confidence remains missing. Locked metrics remain unchanged, while common-field completeness, partial lineage, equivalent record-bundle generation, source accesses, and human Time to Decision are reported as supplemental controls. Automatic clock-safeguard ablation must not be described as proof that a human analyst would miss a deadline.
+
+
+## Stage 6.1.1 execution-environment parity
+
+A stage package must not be described as having passed static quality gates unless the exact
+repository-declared development toolchain has been installed and executed in that packaging
+environment. The expected installation is `python -m pip install -e ".[dev]"` inside an isolated
+virtual environment. The release evidence must record Ruff, Mypy, Codespell, Yamllint, Hypothesis,
+Python, and pytest versions together with the commands and outcomes.
+
+Where an ephemeral assistant runtime cannot reach an approved package index, the local result must
+fail closed as `TOOLCHAIN_NOT_PROVISIONED`; it must not be reported as a successful quality run.
+GitHub Actions and the immutable Colab checkpoint remain authoritative independent environments,
+but they do not retroactively justify an unexecuted local claim. Corrective releases increment the
+stage patch suffix, such as Stage 6.1 to Stage 6.1.1.
+
+### Reproducible quality-environment bootstrap
+
+Stage 6.1.1 adds `scripts/bootstrap_quality_env.py` as the fail-closed provisioning entry
+point. Running the script creates an isolated `.quality-venv`, installs the repository's
+`.[dev]` extra, checks dependency integrity, and records the installed versions of Ruff,
+Mypy, Codespell, Yamllint, and Hypothesis. A blocked package registry yields
+`TOOLCHAIN_NOT_PROVISIONED`; it must never be reported as a passed static-quality gate.

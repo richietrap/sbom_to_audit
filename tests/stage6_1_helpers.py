@@ -86,7 +86,8 @@ def build_completed_manual_bundle(destination: Path) -> Path:
         )
     with decision_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader(); writer.writerows(rows)
+        writer.writeheader()
+        writer.writerows(rows)
 
     observation_path = destination / "evidence_observations.csv"
     with observation_path.open(encoding="utf-8", newline="") as handle:
@@ -131,7 +132,8 @@ def build_completed_manual_bundle(destination: Path) -> Path:
         )
     with observation_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader(); writer.writerows(observations)
+        writer.writeheader()
+        writer.writerows(observations)
 
     access_path = destination / "source_access_log.csv"
     with access_path.open(encoding="utf-8", newline="") as handle:
@@ -159,7 +161,8 @@ def build_completed_manual_bundle(destination: Path) -> Path:
             )
     with access_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader(); writer.writerows(access_rows)
+        writer.writeheader()
+        writer.writerows(access_rows)
 
     conflict_path = destination / "conflict_log.csv"
     with conflict_path.open(encoding="utf-8", newline="") as handle:
@@ -188,7 +191,8 @@ def build_completed_manual_bundle(destination: Path) -> Path:
         )
     with conflict_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader(); writer.writerows(conflict_rows)
+        writer.writeheader()
+        writer.writerows(conflict_rows)
 
     timing_path = destination / "timing_log.csv"
     with timing_path.open(encoding="utf-8", newline="") as handle:
@@ -209,7 +213,8 @@ def build_completed_manual_bundle(destination: Path) -> Path:
         )
     with timing_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader(); writer.writerows(timing_rows)
+        writer.writeheader()
+        writer.writerows(timing_rows)
 
     declaration_path = destination / "declaration.yaml"
     declaration = yaml.safe_load(declaration_path.read_text(encoding="utf-8"))

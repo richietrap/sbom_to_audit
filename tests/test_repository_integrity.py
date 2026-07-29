@@ -46,6 +46,7 @@ def test_gitignore_excludes_generated_outputs_and_local_quality_caches() -> None
         ".ruff_cache/",
         ".hypothesis/",
         ".qa-venv/",
+        ".quality-venv/",
         "outputs/evidence_packs/*",
         "outputs/state_logs/*",
         "outputs/conflict_reports/*",
