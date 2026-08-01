@@ -46,9 +46,7 @@ def _safe_extract(tmp_path: Path) -> Callable[[Path, Path], None]:
         "import zipfile\n"
         "from pathlib import Path, PurePosixPath\n\n"
         "MAX_MANUAL_ZIP_MEMBERS = 200\n"
-        "MAX_MANUAL_ZIP_UNCOMPRESSED_BYTES = 100 * 1024 * 1024\n\n"
-        + ast.unparse(function)
-        + "\n"
+        "MAX_MANUAL_ZIP_UNCOMPRESSED_BYTES = 100 * 1024 * 1024\n\n" + ast.unparse(function) + "\n"
     )
     module = _load_module(tmp_path / "notebook_safe_extract.py", module_source)
     return module.safe_extract_zip

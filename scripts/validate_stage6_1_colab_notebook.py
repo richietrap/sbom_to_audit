@@ -114,9 +114,9 @@ def validate(path: Path, expected_stage: str, expected_version: str) -> list[str
         '[str(VENV_PYTHON), "-m", "pip", "check"]': "isolated pip check",
         'VENV_ENV["PIP_REQUIRE_VIRTUALENV"] = "true"': "pip virtualenv enforcement",
         'VENV_ENV["PYTHONNOUSERSITE"] = "1"': "user-site isolation",
-        'verify virtual environment isolation': "virtualenv prefix verification",
-        'stdlib_venv_pip_probe.log': "stdlib venv pip probe",
-        'attempt-{attempt:02d}.log': "per-attempt command logging",
+        "verify virtual environment isolation": "virtualenv prefix verification",
+        "stdlib_venv_pip_probe.log": "stdlib venv pip probe",
+        "attempt-{attempt:02d}.log": "per-attempt command logging",
         "scripts/release_check.py": "canonical release gate",
         "scripts/verify_historical_epss.py": "online historical EPSS gate",
         "scripts/export_stage6_1_baseline_packets.py": "packet export",
@@ -127,9 +127,7 @@ def validate(path: Path, expected_stage: str, expected_version: str) -> list[str
         "zipfile.is_zipfile(source)": "ZIP format validation",
         "file_type = stat.S_IFMT(mode)": "portable ZIP member-type handling",
         "MAX_MANUAL_ZIP_MEMBERS = 200": "ZIP member-count safety limit",
-        "MAX_MANUAL_ZIP_UNCOMPRESSED_BYTES = 100 * 1024 * 1024": (
-            "ZIP expansion safety limit"
-        ),
+        "MAX_MANUAL_ZIP_UNCOMPRESSED_BYTES = 100 * 1024 * 1024": ("ZIP expansion safety limit"),
         "Manual ZIP contains a corrupt member": "manual ZIP CRC validation",
         "duplicate normalized paths": "normalized ZIP-path collision rejection",
         'target.open("xb")': "exclusive controlled ZIP extraction",

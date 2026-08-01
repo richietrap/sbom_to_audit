@@ -15,9 +15,7 @@ def _cell_source(cell: dict[str, Any]) -> str:
 def _code_source(path: Path) -> str:
     notebook = json.loads(path.read_text(encoding="utf-8"))
     return "\n".join(
-        _cell_source(cell)
-        for cell in notebook["cells"]
-        if cell.get("cell_type") == "code"
+        _cell_source(cell) for cell in notebook["cells"] if cell.get("cell_type") == "code"
     )
 
 
@@ -89,7 +87,7 @@ def test_stage6_1_5_notebook_uses_isolated_environment_and_full_preflight() -> N
     assert "archive.testzip()" in source
     assert "evidence_checksums.json" in source
     assert 'subprocess.run(["python"' not in source
-    assert 'shutil.unpack_archive(' not in source
+    assert "shutil.unpack_archive(" not in source
 
     for index, cell in enumerate(notebook["cells"], start=1):
         if cell.get("cell_type") != "code":

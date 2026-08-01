@@ -45,11 +45,7 @@ def _packet_validator(tmp_path: Path) -> Callable[[Path], list[dict[str, object]
         if isinstance(node, ast.FunctionDef) and node.name == "validate_packet_export"
     )
     module_source = (
-        "import hashlib\n"
-        "import json\n"
-        "from pathlib import Path\n\n"
-        + ast.unparse(function)
-        + "\n"
+        "import hashlib\nimport json\nfrom pathlib import Path\n\n" + ast.unparse(function) + "\n"
     )
     module = _load_module(tmp_path / "notebook_packet_validator.py", module_source)
     return module.validate_packet_export

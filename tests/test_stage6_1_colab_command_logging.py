@@ -45,9 +45,7 @@ def _run_checked(tmp_path: Path, log_root: Path) -> Any:
         "import subprocess\n"
         "import time\n"
         "from collections.abc import Sequence\n"
-        "from pathlib import Path\n\n"
-        + ast.unparse(function)
-        + "\n"
+        "from pathlib import Path\n\n" + ast.unparse(function) + "\n"
     )
     module = _load_module(tmp_path / "notebook_run_checked.py", module_source)
     module.LOG_ROOT = log_root
