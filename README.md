@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.1.4 is the Stage 6.1.4 YAML-quality and release-gate parity correction for the Stage 6.1 pre-execution package. It canonicalises the Stage 6.1 protocol, oracle, mapping, analyst-policy, and release-manifest YAML indentation without changing their parsed content; removes the workflow trailing blank line reported by Yamllint; refreshes the pre-execution freeze as revision 002; and separates each static quality command into an independently reported GitHub Actions step. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from an exact Git commit.
+Version 0.6.1.5 is the Stage 6.1.5 isolated Colab checkpoint correction for the Stage 6.1 pre-execution package. It restores the isolated-virtual-environment pattern used by earlier checkpoints, requires an exact 40-character commit SHA, routes every project command through the isolated interpreter, preserves complete command logs and evidence checksums, safely handles an optional manual-result ZIP, and adds notebook-wide contract validation. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from the exact successful Git commit.
 
 ## Research questions
 

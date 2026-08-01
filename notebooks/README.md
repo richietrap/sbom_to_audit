@@ -51,3 +51,11 @@ The Stage 6.1 notebook remains preserved as the superseded pre-correction checkp
 ## Stage 6.1.2 checkpoint
 
 `stage6_1_2_colab_checkpoint.ipynb` reproduces the formatter-corrected Stage 6.1.2 package from an exact immutable Git reference. It checks package version `0.6.1.2`, reruns all quality and regression safeguards, verifies the unchanged Stage 6.1 protocol freeze, and emits `stage612_colab_checkpoint_evidence.zip`.
+## Stage 6.1.3 and Stage 6.1.4 checkpoints
+
+`stage6_1_3_colab_checkpoint.ipynb` and `stage6_1_4_colab_checkpoint.ipynb` are preserved as superseded corrective history. The Stage 6.1.4 notebook must not be used as final evidence because it installed and checked project dependencies in the shared Colab kernel environment.
+
+## Stage 6.1.5 checkpoint
+
+`stage6_1_5_colab_checkpoint.ipynb` requires an exact 40-character Git commit SHA, creates a dedicated virtual environment, installs and checks `.[dev]` only inside that environment, executes the canonical release report and online historical verification, validates the blinded packet inventory, safely handles an optional completed manual bundle, and emits `stage615_colab_checkpoint_evidence.zip` with command logs and evidence checksums. A run with online historical verification disabled is explicitly partial.
+

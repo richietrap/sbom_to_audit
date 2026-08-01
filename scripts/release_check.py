@@ -260,6 +260,18 @@ def run_release_check() -> ReleaseReport:
             ],
         ),
         (
+            "Stage 6.1.5 Colab notebook contract",
+            [
+                sys.executable,
+                "scripts/validate_stage6_1_colab_notebook.py",
+                "notebooks/stage6_1_5_colab_checkpoint.ipynb",
+                "--expected-stage",
+                "6.1.5",
+                "--expected-version",
+                "0.6.1.5",
+            ],
+        ),
+        (
             "repository validation",
             [sys.executable, "scripts/validate_repository.py", "--strict-sources"],
         ),

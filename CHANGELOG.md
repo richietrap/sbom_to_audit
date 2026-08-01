@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.6.1.5 — Stage 6.1.5 isolated Colab checkpoint correction — 2026-07-30
+
+- Corrected the Stage 6.1.4 checkpoint's use of the shared Colab kernel environment for package installation, dependency integrity, validation, tests, replay, and export commands.
+- Restored a dedicated virtual environment and routed every repository command through its explicit interpreter.
+- Replaced the fail-first reference placeholder with an exact 40-character commit-SHA prompt and detached-checkout equality verification.
+- Added complete named command logs, retry handling for network-dependent installation and historical verification, safe manual ZIP extraction, output cleanup, evidence-content checksums, and checkpoint ZIP integrity verification.
+- Restored authoritative online historical EPSS verification and verified historical replay generation in the Stage 6.1 checkpoint.
+- Added `scripts/validate_stage6_1_colab_notebook.py`, notebook code-cell compilation, release-contract tests, ADR-021, BUG-022, and a Stage 6.1.5 correction report.
+- Corrected the pre-release notebook validator to normalise canonical nbformat source arrays before compilation and contract scanning; added negative regression tests and recorded the internally detected defect as BUG-023.
+- Corrected pre-release manual ZIP member-type handling after notebook-derived tests found that ordinary ZIP entries without explicit Unix file-type bits were incorrectly rejected; recorded as BUG-024.
+- Hardened the pre-release manual ZIP path after adversarial review found normalized path aliases, file-parent collisions, and bulk extraction remained insufficiently constrained; replaced it with exclusive streamed extraction and recorded BUG-025.
+- Added notebook-derived tests for regular, traversal, absolute, drive-qualified, duplicate, symbolic-link, and special-file ZIP entries, plus retry-log preservation tests.
+- Added independent packet-registry, manifest-hash, copied-artifact-hash, identity, path, and recursive blinding-key verification after the pre-release audit identified the missing checkpoint boundary; recorded as BUG-026.
+- Preserved the Stage 6.1 protocol freeze, independent oracles, fairness mappings, EvidencePack v0.2, the 34-field EC denominator, all seven locked metrics, and the manuscript-eligibility boundary.
+
 ## 0.6.1.4 — Stage 6.1.4 YAML-quality and release-gate parity correction — 2026-07-29
 
 - Corrected all Yamllint indentation errors reported across the Stage 6.1 protocol, independent oracles, fairness mappings, analyst allowed-tool policy, and seven chronological release manifests.
