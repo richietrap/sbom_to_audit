@@ -116,3 +116,8 @@ Formatter evidence applies only to the exact repository tree on which it was gen
 Syntactic YAML parsing is not equivalent to passing the repository's Yamllint contract. Sequence indentation, trailing whitespace, and end-of-file blank-line rules are release-blocking even when PyYAML loads the document successfully. Before packaging, the exact Yamllint scope from GitHub Actions must run against the final repository tree.
 
 Where a pre-execution frozen YAML document requires formatting-only correction, the parsed object before and after the change must be identical, the evidence must be recorded, and the byte-level freeze must receive a new revision before any manual data are collected. Ruff lint, Ruff formatting, Mypy, Codespell, and Yamllint are reported as separate CI steps so no tool's result is hidden behind another command in a combined shell block.
+## Stage 6.2 release discipline
+
+For Stage 6.2, all implementation, tests, documentation, registry changes, and manifest updates must be complete before running mutating formatters. The final release sequence is: `ruff format .`, every non-mutating static gate, complete tests and coverage, Stage 6.1 freeze validation, Stage 6.2 validation, deterministic double-run comparison, repository validation, clean-tree confirmation, archive creation, and clean-extraction validation. Any edit after a successful gate invalidates that gate and restarts the sequence.
+
+The Stage 6.2 notebook and release checker independently regenerate results and paper assets twice and compare their byte manifests. Candidate sensitivity counts are not promoted to paper evidence until exact-commit GitHub and Colab validation and the final evaluation freeze.

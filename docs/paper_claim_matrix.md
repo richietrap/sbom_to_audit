@@ -42,3 +42,8 @@ This matrix prevents implementation observations from entering the manuscript wi
 
 
 > **Stage 6.1 pre-execution boundary:** version 0.6.1.1 is the quality-corrected checkpoint; it adds no new comparative result claim. PC-025 through PC-030 remain Stage 6 pilot claims. They may be replaced or narrowed only after a genuine manual-assisted run, independent-oracle scoring, immutable Git/Colab reproduction, and final evaluation freeze.
+
+| PC-031 | The Stage 6.2 harness executes registered threshold, clock, evidence, and negative perturbations deterministically. | `scripts/run_stage6_2_robustness.py`; `evaluation/stage6_2_candidate/stage6_2_output_manifest.json` | Candidate only; requires exact-commit external reproduction and final freeze. |
+| PC-032 | Eight registered malformed, missing, unsafe, or temporally invalid inputs are rejected fail-closed in the candidate run. | `evaluation/stage6_2_candidate/stage6_2_negative_cases.csv`; `tests/test_stage6_2_temporal_integrity.py` | Controlled negative tests, not evidence about all malformed inputs. |
+| PC-033 | Prototype state outcomes show both stable and boundary-sensitive responses under registered threshold and factor perturbations. | `stage6_2_threshold_sensitivity.csv`; `stage6_2_factor_sensitivity.csv`; candidate figures/tables | Descriptive controlled sensitivity only; do not claim optimal or legally valid thresholds. |
+| PC-034 | The Rapid Pivot pair responds to registered changes in the internal clock safeguard while preserving the baseline 18-hour configuration. | `stage6_2_clock_sensitivity.csv`; `stage6_2_clock_summary.csv` | Internal safeguard sensitivity, not interpretation of statutory deadlines. |

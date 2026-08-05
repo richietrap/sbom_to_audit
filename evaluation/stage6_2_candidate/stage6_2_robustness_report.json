@@ -1,0 +1,135 @@
+{
+  "run_id": "STAGE6-2-ROBUSTNESS-CANDIDATE-001",
+  "stage": "6.2",
+  "protocol_id": "stage6_2_robustness_and_sensitivity",
+  "protocol_version": "0.1",
+  "evaluation_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "scenario_count": 7,
+  "event_count": 28,
+  "threshold_profile_count": 5,
+  "threshold_event_rows": 140,
+  "non_baseline_threshold_event_rows": 112,
+  "threshold_state_changes": 24,
+  "clock_profile_count": 5,
+  "clock_event_rows": 60,
+  "clock_state_changes": 3,
+  "factor_variant_rows": 266,
+  "factor_state_changes": 42,
+  "negative_case_count": 8,
+  "negative_cases_rejected": 8,
+  "scenario_stability": [
+    {
+      "scenario_id": "ghost_logger",
+      "threshold_variant_event_rows": 20,
+      "threshold_state_changes": 3,
+      "factor_variants": 38,
+      "factor_state_changes": 6,
+      "clock_variant_event_rows": 0,
+      "clock_state_changes": 0,
+      "total_state_changes": 9,
+      "classification": "multi_parameter_sensitive"
+    },
+    {
+      "scenario_id": "false_comfort",
+      "threshold_variant_event_rows": 16,
+      "threshold_state_changes": 4,
+      "factor_variants": 38,
+      "factor_state_changes": 7,
+      "clock_variant_event_rows": 0,
+      "clock_state_changes": 0,
+      "total_state_changes": 11,
+      "classification": "multi_parameter_sensitive"
+    },
+    {
+      "scenario_id": "false_comfort_control",
+      "threshold_variant_event_rows": 4,
+      "threshold_state_changes": 0,
+      "factor_variants": 38,
+      "factor_state_changes": 7,
+      "clock_variant_event_rows": 0,
+      "clock_state_changes": 0,
+      "total_state_changes": 7,
+      "classification": "multi_parameter_sensitive"
+    },
+    {
+      "scenario_id": "operational_outlier",
+      "threshold_variant_event_rows": 16,
+      "threshold_state_changes": 1,
+      "factor_variants": 38,
+      "factor_state_changes": 5,
+      "clock_variant_event_rows": 0,
+      "clock_state_changes": 0,
+      "total_state_changes": 6,
+      "classification": "multi_parameter_sensitive"
+    },
+    {
+      "scenario_id": "operational_outlier_control",
+      "threshold_variant_event_rows": 8,
+      "threshold_state_changes": 0,
+      "factor_variants": 38,
+      "factor_state_changes": 3,
+      "clock_variant_event_rows": 0,
+      "clock_state_changes": 0,
+      "total_state_changes": 3,
+      "classification": "multi_parameter_sensitive"
+    },
+    {
+      "scenario_id": "rapid_pivot",
+      "threshold_variant_event_rows": 24,
+      "threshold_state_changes": 9,
+      "factor_variants": 38,
+      "factor_state_changes": 7,
+      "clock_variant_event_rows": 30,
+      "clock_state_changes": 3,
+      "total_state_changes": 19,
+      "classification": "multi_parameter_sensitive"
+    },
+    {
+      "scenario_id": "rapid_pivot_control",
+      "threshold_variant_event_rows": 24,
+      "threshold_state_changes": 7,
+      "factor_variants": 38,
+      "factor_state_changes": 7,
+      "clock_variant_event_rows": 30,
+      "clock_state_changes": 0,
+      "total_state_changes": 14,
+      "classification": "multi_parameter_sensitive"
+    }
+  ],
+  "scenario_definition_hashes": {
+    "ghost_logger": "418753c6677348a05a91fb2f2ccad6d763a122f00d6f8be2238a1203d6281cd1",
+    "false_comfort": "6b99d0d769302b6a304273d669a368ea6e75677fc5dfabd9622d93e0d619bfe3",
+    "false_comfort_control": "e0917a50cd6844781728e832d5663ce1ee45bfde27890b4ab063c61d9a412868",
+    "operational_outlier": "61970ea24db5434d7b5d6e5c9be311f1e1ebf15ff70b627f1dcf4b1b83a51f6a",
+    "operational_outlier_control": "05add8618bdfba0c403846700b07fbea62db09d87d5c51c3b251b4750666ea5e",
+    "rapid_pivot": "c10ee2e9121ccce683937c6050cf4b7dc7a8be392250ef706731a978747ab82a",
+    "rapid_pivot_control": "d1b1ca30c450a053b35253223efe6e28df2888805464b644ab6e879fe938a1cf"
+  },
+  "locked_controls": {
+    "evidencepack_schema_version": "0.2",
+    "evidence_completeness_denominator": 34,
+    "metrics": [
+      "EC",
+      "TR",
+      "CD",
+      "CA",
+      "AR",
+      "SC",
+      "EPG"
+    ],
+    "baseline_tau_E_hours": 18.0
+  },
+  "interpretation_boundary": [
+    "The registered perturbations test deterministic prototype behaviour, not legal correctness.",
+    "Threshold and clock sweeps are sensitivity analyses and do not validate or optimise parameters.",
+    "Controlled evidence toggles are evaluation-only counterfactuals, not observed incidents.",
+    "Candidate outputs remain ineligible until exact-commit reproduction and final freeze."
+  ],
+  "limitations": [
+    "Single-factor evidence analysis evaluates the final registered event boundary rather than every possible multivariate trajectory.",
+    "The controlled scenario families do not establish industrial generalisability.",
+    "The registered grid is finite and cannot establish global stability outside tested values.",
+    "Manual-assisted baseline execution remains deferred and is not part of Stage 6.2."
+  ]
+}

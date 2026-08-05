@@ -28,8 +28,8 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
     }
     assert report.checks["evaluation_registry"] == {
         "scenarios": 10,
-        "runs": 29,
-        "environments": 9,
+        "runs": 30,
+        "environments": 10,
     }
     assert report.checks["baseline_protocol"] == {
         "protocol_id": "matched_unorchestrated_psirt_worksheet",

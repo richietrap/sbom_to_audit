@@ -79,3 +79,6 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 
 - Stage 6.1.2 applies formatter-only corrections reported by GitHub Actions. It does not create or change any Stage 6.1 comparison result.
 - Acceptance still requires both `ruff check .` and `ruff format --check .` to pass on the exact pushed commit, followed by the remaining static, regression, repository, freeze, and immutable Colab gates.
+## Stage 6.2 candidate status
+
+The Stage 6.2 robustness outputs and figures are locally generated candidates, not frozen manuscript evidence. They require the exact repository quality workflow, GitHub Actions, exact-commit Colab reproduction, independent logic review, and final evaluation freeze. The blinded Stage 6.1 manual baseline remains outstanding and is required before final RQ5 comparative claims. Sensitivity observations must not be described as threshold validation, legal correctness, industrial effectiveness, or production scalability.

@@ -1,0 +1,156 @@
+protocol_id: stage6_2_robustness_and_sensitivity
+protocol_version: '0.1'
+evaluation_status: CANDIDATE_NOT_FROZEN
+manuscript_eligible: false
+purpose: >-
+  Evaluate whether the accepted prototype responds deterministically and explainably to
+  registered threshold, clock, evidence, scope, identity, conflict, missingness, and malformed
+  input perturbations without changing the locked EvidencePack schema or metric definitions.
+research_boundary:
+  - The protocol tests prototype behaviour and implementation safeguards.
+  - It does not validate legal correctness, industrial effectiveness, or optimal thresholds.
+  - Controlled perturbations are evaluation inputs, not observations from affected organisations.
+  - Candidate results remain ineligible until exact-commit GitHub and Colab reproduction and
+    the final evaluation freeze.
+locked_controls:
+  evidencepack_schema_version: '0.2'
+  evidence_completeness_denominator: 34
+  metrics:
+    - EC
+    - TR
+    - CD
+    - CA
+    - AR
+    - SC
+    - EPG
+  baseline_tau_E_hours: 18.0
+scenario_ids:
+  - ghost_logger
+  - false_comfort
+  - false_comfort_control
+  - operational_outlier
+  - operational_outlier_control
+  - rapid_pivot
+  - rapid_pivot_control
+threshold_profiles:
+  - profile_id: threshold_minus_0_10
+    offset: -0.10
+  - profile_id: threshold_minus_0_05
+    offset: -0.05
+  - profile_id: threshold_baseline
+    offset: 0.0
+  - profile_id: threshold_plus_0_05
+    offset: 0.05
+  - profile_id: threshold_plus_0_10
+    offset: 0.10
+clock_sensitivity:
+  scenario_ids:
+    - rapid_pivot
+    - rapid_pivot_control
+  profiles:
+    - profile_id: clock_14h
+      tau_E_hours: 14.0
+    - profile_id: clock_16h
+      tau_E_hours: 16.0
+    - profile_id: clock_18h_baseline
+      tau_E_hours: 18.0
+    - profile_id: clock_20h
+      tau_E_hours: 20.0
+    - profile_id: clock_22h
+      tau_E_hours: 22.0
+single_factor_profiles:
+  - factor: gamma_id
+    values:
+      - 1.0
+      - 0.9
+      - 0.7
+      - 0.4
+      - 0.2
+  - factor: cisa_kev_status
+    values:
+      - false
+      - true
+  - factor: epss_percentile
+    values:
+      - 0.0
+      - 0.25
+      - 0.5
+      - 0.75
+      - 1.0
+  - factor: csaf_vex_status
+    values:
+      - known_not_affected
+      - under_investigation
+      - known_affected
+  - factor: execution_observed
+    values:
+      - false
+      - true
+  - factor: reachability_confirmed
+    values:
+      - false
+      - true
+  - factor: asset_criticality
+    values:
+      - low
+      - medium
+      - high
+      - critical
+  - factor: deployment_scope
+    values:
+      - isolated
+      - limited
+      - broad
+      - widespread
+  - factor: mitigation_status
+    values:
+      - none
+      - planned
+      - partial
+      - deployed
+      - verified
+  - factor: conflict
+    values:
+      - false
+      - true
+  - factor: malicious_exploitation_observed
+    values:
+      - false
+      - true
+  - factor: missing_telemetry_reference
+    values:
+      - false
+      - true
+negative_cases:
+  - case_id: missing_required_source
+    expected_exception: FileNotFoundError
+    expected_message: source artefact not found
+  - case_id: malformed_sbom_json
+    expected_exception: JSONDecodeError
+    expected_message: Expecting property name enclosed in double quotes
+  - case_id: duplicate_artifact_id
+    expected_exception: ValueError
+    expected_message: duplicate artifact_id
+  - case_id: path_traversal
+    expected_exception: ValueError
+    expected_message: source path escapes repository root
+  - case_id: out_of_order_events
+    expected_exception: ValueError
+    expected_message: replay events must be time-ordered
+  - case_id: duplicate_event_id
+    expected_exception: ValueError
+    expected_message: duplicate replay event_id
+  - case_id: future_dated_release
+    expected_exception: ValueError
+    expected_message: releases future-dated source
+  - case_id: unsupported_asset_criticality
+    expected_exception: ValueError
+    expected_message: unsupported asset criticality
+outputs:
+  - stage6_2_threshold_sensitivity.csv
+  - stage6_2_clock_sensitivity.csv
+  - stage6_2_factor_sensitivity.csv
+  - stage6_2_negative_cases.csv
+  - stage6_2_scenario_stability.csv
+  - stage6_2_robustness_report.json
+  - stage6_2_output_manifest.json

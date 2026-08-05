@@ -53,3 +53,8 @@ Stage 6 adds a deterministic structured-but-unorchestrated PSIRT worksheet basel
 ## Stage 6.1 hardened matched baseline
 
 Stage 6.1 preserves the Stage 6 proxy and adds `baseline_protocol_v0.2.yaml` for a manual-assisted review. The protocol, independent event-level oracles, fairness mappings, worksheet schema, and scenario files are covered by a pre-execution freeze record. A completed run must preserve original analyst files and record blinding or prior exposure. No Stage 6.1 run is registered as `FROZEN_EVALUATION` until GitHub and clean Colab reproduction preserve the exact commit and bundle hashes.
+## Stage 6.2 robustness and sensitivity
+
+Stage 6.2 evaluates the accepted prototype through registered threshold offsets, alternative internal clock safeguards, one-factor-at-a-time evidence perturbations, and fail-closed negative cases. The protocol is `stage6_2_robustness_protocol_v0.1.yaml`; deterministic candidate outputs are stored under `stage6_2_candidate/`. These runs do not change the accepted model and remain `CANDIDATE_NOT_FROZEN`.
+
+The blinded Stage 6.1 human execution is intentionally deferred. Stage 6.2 may proceed because it does not expose the future analyst to automated outputs or alter the frozen baseline packets. Final RQ5 claims still require the completed manual baseline before evaluation freeze.

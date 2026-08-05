@@ -1,0 +1,8 @@
+scenario_id,threshold_variant_event_rows,threshold_state_changes,factor_variants,factor_state_changes,clock_variant_event_rows,clock_state_changes,total_state_changes,classification
+ghost_logger,20,3,38,6,0,0,9,multi_parameter_sensitive
+false_comfort,16,4,38,7,0,0,11,multi_parameter_sensitive
+false_comfort_control,4,0,38,7,0,0,7,multi_parameter_sensitive
+operational_outlier,16,1,38,5,0,0,6,multi_parameter_sensitive
+operational_outlier_control,8,0,38,3,0,0,3,multi_parameter_sensitive
+rapid_pivot,24,9,38,7,30,3,19,multi_parameter_sensitive
+rapid_pivot_control,24,7,38,7,30,0,14,multi_parameter_sensitive

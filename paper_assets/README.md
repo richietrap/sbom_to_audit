@@ -35,3 +35,6 @@ the authoritative online quality and Colab gates.
 ## Stage 6 pilot assets
 
 `build_stage6_assets.py` consumes the matched orchestrated and baseline outputs. It generates the primary metric comparison, scenario-level results, state divergences, conflict-precision table, source-review operation proxy, and an SVG metric figure. These remain `PILOT_BASELINE_NOT_FROZEN / NOT_ELIGIBLE`; the operation proxy must not be described as analyst time or cognitive workload.
+## Stage 6.2 candidate assets
+
+`build_stage6_2_paper_assets.py` consumes only the registered Stage 6.2 CSV and JSON outputs. It creates threshold-stability and factor-transition SVG figures plus threshold, clock, factor, negative-case, and scenario-stability tables. The assets must not be manually redrawn or presented as final results. Their manifest records source hashes, generation script, status, and manuscript ineligibility until final freeze.

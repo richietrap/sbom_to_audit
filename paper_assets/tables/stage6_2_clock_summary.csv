@@ -1,0 +1,11 @@
+scenario_id,profile_id,tau_E_hours,clock_trigger_event_ids,state_change_event_ids,state_change_count
+rapid_pivot,clock_14h,14.0,EVT-RP-018H,,0
+rapid_pivot,clock_16h,16.0,EVT-RP-018H,,0
+rapid_pivot,clock_18h_baseline,18.0,EVT-RP-018H,,0
+rapid_pivot,clock_20h,20.0,EVT-RP-020H,EVT-RP-018H;EVT-RP-020H,2
+rapid_pivot,clock_22h,22.0,,EVT-RP-018H,1
+rapid_pivot_control,clock_14h,14.0,,,0
+rapid_pivot_control,clock_16h,16.0,,,0
+rapid_pivot_control,clock_18h_baseline,18.0,,,0
+rapid_pivot_control,clock_20h,20.0,,,0
+rapid_pivot_control,clock_22h,22.0,,,0

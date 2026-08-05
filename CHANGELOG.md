@@ -1,3 +1,15 @@
+## 0.6.2 — Stage 6.2 robustness and sensitivity evaluation — 2026-08-03
+
+- added a registered Stage 6.2 threshold, clock, single-factor, and negative-case protocol;
+- added deterministic robustness runner, validator, output manifest, and scenario-stability summary;
+- added a data-driven paper asset builder with two SVG figures and five CSV tables;
+- added an isolated exact-commit Stage 6.2 Colab checkpoint with double-run byte comparison;
+- added fail-closed chronology checks for duplicate, out-of-order, pre-clock, and future-source events;
+- added Stage 6.2 unit, integration, validator, asset, temporal-integrity, and notebook-contract tests;
+- preserved EvidencePack Schema v0.2, the 34-field EC denominator, locked metrics, accepted scenario evidence, and the Stage 6.1 freeze;
+- recorded all results and paper assets as `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false`;
+- documented BUG-027 as the pre-acceptance Stage 6.1.5 formatter correction and BUG-028 as a Stage 6.2 pre-release temporal-integrity correction.
+
 # Changelog
 
 ## 0.6.1.5 — Stage 6.1.5 isolated Colab checkpoint correction — 2026-07-30

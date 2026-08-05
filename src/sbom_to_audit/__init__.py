@@ -1,3 +1,3 @@
 """Temporal vulnerability-evidence orchestration research artefact."""
 
-__version__ = "0.6.1.5"
+__version__ = "0.6.2"

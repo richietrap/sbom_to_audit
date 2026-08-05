@@ -1,0 +1,43 @@
+scenario_id,event_id,factor,variant_value,baseline_value,baseline_state,variant_state,state_changed,delta_t_hours,previous_state,E_t,A_t,I_t,M_t,U_t,C_t,rationale
+ghost_logger,EVT-GL-072H,cisa_kev_status,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.552,1.0,0.75,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+ghost_logger,EVT-GL-072H,asset_criticality,"""low""","""critical""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.375,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+ghost_logger,EVT-GL-072H,asset_criticality,"""medium""","""critical""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+ghost_logger,EVT-GL-072H,asset_criticality,"""high""","""critical""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+ghost_logger,EVT-GL-072H,deployment_scope,"""isolated""","""limited""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+ghost_logger,EVT-GL-072H,conflict,true,false,Report-Ready,Escalate,True,72.0,Report-Ready,0.85,1.0,0.75,1.0,0.0,True,Active evidence claims conflict; conflict precedence forces internal escalation.
+false_comfort,EVT-FC-072H,cisa_kev_status,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.534,1.0,0.75,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort,EVT-FC-072H,reachability_confirmed,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.85,0.6,0.75,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort,EVT-FC-072H,asset_criticality,"""low""","""high""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort,EVT-FC-072H,asset_criticality,"""medium""","""high""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort,EVT-FC-072H,deployment_scope,"""isolated""","""broad""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort,EVT-FC-072H,deployment_scope,"""limited""","""broad""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort,EVT-FC-072H,conflict,true,false,Report-Ready,Escalate,True,72.0,Report-Ready,0.85,1.0,0.75,1.0,0.0,True,Active evidence claims conflict; conflict precedence forces internal escalation.
+false_comfort_control,EVT-FCC-002H,gamma_id,0.4,1.0,Document No-Report,Monitor,True,2.0,,0.85,0.1,0.75,0.0,0.3,False,No higher-precedence transition rule is satisfied.
+false_comfort_control,EVT-FCC-002H,gamma_id,0.2,1.0,Document No-Report,Monitor,True,2.0,,0.85,0.1,0.75,0.0,0.4,False,No higher-precedence transition rule is satisfied.
+false_comfort_control,EVT-FCC-002H,csaf_vex_status,"""under_investigation""","""known_not_affected""",Document No-Report,Monitor,True,2.0,,0.85,0.6,0.75,0.0,0.0,False,No higher-precedence transition rule is satisfied.
+false_comfort_control,EVT-FCC-002H,csaf_vex_status,"""known_affected""","""known_not_affected""",Document No-Report,Report-Ready,True,2.0,,0.85,0.8,0.75,0.0,0.0,False,"Applicability, exploitation evidence, and impact meet the prototype thresholds; human review is required."
+false_comfort_control,EVT-FCC-002H,execution_observed,true,false,Document No-Report,Report-Ready,True,2.0,,0.85,1.0,0.75,0.0,0.0,False,"Applicability, exploitation evidence, and impact meet the prototype thresholds; human review is required."
+false_comfort_control,EVT-FCC-002H,reachability_confirmed,true,false,Document No-Report,Report-Ready,True,2.0,,0.85,1.0,0.75,0.0,0.0,False,"Applicability, exploitation evidence, and impact meet the prototype thresholds; human review is required."
+false_comfort_control,EVT-FCC-002H,conflict,true,false,Document No-Report,Escalate,True,2.0,,0.85,0.1,0.75,0.0,0.0,True,Active evidence claims conflict; conflict precedence forces internal escalation.
+operational_outlier,EVT-OO-072H,cisa_kev_status,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.432,1.0,1.0,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+operational_outlier,EVT-OO-072H,reachability_confirmed,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.85,0.6,1.0,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+operational_outlier,EVT-OO-072H,asset_criticality,"""low""","""critical""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+operational_outlier,EVT-OO-072H,deployment_scope,"""isolated""","""widespread""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.0,False,No higher-precedence transition rule is satisfied.
+operational_outlier,EVT-OO-072H,conflict,true,false,Report-Ready,Escalate,True,72.0,Report-Ready,0.85,1.0,1.0,1.0,0.0,True,Active evidence claims conflict; conflict precedence forces internal escalation.
+operational_outlier_control,EVT-OOC-006H,asset_criticality,"""critical""","""medium""",Monitor,Report-Ready,True,6.0,Monitor,0.85,1.0,0.75,0.0,0.0,False,"Applicability, exploitation evidence, and impact meet the prototype thresholds; human review is required."
+operational_outlier_control,EVT-OOC-006H,deployment_scope,"""widespread""","""limited""",Monitor,Report-Ready,True,6.0,Monitor,0.85,1.0,0.75,0.0,0.0,False,"Applicability, exploitation evidence, and impact meet the prototype thresholds; human review is required."
+operational_outlier_control,EVT-OOC-006H,conflict,true,false,Monitor,Escalate,True,6.0,Monitor,0.85,1.0,0.5,0.0,0.0,True,Active evidence claims conflict; conflict precedence forces internal escalation.
+rapid_pivot,EVT-RP-072H,cisa_kev_status,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.48,1.0,0.75,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot,EVT-RP-072H,reachability_confirmed,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.85,0.42,0.75,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot,EVT-RP-072H,asset_criticality,"""low""","""high""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot,EVT-RP-072H,asset_criticality,"""medium""","""high""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot,EVT-RP-072H,deployment_scope,"""isolated""","""broad""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot,EVT-RP-072H,deployment_scope,"""limited""","""broad""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot,EVT-RP-072H,conflict,true,false,Report-Ready,Escalate,True,72.0,Report-Ready,0.85,1.0,0.75,1.0,0.15,True,Active evidence claims conflict; conflict precedence forces internal escalation.
+rapid_pivot_control,EVT-RPC-072H,cisa_kev_status,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.48,1.0,0.75,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot_control,EVT-RPC-072H,reachability_confirmed,false,true,Report-Ready,Monitor,True,72.0,Report-Ready,0.85,0.42,0.75,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot_control,EVT-RPC-072H,asset_criticality,"""low""","""high""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot_control,EVT-RPC-072H,asset_criticality,"""medium""","""high""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot_control,EVT-RPC-072H,deployment_scope,"""isolated""","""broad""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.5,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot_control,EVT-RPC-072H,deployment_scope,"""limited""","""broad""",Report-Ready,Monitor,True,72.0,Report-Ready,0.85,1.0,0.625,1.0,0.15,False,No higher-precedence transition rule is satisfied.
+rapid_pivot_control,EVT-RPC-072H,conflict,true,false,Report-Ready,Escalate,True,72.0,Report-Ready,0.85,1.0,0.75,1.0,0.15,True,Active evidence claims conflict; conflict precedence forces internal escalation.

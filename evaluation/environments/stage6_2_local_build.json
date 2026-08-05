@@ -1,0 +1,12 @@
+{
+  "environment_id": "stage6-2-local-build",
+  "environment_class": "candidate_development_validation",
+  "stage": "6.2",
+  "package_version": "0.6.2",
+  "python_version": "3.13.5",
+  "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+  "python_policy": "assistant-side isolated candidate build; authoritative static toolchain remains GitHub and user virtual environment",
+  "evaluation_protocol": "evaluation/stage6_2_robustness_protocol_v0.1.yaml",
+  "evaluation_status": "CANDIDATE_NOT_FROZEN",
+  "recorded_at": "2026-08-03T00:00:00Z"
+}

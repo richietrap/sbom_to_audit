@@ -183,3 +183,8 @@ Across the four primary controlled families, the pilot comparison reports higher
 Independent state, conflict, and clock-opportunity oracles are stored under `evaluation/oracles/` and are hashed with the protocol, mappings, worksheet schema, and scenario files in `evaluation/freeze/stage6_1_protocol_freeze.json`. The seven locked metrics and EvidencePack v0.2 remain unchanged. Common-field completeness, partial lineage, equivalent record-bundle generation, like-for-like source-access accounting, conflict precision, and human Time to Decision are supplemental fairness controls.
 
 Stage 6.1 is currently an implementation candidate awaiting genuine manual execution. The blank workbook is `data/baseline_templates/manual_psirt_worksheet.xlsx`; the canonical exchange files are the adjacent CSV/YAML templates. The final Colab checkpoint rejects mutable branch references such as `main`.
+## Stage 6.2 robustness and sensitivity evaluation
+
+Stage 6.2 adds a deterministic robustness harness for threshold, clock, identity, exploitation, applicability, scope, mitigation, conflict, missingness, malformed-input, and temporal-integrity perturbations. It preserves EvidencePack Schema v0.2, the 34-field EC denominator, the seven locked metrics, the accepted scenario evidence, and the Stage 6.1 pre-execution freeze.
+
+Candidate outputs are stored under `evaluation/stage6_2_candidate/` and candidate figures and tables are generated from those machine-readable results. They remain `CANDIDATE_NOT_FROZEN` and are not manuscript-eligible until GitHub, exact-commit Colab reproduction, independent review, and the final evaluation freeze. The blinded manual baseline is deferred but still required before final RQ5 comparative claims.

@@ -217,6 +217,84 @@ def _deterministic_stage6_1_packets(report: ReleaseReport) -> None:
             report.deterministic_hashes[f"stage6_1_packets/{relative.as_posix()}"] = left_hash
 
 
+def _deterministic_stage6_2(report: ReleaseReport) -> None:
+    with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-2-") as temp:
+        base = Path(temp)
+        first = base / "results-first"
+        second = base / "results-second"
+        first_assets = base / "assets-first"
+        second_assets = base / "assets-second"
+        command = [
+            sys.executable,
+            "scripts/run_stage6_2_robustness.py",
+            "--destination",
+        ]
+        _run(report, "Stage 6.2 robustness run A", command + [str(first)])
+        _run(report, "Stage 6.2 robustness run B", command + [str(second)])
+        if report.status == "FAIL":
+            return
+        for label, destination in (("A", first), ("B", second)):
+            _run(
+                report,
+                f"Stage 6.2 result validation {label}",
+                [
+                    sys.executable,
+                    "scripts/validate_stage6_2_evaluation.py",
+                    "--results",
+                    str(destination),
+                ],
+            )
+        if report.status == "FAIL":
+            return
+
+        first_files = sorted(path.relative_to(first) for path in first.rglob("*") if path.is_file())
+        second_files = sorted(
+            path.relative_to(second) for path in second.rglob("*") if path.is_file()
+        )
+        if first_files != second_files:
+            report.fail("Stage 6.2 result inventories differ")
+            return
+        for relative in first_files:
+            left_hash = _sha256(first / relative)
+            right_hash = _sha256(second / relative)
+            if left_hash != right_hash:
+                report.fail(f"non-deterministic Stage 6.2 result: {relative}")
+            report.deterministic_hashes[f"stage6_2/{relative.as_posix()}"] = left_hash
+
+        asset_command = [
+            sys.executable,
+            "scripts/build_stage6_2_paper_assets.py",
+            "--results",
+        ]
+        _run(
+            report,
+            "Stage 6.2 paper assets A",
+            asset_command + [str(first), "--destination", str(first_assets)],
+        )
+        _run(
+            report,
+            "Stage 6.2 paper assets B",
+            asset_command + [str(second), "--destination", str(second_assets)],
+        )
+        if report.status == "FAIL":
+            return
+        first_asset_files = sorted(
+            path.relative_to(first_assets) for path in first_assets.rglob("*") if path.is_file()
+        )
+        second_asset_files = sorted(
+            path.relative_to(second_assets) for path in second_assets.rglob("*") if path.is_file()
+        )
+        if first_asset_files != second_asset_files:
+            report.fail("Stage 6.2 paper-asset inventories differ")
+            return
+        for relative in first_asset_files:
+            left_hash = _sha256(first_assets / relative)
+            right_hash = _sha256(second_assets / relative)
+            if left_hash != right_hash:
+                report.fail(f"non-deterministic Stage 6.2 paper asset: {relative}")
+            report.deterministic_hashes[f"stage6_2_assets/{relative.as_posix()}"] = left_hash
+
+
 def run_release_check() -> ReleaseReport:
     report = ReleaseReport()
     commands = [
@@ -272,6 +350,18 @@ def run_release_check() -> ReleaseReport:
             ],
         ),
         (
+            "Stage 6.2 protocol validation",
+            [sys.executable, "scripts/validate_stage6_2_evaluation.py"],
+        ),
+        (
+            "Stage 6.2 Colab notebook contract",
+            [
+                sys.executable,
+                "scripts/validate_stage6_2_colab_notebook.py",
+                "notebooks/stage6_2_colab_checkpoint.ipynb",
+            ],
+        ),
+        (
             "repository validation",
             [sys.executable, "scripts/validate_repository.py", "--strict-sources"],
         ),
@@ -297,6 +387,8 @@ def run_release_check() -> ReleaseReport:
         _deterministic_stage6_baseline(report)
     if report.status == "PASS":
         _deterministic_stage6_1_packets(report)
+    if report.status == "PASS":
+        _deterministic_stage6_2(report)
     return report
 
 

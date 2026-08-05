@@ -1,0 +1,9 @@
+case_id,expected_exception,expected_message,observed_exception,observed_message,rejected_as_expected
+missing_required_source,FileNotFoundError,source artefact not found,FileNotFoundError,source artefact not found: data/sbom/stage6_2_missing.cdx.json,True
+malformed_sbom_json,JSONDecodeError,Expecting property name enclosed in double quotes,JSONDecodeError,Expecting property name enclosed in double quotes: line 1 column 28 (char 27),True
+duplicate_artifact_id,ValueError,duplicate artifact_id,ValueError,duplicate artifact_id: ART-SBOM-001,True
+path_traversal,ValueError,source path escapes repository root,ValueError,source path escapes repository root: ../stage6_2_escape.json,True
+out_of_order_events,ValueError,replay events must be time-ordered,ValueError,replay events must be time-ordered,True
+duplicate_event_id,ValueError,duplicate replay event_id,ValueError,duplicate replay event_id: EVT-GL-002H,True
+future_dated_release,ValueError,releases future-dated source,ValueError,event EVT-GL-002H releases future-dated source ART-SBOM-001,True
+unsupported_asset_criticality,ValueError,unsupported asset criticality,ValueError,unsupported asset criticality: 'mission_supreme',True

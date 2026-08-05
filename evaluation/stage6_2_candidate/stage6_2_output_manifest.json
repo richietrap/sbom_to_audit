@@ -1,0 +1,22 @@
+{
+  "run_id": "STAGE6-2-ROBUSTNESS-CANDIDATE-001",
+  "algorithm": "sha256",
+  "source_files": {
+    "evaluation/stage6_2_robustness_protocol_v0.1.yaml": "8cdb40b89d49e0ebc725c887ecd0faf9295f67c1dc6d36576b807bc7efc27148",
+    "data/scenarios/ghost_logger.yaml": "418753c6677348a05a91fb2f2ccad6d763a122f00d6f8be2238a1203d6281cd1",
+    "data/scenarios/false_comfort.yaml": "6b99d0d769302b6a304273d669a368ea6e75677fc5dfabd9622d93e0d619bfe3",
+    "data/scenarios/false_comfort_control.yaml": "e0917a50cd6844781728e832d5663ce1ee45bfde27890b4ab063c61d9a412868",
+    "data/scenarios/operational_outlier.yaml": "61970ea24db5434d7b5d6e5c9be311f1e1ebf15ff70b627f1dcf4b1b83a51f6a",
+    "data/scenarios/operational_outlier_control.yaml": "05add8618bdfba0c403846700b07fbea62db09d87d5c51c3b251b4750666ea5e",
+    "data/scenarios/rapid_pivot.yaml": "c10ee2e9121ccce683937c6050cf4b7dc7a8be392250ef706731a978747ab82a",
+    "data/scenarios/rapid_pivot_control.yaml": "d1b1ca30c450a053b35253223efe6e28df2888805464b644ab6e879fe938a1cf"
+  },
+  "output_files": {
+    "stage6_2_threshold_sensitivity.csv": "17833779d4d983405c47139eef6b08d3a8fc7501f7cf04a54a450a1e751bf5dc",
+    "stage6_2_clock_sensitivity.csv": "f4634882c44619e5ccd8418e6189ec1d8bec3e8b6bee82a26ddf9c0b1e97b22e",
+    "stage6_2_factor_sensitivity.csv": "c6d21b35ff89524b1714840018e8abee56e99e00e9ad18f7cfebc88e2a4c9f81",
+    "stage6_2_negative_cases.csv": "76f3fe8fdc21fb3a2e132e62fe92d9b2e39e20f48eb6ce23285e6bdf9154584c",
+    "stage6_2_scenario_stability.csv": "33a5536cb56727943782f22f797372aa33c9962097a910fdd7dcdda1305061c2",
+    "stage6_2_robustness_report.json": "2cbf98675a43eb28b3db3e00915b8f0c8a91fef5be55964269384e4dbdcf0250"
+  }
+}

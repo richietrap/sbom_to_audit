@@ -27,6 +27,7 @@ from sbom_to_audit.historical.epss_verification import verify_offline_contract
 from sbom_to_audit.historical.public_replay import run_public_historical_replay
 from sbom_to_audit.ingestion.source_registry import SourceRegistry
 from sbom_to_audit.model.metrics import MANDATORY_FIELDS
+from sbom_to_audit.utils.hashing import sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
 GENERATED_OUTPUT_DIRS = {
@@ -86,6 +87,10 @@ LOCKED_RECOMMENDED_STATES = {
     "Report",
     "Document No-Report",
 }
+
+
+def _sha256(path: Path) -> str:
+    return sha256_file(path)
 
 
 @dataclass
@@ -505,6 +510,85 @@ def validate_stage6_1_controls(report: ValidationReport) -> None:
     }
 
 
+def validate_stage6_2_controls(report: ValidationReport) -> None:
+    """Validate the registered Stage 6.2 protocol, candidate results, and asset boundary."""
+
+    protocol_path = ROOT / "evaluation/stage6_2_robustness_protocol_v0.1.yaml"
+    results_root = ROOT / "evaluation/stage6_2_candidate"
+    try:
+        protocol = _load_yaml(protocol_path)
+        result = json.loads(
+            (results_root / "stage6_2_robustness_report.json").read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            (results_root / "stage6_2_output_manifest.json").read_text(encoding="utf-8")
+        )
+        asset_manifest = json.loads(
+            (ROOT / "paper_assets/data/stage6_2_asset_manifest.json").read_text(encoding="utf-8")
+        )
+    except (OSError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        report.error(f"Stage 6.2 control validation failed: {exc}")
+        return
+
+    expected_scenarios = {
+        "ghost_logger",
+        "false_comfort",
+        "false_comfort_control",
+        "operational_outlier",
+        "operational_outlier_control",
+        "rapid_pivot",
+        "rapid_pivot_control",
+    }
+    expected_metrics = ["EC", "TR", "CD", "CA", "AR", "SC", "EPG"]
+    if set(protocol.get("scenario_ids") or []) != expected_scenarios:
+        report.error("Stage 6.2 scenario registry differs from the seven controlled scenarios")
+    locked = protocol.get("locked_controls") or {}
+    if str(locked.get("evidencepack_schema_version")) != "0.2":
+        report.error("Stage 6.2 EvidencePack schema boundary changed")
+    if int(locked.get("evidence_completeness_denominator", -1)) != 34:
+        report.error("Stage 6.2 EC denominator changed")
+    if list(locked.get("metrics") or []) != expected_metrics:
+        report.error("Stage 6.2 locked metric list changed")
+    if protocol.get("evaluation_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.2 protocol must remain CANDIDATE_NOT_FROZEN")
+    if result.get("evaluation_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.2 candidate report status changed")
+    if result.get("manuscript_eligible") is not False:
+        report.error("Stage 6.2 candidate report became prematurely manuscript-eligible")
+    if result.get("locked_controls") != locked:
+        report.error("Stage 6.2 candidate report changed the locked controls")
+    if int(result.get("negative_cases_rejected", -1)) != 8:
+        report.error("Stage 6.2 did not preserve all eight fail-closed negative cases")
+
+    output_hashes = manifest.get("output_files") or {}
+    for name, expected_hash in output_hashes.items():
+        path = results_root / str(name)
+        if not path.is_file() or _sha256(path) != expected_hash:
+            report.error(f"Stage 6.2 candidate output hash mismatch: {name}")
+
+    if asset_manifest.get("asset_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.2 asset status changed")
+    if asset_manifest.get("manuscript_eligible") is not False:
+        report.error("Stage 6.2 assets became prematurely manuscript-eligible")
+    for relative, expected_hash in (asset_manifest.get("generated_asset_hashes") or {}).items():
+        path = ROOT / "paper_assets" / str(relative)
+        if not path.is_file() or _sha256(path) != expected_hash:
+            report.error(f"Stage 6.2 paper-asset hash mismatch: {relative}")
+
+    report.checks["stage6_2_controls"] = {
+        "protocol_id": protocol.get("protocol_id"),
+        "protocol_version": protocol.get("protocol_version"),
+        "evaluation_status": protocol.get("evaluation_status"),
+        "scenario_count": len(protocol.get("scenario_ids") or []),
+        "event_count": result.get("event_count"),
+        "threshold_event_rows": result.get("threshold_event_rows"),
+        "clock_event_rows": result.get("clock_event_rows"),
+        "factor_variant_rows": result.get("factor_variant_rows"),
+        "negative_cases_rejected": result.get("negative_cases_rejected"),
+        "manuscript_eligible": result.get("manuscript_eligible"),
+    }
+
+
 def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
@@ -546,6 +630,7 @@ def run_validation(strict_sources: bool = False) -> ValidationReport:
     validate_evaluation_registry(report)
     validate_baseline_protocol(report)
     validate_stage6_1_controls(report)
+    validate_stage6_2_controls(report)
     validate_text_integrity(report)
     return report
 

@@ -1,0 +1,39 @@
+{
+  "asset_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "source_run_ids": [
+    "STAGE6-2-ROBUSTNESS-CANDIDATE-001"
+  ],
+  "generation_script": "scripts/build_stage6_2_paper_assets.py",
+  "generation_script_hash": "ccf17dfee5e49e0c3fc0ec257800ca3faf3a62b32544f80ae1b0ad060c78870b",
+  "source_data_hashes": {
+    "stage6_2_clock_sensitivity.csv": "f4634882c44619e5ccd8418e6189ec1d8bec3e8b6bee82a26ddf9c0b1e97b22e",
+    "stage6_2_factor_sensitivity.csv": "c6d21b35ff89524b1714840018e8abee56e99e00e9ad18f7cfebc88e2a4c9f81",
+    "stage6_2_negative_cases.csv": "76f3fe8fdc21fb3a2e132e62fe92d9b2e39e20f48eb6ce23285e6bdf9154584c",
+    "stage6_2_output_manifest.json": "f01bccb3ac091dd591a18ac2fa5d08df00343b623107348e9b49e80d3daae9be",
+    "stage6_2_robustness_report.json": "2cbf98675a43eb28b3db3e00915b8f0c8a91fef5be55964269384e4dbdcf0250",
+    "stage6_2_scenario_stability.csv": "33a5536cb56727943782f22f797372aa33c9962097a910fdd7dcdda1305061c2",
+    "stage6_2_threshold_sensitivity.csv": "17833779d4d983405c47139eef6b08d3a8fc7501f7cf04a54a450a1e751bf5dc"
+  },
+  "generated_asset_hashes": {
+    "tables/stage6_2_threshold_summary.csv": "ecec26a6dcffe7abf968b0a32115ffb0c62df88a8e2670eab856a768d4c4c9e2",
+    "tables/stage6_2_clock_summary.csv": "ae7d1164e1d912589ced349817447a3193c45bcbec29009b8d2e14a996914628",
+    "tables/stage6_2_factor_transitions.csv": "e21c819ad89b634a95e0934dfb3d2882f1f28a41977c937b02ed2f78faab8b3a",
+    "tables/stage6_2_negative_cases.csv": "76f3fe8fdc21fb3a2e132e62fe92d9b2e39e20f48eb6ce23285e6bdf9154584c",
+    "tables/stage6_2_scenario_stability.csv": "33a5536cb56727943782f22f797372aa33c9962097a910fdd7dcdda1305061c2",
+    "figures/stage6_2_threshold_stability.svg": "755441579b41efc17fea4bfd6aca194ba71125bdf13aea4ac26f1f14bd6c9a77",
+    "figures/stage6_2_factor_state_changes.svg": "6a0780213bcbaca74e0f5f1dc0ef7daa9cbe1731a88dbe86b83e9032c075b2cc"
+  },
+  "interpretation_boundary": [
+    "The registered perturbations test deterministic prototype behaviour, not legal correctness.",
+    "Threshold and clock sweeps are sensitivity analyses and do not validate or optimise parameters.",
+    "Controlled evidence toggles are evaluation-only counterfactuals, not observed incidents.",
+    "Candidate outputs remain ineligible until exact-commit reproduction and final freeze."
+  ],
+  "limitations": [
+    "Single-factor evidence analysis evaluates the final registered event boundary rather than every possible multivariate trajectory.",
+    "The controlled scenario families do not establish industrial generalisability.",
+    "The registered grid is finite and cannot establish global stability outside tested values.",
+    "Manual-assisted baseline execution remains deferred and is not part of Stage 6.2."
+  ]
+}

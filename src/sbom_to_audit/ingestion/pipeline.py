@@ -41,7 +41,45 @@ from sbom_to_audit.parsers.telemetry_parser import (
     reachability_confirmed,
 )
 from sbom_to_audit.utils.hashing import sha256_json
-from sbom_to_audit.utils.time import delta_hours
+from sbom_to_audit.utils.time import delta_hours, parse_timestamp
+
+
+def _validate_replay_events(
+    events: list[dict[str, Any]],
+    *,
+    registry: SourceRegistry,
+    clock_start_time: str,
+) -> None:
+    """Fail closed on duplicate, retrograde, or temporally leaked replay events."""
+
+    if not events:
+        raise ValueError("real-format scenario requires a non-empty replay_events list")
+
+    clock_start = parse_timestamp(clock_start_time)
+    previous_timestamp = clock_start
+    seen_event_ids: set[str] = set()
+    for event in events:
+        event_id = str(event.get("event_id") or "").strip()
+        timestamp = str(event.get("timestamp") or "").strip()
+        if not event_id or not timestamp:
+            raise ValueError("replay events require event_id and timestamp")
+        if event_id in seen_event_ids:
+            raise ValueError(f"duplicate replay event_id: {event_id}")
+        seen_event_ids.add(event_id)
+
+        event_timestamp = parse_timestamp(timestamp)
+        if event_timestamp < clock_start:
+            raise ValueError(f"event {event_id} precedes the reporting-clock start")
+        if event_timestamp < previous_timestamp:
+            raise ValueError("replay events must be time-ordered")
+        previous_timestamp = event_timestamp
+
+        for artifact_id in event.get("release_artifact_ids") or []:
+            source = registry.source(str(artifact_id))
+            if parse_timestamp(source.timestamp) > event_timestamp:
+                raise ValueError(
+                    f"event {event_id} releases future-dated source {source.artifact_id}"
+                )
 
 
 def _claim(
@@ -766,6 +804,10 @@ def replay_real_format_scenario(
 
     source_ids = {item["artifact_id"] for item in catalog}
     t0 = scenario["case_metadata"]["clock_start_time"]
+    replay_events = scenario.get("replay_events") or []
+    if not isinstance(replay_events, list):
+        raise ValueError("real-format scenario replay_events must be a list")
+    _validate_replay_events(replay_events, registry=registry, clock_start_time=t0)
     milestones, milestone_applicability = _deadline_milestones(
         scenario.get("deadline_profile") or {}
     )
@@ -786,7 +828,7 @@ def replay_real_format_scenario(
     final_rationale = ""
     final_timestamp = t0
 
-    for event in scenario.get("replay_events") or []:
+    for event in replay_events:
         new_ids = {str(item) for item in (event.get("release_artifact_ids") or [])}
         unknown = sorted(new_ids - source_ids)
         if unknown:
