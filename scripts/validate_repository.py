@@ -697,6 +697,114 @@ def validate_stage6_3_controls(report: ValidationReport) -> None:
     }
 
 
+def validate_stage6_4_controls(report: ValidationReport) -> None:
+    """Validate the Stage 6.4 performance boundary and observed candidate assets."""
+
+    protocol_path = ROOT / "evaluation/stage6_4_performance_protocol_v0.1.yaml"
+    results_root = ROOT / "evaluation/stage6_4_candidate"
+    try:
+        protocol = _load_yaml(protocol_path)
+        performance = json.loads(
+            (results_root / "stage6_4_performance_report.json").read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            (results_root / "stage6_4_output_manifest.json").read_text(encoding="utf-8")
+        )
+        asset_manifest = json.loads(
+            (ROOT / "paper_assets/data/stage6_4_asset_manifest.json").read_text(encoding="utf-8")
+        )
+    except (OSError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        report.error(f"Stage 6.4 control validation failed: {exc}")
+        return
+
+    expected_metrics = ["EC", "TR", "CD", "CA", "AR", "SC", "EPG"]
+    expected_axes = {
+        "sbom_components",
+        "telemetry_records",
+        "source_artifacts",
+        "replay_events",
+    }
+    locked = protocol.get("locked_controls") or {}
+    axes = protocol.get("scale_axes") or {}
+    if protocol.get("protocol_id") != "stage6_4_performance_and_scale":
+        report.error("Stage 6.4 protocol_id changed")
+    if str(protocol.get("protocol_version")) != "0.1":
+        report.error("Stage 6.4 protocol version changed")
+    if protocol.get("evaluation_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.4 protocol must remain CANDIDATE_NOT_FROZEN")
+    if protocol.get("manuscript_eligible") is not False:
+        report.error("Stage 6.4 protocol became prematurely manuscript-eligible")
+    if set(axes) != expected_axes:
+        report.error("Stage 6.4 scale-axis registry changed")
+    if any(len(axes.get(axis) or []) != 5 for axis in expected_axes):
+        report.error("Stage 6.4 each scale axis must contain five registered values")
+    if str(locked.get("evidencepack_schema_version")) != "0.2":
+        report.error("Stage 6.4 EvidencePack schema boundary changed")
+    if int(locked.get("evidence_completeness_denominator", -1)) != 34:
+        report.error("Stage 6.4 EC denominator changed")
+    if list(locked.get("metrics") or []) != expected_metrics:
+        report.error("Stage 6.4 locked metric list changed")
+    if float(locked.get("tau_E_hours", -1)) != 18.0:
+        report.error("Stage 6.4 tau_E boundary changed")
+    if locked.get("production_thresholds_changed") is not False:
+        report.error("Stage 6.4 changed production thresholds")
+    if locked.get("scenario_oracles_changed") is not False:
+        report.error("Stage 6.4 changed scenario oracles")
+
+    if performance.get("profile") != "full":
+        report.error("Stage 6.4 committed candidate must use the full profile")
+    if performance.get("evaluation_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.4 candidate report status changed")
+    if performance.get("manuscript_eligible") is not False:
+        report.error("Stage 6.4 candidate became prematurely manuscript-eligible")
+    if performance.get("locked_controls") != locked:
+        report.error("Stage 6.4 candidate changed the locked controls")
+    if int(performance.get("axis_count", -1)) != 4:
+        report.error("Stage 6.4 candidate axis count changed")
+    if int(performance.get("workload_count", -1)) != 20:
+        report.error("Stage 6.4 candidate workload count changed")
+    if int(performance.get("measured_runs", -1)) != 10:
+        report.error("Stage 6.4 measured-run count changed")
+    if int(performance.get("warmup_runs", -1)) != 3:
+        report.error("Stage 6.4 warm-up count changed")
+    if performance.get("all_decision_equivalent") is not True:
+        report.error("Stage 6.4 candidate changed decision semantics under scale")
+
+    output_hashes = manifest.get("output_files") or {}
+    expected_outputs = {
+        "stage6_4_performance_report.json",
+        "stage6_4_raw_trials.csv",
+        "stage6_4_scale_summary.csv",
+    }
+    if set(output_hashes) != expected_outputs:
+        report.error("Stage 6.4 candidate output inventory changed")
+    for name, expected_hash in output_hashes.items():
+        path = results_root / str(name)
+        if not path.is_file() or _sha256(path) != expected_hash:
+            report.error(f"Stage 6.4 candidate output hash mismatch: {name}")
+
+    if asset_manifest.get("asset_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.4 asset status changed")
+    if asset_manifest.get("manuscript_eligible") is not False:
+        report.error("Stage 6.4 assets became prematurely manuscript-eligible")
+    for relative, expected_hash in (asset_manifest.get("generated_asset_hashes") or {}).items():
+        path = ROOT / "paper_assets" / str(relative)
+        if not path.is_file() or _sha256(path) != expected_hash:
+            report.error(f"Stage 6.4 paper-asset hash mismatch: {relative}")
+
+    report.checks["stage6_4_controls"] = {
+        "protocol_id": protocol.get("protocol_id"),
+        "protocol_version": protocol.get("protocol_version"),
+        "evaluation_status": protocol.get("evaluation_status"),
+        "axis_count": performance.get("axis_count"),
+        "workload_count": performance.get("workload_count"),
+        "warmup_runs": performance.get("warmup_runs"),
+        "measured_runs": performance.get("measured_runs"),
+        "all_decision_equivalent": performance.get("all_decision_equivalent"),
+        "manuscript_eligible": performance.get("manuscript_eligible"),
+    }
+
+
 def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
@@ -740,6 +848,7 @@ def run_validation(strict_sources: bool = False) -> ValidationReport:
     validate_stage6_1_controls(report)
     validate_stage6_2_controls(report)
     validate_stage6_3_controls(report)
+    validate_stage6_4_controls(report)
     validate_text_integrity(report)
     return report
 

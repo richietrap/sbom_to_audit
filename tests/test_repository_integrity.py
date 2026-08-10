@@ -28,8 +28,8 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
     }
     assert report.checks["evaluation_registry"] == {
         "scenarios": 10,
-        "runs": 31,
-        "environments": 11,
+        "runs": 32,
+        "environments": 12,
     }
     assert report.checks["baseline_protocol"] == {
         "protocol_id": "matched_unorchestrated_psirt_worksheet",
@@ -40,6 +40,10 @@ def test_repository_validator_passes_with_all_strict_sources() -> None:
     assert report.checks["stage6_3_controls"]["mutant_count"] == 26
     assert report.checks["stage6_3_controls"]["family_count"] == 7
     assert report.checks["stage6_3_controls"]["manuscript_eligible"] is False
+    assert report.checks["stage6_4_controls"]["axis_count"] == 4
+    assert report.checks["stage6_4_controls"]["workload_count"] == 20
+    assert report.checks["stage6_4_controls"]["all_decision_equivalent"] is True
+    assert report.checks["stage6_4_controls"]["manuscript_eligible"] is False
 
 
 def test_gitignore_excludes_generated_outputs_and_local_quality_caches() -> None:

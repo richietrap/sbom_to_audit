@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.3 is the Stage 6.3 controlled mutation-testing candidate. It preserves the accepted Stage 6.2 checkpoint, applies 26 registered first-order mutants only in disposable repository copies, records baseline detection separately from transparent safety-test strengthening, and generates deterministic candidate evidence and paper assets. Stage 6.3 remains `CANDIDATE_NOT_FROZEN`; neither its mutation scores nor its figures and tables are manuscript eligible before exact-commit GitHub and Colab reproduction and the final evaluation freeze. The Stage 6.1 blinded manual baseline remains deferred and unexecuted.
+Version 0.6.4 is the Stage 6.4 performance-and-scale evaluation candidate. It preserves the accepted Stage 6.3 mutation-testing checkpoint and adds an environment-recorded benchmark harness over four one-factor-at-a-time scale axes: SBOM component count, telemetry-record count, source-artifact count, and temporal replay-event count. Each scale fixture must preserve the accepted Ghost-Logger decision semantics. Timing observations are intentionally environment-specific and are not required to be byte-identical across runs. Stage 6.4 remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending exact-commit reproduction, independent audit, the deferred manual baseline, and the final evaluation freeze.
 
 ## Research questions
 
@@ -192,3 +192,9 @@ Candidate outputs are stored under `evaluation/stage6_2_candidate/` and candidat
 ## Stage 6.3 controlled mutation testing
 
 Stage 6.3 evaluates whether the verification system detects plausible faults in temporal decision logic, conflict handling, authorisation, source integrity, identity uncertainty, evidence semantics, and metric computation. Mutants are pre-registered, first order, exact-text, and applied one at a time in a temporary repository copy. Baseline survivors and the targeted tests added in response remain separately recorded. A bounded mutation score is not represented as proof of exhaustive correctness or absence of defects.
+
+## Stage 6.4 performance and scale evaluation
+
+Stage 6.4 characterizes the computational behaviour of the accepted orchestration path without changing production thresholds or scenario oracles. The registered protocol scales four dimensions independently: CycloneDX component count, runtime-telemetry record count, registered source-artifact count, and replay-event count. A fresh worker process is used for each workload; warm-up runs are excluded; measured runs report median and nearest-rank p95 wall time, CPU time, peak resident memory, input/output size, relative slowdown, and scale-unit throughput.
+
+Scale fixtures extend the controlled Ghost-Logger case with deterministic decoys or no-op temporal events. Every workload must preserve the unscaled final state, authorized state, orchestration scores, and the registered outcomes of the original five events. The benchmark has no pass/fail latency threshold. Hardware-specific values must be reported with their environment metadata and must not be pooled across non-equivalent environments.

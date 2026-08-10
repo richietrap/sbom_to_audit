@@ -125,3 +125,9 @@ The Stage 6.2 notebook and release checker independently regenerate results and 
 ## Stage 6.3 mutation-quality gate
 
 The Stage 6.3 release gate validates the mutation protocol and candidate hashes, compiles every registered mutant, runs deterministic mutation and asset generation twice, and rejects invalid, timed-out, missing, reordered, or source-drifted mutants. The accepted source tree is never mutated in place. Ruff formatting must run after the final source edit and before regenerating the Stage 6.3 result and asset manifests; every subsequent gate must then be rerun without further edits.
+
+## Stage 6.4 performance-quality gate
+
+Stage 6.4 separates deterministic correctness from non-deterministic timing. The release gate validates the registered scale protocol, a smoke benchmark in fresh worker processes, semantic decision equivalence, candidate-output hashes, environment metadata, paper-asset hashes, and the existing Stage 6.1–6.3 controls. It must not assert byte-identical latency or memory values across independent runs.
+
+The local acceptance order remains strict: complete all source and documentation edits; apply Ruff lint fixes and Ruff formatting; run the full Stage 6.4 benchmark and regenerate its registered hashes/assets; then run only non-mutating quality, test, protocol, repository, release, and whitespace checks. Any source edit after the benchmark requires regeneration and a complete re-run.

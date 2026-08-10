@@ -1,0 +1,71 @@
+{
+  "run_id": "STAGE6-4-PERFORMANCE-CANDIDATE-001",
+  "protocol_id": "stage6_4_performance_and_scale",
+  "protocol_version": "0.1",
+  "evaluation_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "profile": "full",
+  "source_commit": "df749db9642e59a3955000fc5bbb127bf25ef9c2",
+  "source_tree_dirty": true,
+  "environment": {
+    "python_version": "3.12.3",
+    "python_implementation": "CPython",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "cpu_count": 32,
+    "physical_memory_bytes": 8168517632
+  },
+  "warmup_runs": 3,
+  "measured_runs": 10,
+  "workload_count": 20,
+  "axis_count": 4,
+  "all_decision_equivalent": true,
+  "canonical_decision_fingerprint_sha256": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+  "semantic_fingerprint_hashes": {
+    "S64-REPLAY-EVENTS-00005": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-REPLAY-EVENTS-00010": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-REPLAY-EVENTS-00025": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-REPLAY-EVENTS-00050": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-REPLAY-EVENTS-00100": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SBOM-COMPONENTS-00002": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SBOM-COMPONENTS-00100": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SBOM-COMPONENTS-01000": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SBOM-COMPONENTS-05000": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SBOM-COMPONENTS-10000": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SOURCE-ARTIFACTS-00015": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SOURCE-ARTIFACTS-00025": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SOURCE-ARTIFACTS-00050": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SOURCE-ARTIFACTS-00100": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-SOURCE-ARTIFACTS-00200": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-TELEMETRY-RECORDS-00001": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-TELEMETRY-RECORDS-00010": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-TELEMETRY-RECORDS-00100": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-TELEMETRY-RECORDS-00500": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c",
+    "S64-TELEMETRY-RECORDS-01000": "6d2cfda4e18c62d6f48215659326119a8f802f86f692609718ea535f43d3821c"
+  },
+  "locked_controls": {
+    "evidencepack_schema_version": "0.2",
+    "evidence_completeness_denominator": 34,
+    "metrics": [
+      "EC",
+      "TR",
+      "CD",
+      "CA",
+      "AR",
+      "SC",
+      "EPG"
+    ],
+    "tau_E_hours": 18.0,
+    "production_thresholds_changed": false,
+    "scenario_oracles_changed": false
+  },
+  "interpretation_limits": [
+    "Results are environment-specific and must be reported with hardware and runtime metadata.",
+    "Timing observations are intentionally non-deterministic; fixture definitions and correctness outputs are deterministic.",
+    "Cross-environment latency values must not be pooled as if the hardware were equivalent.",
+    "Synthetic scale fixtures extend a controlled scenario and are not industrial deployment traces.",
+    "No absolute latency or throughput value is a legal, operational, or production-readiness threshold.",
+    "Final manuscript use requires exact-commit reproduction, independent result audit, and final evaluation freeze."
+  ]
+}

@@ -89,3 +89,7 @@ The Stage 6.2 robustness outputs and figures are locally generated candidates, n
 - Exact-text mutation operators fail closed after source refactoring and require protocol maintenance.
 - A mutation score of one for the registered strengthened suite would not prove that no other defect can survive.
 - Candidate observations remain ineligible until exact-commit GitHub and Colab reproduction and final evaluation freeze.
+
+## Stage 6.4 performance interpretation boundary
+
+Stage 6.4 measurements are sensitive to CPU model, virtualization, scheduler load, Python build, memory pressure, and other environment factors. The protocol records these conditions where available and prohibits pooling non-equivalent environments. The synthetic scale axes characterize the current prototype implementation only; they are not production capacity, service-level, industrial throughput, or statutory-performance claims.

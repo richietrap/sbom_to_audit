@@ -1,0 +1,5 @@
+axis,minimum_scale,minimum_median_wall_ms,maximum_scale,maximum_median_wall_ms,maximum_p95_wall_ms,maximum_peak_rss_mib,maximum_input_mib,slowdown_vs_axis_minimum,decision_equivalent
+sbom_components,2,8.430782,10000,84.916126,91.073499,57.109,3.744,10.072153,True
+telemetry_records,1,7.963128,1000,669.946943,682.502835,44.375,0.322,84.131128,True
+source_artifacts,15,8.150033,200,105.650096,110.355771,43.25,0.068,12.963149,True
+replay_events,5,7.978502,100,73.048334,75.089451,43.25,0.007,9.155645,True

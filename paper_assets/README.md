@@ -42,3 +42,7 @@ the authoritative online quality and Colab gates.
 ## Stage 6.3 candidate assets
 
 `build_stage6_3_paper_assets.py` generates a family-level mutation-detection figure and two tables from the registered Stage 6.3 result bundle. The figure distinguishes the pre-Stage 6.3 baseline suite from the transparently strengthened safety suite. All assets remain `CANDIDATE_NOT_FROZEN`; they must not be manually redrawn or presented as final results before exact-commit reproduction and evaluation freeze.
+
+## Stage 6.4 candidate assets
+
+Stage 6.4 reserves F12 for observed latency scaling and T30/T31 for environment-specific scale summaries. These assets are generated from the full candidate performance run and remain `CANDIDATE_NOT_FROZEN`. Timing values must not be copied into final manuscript prose until the exact-commit run and final evaluation freeze have selected the eligible environment and evidence bundle.

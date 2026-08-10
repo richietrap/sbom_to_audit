@@ -1,0 +1,25 @@
+{
+  "run_id": "STAGE6-4-PERFORMANCE-CANDIDATE-001",
+  "asset_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "source_environment": {
+    "python_version": "3.12.3",
+    "python_implementation": "CPython",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "cpu_count": 32,
+    "physical_memory_bytes": 8168517632
+  },
+  "source_commit": "df749db9642e59a3955000fc5bbb127bf25ef9c2",
+  "source_results": {
+    "evaluation/stage6_4_candidate/stage6_4_performance_report.json": "a10393d3269988c582e44f1c4e9e3e242a94cd98d08caf84b66eb36149966c54",
+    "evaluation/stage6_4_candidate/stage6_4_scale_summary.csv": "ecb5ba4132367d531d7971eb870378590bb8d30357b3e18a82b7d12a810f9fe4"
+  },
+  "generated_asset_hashes": {
+    "figures/stage6_4_latency_scaling.svg": "6ebd33b070a6bfa343dd91b50f9abe412c6a7a7f2c6b13f02ee500eb08b7d536",
+    "tables/stage6_4_axis_endpoints.csv": "2a92f6b39c579b61118494da67459e647bb9ef613f2ae0124e066af95276a474",
+    "tables/stage6_4_scale_summary.csv": "ecb5ba4132367d531d7971eb870378590bb8d30357b3e18a82b7d12a810f9fe4"
+  },
+  "interpretation_boundary": "Stage 6.4 timing assets describe one observed environment-specific candidate run. They remain ineligible until exact-commit reproduction, independent audit, and the final evaluation freeze."
+}

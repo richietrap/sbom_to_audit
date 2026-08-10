@@ -62,3 +62,7 @@ The blinded Stage 6.1 human execution is intentionally deferred. Stage 6.2 may p
 ## Stage 6.3 controlled mutation testing
 
 Stage 6.3 registers 26 first-order mutants across seven decision-safety families. The baseline phase uses only tests predating Stage 6.3; the strengthened phase transparently records targeted safety tests added for baseline survivors. Mutations execute one at a time in a disposable repository copy. Candidate outputs under `stage6_3_candidate/` remain `CANDIDATE_NOT_FROZEN` and do not establish legal correctness, exhaustive fault coverage, or absence of defects.
+
+## Stage 6.4
+
+Stage 6.4 adds an environment-specific performance and scale evaluation over four registered one-factor-at-a-time axes. Timing observations are intentionally non-deterministic; the protocol, fixture generation, decision fingerprints, output schema, and manuscript-eligibility boundary remain controlled. Full candidate runs use three warm-ups and ten measured replays per workload. No absolute performance threshold is defined.

@@ -1,0 +1,11 @@
+{
+  "run_id": "STAGE6-4-PERFORMANCE-CANDIDATE-001",
+  "profile": "full",
+  "protocol_sha256": "c5001c5ef760ed37d72971970c119848e06f6fec481677e73895c1ab32745035",
+  "output_files": {
+    "stage6_4_performance_report.json": "a10393d3269988c582e44f1c4e9e3e242a94cd98d08caf84b66eb36149966c54",
+    "stage6_4_raw_trials.csv": "a1d5bcbbfc5f76ec64c9645caba7533f1b9db7484ba7854131eead898443c04e",
+    "stage6_4_scale_summary.csv": "ecb5ba4132367d531d7971eb870378590bb8d30357b3e18a82b7d12a810f9fe4"
+  },
+  "non_determinism_boundary": "Timing and memory observations are environment-specific. Output hashes preserve one observed run; release checks validate structure and decision equivalence rather than requiring byte-identical timing values."
+}

@@ -1,0 +1,92 @@
+protocol_id: stage6_4_performance_and_scale
+protocol_version: "0.1"
+evaluation_status: CANDIDATE_NOT_FROZEN
+manuscript_eligible: false
+classification: controlled_performance_and_scale_evaluation_candidate
+purpose: >-
+  Characterize end-to-end replay latency, CPU time, peak resident memory, input size,
+  output size, and scale response while preserving the accepted decision semantics.
+  This protocol does not establish a service-level objective, production capacity,
+  industrial throughput, legal correctness, or a universal performance threshold.
+
+parent_checkpoint:
+  stage: "6.3"
+  version: "0.6.3"
+  acceptance_required: local_github_and_exact_commit_colab_passed
+
+reference_scenario: data/scenarios/ghost_logger.yaml
+measurement_scope:
+  timed_operation: replay_scenario
+  includes:
+    - source path validation and registration
+    - source hashing and parsing
+    - temporal event replay
+    - claim generation and supersession
+    - conflict evaluation
+    - score and state calculation
+    - deadline and authorization evaluation
+    - EvidencePack and audit-ledger assembly
+  excludes:
+    - Python interpreter startup
+    - workload-fixture generation
+    - worker-process startup
+    - result-file serialization by the parent runner
+  worker_isolation: one fresh Python process per workload
+  warmups_excluded_from_statistics: true
+
+scale_axes:
+  sbom_components: [2, 100, 1000, 5000, 10000]
+  telemetry_records: [1, 10, 100, 500, 1000]
+  source_artifacts: [15, 25, 50, 100, 200]
+  replay_events: [5, 10, 25, 50, 100]
+
+execution:
+  warmup_runs: 3
+  measured_runs: 10
+  execution_order_seed: 6401
+  smoke_values:
+    sbom_components: 100
+    telemetry_records: 10
+    source_artifacts: 25
+    replay_events: 10
+
+statistics:
+  primary_latency_statistic: median_wall_ms
+  tail_latency_statistic: p95_wall_ms
+  p95_definition: nearest_rank
+  variability_statistic: wall_cv
+  cpu_statistic: median_cpu_ms
+  memory_statistic: peak_rss_bytes
+  relative_scale_statistic: slowdown_vs_axis_minimum
+  throughput_statistic: scale_units_per_second
+
+correctness_invariants:
+  - all_original_replay_events_match_registered_expected_state
+  - all_original_authorization_states_match_registered_expectation
+  - all_original_deadline_postures_match_registered_expectation
+  - final_recommended_state_matches_unscaled_reference
+  - final_authorized_state_matches_unscaled_reference
+  - final_orchestration_scores_match_unscaled_reference
+  - scale_only_decoys_do_not_change_the_target_decision
+
+locked_controls:
+  evidencepack_schema_version: "0.2"
+  evidence_completeness_denominator: 34
+  metrics: [EC, TR, CD, CA, AR, SC, EPG]
+  tau_E_hours: 18.0
+  production_thresholds_changed: false
+  scenario_oracles_changed: false
+
+interpretation_limits:
+  - Results are environment-specific and must be reported with hardware and runtime metadata.
+  - >-
+    Timing observations are intentionally non-deterministic; fixture definitions and
+    correctness outputs are deterministic.
+  - Cross-environment latency values must not be pooled as if the hardware were equivalent.
+  - Synthetic scale fixtures extend a controlled scenario and are not industrial deployment traces.
+  - >-
+    No absolute latency or throughput value is a legal, operational, or production-readiness
+    threshold.
+  - >-
+    Final manuscript use requires exact-commit reproduction, independent result audit, and final
+    evaluation freeze.

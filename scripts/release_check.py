@@ -373,6 +373,59 @@ def _deterministic_stage6_3(report: ReleaseReport) -> None:
             report.deterministic_hashes[f"stage6_3_assets/{relative.as_posix()}"] = left_hash
 
 
+def _semantic_stage6_4_smoke(report: ReleaseReport) -> None:
+    """Repeat a reduced performance run and compare deterministic decision semantics only."""
+
+    with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-4-") as temp:
+        base = Path(temp)
+        first = base / "smoke-first"
+        second = base / "smoke-second"
+        command = [
+            sys.executable,
+            "scripts/run_stage6_4_performance.py",
+            "--profile",
+            "smoke",
+            "--destination",
+        ]
+        _run(report, "Stage 6.4 performance smoke A", command + [str(first)])
+        _run(report, "Stage 6.4 performance smoke B", command + [str(second)])
+        if report.status == "FAIL":
+            return
+        for label, destination in (("A", first), ("B", second)):
+            _run(
+                report,
+                f"Stage 6.4 smoke validation {label}",
+                [
+                    sys.executable,
+                    "scripts/validate_stage6_4_evaluation.py",
+                    "--results",
+                    str(destination),
+                    "--allow-smoke",
+                ],
+            )
+        if report.status == "FAIL":
+            return
+        first_report = json.loads(
+            (first / "stage6_4_performance_report.json").read_text(encoding="utf-8")
+        )
+        second_report = json.loads(
+            (second / "stage6_4_performance_report.json").read_text(encoding="utf-8")
+        )
+        for field in (
+            "canonical_decision_fingerprint_sha256",
+            "semantic_fingerprint_hashes",
+            "workload_count",
+            "axis_count",
+            "all_decision_equivalent",
+        ):
+            if first_report.get(field) != second_report.get(field):
+                report.fail(f"Stage 6.4 smoke semantic field differs across repeats: {field}")
+        for workload_id, digest in sorted(
+            (first_report.get("semantic_fingerprint_hashes") or {}).items()
+        ):
+            report.deterministic_hashes[f"stage6_4_semantics/{workload_id}"] = str(digest)
+
+
 def run_release_check() -> ReleaseReport:
     report = ReleaseReport()
     commands = [
@@ -457,6 +510,23 @@ def run_release_check() -> ReleaseReport:
             ],
         ),
         (
+            "Stage 6.4 performance candidate validation",
+            [
+                sys.executable,
+                "scripts/validate_stage6_4_evaluation.py",
+                "--results",
+                "evaluation/stage6_4_candidate",
+            ],
+        ),
+        (
+            "Stage 6.4 Colab notebook contract",
+            [
+                sys.executable,
+                "scripts/validate_stage6_4_colab_notebook.py",
+                "notebooks/stage6_4_colab_checkpoint.ipynb",
+            ],
+        ),
+        (
             "repository validation",
             [sys.executable, "scripts/validate_repository.py", "--strict-sources"],
         ),
@@ -486,6 +556,8 @@ def run_release_check() -> ReleaseReport:
         _deterministic_stage6_2(report)
     if report.status == "PASS":
         _deterministic_stage6_3(report)
+    if report.status == "PASS":
+        _semantic_stage6_4_smoke(report)
     return report
 
 

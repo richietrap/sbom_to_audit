@@ -1,3 +1,13 @@
+## 0.6.4 — Stage 6.4 performance and scale evaluation — 2026-08-10
+
+- added a pre-registered, environment-recorded performance protocol over SBOM-component, telemetry-record, source-artifact, and replay-event scale axes;
+- added isolated per-workload benchmark workers with warm-up exclusion, repeated measurements, median and nearest-rank p95 latency, CPU time, peak RSS, input/output size, relative slowdown, and throughput summaries;
+- added deterministic scale-fixture generation and fail-closed semantic-equivalence checks so synthetic scale alone cannot change the accepted Ghost-Logger decision;
+- added observed candidate result validation, a timing non-determinism boundary, smoke benchmarking for the canonical release gate, and an exact-commit Colab checkpoint;
+- added candidate paper assets for latency scaling and axis-endpoint summaries;
+- preserved EvidencePack Schema v0.2, the 34-field EC denominator, seven locked metrics, Stage 6.1 freeze, Stage 6.2 robustness controls, and Stage 6.3 mutation controls;
+- retained Stage 6.4 as `CANDIDATE_NOT_FROZEN` and manuscript-ineligible until exact-commit reproduction, independent audit, the deferred manual baseline, and the final evaluation freeze.
+
 ## 0.6.3 — Stage 6.3 controlled mutation testing — 2026-08-05
 
 - added a fail-closed registry of 26 first-order mutants across seven decision-safety families;
