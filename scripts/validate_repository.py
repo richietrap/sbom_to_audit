@@ -589,6 +589,114 @@ def validate_stage6_2_controls(report: ValidationReport) -> None:
     }
 
 
+def validate_stage6_3_controls(report: ValidationReport) -> None:
+    """Validate the registered Stage 6.3 mutation boundary and candidate assets."""
+
+    protocol_path = ROOT / "evaluation/stage6_3_mutation_protocol_v0.1.yaml"
+    results_root = ROOT / "evaluation/stage6_3_candidate"
+    try:
+        protocol = _load_yaml(protocol_path)
+        summary = json.loads(
+            (results_root / "stage6_3_mutation_summary.json").read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            (results_root / "stage6_3_output_manifest.json").read_text(encoding="utf-8")
+        )
+        asset_manifest = json.loads(
+            (ROOT / "paper_assets/data/stage6_3_asset_manifest.json").read_text(encoding="utf-8")
+        )
+    except (OSError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        report.error(f"Stage 6.3 control validation failed: {exc}")
+        return
+
+    expected_parent_commit = "36cb40fed9be39a19da25df70bb524c2cc05e316"
+    expected_parent_colab = "01b184fb95dcec987cd599e2a50dc1ad6027b8d0dfce2d0d9af2fdf20090d3f1"
+    expected_metrics = ["EC", "TR", "CD", "CA", "AR", "SC", "EPG"]
+    expected_families = {
+        "authorization",
+        "conflict",
+        "evidence_semantics",
+        "identity_uncertainty",
+        "metrics",
+        "temporal_decision",
+        "traceability_integrity",
+    }
+    parent = protocol.get("parent_checkpoint") or {}
+    locked = protocol.get("locked_controls") or {}
+    mutants = protocol.get("mutants") or []
+    if protocol.get("protocol_id") != "stage6_3_controlled_mutation_testing":
+        report.error("Stage 6.3 protocol_id changed")
+    if str(protocol.get("protocol_version")) != "0.1":
+        report.error("Stage 6.3 protocol version changed")
+    if protocol.get("evaluation_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.3 protocol must remain CANDIDATE_NOT_FROZEN")
+    if protocol.get("manuscript_eligible") is not False:
+        report.error("Stage 6.3 protocol became prematurely manuscript-eligible")
+    if parent.get("git_commit") != expected_parent_commit:
+        report.error("Stage 6.3 parent commit differs from accepted Stage 6.2")
+    if parent.get("colab_evidence_sha256") != expected_parent_colab:
+        report.error("Stage 6.3 parent Colab hash differs from accepted Stage 6.2")
+    if str(locked.get("evidencepack_schema_version")) != "0.2":
+        report.error("Stage 6.3 EvidencePack schema boundary changed")
+    if int(locked.get("evidence_completeness_denominator", -1)) != 34:
+        report.error("Stage 6.3 EC denominator changed")
+    if list(locked.get("metrics") or []) != expected_metrics:
+        report.error("Stage 6.3 locked metric list changed")
+    if float(locked.get("tau_E_hours", -1)) != 18.0:
+        report.error("Stage 6.3 tau_E boundary changed")
+    if len(mutants) != 26:
+        report.error("Stage 6.3 mutant registry must contain 26 registered mutants")
+    observed_families = {
+        str(item.get("family") or "") for item in mutants if isinstance(item, dict)
+    }
+    if observed_families != expected_families:
+        report.error("Stage 6.3 mutation family registry changed")
+
+    if summary.get("evaluation_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.3 candidate report status changed")
+    if summary.get("manuscript_eligible") is not False:
+        report.error("Stage 6.3 candidate report became prematurely manuscript-eligible")
+    if summary.get("parent_checkpoint") != parent:
+        report.error("Stage 6.3 candidate report changed the parent checkpoint")
+    if summary.get("locked_controls") != locked:
+        report.error("Stage 6.3 candidate report changed the locked controls")
+    if int(summary.get("mutant_count", -1)) != len(mutants):
+        report.error("Stage 6.3 candidate mutant count differs from the protocol")
+    strengthened = summary.get("strengthened_outcomes") or {}
+    if int(strengthened.get("INVALID", -1)) != 0:
+        report.error("Stage 6.3 candidate contains invalid registered mutants")
+    if int(strengthened.get("TIMEOUT", -1)) != 0:
+        report.error("Stage 6.3 candidate contains timed-out registered mutants")
+
+    output_hashes = manifest.get("output_files") or {}
+    for name, expected_hash in output_hashes.items():
+        path = results_root / str(name)
+        if not path.is_file() or _sha256(path) != expected_hash:
+            report.error(f"Stage 6.3 candidate output hash mismatch: {name}")
+
+    if asset_manifest.get("asset_status") != "CANDIDATE_NOT_FROZEN":
+        report.error("Stage 6.3 asset status changed")
+    if asset_manifest.get("manuscript_eligible") is not False:
+        report.error("Stage 6.3 assets became prematurely manuscript-eligible")
+    for relative, expected_hash in (asset_manifest.get("generated_asset_hashes") or {}).items():
+        path = ROOT / "paper_assets" / str(relative)
+        if not path.is_file() or _sha256(path) != expected_hash:
+            report.error(f"Stage 6.3 paper-asset hash mismatch: {relative}")
+
+    report.checks["stage6_3_controls"] = {
+        "protocol_id": protocol.get("protocol_id"),
+        "protocol_version": protocol.get("protocol_version"),
+        "evaluation_status": protocol.get("evaluation_status"),
+        "mutant_count": summary.get("mutant_count"),
+        "family_count": summary.get("family_count"),
+        "baseline_outcomes": summary.get("baseline_outcomes"),
+        "baseline_mutation_score": summary.get("baseline_mutation_score"),
+        "strengthened_outcomes": summary.get("strengthened_outcomes"),
+        "strengthened_mutation_score": summary.get("strengthened_mutation_score"),
+        "manuscript_eligible": summary.get("manuscript_eligible"),
+    }
+
+
 def validate_text_integrity(report: ValidationReport) -> None:
     markers = ("<" * 7, "=" * 7, ">" * 7)
     bad_files: list[str] = []
@@ -631,6 +739,7 @@ def run_validation(strict_sources: bool = False) -> ValidationReport:
     validate_baseline_protocol(report)
     validate_stage6_1_controls(report)
     validate_stage6_2_controls(report)
+    validate_stage6_3_controls(report)
     validate_text_integrity(report)
     return report
 

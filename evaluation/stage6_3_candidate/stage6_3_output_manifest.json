@@ -1,0 +1,11 @@
+{
+  "run_id": "STAGE6-3-MUTATION-CANDIDATE-001",
+  "protocol_sha256": "e6bfcc0c4984b41846e5dfb732b9a6e7d06e2fb5f40fef73c07d429b183ceb6b",
+  "output_files": {
+    "stage6_3_family_summary.csv": "ba62e28205ec472c0ffbe838fea7149794f3107c9111b9aaa46c08e3b041de8c",
+    "stage6_3_mutant_registry.csv": "5071d50d0957bc3269dccfcfdae777fdd82f0acf1bdd796dd8e37e6f7b717e70",
+    "stage6_3_mutation_results.csv": "7da9ca7f662ab2c01e3044d5c8242ef8080c3df3487e456f622d0a256501cf6b",
+    "stage6_3_mutation_summary.json": "13d80157935cdc786dc8b524a086f847776e06ec3fde11fca7a7d196102b401e",
+    "stage6_3_surviving_mutants.csv": "a74764b50f8872e80798cca5d9cb2c3293d34abcc162d30f9f1baf3d241d6a08"
+  }
+}

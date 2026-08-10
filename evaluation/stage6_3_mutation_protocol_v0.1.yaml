@@ -1,0 +1,383 @@
+protocol_id: stage6_3_controlled_mutation_testing
+protocol_version: '0.1'
+evaluation_status: CANDIDATE_NOT_FROZEN
+manuscript_eligible: false
+parent_checkpoint:
+  stage: '6.2'
+  package_version: '0.6.2'
+  git_commit: 36cb40fed9be39a19da25df70bb524c2cc05e316
+  colab_evidence_sha256: 01b184fb95dcec987cd599e2a50dc1ad6027b8d0dfce2d0d9af2fdf20090d3f1
+purpose: >-
+  Evaluate whether the repository test and validation controls detect registered plausible defects
+  in temporal decision, conflict, authorization, traceability, identity, evidence-semantics, and
+  metric logic. Mutations are applied only to disposable repository copies.
+research_boundary:
+  - Production decision logic is not edited by the mutation runner.
+  - Each mutant applies one registered semantic fault through exact source replacements.
+  - The baseline phase uses tests that existed before Stage 6.3.
+  - The strengthened phase adds explicit Stage 6.3 safety tests only for identified gaps.
+  - Mutation scores exclude invalid and timed-out mutants from the denominator.
+  - Candidate findings do not validate legal correctness, industrial effectiveness, or universal
+    mutation-score thresholds.
+  - Results remain ineligible until exact-commit GitHub and Colab reproduction and the final
+    evaluation freeze.
+locked_controls:
+  evidencepack_schema_version: '0.2'
+  evidence_completeness_denominator: 34
+  metrics:
+    - EC
+    - TR
+    - CD
+    - CA
+    - AR
+    - SC
+    - EPG
+  tau_E_hours: 18.0
+execution:
+  timeout_seconds: 12
+  python_hash_seed: '0'
+  mutation_order: sorted_mutant_id
+  classifications:
+    - KILLED
+    - SURVIVED
+    - INVALID
+    - TIMEOUT
+mutants:
+  - mutant_id: S63-AU-001
+    family: authorization
+    target_file: src/sbom_to_audit/model/authorization.py
+    target_symbol: HumanAuthorizationEvent.__post_init__
+    description: Allow a non-human actor to authorize a reporting state.
+    rationale: Tests the explicit human-authorization boundary.
+    replacements:
+      - original: '        if self.actor_type.strip().lower() != "human":'
+        mutated: '        if False and self.actor_type.strip().lower() != "human":'
+    baseline_tests:
+      - tests/test_authorization.py::test_system_actor_cannot_authorize
+    strengthened_tests: []
+  - mutant_id: S63-AU-002
+    family: authorization
+    target_file: src/sbom_to_audit/model/authorization.py
+    target_symbol: apply_human_authorization
+    description: Preserve the previous authorized state instead of applying the human event.
+    rationale: Tests that an explicit authorization event is actually applied.
+    replacements:
+      - original: '    return event.authorized_state'
+        mutated: '    return current_authorized_state or "Document No-Report"'
+    baseline_tests:
+      - tests/test_authorization.py::test_explicit_human_event_can_authorize_report
+    strengthened_tests: []
+  - mutant_id: S63-AU-003
+    family: authorization
+    target_file: src/sbom_to_audit/model/authorization.py
+    target_symbol: authorization_audit_event
+    description: Accept an empty recommended state in an authorization audit record.
+    rationale: Tests fail-closed audit-record construction.
+    replacements:
+      - original: '    if not recommended_state.strip():'
+        mutated: '    if False and not recommended_state.strip():'
+    baseline_tests:
+      - tests/test_authorization.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_authorization_audit_rejects_blank_recommendation
+  - mutant_id: S63-AU-004
+    family: authorization
+    target_file: src/sbom_to_audit/model/authorization.py
+    target_symbol: MilestoneSatisfactionEvidence.__post_init__
+    description: Stop requiring a milestone satisfaction reference.
+    rationale: Tests separation between authorization and evidenced completion or submission.
+    replacements:
+      # yamllint disable rule:line-length
+      - original: '        for field_name in ("evidence_id", "milestone_id", "timestamp", "reference", "actor"):'
+        mutated: '        for field_name in ("evidence_id", "milestone_id", "timestamp", "actor"):'
+        # yamllint enable rule:line-length
+    baseline_tests:
+      - tests/test_authorization.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_milestone_satisfaction_requires_reference
+  - mutant_id: S63-CF-001
+    family: conflict
+    target_file: src/sbom_to_audit/model/conflict_engine.py
+    target_symbol: ACTIVE_CLAIM_STATUSES
+    description: Treat superseded evidence claims as active.
+    rationale: Tests conflict lifecycle filtering.
+    replacements:
+      - original: 'ACTIVE_CLAIM_STATUSES = {"active", "confirmed"}'
+        mutated: 'ACTIVE_CLAIM_STATUSES = {"active", "confirmed", "superseded"}'
+    baseline_tests:
+      - tests/test_conflict_engine.py::test_superseded_claim_is_not_active_conflict
+    strengthened_tests: []
+  - mutant_id: S63-CF-002
+    family: conflict
+    target_file: src/sbom_to_audit/model/conflict_engine.py
+    target_symbol: detect_conflicts
+    description: Skip contradictory values and continue on equal values.
+    rationale: Tests the fundamental contradiction predicate.
+    replacements:
+      - original: '            if repr(left.get("value")) == repr(right.get("value")):'
+        mutated: '            if repr(left.get("value")) != repr(right.get("value")):'
+    baseline_tests:
+      - tests/test_conflict_engine.py::test_active_cross_source_contradiction_is_detected
+    strengthened_tests: []
+  - mutant_id: S63-CF-003
+    family: conflict
+    target_file: src/sbom_to_audit/model/conflict_engine.py
+    target_symbol: detect_conflicts
+    description: Ignore scope disjointness when deciding whether claims conflict.
+    rationale: Tests scope-aware conflict precision.
+    replacements:
+      - original: '            if not scopes_overlap(left_scope, right_scope):'
+        mutated: '            if False and not scopes_overlap(left_scope, right_scope):'
+    baseline_tests:
+      - tests/test_conflict_engine.py::test_disjoint_product_variants_do_not_conflict
+    strengthened_tests: []
+  - mutant_id: S63-CF-004
+    family: conflict
+    target_file: src/sbom_to_audit/model/conflict_engine.py
+    target_symbol: detect_conflicts
+    description: Group claims that have no proposition.
+    rationale: Tests that incomplete claims cannot create synthetic conflicts.
+    replacements:
+      - original: '        if proposition:'
+        mutated: '        if True:'
+    baseline_tests:
+      - tests/test_conflict_engine.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_blank_proposition_is_not_a_conflict
+  - mutant_id: S63-ES-001
+    family: evidence_semantics
+    target_file: src/sbom_to_audit/model/scoring.py
+    target_symbol: exploitation_score
+    description: Treat vulnerable-function execution as confirmed exploitation evidence.
+    rationale: Tests the separation of applicability evidence from malicious exploitation evidence.
+    replacements:
+      # yamllint disable rule:line-length
+      - original: "    del local\n    candidates = [0.0]"
+        mutated: "    local_signal = bool(local and local.get(\"execution_observed\") is True)\n    candidates = [0.0]\n    if local_signal:\n        candidates.append(1.0)"
+        # yamllint enable rule:line-length
+    baseline_tests:
+      - tests/test_scoring.py::test_runtime_execution_increases_applicability_not_exploitation
+    strengthened_tests: []
+  - mutant_id: S63-ES-002
+    family: evidence_semantics
+    target_file: src/sbom_to_audit/model/scoring.py
+    target_symbol: uncertainty_score
+    description: Treat missing values as though they were explicit false values.
+    rationale: Tests missingness semantics in uncertainty computation.
+    replacements:
+      - original: '        if value is None or value == "":'
+        mutated: '        if value == "":'
+    baseline_tests:
+      - tests/test_scoring.py::test_missing_evidence_is_distinct_from_explicit_false_via_uncertainty
+    strengthened_tests: []
+  - mutant_id: S63-ES-003
+    family: evidence_semantics
+    target_file: src/sbom_to_audit/model/scoring.py
+    target_symbol: applicability_score
+    description: Ignore the low-applicability effect of a supplier not-affected assertion.
+    rationale: Tests the registered supplier-assertion interpretation.
+    replacements:
+      - original: '        return 0.10'
+        mutated: '        return round(max(candidates), 6)'
+    baseline_tests:
+      - tests/test_scoring.py::test_not_affected_without_local_signal_has_low_applicability
+    strengthened_tests: []
+  - mutant_id: S63-ID-001
+    family: identity_uncertainty
+    target_file: src/sbom_to_audit/model/identity.py
+    target_symbol: MATCH_CONFIDENCE
+    description: Give name-only matching the confidence of an exact PURL match.
+    rationale: Tests the locked identity-confidence mapping.
+    replacements:
+      - original: '    "name_only": 0.2,'
+        mutated: '    "name_only": 1.0,'
+    baseline_tests:
+      - tests/test_identity.py::test_locked_identity_confidence_table
+    strengthened_tests: []
+  - mutant_id: S63-ID-002
+    family: identity_uncertainty
+    target_file: src/sbom_to_audit/model/identity.py
+    target_symbol: apply_identity_uncertainty
+    description: Subtract the identity-confidence penalty from uncertainty.
+    rationale: Tests the direction of the locked identity-uncertainty contribution.
+    replacements:
+      - original: '    return round(clamp(base_uncertainty + lambda_id * (1 - gamma_id)), 6)'
+        mutated: '    return round(clamp(base_uncertainty - lambda_id * (1 - gamma_id)), 6)'
+    baseline_tests:
+      - tests/test_identity.py::test_identity_uncertainty_penalty
+    strengthened_tests: []
+  - mutant_id: S63-ID-003
+    family: identity_uncertainty
+    target_file: src/sbom_to_audit/model/identity.py
+    target_symbol: apply_identity_uncertainty
+    description: Accept identity confidence values above one.
+    rationale: Tests the bounded-confidence contract.
+    replacements:
+      - original: '    if not 0 <= gamma_id <= 1:'
+        mutated: '    if not 0 <= gamma_id <= 2:'
+    baseline_tests:
+      - tests/test_identity.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_identity_uncertainty_rejects_gamma_above_one
+  - mutant_id: S63-MT-001
+    family: metrics
+    target_file: src/sbom_to_audit/model/metrics.py
+    target_symbol: evidence_completeness
+    description: Divide Evidence Completeness by 33 instead of the locked 34 fields.
+    rationale: Tests the fixed EC denominator.
+    replacements:
+      - original: '    return round(populated / len(MANDATORY_FIELDS), 6)'
+        mutated: '    return round(populated / 33, 6)'
+    baseline_tests:
+      - tests/test_metrics.py::test_false_and_zero_count_as_populated
+      - tests/test_metrics.py::test_missing_field_reduces_ec_by_one_thirty_fourth
+    strengthened_tests: []
+  - mutant_id: S63-MT-002
+    family: metrics
+    target_file: src/sbom_to_audit/model/metrics.py
+    target_symbol: audit_reconstructability
+    description: Count an audit event as reconstructable when any required field is present.
+    rationale: Tests all-field audit reconstruction semantics.
+    replacements:
+      # yamllint disable rule:line-length
+      - original: '    reconstructable = sum(all(_populated(entry.get(key)) for key in required) for entry in entries)'
+        mutated: '    reconstructable = sum(any(_populated(entry.get(key)) for key in required) for entry in entries)'
+        # yamllint enable rule:line-length
+    baseline_tests:
+      - tests/test_metrics.py
+    strengthened_tests:
+      # yamllint disable rule:line-length
+      - tests/test_stage6_3_safety_guards.py::test_audit_reconstructability_requires_every_registered_field
+      # yamllint enable rule:line-length
+  - mutant_id: S63-MT-003
+    family: metrics
+    target_file: src/sbom_to_audit/model/metrics.py
+    target_symbol: evidence_pack_generation
+    description: Mark EvidencePack generation successful when only one required output exists.
+    rationale: Tests all-output generation semantics.
+    replacements:
+      - original: '    return int(all(Path(path).is_file() for path in paths))'
+        mutated: '    return int(any(Path(path).is_file() for path in paths))'
+    baseline_tests:
+      - tests/test_metrics.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_evidence_pack_generation_requires_every_output
+  - mutant_id: S63-TD-001
+    family: temporal_decision
+    target_file: src/sbom_to_audit/model/state_machine.py
+    target_symbol: recommend_state
+    description: Disable active-conflict precedence.
+    rationale: Tests conflict-forced escalation.
+    replacements:
+      - original: '    if C_t:'
+        mutated: '    if C_t and False:'
+    baseline_tests:
+      - tests/test_state_machine.py::test_conflict_has_precedence
+    strengthened_tests: []
+  - mutant_id: S63-TD-002
+    family: temporal_decision
+    target_file: src/sbom_to_audit/model/state_machine.py
+    target_symbol: recommend_state
+    description: Miss the exact 18-hour Prepare-to-Escalate boundary.
+    rationale: Tests the inclusive internal clock safeguard.
+    replacements:
+      - original: '    if previous_state == "Prepare" and delta_t_hours >= t.tau_E_hours:'
+        mutated: '    if previous_state == "Prepare" and delta_t_hours > t.tau_E_hours:'
+    baseline_tests:
+      - tests/test_state_machine.py::test_prepare_escalates_at_18_hours
+    strengthened_tests: []
+  - mutant_id: S63-TD-003
+    family: temporal_decision
+    target_file: src/sbom_to_audit/model/state_machine.py
+    target_symbol: recommend_state
+    description: Permit Report-Ready when impact alone meets its threshold.
+    rationale: Tests the conjunction across applicability, exploitation, and impact.
+    replacements:
+      - original: '    if A_t >= t.theta_A and E_t >= t.theta_E and I_t >= t.theta_I:'
+        mutated: '    if A_t >= t.theta_A and E_t >= t.theta_E or I_t >= t.theta_I:'
+    baseline_tests:
+      - tests/test_state_machine.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_report_ready_requires_each_individual_threshold
+  - mutant_id: S63-TD-004
+    family: temporal_decision
+    target_file: src/sbom_to_audit/model/state_machine.py
+    target_symbol: recommend_state
+    description: Permit Document No-Report under high uncertainty.
+    rationale: Tests the low-applicability and low-uncertainty conjunction.
+    replacements:
+      - original: '    if A_t <= t.theta_N and U_t <= t.theta_L:'
+        mutated: '    if A_t <= t.theta_N and U_t >= t.theta_L:'
+    baseline_tests:
+      - tests/test_state_machine.py::test_document_no_report_for_low_applicability_and_uncertainty
+    strengthened_tests: []
+  - mutant_id: S63-TD-005
+    family: temporal_decision
+    target_file: src/sbom_to_audit/model/state_machine.py
+    target_symbol: recommend_state
+    description: Permit small negative elapsed-time values.
+    rationale: Tests temporal monotonicity at the state-machine boundary.
+    replacements:
+      - original: '    if delta_t_hours < 0:'
+        mutated: '    if delta_t_hours < -1:'
+    baseline_tests:
+      - tests/test_state_machine.py
+    strengthened_tests:
+      - tests/test_stage6_3_safety_guards.py::test_negative_delta_is_rejected
+  - mutant_id: S63-TR-001
+    family: traceability_integrity
+    target_file: src/sbom_to_audit/model/metrics.py
+    target_symbol: claim_traceable
+    description: Treat a claim as traceable when any provenance field is populated.
+    rationale: Tests complete claim-level traceability.
+    replacements:
+      - original: '    return all(_populated(claim.get(field)) for field in TRACEABILITY_FIELDS)'
+        mutated: '    return any(_populated(claim.get(field)) for field in TRACEABILITY_FIELDS)'
+    baseline_tests:
+      - tests/test_metrics.py::test_traceability_requires_all_five_fields
+    strengthened_tests: []
+  - mutant_id: S63-TR-002
+    family: traceability_integrity
+    target_file: src/sbom_to_audit/model/scoring.py
+    target_symbol: _claim_traceable
+    description: Accept a malicious-exploitation claim with only partial provenance.
+    rationale: Tests provenance requirements before high-confidence exploitation scoring.
+    replacements:
+      - original: '    return all('
+        mutated: '    return any('
+    baseline_tests:
+      - tests/test_scoring.py::test_superseded_or_untraceable_malicious_claim_does_not_raise_E_t
+    strengthened_tests: []
+  - mutant_id: S63-TR-003
+    family: traceability_integrity
+    target_file: src/sbom_to_audit/ingestion/source_registry.py
+    target_symbol: SourceRegistry.register
+    description: Disable repository-root path confinement.
+    rationale: Tests source substitution and path traversal safeguards.
+    replacements:
+      # yamllint disable rule:line-length
+      - original: "        try:\n            candidate.relative_to(self.repository_root)\n        except ValueError as exc:\n            raise ValueError(f\"source path escapes repository root: {relative_path}\") from exc"
+        mutated: "        if False:\n            candidate.relative_to(self.repository_root)"
+        # yamllint enable rule:line-length
+    baseline_tests:
+      - tests/test_source_registry.py::test_registry_rejects_path_escape
+    strengthened_tests: []
+  - mutant_id: S63-TR-004
+    family: traceability_integrity
+    target_file: src/sbom_to_audit/ingestion/source_registry.py
+    target_symbol: SourceRegistry.register
+    description: Store an empty source hash in the registered source record.
+    rationale: Tests computed source-hash preservation.
+    replacements:
+      - original: '            source_hash=sha256_file(candidate),'
+        mutated: '            source_hash="",'
+    baseline_tests:
+      - tests/test_source_registry.py::test_registry_computes_hashes_and_validates_all_sources
+    strengthened_tests: []
+outputs:
+  - stage6_3_mutant_registry.csv
+  - stage6_3_mutation_results.csv
+  - stage6_3_family_summary.csv
+  - stage6_3_surviving_mutants.csv
+  - stage6_3_mutation_summary.json
+  - stage6_3_output_manifest.json

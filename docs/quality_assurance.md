@@ -121,3 +121,7 @@ Where a pre-execution frozen YAML document requires formatting-only correction, 
 For Stage 6.2, all implementation, tests, documentation, registry changes, and manifest updates must be complete before running mutating formatters. The final release sequence is: `ruff format .`, every non-mutating static gate, complete tests and coverage, Stage 6.1 freeze validation, Stage 6.2 validation, deterministic double-run comparison, repository validation, clean-tree confirmation, archive creation, and clean-extraction validation. Any edit after a successful gate invalidates that gate and restarts the sequence.
 
 The Stage 6.2 notebook and release checker independently regenerate results and paper assets twice and compare their byte manifests. Candidate sensitivity counts are not promoted to paper evidence until exact-commit GitHub and Colab validation and the final evaluation freeze.
+
+## Stage 6.3 mutation-quality gate
+
+The Stage 6.3 release gate validates the mutation protocol and candidate hashes, compiles every registered mutant, runs deterministic mutation and asset generation twice, and rejects invalid, timed-out, missing, reordered, or source-drifted mutants. The accepted source tree is never mutated in place. Ruff formatting must run after the final source edit and before regenerating the Stage 6.3 result and asset manifests; every subsequent gate must then be rerun without further edits.

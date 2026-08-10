@@ -1,0 +1,70 @@
+{
+  "run_id": "STAGE6-3-MUTATION-CANDIDATE-001",
+  "stage": "6.3",
+  "protocol_id": "stage6_3_controlled_mutation_testing",
+  "protocol_version": "0.1",
+  "evaluation_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "parent_checkpoint": {
+    "stage": "6.2",
+    "package_version": "0.6.2",
+    "git_commit": "36cb40fed9be39a19da25df70bb524c2cc05e316",
+    "colab_evidence_sha256": "01b184fb95dcec987cd599e2a50dc1ad6027b8d0dfce2d0d9af2fdf20090d3f1"
+  },
+  "mutant_count": 26,
+  "family_count": 7,
+  "baseline_outcomes": {
+    "INVALID": 0,
+    "KILLED": 18,
+    "SURVIVED": 8,
+    "TIMEOUT": 0
+  },
+  "baseline_mutation_score": 0.692308,
+  "strengthened_outcomes": {
+    "INVALID": 0,
+    "KILLED": 26,
+    "SURVIVED": 0,
+    "TIMEOUT": 0
+  },
+  "strengthened_mutation_score": 1.0,
+  "baseline_survivor_count": 8,
+  "strengthened_survivor_count": 0,
+  "targeted_tests_added": 8,
+  "target_source_hashes": {
+    "src/sbom_to_audit/ingestion/source_registry.py": "6ffa9b41a1a3c7c841e27a89fb32356829e6501a50301f543ab55e96420a8568",
+    "src/sbom_to_audit/model/authorization.py": "2dc7fda837542b1f90039aef6fdb4f0c70fac03beb1f1532e98bd2e6238f2b3c",
+    "src/sbom_to_audit/model/conflict_engine.py": "7e8b12858c7942a85d9c1cb8a1d437774fdfdda6fbf0d0a373276861e4c93dbf",
+    "src/sbom_to_audit/model/identity.py": "20ba7fca858824f51ed56cc437ce9b6163dfbbb1166b5505ed1af9d30297ee0d",
+    "src/sbom_to_audit/model/metrics.py": "d5bc97a6a3a8b738ee82181653236a821c85cd370699eb895668e589de5d0b48",
+    "src/sbom_to_audit/model/scoring.py": "b0f196168ac7ab10279f89462455ea962cf46b77a1e6b32c26f49e1b25dea1e1",
+    "src/sbom_to_audit/model/state_machine.py": "9463c9e870d053a8eaed8075e49e58d774e9eb82681b8d64fd42103fcf0b9fc8"
+  },
+  "safety_test_sha256": "97a72aa162b2efe023119e23a75b147739923cd870c385993e8374f7bfa33139",
+  "locked_controls": {
+    "evidencepack_schema_version": "0.2",
+    "evidence_completeness_denominator": 34,
+    "metrics": [
+      "EC",
+      "TR",
+      "CD",
+      "CA",
+      "AR",
+      "SC",
+      "EPG"
+    ],
+    "tau_E_hours": 18.0
+  },
+  "interpretation_boundary": [
+    "Mutation testing evaluates test sensitivity to registered faults, not legal correctness.",
+    "The baseline phase uses only tests that pre-date Stage 6.3.",
+    "The strengthened phase transparently records tests added after baseline survivors were identified.",
+    "No universal acceptable mutation-score threshold is claimed.",
+    "Candidate outputs remain ineligible until exact-commit reproduction and final freeze."
+  ],
+  "limitations": [
+    "The registry is a bounded set of plausible first-order mutants rather than an exhaustive search.",
+    "Exact-text mutations are intentionally fail-closed and may require registry maintenance after source refactoring.",
+    "Targeted test execution does not substitute for the repository-wide quality and regression suite.",
+    "Equivalent mutants are not asserted automatically; unresolved survivors remain visible."
+  ]
+}

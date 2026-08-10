@@ -1,0 +1,14 @@
+{
+  "environment_id": "stage6-3-local-build",
+  "environment_class": "candidate_development_validation",
+  "stage": "6.3",
+  "package_version": "0.6.3",
+  "python_version": "3.13.5",
+  "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+  "python_policy": "assistant-side candidate build; authoritative static toolchain remains the user virtual environment, GitHub Actions, and exact-commit Colab",
+  "evaluation_protocol": "evaluation/stage6_3_mutation_protocol_v0.1.yaml",
+  "parent_stage6_2_commit": "36cb40fed9be39a19da25df70bb524c2cc05e316",
+  "parent_stage6_2_colab_sha256": "01b184fb95dcec987cd599e2a50dc1ad6027b8d0dfce2d0d9af2fdf20090d3f1",
+  "evaluation_status": "CANDIDATE_NOT_FROZEN",
+  "recorded_at": "2026-08-05T00:00:00Z"
+}

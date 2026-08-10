@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.1.5 is the Stage 6.1.5 isolated Colab checkpoint correction for the Stage 6.1 pre-execution package. It restores the isolated-virtual-environment pattern used by earlier checkpoints, requires an exact 40-character commit SHA, routes every project command through the isolated interpreter, preserves complete command logs and evidence checksums, safely handles an optional manual-result ZIP, and adds notebook-wide contract validation. No Stage 6.1 comparison result is manuscript-eligible until the manual baseline is completed, validated, and reproduced from the exact successful Git commit.
+Version 0.6.3 is the Stage 6.3 controlled mutation-testing candidate. It preserves the accepted Stage 6.2 checkpoint, applies 26 registered first-order mutants only in disposable repository copies, records baseline detection separately from transparent safety-test strengthening, and generates deterministic candidate evidence and paper assets. Stage 6.3 remains `CANDIDATE_NOT_FROZEN`; neither its mutation scores nor its figures and tables are manuscript eligible before exact-commit GitHub and Colab reproduction and the final evaluation freeze. The Stage 6.1 blinded manual baseline remains deferred and unexecuted.
 
 ## Research questions
 
@@ -188,3 +188,7 @@ Stage 6.1 is currently an implementation candidate awaiting genuine manual execu
 Stage 6.2 adds a deterministic robustness harness for threshold, clock, identity, exploitation, applicability, scope, mitigation, conflict, missingness, malformed-input, and temporal-integrity perturbations. It preserves EvidencePack Schema v0.2, the 34-field EC denominator, the seven locked metrics, the accepted scenario evidence, and the Stage 6.1 pre-execution freeze.
 
 Candidate outputs are stored under `evaluation/stage6_2_candidate/` and candidate figures and tables are generated from those machine-readable results. They remain `CANDIDATE_NOT_FROZEN` and are not manuscript-eligible until GitHub, exact-commit Colab reproduction, independent review, and the final evaluation freeze. The blinded manual baseline is deferred but still required before final RQ5 comparative claims.
+
+## Stage 6.3 controlled mutation testing
+
+Stage 6.3 evaluates whether the verification system detects plausible faults in temporal decision logic, conflict handling, authorisation, source integrity, identity uncertainty, evidence semantics, and metric computation. Mutants are pre-registered, first order, exact-text, and applied one at a time in a temporary repository copy. Baseline survivors and the targeted tests added in response remain separately recorded. A bounded mutation score is not represented as proof of exhaustive correctness or absence of defects.

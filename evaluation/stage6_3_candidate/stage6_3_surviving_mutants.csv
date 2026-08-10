@@ -1,0 +1,9 @@
+mutant_id,family,description,baseline_outcome,strengthened_outcome,disposition
+S63-AU-003,authorization,Accept an empty recommended state in an authorization audit record.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-AU-004,authorization,Stop requiring a milestone satisfaction reference.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-CF-004,conflict,Group claims that have no proposition.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-ID-003,identity_uncertainty,Accept identity confidence values above one.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-MT-002,metrics,Count an audit event as reconstructable when any required field is present.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-MT-003,metrics,Mark EvidencePack generation successful when only one required output exists.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-TD-003,temporal_decision,Permit Report-Ready when impact alone meets its threshold.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING
+S63-TD-005,temporal_decision,Permit small negative elapsed-time values.,SURVIVED,KILLED,KILLED_AFTER_TARGETED_TEST_STRENGTHENING

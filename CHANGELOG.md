@@ -1,3 +1,12 @@
+## 0.6.3 — Stage 6.3 controlled mutation testing — 2026-08-05
+
+- added a fail-closed registry of 26 first-order mutants across seven decision-safety families;
+- applied every mutant only inside a disposable repository copy and restored its target after each run;
+- recorded pre-Stage 6.3 baseline detection separately from transparent test strengthening;
+- added eight targeted safety tests, deterministic result and paper-asset generation, validation, release-gate replay, and an exact-commit Colab checkpoint;
+- preserved the accepted Stage 6.2 commit and Colab evidence hash, EvidencePack Schema v0.2, the fixed 34-field EC denominator, the seven locked metrics, and the 18-hour internal safeguard;
+- retained all Stage 6.3 outputs as `CANDIDATE_NOT_FROZEN` and manuscript-ineligible pending exact-commit reproduction and final evaluation freeze.
+
 ## 0.6.2 — Stage 6.2 robustness and sensitivity evaluation — 2026-08-03
 
 - added a registered Stage 6.2 threshold, clock, single-factor, and negative-case protocol;

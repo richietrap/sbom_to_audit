@@ -38,3 +38,7 @@ the authoritative online quality and Colab gates.
 ## Stage 6.2 candidate assets
 
 `build_stage6_2_paper_assets.py` consumes only the registered Stage 6.2 CSV and JSON outputs. It creates threshold-stability and factor-transition SVG figures plus threshold, clock, factor, negative-case, and scenario-stability tables. The assets must not be manually redrawn or presented as final results. Their manifest records source hashes, generation script, status, and manuscript ineligibility until final freeze.
+
+## Stage 6.3 candidate assets
+
+`build_stage6_3_paper_assets.py` generates a family-level mutation-detection figure and two tables from the registered Stage 6.3 result bundle. The figure distinguishes the pre-Stage 6.3 baseline suite from the transparently strengthened safety suite. All assets remain `CANDIDATE_NOT_FROZEN`; they must not be manually redrawn or presented as final results before exact-commit reproduction and evaluation freeze.

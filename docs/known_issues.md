@@ -82,3 +82,10 @@ The Stage 2 figures and tables are generated from a local export build whose Git
 ## Stage 6.2 candidate status
 
 The Stage 6.2 robustness outputs and figures are locally generated candidates, not frozen manuscript evidence. They require the exact repository quality workflow, GitHub Actions, exact-commit Colab reproduction, independent logic review, and final evaluation freeze. The blinded Stage 6.1 manual baseline remains outstanding and is required before final RQ5 comparative claims. Sensitivity observations must not be described as threshold validation, legal correctness, industrial effectiveness, or production scalability.
+
+## Stage 6.3 limitations
+
+- The 26 registered mutants are a bounded first-order sample and are not exhaustive.
+- Exact-text mutation operators fail closed after source refactoring and require protocol maintenance.
+- A mutation score of one for the registered strengthened suite would not prove that no other defect can survive.
+- Candidate observations remain ineligible until exact-commit GitHub and Colab reproduction and final evaluation freeze.

@@ -1,0 +1,8 @@
+family,mutant_count,baseline_killed,baseline_survived,baseline_invalid,baseline_timeout,baseline_score,strengthened_killed,strengthened_survived,strengthened_invalid,strengthened_timeout,strengthened_score
+authorization,4,2,2,0,0,0.5,4,0,0,0,1.0
+conflict,4,3,1,0,0,0.75,4,0,0,0,1.0
+evidence_semantics,3,3,0,0,0,1.0,3,0,0,0,1.0
+identity_uncertainty,3,2,1,0,0,0.666667,3,0,0,0,1.0
+metrics,3,1,2,0,0,0.333333,3,0,0,0,1.0
+temporal_decision,5,3,2,0,0,0.6,5,0,0,0,1.0
+traceability_integrity,4,4,0,0,0,1.0,4,0,0,0,1.0

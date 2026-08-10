@@ -1,0 +1,16 @@
+{
+  "run_id": "STAGE6-3-MUTATION-CANDIDATE-001",
+  "asset_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "source_results": {
+    "evaluation/stage6_3_candidate/stage6_3_mutation_summary.json": "13d80157935cdc786dc8b524a086f847776e06ec3fde11fca7a7d196102b401e",
+    "evaluation/stage6_3_candidate/stage6_3_family_summary.csv": "ba62e28205ec472c0ffbe838fea7149794f3107c9111b9aaa46c08e3b041de8c",
+    "evaluation/stage6_3_candidate/stage6_3_surviving_mutants.csv": "a74764b50f8872e80798cca5d9cb2c3293d34abcc162d30f9f1baf3d241d6a08"
+  },
+  "generated_asset_hashes": {
+    "figures/stage6_3_mutation_detection.svg": "79a9f1c5fe8ddb5cb7fe2564c3f5da3396a114a39f8f07d026e119707cdbfb08",
+    "tables/stage6_3_baseline_survivors.csv": "a74764b50f8872e80798cca5d9cb2c3293d34abcc162d30f9f1baf3d241d6a08",
+    "tables/stage6_3_family_summary.csv": "ba62e28205ec472c0ffbe838fea7149794f3107c9111b9aaa46c08e3b041de8c"
+  },
+  "interpretation_boundary": "Mutation figures and tables are candidate evaluation assets and remain ineligible until exact-commit reproduction and final evaluation freeze."
+}

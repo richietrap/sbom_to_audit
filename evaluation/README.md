@@ -58,3 +58,7 @@ Stage 6.1 preserves the Stage 6 proxy and adds `baseline_protocol_v0.2.yaml` for
 Stage 6.2 evaluates the accepted prototype through registered threshold offsets, alternative internal clock safeguards, one-factor-at-a-time evidence perturbations, and fail-closed negative cases. The protocol is `stage6_2_robustness_protocol_v0.1.yaml`; deterministic candidate outputs are stored under `stage6_2_candidate/`. These runs do not change the accepted model and remain `CANDIDATE_NOT_FROZEN`.
 
 The blinded Stage 6.1 human execution is intentionally deferred. Stage 6.2 may proceed because it does not expose the future analyst to automated outputs or alter the frozen baseline packets. Final RQ5 claims still require the completed manual baseline before evaluation freeze.
+
+## Stage 6.3 controlled mutation testing
+
+Stage 6.3 registers 26 first-order mutants across seven decision-safety families. The baseline phase uses only tests predating Stage 6.3; the strengthened phase transparently records targeted safety tests added for baseline survivors. Mutations execute one at a time in a disposable repository copy. Candidate outputs under `stage6_3_candidate/` remain `CANDIDATE_NOT_FROZEN` and do not establish legal correctness, exhaustive fault coverage, or absence of defects.
