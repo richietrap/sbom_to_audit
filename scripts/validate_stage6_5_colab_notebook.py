@@ -52,6 +52,12 @@ def validate_notebook(path: Path) -> list[str]:
         're.fullmatch(r"[0-9a-fA-F]{40}", REF)': "exact commit validation",
         '["git", "checkout", "--detach", REF]': "detached exact checkout",
         'VENV = Path("/content/sbom_to_audit_stage65_venv")': "isolated environment path",
+        'RESULT_FULL = WORKDIR / "outputs/validation/stage65_colab_results"': (
+            "repository-relative ignored results path"
+        ),
+        'ASSET_FULL = WORKDIR / "outputs/validation/stage65_colab_assets"': (
+            "repository-relative ignored asset path"
+        ),
         'VENV_ENV["PYTHONNOUSERSITE"] = "1"': "user-site isolation",
         '[str(VENV_PYTHON), "-m", "pip", "check"]': "isolated dependency check",
         '"canonical release check"': "canonical release gate",

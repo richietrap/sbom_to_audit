@@ -1,3 +1,9 @@
+## 0.6.5 pre-acceptance Colab checkpoint path correction — 2026-08-15
+
+- corrected the Stage 6.5 exact-commit Colab checkpoint so fresh performance results and generated paper assets are written beneath the repository's ignored `outputs/validation/` subtree, satisfying the existing asset-builder provenance contract while keeping `git status --porcelain` clean;
+- strengthened the Stage 6.5 notebook contract validator and regression coverage so an external `/content/stage65_results` path cannot pass pre-acceptance validation again;
+- recorded the defect as `BUG-032`; the failed Colab run had already completed and validated the full 20-workload performance run before asset generation failed, so no audited decision logic, performance-runner semantics, raw Stage 6.5 remediation evidence, or independent closure evidence was changed.
+
 ## 0.6.5 targeted independent closure re-audit — 2026-08-15
 
 - independently resolved `S65-F001` after 40/40 specification-derived AR cases matched, seven historical scenario replays covering 157 audit entries showed zero historical AR changes, and Stage 6.3 historical evidence remained byte-identical;
