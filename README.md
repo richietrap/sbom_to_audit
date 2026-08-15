@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.4 is the Stage 6.4 performance-and-scale evaluation candidate. It preserves the accepted Stage 6.3 mutation-testing checkpoint and adds an environment-recorded benchmark harness over four one-factor-at-a-time scale axes: SBOM component count, telemetry-record count, source-artifact count, and temporal replay-event count. Each scale fixture must preserve the accepted Ghost-Logger decision semantics. Timing observations are intentionally environment-specific and are not required to be byte-identical across runs. Stage 6.4 remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending exact-commit reproduction, independent audit, the deferred manual baseline, and the final evaluation freeze.
+Version 0.6.5 is the Stage 6.5 independent-audit remediation candidate. It preserves the accepted Stage 6.4 source and observed evidence as immutable history while addressing the two MAJOR Stage 6.5 findings: Audit Reconstructability now conforms to the frozen `output_hash OR output_state` specification, and a complete performance rerun preserves one genuine worker-level high-water RSS observation per workload for independent raw recomputation. Historical Stage 6.3 mutation evidence remains bound to its original source hashes rather than being rewritten to fit the changed AR source. Targeted independent closure re-audit has resolved `S65-F001` and `S65-F004`; Stage 6.5 nevertheless remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending post-audit repository integration, GitHub Actions, exact-commit Colab reproduction, the deferred manual baseline, and final evaluation freeze.
 
 ## Research questions
 
@@ -192,6 +192,16 @@ Candidate outputs are stored under `evaluation/stage6_2_candidate/` and candidat
 ## Stage 6.3 controlled mutation testing
 
 Stage 6.3 evaluates whether the verification system detects plausible faults in temporal decision logic, conflict handling, authorisation, source integrity, identity uncertainty, evidence semantics, and metric computation. Mutants are pre-registered, first order, exact-text, and applied one at a time in a temporary repository copy. Baseline survivors and the targeted tests added in response remain separately recorded. A bounded mutation score is not represented as proof of exhaustive correctness or absence of defects.
+
+## Stage 6.5 audit remediation
+
+Stage 6.5 remediation is intentionally narrow. `S65-F001` corrects only the Audit Reconstructability output-identification predicate so the common audit fields remain mandatory while either a populated `output_hash` or `output_state` satisfies the frozen output-identification requirement. The historical Stage 6.3 exact-text mutation protocol and result bundle are not rewritten; current v0.6.5 AR behaviour is covered by new specification-derived regression tests.
+
+`S65-F004` is addressed by a new performance protocol v0.2 and a separate Stage 6.5 candidate run. The runner preserves the same four scale axes, five workloads per axis, three warm-ups and ten measured replays per workload. Because the operating-system measurement is `resource.getrusage(resource.RUSAGE_SELF).ru_maxrss` captured after the workload worker completes its warm-ups and measured runs, the raw memory evidence contains one genuine high-water RSS observation per workload worker rather than pseudo per-trial observations. The historical Stage 6.4 protocol v0.1, results, and F12/T30/T31 assets remain unchanged.
+
+The v0.2 protocol also makes the previously implicit Stage 6.4 coefficient-of-variation convention explicit: `wall_cv = statistics.stdev(wall) / statistics.fmean(wall)`, using sample standard deviation with an `n-1` denominator. This is a versioned clarification, not a claim that v0.1 documented the convention explicitly.
+
+Development tests did not close the MAJOR findings. A targeted independent closure re-audit subsequently resolved both `S65-F001` and `S65-F004`, with closure evidence bundle SHA-256 `1c03387e3dfbc5e3bee4e115cca8d2a93ba0a5f17602f0b5ab950502be9530c8`. This closure does not itself freeze or accept the repository: the candidate remains manuscript-ineligible until the post-audit repository/GitHub/exact-commit-Colab sequence and final evaluation freeze are completed.
 
 ## Stage 6.4 performance and scale evaluation
 

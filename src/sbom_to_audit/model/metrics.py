@@ -106,8 +106,12 @@ def clock_aware_escalation(opportunities: Iterable[dict[str, Any]]) -> float | N
 def audit_reconstructability(entries: list[dict[str, Any]]) -> float:
     if not entries:
         return 0.0
-    required = ("event_id", "timestamp", "actor", "action", "input_references", "output_state")
-    reconstructable = sum(all(_populated(entry.get(key)) for key in required) for entry in entries)
+    common_required = ("event_id", "timestamp", "actor", "action", "input_references")
+    reconstructable = sum(
+        all(_populated(entry.get(key)) for key in common_required)
+        and (_populated(entry.get("output_hash")) or _populated(entry.get("output_state")))
+        for entry in entries
+    )
     return round(reconstructable / len(entries), 6)
 
 

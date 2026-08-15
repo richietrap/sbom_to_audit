@@ -1,0 +1,96 @@
+protocol_id: stage6_4_performance_and_scale
+protocol_version: "0.2"
+evaluation_status: CANDIDATE_NOT_FROZEN
+manuscript_eligible: false
+classification: stage6_5_performance_remediation_candidate
+purpose: >-
+  Repeat the complete Stage 6.4 controlled performance-and-scale experiment while preserving
+  the genuine raw workload-worker peak-RSS observation required for independent recomputation.
+  The run retains the v0.1 workloads and decision invariants. It does not overwrite or revise the
+  historical Stage 6.4 candidate.
+relationship_to_v0_1: >-
+  Version 0.2 supersedes v0.1 only for the new Stage 6.5 remediation performance run. Version
+  0.1 and its observed results remain immutable historical evidence.
+parent_checkpoint:
+  stage: "6.4"
+  package_version: "0.6.4"
+  git_commit: 77178902b04fcc9b8bd8c660e553c89e9ae6d246
+reference_scenario: data/scenarios/ghost_logger.yaml
+measurement_scope:
+  timed_operation: replay_scenario
+  includes:
+    - source path validation and registration
+    - source hashing and parsing
+    - temporal event replay
+    - claim generation and supersession
+    - conflict evaluation
+    - score and state calculation
+    - deadline and authorization evaluation
+    - EvidencePack and audit-ledger assembly
+  excludes:
+    - Python interpreter startup
+    - workload-fixture generation
+    - worker-process startup
+    - result-file serialization by the parent runner
+  worker_isolation: one fresh Python process per workload
+  warmups_excluded_from_statistics: true
+  memory_measurement:
+    statistic: process_high_water_rss
+    api: resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    measured_process: workload_worker
+    capture_point: after_warmups_and_all_measured_replays
+    raw_observation_granularity: one observation per workload worker
+    native_unit_non_darwin: KiB
+    native_unit_darwin: bytes
+    normalized_unit: bytes
+    raw_observation_file: stage6_5_memory_observations.csv
+scale_axes:
+  sbom_components: [2, 100, 1000, 5000, 10000]
+  telemetry_records: [1, 10, 100, 500, 1000]
+  source_artifacts: [15, 25, 50, 100, 200]
+  replay_events: [5, 10, 25, 50, 100]
+execution:
+  warmup_runs: 3
+  measured_runs: 10
+  execution_order_seed: 6401
+  smoke_values:
+    sbom_components: 100
+    telemetry_records: 10
+    source_artifacts: 25
+    replay_events: 10
+statistics:
+  primary_latency_statistic: median_wall_ms
+  tail_latency_statistic: p95_wall_ms
+  p95_definition: nearest_rank
+  variability_statistic: wall_cv
+  wall_cv_definition: sample_standard_deviation_n_minus_1_divided_by_arithmetic_mean
+  cpu_statistic: median_cpu_ms
+  memory_statistic: peak_rss_bytes
+  memory_aggregation: normalized worker high-water observation copied once into workload summary
+  relative_scale_statistic: slowdown_vs_axis_minimum
+  throughput_statistic: scale_units_per_second
+correctness_invariants:
+  - all_original_replay_events_match_registered_expected_state
+  - all_original_authorization_states_match_registered_expectation
+  - all_original_deadline_postures_match_registered_expectation
+  - final_recommended_state_matches_unscaled_reference
+  - final_authorized_state_matches_unscaled_reference
+  - final_orchestration_scores_match_unscaled_reference
+  - scale_only_decoys_do_not_change_the_target_decision
+locked_controls:
+  evidencepack_schema_version: "0.2"
+  evidence_completeness_denominator: 34
+  metrics: [EC, TR, CD, CA, AR, SC, EPG]
+  tau_E_hours: 18.0
+  production_thresholds_changed: false
+  scenario_oracles_changed: false
+interpretation_limits:
+  - Results are environment-specific and must be reported with hardware and runtime metadata.
+  - Timing and memory observations are intentionally environment-specific.
+  - Cross-environment timing or memory values must not be pooled as equivalent observations.
+  - Synthetic scale fixtures extend a controlled scenario and are not industrial deployment traces.
+  - No absolute latency memory or throughput value is a legal operational or
+    production-readiness threshold.
+  - Peak RSS is a worker-process high-water observation for the whole workload
+    execution, not a per-replay distribution.
+  - Final manuscript use requires targeted independent re-audit and final evaluation freeze.

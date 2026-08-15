@@ -296,6 +296,70 @@ def _deterministic_stage6_2(report: ReleaseReport) -> None:
 
 
 def _deterministic_stage6_3(report: ReleaseReport) -> None:
+    """Re-run Stage 6.3 only while current source still matches its historical targets."""
+
+    summary_path = ROOT / "evaluation/stage6_3_candidate/stage6_3_mutation_summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    historical_hashes = summary.get("target_source_hashes") or {}
+    current_matches_historical = all(
+        (ROOT / relative).is_file() and _sha256(ROOT / relative) == expected_hash
+        for relative, expected_hash in historical_hashes.items()
+    )
+
+    if not current_matches_historical:
+        _run(
+            report,
+            "Stage 6.3 immutable historical result validation",
+            [
+                sys.executable,
+                "scripts/validate_stage6_3_evaluation.py",
+                "--results",
+                "evaluation/stage6_3_candidate",
+                "--historical-source-mode",
+            ],
+        )
+        if report.status == "FAIL":
+            return
+        candidate = ROOT / "evaluation/stage6_3_candidate"
+        for path in sorted(candidate.glob("stage6_3_*")):
+            if path.is_file():
+                report.deterministic_hashes[f"stage6_3_historical/{path.name}"] = _sha256(path)
+        with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-3-assets-") as temp:
+            base = Path(temp)
+            first_assets = base / "assets-first"
+            second_assets = base / "assets-second"
+            command = [
+                sys.executable,
+                "scripts/build_stage6_3_paper_assets.py",
+                "--results",
+                str(candidate),
+                "--destination",
+            ]
+            _run(report, "Stage 6.3 historical paper assets A", command + [str(first_assets)])
+            _run(report, "Stage 6.3 historical paper assets B", command + [str(second_assets)])
+            if report.status == "FAIL":
+                return
+            first_files = sorted(
+                path.relative_to(first_assets) for path in first_assets.rglob("*") if path.is_file()
+            )
+            second_files = sorted(
+                path.relative_to(second_assets)
+                for path in second_assets.rglob("*")
+                if path.is_file()
+            )
+            if first_files != second_files:
+                report.fail("Stage 6.3 historical paper-asset inventories differ")
+                return
+            for relative in first_files:
+                left_hash = _sha256(first_assets / relative)
+                right_hash = _sha256(second_assets / relative)
+                if left_hash != right_hash:
+                    report.fail(f"non-deterministic Stage 6.3 historical paper asset: {relative}")
+                report.deterministic_hashes[f"stage6_3_historical_assets/{relative.as_posix()}"] = (
+                    left_hash
+                )
+        return
+
     with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-3-") as temp:
         base = Path(temp)
         first = base / "results-first"
@@ -426,6 +490,63 @@ def _semantic_stage6_4_smoke(report: ReleaseReport) -> None:
             report.deterministic_hashes[f"stage6_4_semantics/{workload_id}"] = str(digest)
 
 
+def _semantic_stage6_5_performance_smoke(report: ReleaseReport) -> None:
+    """Repeat the remediated smoke profile and compare deterministic decision semantics."""
+
+    with tempfile.TemporaryDirectory(prefix="sbom-audit-stage6-5-performance-") as temp:
+        base = Path(temp)
+        first = base / "smoke-first"
+        second = base / "smoke-second"
+        command = [
+            sys.executable,
+            "scripts/run_stage6_5_performance_remediation.py",
+            "--profile",
+            "smoke",
+            "--destination",
+        ]
+        _run(report, "Stage 6.5 performance remediation smoke A", command + [str(first)])
+        _run(report, "Stage 6.5 performance remediation smoke B", command + [str(second)])
+        if report.status == "FAIL":
+            return
+        for label, destination in (("A", first), ("B", second)):
+            _run(
+                report,
+                f"Stage 6.5 performance remediation smoke validation {label}",
+                [
+                    sys.executable,
+                    "scripts/validate_stage6_5_performance_remediation.py",
+                    "--results",
+                    str(destination),
+                ],
+            )
+        if report.status == "FAIL":
+            return
+        first_report = json.loads(
+            (first / "stage6_5_performance_report.json").read_text(encoding="utf-8")
+        )
+        second_report = json.loads(
+            (second / "stage6_5_performance_report.json").read_text(encoding="utf-8")
+        )
+        for field in (
+            "canonical_decision_fingerprint_sha256",
+            "semantic_fingerprint_hashes",
+            "workload_count",
+            "axis_count",
+            "all_decision_equivalent",
+            "memory_observation_granularity",
+        ):
+            if first_report.get(field) != second_report.get(field):
+                report.fail(
+                    f"Stage 6.5 performance smoke semantic field differs across repeats: {field}"
+                )
+        for workload_id, digest in sorted(
+            (first_report.get("semantic_fingerprint_hashes") or {}).items()
+        ):
+            report.deterministic_hashes[f"stage6_5_performance_semantics/{workload_id}"] = str(
+                digest
+            )
+
+
 def run_release_check() -> ReleaseReport:
     report = ReleaseReport()
     commands = [
@@ -499,6 +620,7 @@ def run_release_check() -> ReleaseReport:
                 "scripts/validate_stage6_3_evaluation.py",
                 "--results",
                 "evaluation/stage6_3_candidate",
+                "--historical-source-mode",
             ],
         ),
         (
@@ -524,6 +646,27 @@ def run_release_check() -> ReleaseReport:
                 sys.executable,
                 "scripts/validate_stage6_4_colab_notebook.py",
                 "notebooks/stage6_4_colab_checkpoint.ipynb",
+            ],
+        ),
+        (
+            "Stage 6.5 remediation governance",
+            [sys.executable, "scripts/validate_stage6_5_remediation.py"],
+        ),
+        (
+            "Stage 6.5 Colab notebook contract",
+            [
+                sys.executable,
+                "scripts/validate_stage6_5_colab_notebook.py",
+                "notebooks/stage6_5_colab_checkpoint.ipynb",
+            ],
+        ),
+        (
+            "Stage 6.5 performance remediation candidate",
+            [
+                sys.executable,
+                "scripts/validate_stage6_5_performance_remediation.py",
+                "--results",
+                "evaluation/stage6_5_candidate/performance_remediation",
             ],
         ),
         (
@@ -558,6 +701,8 @@ def run_release_check() -> ReleaseReport:
         _deterministic_stage6_3(report)
     if report.status == "PASS":
         _semantic_stage6_4_smoke(report)
+    if report.status == "PASS":
+        _semantic_stage6_5_performance_smoke(report)
     return report
 
 

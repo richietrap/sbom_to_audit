@@ -1,0 +1,11 @@
+{
+  "run_id": "STAGE6-5-PERFORMANCE-REMEDIATION-CANDIDATE-001",
+  "profile": "full",
+  "protocol_sha256": "1e70e8ce0256f2499db60129cebf4da17321d96ec482a9f54de25ca2d023f38e",
+  "output_files": {
+    "stage6_5_memory_observations.csv": "7d8396eec30ef6ba01a73067cdfb852e25c445a2c6c3a114f20cbfbb7e31980f",
+    "stage6_5_performance_report.json": "66776582270ef7016e556401e01fe2107a34a399f2a0af929d654bdace02dba0",
+    "stage6_5_raw_trials.csv": "f4254da8e73e63371299e9a3552d8d8b7496b7eb828762a5a150738adef3703f",
+    "stage6_5_scale_summary.csv": "b89d5c90bb4903766774404fc35425a32eec3afa97b60e49b1f487414ec3174e"
+  }
+}

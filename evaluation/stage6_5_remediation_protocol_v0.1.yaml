@@ -1,0 +1,119 @@
+protocol_id: stage6_5_audit_remediation
+protocol_version: "0.1"
+package_version: "0.6.5"
+status: REMEDIATION_CANDIDATE
+manuscript_eligible: false
+parent_checkpoint:
+  stage: "6.4"
+  package_version: "0.6.4"
+  git_commit: 77178902b04fcc9b8bd8c660e553c89e9ae6d246
+  repository_archive_sha256: 2de61e8d8e155f42f2f352622a87c89fdd9a58cbb8c650c6e3f26522de1d36fa
+  colab_evidence_sha256: a1364333cfb6f83974516c47bd9018d39528616270a20730b1771d33233231bd
+source_audit:
+  protocol_id: STAGE6.5-AUDIT-PROTOCOL-v0.1.0
+  protocol_sha256: a0afdf749dd796dffbc9d7e2dde5d78fc5411bc417140fe60c5c63771b36d529
+  result_bundle_sha256: 5a39ef9f506f0f2a5e486658330277a76465da47c43a19e1e3f448538f1ed51c
+  classification: ACCEPT_WITH_REMEDIATION
+findings_in_scope:
+  - S65-F001
+  - S65-F004
+production_semantics_allowed_to_change:
+  - >-
+    Audit Reconstructability output-identification predicate only: the common reconstruction
+    fields remain mandatory and output identification is satisfied by a populated output_hash OR
+    a populated output_state, matching the frozen pre-evaluation metric specification.
+forbidden_changes:
+  - EvidencePack Schema v0.2
+  - Evidence Completeness 34-field denominator
+  - recommendation-state semantics
+  - deadline model
+  - tau_E 18-hour production setting
+  - identity-confidence mapping
+  - scoring thresholds
+  - scenario source evidence
+  - scenario expected-state oracles
+  - Stage 6.1 frozen baseline protocol and oracles
+  - Stage 6.2 historical raw and result evidence
+  - Stage 6.3 historical protocol and result evidence
+  - Stage 6.4 protocol v0.1 and historical candidate evidence
+  - original Stage 6.5 audit protocol and findings
+s65_f001:
+  normative_authority: docs/metrics.md
+  frozen_rule: >-
+    A decision is reconstructable when the audit entry contains a stable event identifier,
+    timestamp, actor, action, relevant input references, and an output hash or state.
+  common_required_fields:
+    - event_id
+    - timestamp
+    - actor
+    - action
+    - input_references
+  output_identifier_operator: OR
+  output_identifier_fields:
+    - output_hash
+    - output_state
+  denominator: total audit entries
+  population_semantics: preserve_existing__populated_rules
+  historical_ar_results_must_remain_unchanged: true
+  independent_reaudit_required: true
+stage6_3_historical_compatibility:
+  rule: >-
+    Historical Stage 6.3 exact-text mutation evidence remains bound to the source hashes recorded
+    in its accepted candidate summary. Later source evolution must not rewrite the historical
+    mutation protocol or reinterpret an exact-text mismatch as a failed historical experiment.
+  current_source_reexecution_required: false
+  historical_protocol_mutation_registry_changed: false
+  historical_candidate_results_changed: false
+  authorized_current_source_evolution:
+    - src/sbom_to_audit/model/metrics.py
+  version_specific_ar_conformance_tests_required: true
+s65_f004:
+  historical_protocol: evaluation/stage6_4_performance_protocol_v0.1.yaml
+  remediation_protocol: evaluation/stage6_4_performance_protocol_v0.2.yaml
+  historical_results_disposition: IMMUTABLE
+  new_run_required: true
+  preserve_historical_rss_values: false
+  backfill_historical_memory_observations: false
+  duplicate_workload_rss_into_trial_rows: false
+  independent_reaudit_required: true
+performance_remediation:
+  axes: 4
+  workloads_per_axis: 5
+  workload_count: 20
+  warmup_runs_per_workload: 3
+  measured_timing_runs_per_workload: 10
+  measured_timing_rows: 200
+  scale_values: IDENTICAL_TO_V0_1
+  semantic_fixtures: IDENTICAL_TO_V0_1
+  decision_equivalence_required: true
+  memory_observation:
+    api: resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    process_scope: fresh_workload_worker
+    capture_point: after_all_warmups_and_measured_replays
+    observations_per_workload: 1
+    observations_per_full_run: 20
+    native_unit_linux_and_other_non_darwin: kibibytes_as_reported_by_ru_maxrss
+    native_unit_darwin: bytes_as_reported_by_ru_maxrss
+    normalized_unit: bytes
+  wall_cv:
+    formula: sample_standard_deviation_n_minus_1 / arithmetic_mean
+    implementation: statistics.stdev / statistics.fmean
+    v0_1_convention_explicitly_documented: false
+    v0_2_status: VERSIONED_CLARIFICATION
+stop_conditions:
+  - corrected AR changes an existing historical AR result unexpectedly
+  - Stage 6.1 freeze or oracle evidence changes
+  - Stage 6.2 substantive results change unexpectedly
+  - Stage 6.3 historical protocol or result evidence changes
+  - any remediation workload changes registered decision semantics
+  - RSS cannot be traced to a genuine worker measurement
+  - RSS would require fabrication inference or historical backfill
+  - original Stage 6.4 evidence is overwritten
+  - original Stage 6.5 audit evidence is overwritten
+  - a new CRITICAL finding appears
+  - full regression or release gate fails
+closure_boundary:
+  development_tests_can_close_major_findings: false
+  required_external_step: targeted_independent_stage6_5_reaudit
+  evaluation_status_after_local_remediation: CANDIDATE_NOT_FROZEN
+  manuscript_eligible_after_local_remediation: false

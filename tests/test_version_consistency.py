@@ -4,8 +4,8 @@ from pathlib import Path
 from sbom_to_audit import __version__
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_VERSION = "0.6.4"
-EXPECTED_STAGE = "Stage 6.4"
+EXPECTED_VERSION = "0.6.5"
+EXPECTED_STAGE = "Stage 6.5 independent-audit remediation candidate"
 
 
 def test_release_version_markers_are_consistent() -> None:

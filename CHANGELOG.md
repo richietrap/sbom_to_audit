@@ -1,3 +1,17 @@
+## 0.6.5 targeted independent closure re-audit — 2026-08-15
+
+- independently resolved `S65-F001` after 40/40 specification-derived AR cases matched, seven historical scenario replays covering 157 audit entries showed zero historical AR changes, and Stage 6.3 historical evidence remained byte-identical;
+- independently resolved `S65-F004` after recomputation from 200 raw timing rows and 20 genuine worker-level RSS observations produced 260/260 workload/metric matches, 40/40 endpoint-table matches, 8/8 figure-polyline matches, and 20/20 decision-equivalent workloads;
+- preserved the original Stage 6.5 findings and accepted Stage 6.4 evidence as historical records rather than rewriting them after remediation;
+- recorded the targeted closure evidence bundle SHA-256 `1c03387e3dfbc5e3bee4e115cca8d2a93ba0a5f17602f0b5ab950502be9530c8` and machine-readable closure summary SHA-256 `c3db7a357a233aad959f783e0bbcb7a3e8ba726dba3e998c37743dabf1502444`;
+- retained Stage 6.5 as `CANDIDATE_NOT_FROZEN` and manuscript-ineligible pending post-audit integration, GitHub Actions, exact-commit Colab reproduction, the deferred manual baseline, and final evaluation freeze.
+
+## 0.6.5 pre-acceptance release-gate correction
+
+- Corrected the Stage 6.5 finalizer manifest enumerator to apply the same generated-output exclusions as `validate_repository.py` and `tests/test_manifest.py`.
+- Updated the repository-integrity regression expectation for the Stage 6.5 candidate registry addition from 32/12 to 33/13 runs/environments.
+- Recorded the pre-acceptance packaging/governance defect as `BUG-031`; no AR semantics, raw benchmark observations, performance summaries, scenario oracles, locked metrics, or historical evidence were changed.
+
 ## 0.6.4 — Stage 6.4 performance and scale evaluation — 2026-08-10
 
 - added a pre-registered, environment-recorded performance protocol over SBOM-component, telemetry-record, source-artifact, and replay-event scale axes;
@@ -30,6 +44,17 @@
 - documented BUG-027 as the pre-acceptance Stage 6.1.5 formatter correction and BUG-028 as a Stage 6.2 pre-release temporal-integrity correction.
 
 # Changelog
+
+## 0.6.5 — Stage 6.5 independent-audit remediation candidate — 2026-08-12
+
+- corrected Audit Reconstructability to conform to the frozen common-fields plus `output_hash OR output_state` rule without changing its denominator or population semantics;
+- added specification-derived Stage 6.5 AR regression tests for hash-only, state-only, both, neither, common-field missingness, blank identifiers, and historical state-only behaviour;
+- preserved the Stage 6.3 exact-text mutation protocol and candidate results as immutable historical evidence, adding an explicit historical-source validation mode for later source evolution;
+- added Stage 6.4 performance protocol v0.2 for the Stage 6.5 remediation run while preserving v0.1 and the original Stage 6.4 candidate evidence unchanged;
+- added raw workload-level RSS evidence using the genuine `resource.getrusage(resource.RUSAGE_SELF).ru_maxrss` worker high-water observation;
+- made the sample-standard-deviation wall-CV convention explicit in v0.2 as a versioned clarification of the implementation behaviour used by v0.1;
+- added dedicated Stage 6.5 performance runner, raw-evidence validator, paper-asset builder, remediation validator, finalizer, ADR-025, finding-closure register, and release-gate smoke validation;
+- retained `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false`; independent targeted re-audit remains mandatory before S65-F001 or S65-F004 can be closed.
 
 ## 0.6.1.5 — Stage 6.1.5 isolated Colab checkpoint correction — 2026-07-30
 

@@ -2,11 +2,11 @@
 
 **EvidencePack schema baseline:** v0.2
 **Semantic baseline:** v0.2.1
-**Implementation baseline:** Stage 6.4 performance-and-scale evaluation candidate, package v0.6.4
+**Implementation baseline:** Stage 6.5 independent-audit remediation candidate, package v0.6.5
 **Purpose:** Drift control. Every tracked repository artefact is listed below.
 
-**Expected files:** 504
-**Created files:** 504
+**Expected files:** 531
+**Created files:** 531
 **Missing files:** 0
 
 | Path | Purpose | Status |
@@ -18,11 +18,11 @@
 | `.gitignore` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
 | `.pre-commit-config.yaml` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
 | `.yamllint.yml` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
-| `CHANGELOG.md` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
-| `CITATION.cff` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
+| `CHANGELOG.md` | Repository configuration, metadata, licence, automation, or project documentation. | Updated v0.6.5 |
+| `CITATION.cff` | Repository configuration, metadata, licence, automation, or project documentation. | Updated v0.6.5 |
 | `LICENSE` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
-| `MANIFEST.md` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
-| `README.md` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
+| `MANIFEST.md` | Repository configuration, metadata, licence, automation, or project documentation. | Updated v0.6.5 |
+| `README.md` | Repository configuration, metadata, licence, automation, or project documentation. | Updated v0.6.5 |
 | `data/README.md` | Committed controlled source artefact, scenario input, or directory placeholder. | Preserved, added, or updated v0.6.4 |
 | `data/asset_context/.gitkeep` | Committed controlled source artefact, scenario input, or directory placeholder. | Preserved, added, or updated v0.6.4 |
 | `data/asset_context/false_comfort_asset.yaml` | Committed controlled source artefact, scenario input, or directory placeholder. | Preserved, added, or updated v0.6.4 |
@@ -153,7 +153,7 @@
 | `docs/baseline_execution_guide.md` | Stage 6.1 protocol, execution, fairness, reproduction, or governance documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/baseline_metric_fairness_controls.md` | Stage 6.1 protocol, execution, fairness, reproduction, or governance documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/baseline_protocol.md` | Stage 6.1 protocol, execution, fairness, reproduction, or governance documentation. | Preserved, added, or updated v0.6.4 |
-| `docs/bug_register.csv` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
+| `docs/bug_register.csv` | Design record, methodology, quality, correction, or research documentation. | Updated v0.6.5 |
 | `docs/decision_records/ADR-001-tri-part-model.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/decision_records/ADR-002-semantic-implementation-alignment.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/decision_records/ADR-003-quality-gates-and-clean-checkout-tests.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
@@ -178,6 +178,7 @@
 | `docs/decision_records/ADR-022-stage6-2-robustness-and-sensitivity.md` | Architecture decision record for Stage 6.2 robustness and sensitivity. | Preserved, added, or updated v0.6.4 |
 | `docs/decision_records/ADR-023-stage6-3-controlled-mutation-testing.md` | Architecture or research-governance decision record. | Preserved, added, or updated v0.6.4 |
 | `docs/decision_records/ADR-024-stage6-4-performance-and-scale-evaluation.md` | Architecture or research-governance decision record. | Preserved, added, or updated v0.6.4 |
+| `docs/decision_records/ADR-025-stage6-5-audit-remediation.md` | Stage 6.5 audit-remediation governance or explanatory documentation. | Added v0.6.5 |
 | `docs/decision_semantics.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/design_freeze_v0.2.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/known_issues.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
@@ -205,6 +206,7 @@
 | `docs/stage6_2_robustness_and_sensitivity_report.md` | Stage 6.2 scope, candidate-result, reproduction, and limitation report. | Preserved, added, or updated v0.6.4 |
 | `docs/stage6_3_controlled_mutation_testing_report.md` | Project report, quality record, claim matrix, limitation, or implementation documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage6_4_performance_and_scale_report.md` | Project report, quality record, claim matrix, limitation, or implementation documentation. | Preserved, added, or updated v0.6.4 |
+| `docs/stage6_5_remediation_report.md` | Stage 6.5 audit-remediation governance or explanatory documentation. | Added v0.6.5 |
 | `docs/stage6_matched_baseline_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `evaluation/README.md` | Evaluation protocol, registry, environment record, or pilot summary. | Preserved, added, or updated v0.6.4 |
 | `evaluation/baseline_protocol_v0.1.yaml` | Evaluation protocol, registry, environment record, or pilot summary. | Preserved, added, or updated v0.6.4 |
@@ -221,6 +223,7 @@
 | `evaluation/environments/stage6_2_local_build.json` | Registered Stage 6.2 candidate execution environment. | Preserved, added, or updated v0.6.4 |
 | `evaluation/environments/stage6_3_local_build.json` | Evaluation protocol, registry, oracle, freeze record, environment, or candidate evidence. | Preserved, added, or updated v0.6.4 |
 | `evaluation/environments/stage6_4_local_build.json` | Stage 6.4 performance protocol, environment metadata, or observed candidate evidence. | Preserved, added, or updated v0.6.4 |
+| `evaluation/environments/stage6_5_local_build.json` | Stage 6.5 environment metadata for the local remediation run. | Added or generated v0.6.5 |
 | `evaluation/environments/stage6_local_build.json` | Evaluation protocol, registry, environment record, or pilot summary. | Preserved, added, or updated v0.6.4 |
 | `evaluation/freeze/README.md` | Pre-execution freeze target or hash record for Stage 6.1 evaluation controls. | Preserved, added, or updated v0.6.4 |
 | `evaluation/freeze/stage6_1_4_yaml_semantic_equivalence.json` | Parsed semantic-equivalence evidence for all YAML and workflow files corrected in Stage 6.1.4. | Preserved, added, or updated v0.6.4 |
@@ -256,6 +259,15 @@
 | `evaluation/stage6_4_candidate/stage6_4_raw_trials.csv` | Stage 6.4 performance protocol, environment metadata, or observed candidate evidence. | Preserved, added, or updated v0.6.4 |
 | `evaluation/stage6_4_candidate/stage6_4_scale_summary.csv` | Stage 6.4 performance protocol, environment metadata, or observed candidate evidence. | Preserved, added, or updated v0.6.4 |
 | `evaluation/stage6_4_performance_protocol_v0.1.yaml` | Stage 6.4 performance protocol, environment metadata, or observed candidate evidence. | Preserved, added, or updated v0.6.4 |
+| `evaluation/stage6_4_performance_protocol_v0.2.yaml` | Stage 6.5 remediation or versioned performance protocol. | Added v0.6.5 |
+| `evaluation/stage6_5_candidate/finding_closure.csv` | Stage 6.5 remediation candidate evidence, finding closure, or directory placeholder. | Added v0.6.5 |
+| `evaluation/stage6_5_candidate/performance_remediation/.gitkeep` | Stage 6.5 remediation candidate evidence, finding closure, or directory placeholder. | Added v0.6.5 |
+| `evaluation/stage6_5_candidate/performance_remediation/stage6_5_memory_observations.csv` | Stage 6.5 remediation candidate evidence or finding-closure record. | Added or generated v0.6.5 |
+| `evaluation/stage6_5_candidate/performance_remediation/stage6_5_output_manifest.json` | Stage 6.5 remediation candidate evidence or finding-closure record. | Added or generated v0.6.5 |
+| `evaluation/stage6_5_candidate/performance_remediation/stage6_5_performance_report.json` | Stage 6.5 remediation candidate evidence or finding-closure record. | Added or generated v0.6.5 |
+| `evaluation/stage6_5_candidate/performance_remediation/stage6_5_raw_trials.csv` | Stage 6.5 remediation candidate evidence or finding-closure record. | Added or generated v0.6.5 |
+| `evaluation/stage6_5_candidate/performance_remediation/stage6_5_scale_summary.csv` | Stage 6.5 remediation candidate evidence or finding-closure record. | Added or generated v0.6.5 |
+| `evaluation/stage6_5_remediation_protocol_v0.1.yaml` | Stage 6.5 remediation or versioned performance protocol. | Added v0.6.5 |
 | `evaluation/summaries/README.md` | Evaluation protocol, registry, environment record, or pilot summary. | Preserved, added, or updated v0.6.4 |
 | `evaluation/summaries/cve_2024_3400_public_stage551_candidate.json` | Evaluation protocol, registry, environment record, or pilot summary. | Preserved, added, or updated v0.6.4 |
 | `evaluation/summaries/cve_2024_3400_public_stage552_corrected_candidate.json` | Evaluation protocol, registry, environment record, or pilot summary. | Preserved, added, or updated v0.6.4 |
@@ -290,6 +302,7 @@
 | `notebooks/stage6_2_colab_checkpoint.ipynb` | Exact-commit isolated Colab checkpoint for Stage 6.2 candidate reproduction. | Preserved, added, or updated v0.6.4 |
 | `notebooks/stage6_3_colab_checkpoint.ipynb` | Exact-commit isolated Colab checkpoint notebook. | Preserved, added, or updated v0.6.4 |
 | `notebooks/stage6_4_colab_checkpoint.ipynb` | Exact-commit isolated Colab checkpoint notebook. | Preserved, added, or updated v0.6.4 |
+| `notebooks/stage6_5_colab_checkpoint.ipynb` | Stage 6.5 exact-commit Colab checkpoint notebook. | Added v0.6.5 |
 | `notebooks/stage6_colab_checkpoint.ipynb` | Isolated Google Colab reproduction checkpoint or notebook documentation. | Preserved, added, or updated v0.6.4 |
 | `outputs/README.md` | Generated-output directory placeholder or documentation. | Preserved, added, or updated v0.6.4 |
 | `outputs/audit_ledgers/.gitkeep` | Generated-output directory placeholder or documentation. | Preserved, added, or updated v0.6.4 |
@@ -314,6 +327,7 @@
 | `paper_assets/data/stage6_2_asset_manifest.json` | Hash-addressed manifest for Stage 6.2 candidate paper assets. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/data/stage6_3_asset_manifest.json` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/data/stage6_4_asset_manifest.json` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
+| `paper_assets/data/stage6_5_asset_manifest.json` | Stage 6.5 candidate figure, table, or asset provenance manifest. | Added or generated v0.6.5 |
 | `paper_assets/data/stage6_asset_manifest.json` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/figure_table_register.csv` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/figures/cve_2024_3400_epss_verification.svg` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
@@ -327,6 +341,7 @@
 | `paper_assets/figures/stage6_2_threshold_stability.svg` | Machine-generated Stage 6.2 candidate figure; not manuscript-eligible before freeze. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/figures/stage6_3_mutation_detection.svg` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/figures/stage6_4_latency_scaling.svg` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
+| `paper_assets/figures/stage6_5_latency_scaling.svg` | Stage 6.5 candidate figure, table, or asset provenance manifest. | Added or generated v0.6.5 |
 | `paper_assets/figures/stage6_metric_comparison.svg` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/scripts/__init__.py` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/scripts/build_stage2_assets.py` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
@@ -365,12 +380,14 @@
 | `paper_assets/tables/stage6_3_family_summary.csv` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/tables/stage6_4_axis_endpoints.csv` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/tables/stage6_4_scale_summary.csv` | Registered data-driven candidate figure, table, manifest, or asset documentation. | Preserved, added, or updated v0.6.4 |
+| `paper_assets/tables/stage6_5_axis_endpoints.csv` | Stage 6.5 candidate figure, table, or asset provenance manifest. | Added or generated v0.6.5 |
+| `paper_assets/tables/stage6_5_scale_summary.csv` | Stage 6.5 candidate figure, table, or asset provenance manifest. | Added or generated v0.6.5 |
 | `paper_assets/tables/stage6_conflict_precision.csv` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/tables/stage6_decision_divergence.csv` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/tables/stage6_primary_metric_comparison.csv` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/tables/stage6_scenario_comparison.csv` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `paper_assets/tables/stage6_source_review_operation_proxy.csv` | Programmatically generated paper candidate, provenance record, or asset-generation script. | Preserved, added, or updated v0.6.4 |
-| `pyproject.toml` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
+| `pyproject.toml` | Repository configuration, metadata, licence, automation, or project documentation. | Updated v0.6.5 |
 | `requirements.txt` | Repository configuration, metadata, licence, automation, or project documentation. | Preserved, added, or updated v0.6.4 |
 | `schemas/evidencepack_v0.2.schema.json` | EvidencePack schema or schema documentation artefact. | Preserved, added, or updated v0.6.4 |
 | `scripts/assert_verified_historical_replay.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
@@ -379,18 +396,21 @@
 | `scripts/build_stage6_2_paper_assets.py` | Stage 6.2 runner, validator, asset builder, or Colab contract validator. | Preserved, added, or updated v0.6.4 |
 | `scripts/build_stage6_3_paper_assets.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/build_stage6_4_paper_assets.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
+| `scripts/build_stage6_5_paper_assets.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
 | `scripts/export_stage6_1_baseline_packets.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/finalize_stage6_3_candidate.sh` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/finalize_stage6_4_candidate.sh` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
+| `scripts/finalize_stage6_5_remediation.sh` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
 | `scripts/freeze_stage6_1_protocol.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/import_manual_baseline_results.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
-| `scripts/release_check.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
+| `scripts/release_check.py` | Repository validation, replay, verification, comparison, or release automation. | Updated v0.6.5 |
 | `scripts/run_baseline_comparison.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
 | `scripts/run_historical_replay.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
 | `scripts/run_stage6_1_comparison.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/run_stage6_2_robustness.py` | Stage 6.2 runner, validator, asset builder, or Colab contract validator. | Preserved, added, or updated v0.6.4 |
 | `scripts/run_stage6_3_mutation_testing.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/run_stage6_4_performance.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
+| `scripts/run_stage6_5_performance_remediation.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
 | `scripts/validate_manual_baseline_worksheet.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_repository.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_stage6_1_colab_notebook.py` | Notebook execution-contract and code-cell preflight validator. | Preserved, added, or updated v0.6.4 |
@@ -398,11 +418,14 @@
 | `scripts/validate_stage6_2_colab_notebook.py` | Stage 6.2 runner, validator, asset builder, or Colab contract validator. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_stage6_2_evaluation.py` | Stage 6.2 runner, validator, asset builder, or Colab contract validator. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_stage6_3_colab_notebook.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
-| `scripts/validate_stage6_3_evaluation.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
+| `scripts/validate_stage6_3_evaluation.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Updated v0.6.5 |
 | `scripts/validate_stage6_4_colab_notebook.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_stage6_4_evaluation.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
+| `scripts/validate_stage6_5_colab_notebook.py` | Stage 6.5 Colab notebook contract validator. | Added v0.6.5 |
+| `scripts/validate_stage6_5_performance_remediation.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
+| `scripts/validate_stage6_5_remediation.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
 | `scripts/verify_historical_epss.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
-| `src/sbom_to_audit/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
+| `src/sbom_to_audit/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Updated v0.6.5 |
 | `src/sbom_to_audit/baseline/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/baseline/evaluation_freeze.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/baseline/evaluation_oracles.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
@@ -435,7 +458,7 @@
 | `src/sbom_to_audit/model/evidence_pack.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/model/evidence_record.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/model/identity.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
-| `src/sbom_to_audit/model/metrics.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
+| `src/sbom_to_audit/model/metrics.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Updated v0.6.5 |
 | `src/sbom_to_audit/model/scope.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/model/scoring.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/model/state_machine.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
@@ -502,27 +525,20 @@
 | `tests/test_stage6_2_temporal_integrity.py` | Stage 6.2 robustness, integrity, asset, validator, or notebook regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_2_validator.py` | Stage 6.2 robustness, integrity, asset, validator, or notebook regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_3_assets.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
-| `tests/test_stage6_3_mutation_registry.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
+| `tests/test_stage6_3_mutation_registry.py` | Automated regression, property, integration, contract, or safety test. | Updated v0.6.5 |
 | `tests/test_stage6_3_mutation_runner.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_3_notebook.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_3_safety_guards.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
-| `tests/test_stage6_3_validator.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
+| `tests/test_stage6_3_validator.py` | Automated regression, property, integration, contract, or safety test. | Updated v0.6.5 |
 | `tests/test_stage6_4_assets.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_4_notebook.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_4_performance.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_4_runner.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_4_validator.py` | Automated regression, property, integration, contract, or safety test. | Preserved, added, or updated v0.6.4 |
+| `tests/test_stage6_5_ar_conformance.py` | Stage 6.5 specification-derived regression or historical-compatibility test. | Added v0.6.5 |
+| `tests/test_stage6_5_historical_mutation_compatibility.py` | Stage 6.5 specification-derived regression or historical-compatibility test. | Added v0.6.5 |
+| `tests/test_stage6_5_notebook.py` | Stage 6.5 Colab notebook contract regression test. | Added v0.6.5 |
+| `tests/test_stage6_5_performance_protocol.py` | Stage 6.5 specification-derived regression or historical-compatibility test. | Added v0.6.5 |
 | `tests/test_state_machine.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
-| `tests/test_version_consistency.py` | Automated regression, integrity, quality, or evaluation-control test. | Preserved, added, or updated v0.6.4 |
+| `tests/test_version_consistency.py` | Automated regression, integrity, quality, or evaluation-control test. | Updated v0.6.5 |
 | `tests/test_workflow.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
-
-## v0.6.4 Stage 6.4 performance-and-scale register
-
-- The Stage 6.4 protocol is registered at `evaluation/stage6_4_performance_protocol_v0.1.yaml`.
-- Four one-factor-at-a-time axes scale SBOM components, telemetry records, source artefacts, and replay events while preserving the reference decision fingerprint.
-- Full candidate runs use three warm-ups and ten measured replays per workload in fresh worker processes.
-- Median and nearest-rank p95 wall time, CPU time, peak RSS, input/output size, relative slowdown, and scale-unit throughput are environment-specific observations.
-- Timing values are intentionally non-deterministic and are not required to be byte-identical across environments; scale fixtures and semantic decision fingerprints remain controlled.
-- No latency threshold, production capacity, service-level objective, industrial-throughput claim, or legal-performance claim is introduced.
-- EvidencePack Schema v0.2, the 34-field EC denominator, the seven locked metrics, `tau_E=18h`, Stage 6.1 freeze, Stage 6.2 robustness controls, and Stage 6.3 mutation controls remain unchanged.
-- Stage 6.4 remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending exact-commit reproduction, independent audit, the deferred manual baseline, and final evaluation freeze.

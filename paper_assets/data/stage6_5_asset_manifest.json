@@ -1,0 +1,26 @@
+{
+  "run_id": "STAGE6-5-PERFORMANCE-REMEDIATION-CANDIDATE-001",
+  "asset_status": "CANDIDATE_NOT_FROZEN",
+  "manuscript_eligible": false,
+  "source_environment": {
+    "python_version": "3.12.3",
+    "python_implementation": "CPython",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "cpu_count": 32,
+    "physical_memory_bytes": 8168517632
+  },
+  "source_commit": "77178902b04fcc9b8bd8c660e553c89e9ae6d246",
+  "source_results": {
+    "evaluation/stage6_5_candidate/performance_remediation/stage6_5_performance_report.json": "66776582270ef7016e556401e01fe2107a34a399f2a0af929d654bdace02dba0",
+    "evaluation/stage6_5_candidate/performance_remediation/stage6_5_scale_summary.csv": "b89d5c90bb4903766774404fc35425a32eec3afa97b60e49b1f487414ec3174e",
+    "evaluation/stage6_5_candidate/performance_remediation/stage6_5_memory_observations.csv": "7d8396eec30ef6ba01a73067cdfb852e25c445a2c6c3a114f20cbfbb7e31980f"
+  },
+  "generated_asset_hashes": {
+    "figures/stage6_5_latency_scaling.svg": "11bf4097b0e9b4f9a77feebe8c40996e0837126ff30dd7ee75d4014d1a898ce3",
+    "tables/stage6_5_axis_endpoints.csv": "68efe10fc2637120d8173408c0f063a9bd4b7777859483fb53495f7aa17a4e60",
+    "tables/stage6_5_scale_summary.csv": "b89d5c90bb4903766774404fc35425a32eec3afa97b60e49b1f487414ec3174e"
+  },
+  "interpretation_boundary": "Stage 6.5 performance-remediation assets describe one environment-specific candidate run with preserved raw worker-level peak-RSS observations. They remain ineligible until targeted independent re-audit and final evaluation freeze."
+}

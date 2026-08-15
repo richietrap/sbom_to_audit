@@ -51,7 +51,7 @@ def _error(errors: list[str], condition: bool, message: str) -> None:
         errors.append(message)
 
 
-def validate(results_root: Path) -> dict[str, Any]:
+def validate(results_root: Path, *, historical_source_mode: bool = False) -> dict[str, Any]:
     errors: list[str] = []
     try:
         protocol = read_yaml(PROTOCOL_PATH)
@@ -117,7 +117,7 @@ def validate(results_root: Path) -> dict[str, Any]:
     for mutant in mutants:
         target = ROOT / mutant.target_file
         _error(errors, target.is_file(), f"mutation target is missing: {mutant.target_file}")
-        if target.is_file():
+        if target.is_file() and not historical_source_mode:
             text = target.read_text(encoding="utf-8")
             for index, replacement in enumerate(mutant.replacements):
                 _error(
@@ -248,11 +248,19 @@ def validate(results_root: Path) -> dict[str, Any]:
     )
     for relative, expected_hash in target_hashes.items():
         path = ROOT / str(relative)
-        _error(
-            errors,
-            path.is_file() and sha256_file(path) == expected_hash,
-            f"target source hash mismatch: {relative}",
-        )
+        if historical_source_mode:
+            _error(
+                errors,
+                isinstance(expected_hash, str) and len(expected_hash) == 64,
+                f"historical target source hash is malformed: {relative}",
+            )
+            _error(errors, path.is_file(), f"current mutation target is missing: {relative}")
+        else:
+            _error(
+                errors,
+                path.is_file() and sha256_file(path) == expected_hash,
+                f"target source hash mismatch: {relative}",
+            )
     safety_path = ROOT / "tests" / "test_stage6_3_safety_guards.py"
     _error(
         errors,
@@ -288,6 +296,7 @@ def validate(results_root: Path) -> dict[str, Any]:
             "strengthened_outcomes": strengthened_counts,
             "strengthened_mutation_score": mutation_score(normalized_rows, "strengthened_outcome"),
             "results_validated": True,
+            "historical_source_mode": historical_source_mode,
         },
     }
 
@@ -295,12 +304,23 @@ def validate(results_root: Path) -> dict[str, Any]:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results", type=Path, default=DEFAULT_RESULTS)
+    parser.add_argument(
+        "--historical-source-mode",
+        action="store_true",
+        help=(
+            "Validate immutable Stage 6.3 protocol/result evidence without requiring later "
+            "production source to retain the exact historical mutation target text."
+        ),
+    )
     return parser
 
 
 def main() -> int:
     args = build_parser().parse_args()
-    report = validate(args.results.resolve())
+    report = validate(
+        args.results.resolve(),
+        historical_source_mode=args.historical_source_mode,
+    )
     print(json.dumps(report, indent=2))
     return 0 if report["valid"] else 1
 

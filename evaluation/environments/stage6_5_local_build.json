@@ -1,0 +1,23 @@
+{
+  "benchmark_environment": {
+    "cpu_count": 32,
+    "machine": "x86_64",
+    "physical_memory_bytes": 8168517632,
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python_implementation": "CPython",
+    "python_version": "3.12.3"
+  },
+  "environment_id": "stage6-5-local-build",
+  "interpretation": "Local Stage 6.5 remediation candidate. New performance values supersede Stage 6.4 only for the remediation run and remain manuscript-ineligible pending targeted independent re-audit and final evaluation freeze.",
+  "measured_runs": 10,
+  "measurement_profile": "full",
+  "memory_observation_count": 20,
+  "memory_observation_granularity": "one_worker_high_water_observation_per_workload",
+  "package_version": "0.6.5",
+  "run_id": "STAGE6-5-PERFORMANCE-REMEDIATION-CANDIDATE-001",
+  "source_commit_observed_before_candidate_commit": "77178902b04fcc9b8bd8c660e553c89e9ae6d246",
+  "source_tree_dirty_during_candidate_measurement": true,
+  "stage": "6.5",
+  "warmup_runs": 3
+}
