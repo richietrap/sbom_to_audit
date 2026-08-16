@@ -17,11 +17,16 @@ from sbom_to_audit.historical.epss_verification import (
     parse_archive_payload,
     verify_offline_contract,
     verify_payloads,
+    verify_repository_state,
 )
 from sbom_to_audit.historical.public_replay import run_public_historical_replay
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data/historical_replays/cve_2024_3400/epss/verification_manifest.json"
+PRESERVED_REPORT = (
+    ROOT / "data/historical_replays/cve_2024_3400/epss/preserved_online_verification.json"
+)
+NORMALIZED_ROW = ROOT / "data/historical_replays/cve_2024_3400/epss/archive_row.csv"
 
 
 def _api(epss: str = "0.003710000", percentile: str = "0.723430000") -> bytes:
@@ -65,7 +70,47 @@ def test_offline_verification_contract_is_valid_and_pinned() -> None:
     result = verify_offline_contract(MANIFEST)
     assert result.status == "offline_contract_valid_online_verification_required"
     assert result.archive_commit == ARCHIVE_COMMIT
+    assert result.online_gate_required is True
     assert all(result.checks.values())
+
+
+def test_repository_state_uses_preserved_online_verification_record() -> None:
+    result = verify_repository_state(MANIFEST, PRESERVED_REPORT, normalized_row_path=NORMALIZED_ROW)
+    assert result.status == "offline_contract_valid_preserved_online_verification_verified"
+    assert result.api_record == {
+        "cve": TARGET_CVE,
+        "date": TARGET_DATE,
+        "epss": "0.00371",
+        "percentile": "0.72343",
+    }
+    assert result.archive_record is not None
+    assert result.evidence_zip_sha256
+    assert result.online_gate_required is False
+    assert result.verified_at == "2026-08-16T07:30:04Z"
+    assert all(result.checks.values())
+
+
+def test_preserved_report_tampering_fails_closed(tmp_path: Path) -> None:
+    payload = json.loads(PRESERVED_REPORT.read_text(encoding="utf-8"))
+    payload["archive_commit"] = "0" * 40
+    bad_commit = tmp_path / "bad_commit.json"
+    bad_commit.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="archive_commit mismatch"):
+        verify_repository_state(MANIFEST, bad_commit, normalized_row_path=NORMALIZED_ROW)
+
+    payload = json.loads(PRESERVED_REPORT.read_text(encoding="utf-8"))
+    payload["evidence_zip_sha256"] = "short"
+    bad_zip_hash = tmp_path / "bad_zip_hash.json"
+    bad_zip_hash.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="evidence_zip_sha256"):
+        verify_repository_state(MANIFEST, bad_zip_hash, normalized_row_path=NORMALIZED_ROW)
+
+    payload = json.loads(PRESERVED_REPORT.read_text(encoding="utf-8"))
+    payload["extracted_row_sha256"] = "f" * 64
+    bad_row_hash = tmp_path / "bad_row_hash.json"
+    bad_row_hash.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="extracted_row_sha256 mismatch"):
+        verify_repository_state(MANIFEST, bad_row_hash, normalized_row_path=NORMALIZED_ROW)
 
 
 def test_api_and_archive_dual_source_verification_agree() -> None:
@@ -79,6 +124,7 @@ def test_api_and_archive_dual_source_verification_agree() -> None:
     }
     assert result.archive_record["model_version"] == EXPECTED_MODEL_VERSION
     assert result.api_sha256 and result.archive_sha256 and result.extracted_row_sha256
+    assert result.online_gate_required is False
     assert all(result.checks.values())
 
 
@@ -123,6 +169,19 @@ def test_historical_epss_ablation_does_not_change_state_trajectory() -> None:
     assert result["final_state_without_epss"] == "Report-Ready"
     assert result["final_E_t_with_epss"] == result["final_E_t_without_epss"] == 1.0
     assert not any(row["state_changed"] for row in result["rows"])
+
+
+def test_preserved_online_verification_report_removes_eligibility_blocker() -> None:
+    bundle = run_public_historical_replay(ROOT, epss_verification_report_path=PRESERVED_REPORT)[
+        "bundle"
+    ]
+    assert bundle["historical_epss_verification"]["status"] == (
+        "authoritative_dual_source_verified"
+    )
+    assert bundle["manuscript_eligibility"] is True
+    assert bundle["evaluation_status"] == "PILOT_VERIFIED_NOT_FROZEN"
+    assert bundle["eligibility_blockers"] == []
+    assert bundle["historical_epss_verification"]["online_report_hash"]
 
 
 def test_online_verification_report_removes_eligibility_blocker(tmp_path: Path) -> None:

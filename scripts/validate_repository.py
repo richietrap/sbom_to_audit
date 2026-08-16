@@ -23,7 +23,7 @@ from sbom_to_audit.baseline.evaluation_oracles import (
 )
 from sbom_to_audit.baseline.manual_worksheet import BUNDLE_SCHEMAS, DECLARATION_FILE
 from sbom_to_audit.baseline.protocol import load_manual_protocol, load_protocol
-from sbom_to_audit.historical.epss_verification import verify_offline_contract
+from sbom_to_audit.historical.epss_verification import verify_repository_state
 from sbom_to_audit.historical.public_replay import run_public_historical_replay
 from sbom_to_audit.ingestion.source_registry import SourceRegistry
 from sbom_to_audit.model.metrics import MANDATORY_FIELDS
@@ -289,8 +289,13 @@ def validate_scenarios(report: ValidationReport, strict_sources: bool) -> None:
 
 
 def validate_historical_replay(report: ValidationReport, strict_sources: bool) -> None:
+    preserved_report_path = (
+        ROOT / "data/historical_replays/cve_2024_3400/epss/preserved_online_verification.json"
+    )
     try:
-        result = run_public_historical_replay(ROOT)
+        result = run_public_historical_replay(
+            ROOT, epss_verification_report_path=preserved_report_path
+        )
     except (FileNotFoundError, KeyError, TypeError, ValueError) as exc:
         if strict_sources:
             report.error(f"historical public replay validation failed: {exc}")
@@ -302,27 +307,37 @@ def validate_historical_replay(report: ValidationReport, strict_sources: bool) -
     if boundaries.get("full_evidencepack_generated") is not False:
         report.error("public historical replay must not generate a full EvidencePack")
     try:
-        offline = verify_offline_contract(
-            ROOT / "data/historical_replays/cve_2024_3400/epss/verification_manifest.json"
+        repository_state = verify_repository_state(
+            ROOT / "data/historical_replays/cve_2024_3400/epss/verification_manifest.json",
+            preserved_report_path,
+            normalized_row_path=ROOT / "data/historical_replays/cve_2024_3400/epss/archive_row.csv",
         )
     except (OSError, TypeError, ValueError) as exc:
-        report.error(f"historical EPSS offline contract validation failed: {exc}")
+        report.error(f"historical EPSS repository-state validation failed: {exc}")
         return
     if bundle.get("provisional_source_ids"):
         report.error("historical replay must not contain provisional EPSS sources")
-    if bundle.get("manuscript_eligibility") is not False:
-        report.error("offline validation must not imply that the online EPSS gate has passed")
+    if bundle.get("manuscript_eligibility") is not True:
+        report.error(
+            "historical replay must remain manuscript-eligible after preserved online verification"
+        )
     verification = bundle.get("historical_epss_verification") or {}
-    if verification.get("status") != "verification_contract_valid_online_gate_required":
-        report.error("historical replay does not retain the required online EPSS gate")
+    if verification.get("status") != "authoritative_dual_source_verified":
+        report.error(
+            "historical replay does not reflect the preserved authoritative EPSS verification"
+        )
+    if verification.get("online_report_hash") != sha256_file(preserved_report_path):
+        report.error("historical replay online report hash does not match the preserved report")
     report.checks["historical_public_replay"] = {
         "replay_id": bundle["replay_id"],
         "source_count": bundle["source_manifest"]["source_count"],
         "timeline_events": len(bundle["timeline"]),
         "provisional_source_ids": bundle["provisional_source_ids"],
         "manuscript_eligibility": bundle["manuscript_eligibility"],
-        "epss_offline_contract_status": offline.status,
-        "online_gate_required": True,
+        "epss_repository_state_status": repository_state.status,
+        "epss_verified_at": repository_state.verified_at,
+        "epss_evidence_zip_sha256": repository_state.evidence_zip_sha256,
+        "online_gate_required": repository_state.online_gate_required,
     }
 
 

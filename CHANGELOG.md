@@ -1,3 +1,11 @@
+## 0.6.5 preserved historical EPSS gate closure and checkpoint registration — 2026-08-16
+
+- added a committed machine-readable preserved online-verification record for the historical CVE-2024-3400 EPSS gate, binding the verified FIRST API response, pinned archive, canonical verifier row hash, separately preserved external row hash, preserved evidence ZIP SHA-256 `77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`, and verification timestamp `2026-08-16T07:30:04Z`;
+- updated historical public-replay and repository validation so the machine-readable repository state and verifier output now report the EPSS online gate as closed (`online_gate_required: false`) rather than merely documenting that the verification happened elsewhere;
+- preserved fail-closed behaviour by retaining the offline contract and allowing fresh `--online` reruns while distinguishing them from the preserved authoritative verification record;
+- recorded the completed Stage 6.5 post-audit checkpoint commit `0478690b15246dce3ecb5fb0c860b89cffb08ea4` and Colab evidence ZIP SHA-256 `6c02406ffd4724f97ff5046cbc70dc49e20bf85171edb459ec0979d20be5a2a2`;
+- Stage 6.5 remains `CANDIDATE_NOT_FROZEN` and manuscript-ineligible pending the deferred manual baseline and final evaluation freeze.
+
 ## 0.6.5 pre-acceptance Colab checkpoint path correction — 2026-08-15
 
 - corrected the Stage 6.5 exact-commit Colab checkpoint so fresh performance results and generated paper assets are written beneath the repository's ignored `outputs/validation/` subtree, satisfying the existing asset-builder provenance contract while keeping `git status --porcelain` clean;

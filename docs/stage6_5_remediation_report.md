@@ -33,7 +33,7 @@ Stage 6.4 production code historically used `statistics.stdev(wall) / statistics
 
 ## Acceptance boundary
 
-After the local full performance rerun and repository quality gate pass, both findings remained `REMEDIATION_IMPLEMENTED_AWAITING_INDEPENDENT_REAUDIT`. The targeted independent Stage 6.5 closure re-audit has now completed and independently adjudicated `S65-F001` and `S65-F004` as `RESOLVED`. The closure evidence ZIP SHA-256 is `1c03387e3dfbc5e3bee4e115cca8d2a93ba0a5f17602f0b5ab950502be9530c8`. This does not itself accept or freeze the repository; Stage 6.5 remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending the post-audit repository/GitHub/exact-commit-Colab sequence and final evaluation freeze.
+After the local full performance rerun and repository quality gate pass, both findings remained `REMEDIATION_IMPLEMENTED_AWAITING_INDEPENDENT_REAUDIT`. The targeted independent Stage 6.5 closure re-audit then independently adjudicated `S65-F001` and `S65-F004` as `RESOLVED`. The closure evidence ZIP SHA-256 is `1c03387e3dfbc5e3bee4e115cca8d2a93ba0a5f17602f0b5ab950502be9530c8`. The post-audit repository gate, GitHub Actions, exact-commit Stage 6.5 Colab checkpoint (`0478690b15246dce3ecb5fb0c860b89cffb08ea4`; evidence ZIP SHA-256 `6c02406ffd4724f97ff5046cbc70dc49e20bf85171edb459ec0979d20be5a2a2`) and historical EPSS online-verification gate (evidence ZIP SHA-256 `77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`) are now complete. This still does not accept or freeze the repository; Stage 6.5 remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending the deferred manual baseline and final evaluation freeze.
 
 
 ## Independent closure evidence

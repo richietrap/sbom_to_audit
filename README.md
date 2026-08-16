@@ -6,7 +6,7 @@ GitHub is the source of truth. Google Colab is the independent clean-room runtim
 
 ## Status
 
-Version 0.6.5 is the Stage 6.5 independent-audit remediation candidate. It preserves the accepted Stage 6.4 source and observed evidence as immutable history while addressing the two MAJOR Stage 6.5 findings: Audit Reconstructability now conforms to the frozen `output_hash OR output_state` specification, and a complete performance rerun preserves one genuine worker-level high-water RSS observation per workload for independent raw recomputation. Historical Stage 6.3 mutation evidence remains bound to its original source hashes rather than being rewritten to fit the changed AR source. Targeted independent closure re-audit has resolved `S65-F001` and `S65-F004`; Stage 6.5 nevertheless remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending post-audit repository integration, GitHub Actions, exact-commit Colab reproduction, the deferred manual baseline, and final evaluation freeze.
+Version 0.6.5 is the Stage 6.5 independent-audit remediation candidate. It preserves the accepted Stage 6.4 source and observed evidence as immutable history while addressing the two MAJOR Stage 6.5 findings: Audit Reconstructability now conforms to the frozen `output_hash OR output_state` specification, and a complete performance rerun preserves one genuine worker-level high-water RSS observation per workload for independent raw recomputation. Historical Stage 6.3 mutation evidence remains bound to its original source hashes rather than being rewritten to fit the changed AR source. Targeted independent closure re-audit resolved `S65-F001` and `S65-F004`; the post-audit repository gate, GitHub Actions, exact-commit Stage 6.5 Colab checkpoint (`0478690b15246dce3ecb5fb0c860b89cffb08ea4`) and historical EPSS online verification have now also completed. Stage 6.5 nevertheless remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` pending the deferred manual baseline and the final evaluation freeze.
 
 ## Research questions
 
@@ -129,7 +129,7 @@ fabricating organisation-local facts.
 deployment that exercises the full EvidencePack pipeline. It is not a fifth controlled scenario
 family and must not be interpreted as evidence about a real organisation.
 
-The historical EPSS record is subject to a mandatory online API/archive verification gate.
+The historical EPSS record is bound to a mandatory online API/archive verification gate. The repository now contains a preserved machine-readable verification record from the completed authoritative online verification, so repository validation reports the gate as closed while still retaining the fail-closed offline contract and external raw-evidence hashes.
 
 ## Stage 5.5.1 historical EPSS verification — rejected candidate
 
@@ -141,13 +141,13 @@ the archive model metadata. Raw authoritative evidence is retained in the
 Colab checkpoint bundle. A matched ablation confirms that omitting EPSS does not
 change the historical reference state trajectory.
 
-Run the offline contract check with:
+Validate the committed repository state (offline contract plus preserved online-verification record) with:
 
 ```bash
 python scripts/verify_historical_epss.py
 ```
 
-The online acceptance gate is:
+Perform a fresh online verification run with:
 
 ```bash
 python scripts/verify_historical_epss.py --online --output-dir /tmp/epss-verification
@@ -201,7 +201,7 @@ Stage 6.5 remediation is intentionally narrow. `S65-F001` corrects only the Audi
 
 The v0.2 protocol also makes the previously implicit Stage 6.4 coefficient-of-variation convention explicit: `wall_cv = statistics.stdev(wall) / statistics.fmean(wall)`, using sample standard deviation with an `n-1` denominator. This is a versioned clarification, not a claim that v0.1 documented the convention explicitly.
 
-Development tests did not close the MAJOR findings. A targeted independent closure re-audit subsequently resolved both `S65-F001` and `S65-F004`, with closure evidence bundle SHA-256 `1c03387e3dfbc5e3bee4e115cca8d2a93ba0a5f17602f0b5ab950502be9530c8`. This closure does not itself freeze or accept the repository: the candidate remains manuscript-ineligible until the post-audit repository/GitHub/exact-commit-Colab sequence and final evaluation freeze are completed.
+Development tests did not close the MAJOR findings. A targeted independent closure re-audit subsequently resolved both `S65-F001` and `S65-F004`, with closure evidence bundle SHA-256 `1c03387e3dfbc5e3bee4e115cca8d2a93ba0a5f17602f0b5ab950502be9530c8`. The post-audit repository gate, GitHub Actions, exact-commit Stage 6.5 Colab checkpoint (`0478690b15246dce3ecb5fb0c860b89cffb08ea4`; evidence ZIP SHA-256 `6c02406ffd4724f97ff5046cbc70dc49e20bf85171edb459ec0979d20be5a2a2`) and historical EPSS online verification (evidence ZIP SHA-256 `77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`) are now complete. The candidate nevertheless remains manuscript-ineligible until the deferred manual baseline and final evaluation freeze are completed.
 
 ## Stage 6.4 performance and scale evaluation
 

@@ -48,3 +48,13 @@ The historical replay is `PILOT_VERIFICATION_CANDIDATE`. It becomes eligible for
 later evaluation freezing only after the GitHub quality workflow and isolated
 Colab checkpoint pass for the exact commit and the Colab evidence bundle is
 preserved.
+
+## Later project-level verification status — 2026-08-16
+
+Stage 5.5.1 itself remains a rejected historical candidate and is not rewritten as a pass.
+The project-level historical EPSS gate was subsequently completed against the corrected
+Stage 5.5.2 record using a fresh date-specific FIRST response and the same pinned official
+archive commit. The preserved verification evidence ZIP SHA-256 is
+`77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`.
+The machine-readable current repository state records `online_gate_required: false`. This
+later closure does not reconstruct or replace the rejected Stage 5.5.1 evidence.

@@ -1,0 +1,52 @@
+{
+  "status": "authoritative_dual_source_verified",
+  "target_cve": "CVE-2024-3400",
+  "target_date": "2024-04-15",
+  "expected_record": {
+    "cve": "CVE-2024-3400",
+    "date": "2024-04-15",
+    "epss": "0.00371",
+    "percentile": "0.72343",
+    "model_version": "v2023.03.01"
+  },
+  "api_record": {
+    "cve": "CVE-2024-3400",
+    "date": "2024-04-15",
+    "epss": "0.00371",
+    "percentile": "0.72343"
+  },
+  "archive_record": {
+    "cve": "CVE-2024-3400",
+    "date": "2024-04-15",
+    "epss": "0.00371",
+    "percentile": "0.72343",
+    "model_version": "v2023.03.01"
+  },
+  "api_sha256": "4ea6b4d88c8fd5134974a568ff8cbf7590daaa04914eab154ee3ac97ca77a998",
+  "archive_sha256": "d7c4882b7022fff83ebcc8fde781766fd7615c6d5242bb7ae7b57980d4733abe",
+  "extracted_row_sha256": "62aa4575ba01adce09d4fe484a8bcb431eb651265ff404a99720079b44ea422a",
+  "normalized_row_sha256": "62aa4575ba01adce09d4fe484a8bcb431eb651265ff404a99720079b44ea422a",
+  "archive_commit": "ca26ecd7b9b806badabd6aedffdc8c4472ce6e85",
+  "api_url": "https://api.first.org/data/v1/epss?cve=CVE-2024-3400&date=2024-04-15&envelope=true&pretty=true",
+  "archive_url": "https://raw.githubusercontent.com/empiricalsec/epss_scores/ca26ecd7b9b806badabd6aedffdc8c4472ce6e85/2024/epss_scores-2024-04-15.csv.gz",
+  "checks": {
+    "api_cve_matches": true,
+    "archive_cve_matches": true,
+    "api_date_matches": true,
+    "archive_date_matches": true,
+    "api_archive_epss_agree": true,
+    "api_archive_percentile_agree": true,
+    "normalized_epss_matches": true,
+    "normalized_percentile_matches": true,
+    "archive_model_matches": true
+  },
+  "limitations": [
+    "The FIRST API does not expose the model-version field; model version is verified from the pinned daily archive metadata and FIRST's model schedule."
+  ],
+  "verified_at": "2026-08-16T07:30:04Z",
+  "evidence_zip_sha256": "77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29",
+  "evidence_bundle": "epss_online_verification_CVE-2024-3400.zip",
+  "provenance_note": "Preserved authoritative online verification evidence. extracted_row_sha256 uses the repository verifier canonical CSV representation (header plus CVE row); external_extracted_row_sha256 identifies the separately preserved headerless row in the external evidence bundle. Raw API/archive downloads remain external to source control.",
+  "external_extracted_row_sha256": "8755d4511eeb78eb3bba6e0bf047ef1a0129df158b8ecb0695e2649dae2c5d30",
+  "online_gate_required": false
+}

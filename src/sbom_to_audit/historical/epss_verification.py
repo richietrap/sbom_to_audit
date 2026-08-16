@@ -9,8 +9,8 @@ The verifier compares three representations of the same historical record:
 Online verification fails closed on missing records, metadata drift, or any
 score/percentile disagreement. Raw online evidence is written before semantic
 comparison so a failed gate remains diagnosable. Offline verification validates
-the committed verification contract without pretending that it replaces the
-online check.
+both the committed verification contract and, when present, a preserved report
+from a previously completed authoritative online verification.
 """
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ import gzip
 import hashlib
 import io
 import json
+import re
 import time
 from dataclasses import asdict, dataclass
 from decimal import Decimal, InvalidOperation
@@ -34,6 +35,10 @@ EXPECTED_EPSS = Decimal("0.00371")
 EXPECTED_PERCENTILE = Decimal("0.72343")
 EXPECTED_MODEL_VERSION = "v2023.03.01"
 ARCHIVE_COMMIT = "ca26ecd7b9b806badabd6aedffdc8c4472ce6e85"
+DEFAULT_PRESERVED_REPORT_RELATIVE = (
+    "data/historical_replays/cve_2024_3400/epss/preserved_online_verification.json"
+)
+DEFAULT_NORMALIZED_ROW_RELATIVE = "data/historical_replays/cve_2024_3400/epss/archive_row.csv"
 API_URL = (
     "https://api.first.org/data/v1/epss"
     f"?cve={TARGET_CVE}&date={TARGET_DATE}&envelope=true&pretty=true"
@@ -69,6 +74,10 @@ class VerificationResult:
     archive_url: str
     checks: dict[str, bool]
     limitations: list[str]
+    online_gate_required: bool
+    verified_at: str | None = None
+    evidence_zip_sha256: str | None = None
+    normalized_row_sha256: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -231,6 +240,7 @@ def verify_payloads(api_payload: bytes, archive_payload: bytes) -> VerificationR
             "The FIRST API does not expose the model-version field; model version is "
             "verified from the pinned daily archive metadata and FIRST's model schedule."
         ],
+        online_gate_required=False,
     )
     if status != "authoritative_dual_source_verified":
         raise HistoricalEpssVerificationError(result)
@@ -278,6 +288,141 @@ def verify_offline_contract(path: str | Path) -> VerificationResult:
             "Offline contract validation does not substitute for downloading and comparing "
             "the authoritative FIRST API and pinned archive records."
         ],
+        online_gate_required=True,
+    )
+
+
+def load_verified_online_report(
+    path: str | Path,
+    *,
+    normalized_row_path: str | Path | None = None,
+    require_preserved_metadata: bool = False,
+) -> dict[str, Any]:
+    report_path = Path(path).resolve()
+    if not report_path.is_file():
+        raise FileNotFoundError(f"historical EPSS verification report not found: {report_path}")
+    value = json.loads(report_path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("historical EPSS verification report must contain an object")
+    expected = expected_record()
+    if value.get("status") != "authoritative_dual_source_verified":
+        raise ValueError("historical EPSS report is not authoritatively verified")
+    if str(value.get("target_cve") or "") != expected.cve:
+        raise ValueError("historical EPSS report target_cve mismatch")
+    if str(value.get("target_date") or "") != expected.date:
+        raise ValueError("historical EPSS report target_date mismatch")
+    expected_value = value.get("expected_record")
+    if not isinstance(expected_value, dict):
+        raise ValueError("historical EPSS report lacks expected_record")
+    for key in ("cve", "date", "epss", "percentile", "model_version"):
+        if str(expected_value.get(key)) != str(getattr(expected, key)):
+            raise ValueError(f"historical EPSS expected_record {key} mismatch")
+    if str(value.get("archive_commit") or "") != ARCHIVE_COMMIT:
+        raise ValueError("historical EPSS report archive_commit mismatch")
+    if str(value.get("api_url") or "") != API_URL:
+        raise ValueError("historical EPSS report api_url mismatch")
+    if str(value.get("archive_url") or "") != ARCHIVE_URL:
+        raise ValueError("historical EPSS report archive_url mismatch")
+    checks = value.get("checks")
+    if not isinstance(checks, dict) or not checks or not all(checks.values()):
+        raise ValueError("historical EPSS report contains failed or missing checks")
+    for record_name in ("api_record", "archive_record"):
+        record = value.get(record_name)
+        if not isinstance(record, dict):
+            raise ValueError(f"historical EPSS report lacks {record_name}")
+        for key in ("cve", "date", "epss", "percentile"):
+            if str(record.get(key)) != str(getattr(expected, key)):
+                raise ValueError(f"historical EPSS {record_name} {key} mismatch")
+    archive = value["archive_record"]
+    if archive.get("model_version") != expected.model_version:
+        raise ValueError("historical EPSS archive model version mismatch")
+    for field in ("api_sha256", "archive_sha256", "extracted_row_sha256"):
+        digest = str(value.get(field) or "")
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise ValueError(f"historical EPSS report has invalid {field}")
+    if normalized_row_path is not None and value.get("normalized_row_sha256") is not None:
+        normalized_path = Path(normalized_row_path).resolve()
+        if not normalized_path.is_file():
+            raise FileNotFoundError(f"normalized archive row not found: {normalized_path}")
+        expected_normalized_row_sha = hashlib.sha256(normalized_path.read_bytes()).hexdigest()
+        if str(value.get("normalized_row_sha256") or "") != expected_normalized_row_sha:
+            raise ValueError("historical EPSS report normalized_row_sha256 mismatch")
+        if str(value.get("extracted_row_sha256") or "") != expected_normalized_row_sha:
+            raise ValueError("historical EPSS report extracted_row_sha256 mismatch")
+    if require_preserved_metadata:
+        if value.get("online_gate_required") is not False:
+            raise ValueError("historical EPSS preserved report must close the online gate")
+        verified_at = str(value.get("verified_at") or "")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", verified_at):
+            raise ValueError("historical EPSS preserved report has invalid verified_at")
+        evidence_zip_sha = str(value.get("evidence_zip_sha256") or "")
+        if len(evidence_zip_sha) != 64 or any(
+            char not in "0123456789abcdef" for char in evidence_zip_sha
+        ):
+            raise ValueError("historical EPSS preserved report has invalid evidence_zip_sha256")
+        normalized_sha = str(value.get("normalized_row_sha256") or "")
+        if len(normalized_sha) != 64 or any(
+            char not in "0123456789abcdef" for char in normalized_sha
+        ):
+            raise ValueError("historical EPSS preserved report has invalid normalized_row_sha256")
+        external_row_sha = str(value.get("external_extracted_row_sha256") or "")
+        if len(external_row_sha) != 64 or any(
+            char not in "0123456789abcdef" for char in external_row_sha
+        ):
+            raise ValueError(
+                "historical EPSS preserved report has invalid external_extracted_row_sha256"
+            )
+        if str(value.get("evidence_bundle") or "") != (
+            "epss_online_verification_CVE-2024-3400.zip"
+        ):
+            raise ValueError("historical EPSS preserved report evidence_bundle mismatch")
+    return value
+
+
+def verify_repository_state(
+    manifest_path: str | Path,
+    preserved_report_path: str | Path,
+    *,
+    normalized_row_path: str | Path | None = None,
+) -> VerificationResult:
+    offline = verify_offline_contract(manifest_path)
+    report = load_verified_online_report(
+        preserved_report_path,
+        normalized_row_path=normalized_row_path,
+        require_preserved_metadata=True,
+    )
+    checks = dict(offline.checks)
+    checks.update(
+        {
+            "preserved_online_report_present": True,
+            "preserved_online_report_verified": report.get("status")
+            == "authoritative_dual_source_verified",
+            "normalized_row_bound": bool(report.get("normalized_row_sha256")),
+        }
+    )
+    return VerificationResult(
+        status="offline_contract_valid_preserved_online_verification_verified",
+        target_cve=TARGET_CVE,
+        target_date=TARGET_DATE,
+        expected_record=offline.expected_record,
+        api_record=report.get("api_record"),
+        archive_record=report.get("archive_record"),
+        api_sha256=str(report.get("api_sha256") or "") or None,
+        archive_sha256=str(report.get("archive_sha256") or "") or None,
+        extracted_row_sha256=str(report.get("extracted_row_sha256") or "") or None,
+        archive_commit=ARCHIVE_COMMIT,
+        api_url=API_URL,
+        archive_url=ARCHIVE_URL,
+        checks=checks,
+        limitations=[
+            "Fresh network retrieval is not performed in this mode; repository state is "
+            "validated against a preserved authoritative verification report whose raw "
+            "evidence remains external to source control."
+        ],
+        online_gate_required=False,
+        verified_at=str(report.get("verified_at") or "") or None,
+        evidence_zip_sha256=str(report.get("evidence_zip_sha256") or "") or None,
+        normalized_row_sha256=str(report.get("normalized_row_sha256") or "") or None,
     )
 
 

@@ -570,7 +570,7 @@ def run_release_check() -> ReleaseReport:
             ],
         ),
         (
-            "historical EPSS offline contract",
+            "historical EPSS repository state",
             [sys.executable, "scripts/verify_historical_epss.py"],
         ),
         (

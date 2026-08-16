@@ -5,8 +5,8 @@
 **Implementation baseline:** Stage 6.5 independent-audit remediation candidate, package v0.6.5
 **Purpose:** Drift control. Every tracked repository artefact is listed below.
 
-**Expected files:** 531
-**Created files:** 531
+**Expected files:** 532
+**Created files:** 532
 **Missing files:** 0
 
 | Path | Purpose | Status |
@@ -82,6 +82,7 @@
 | `data/historical_replays/cve_2024_3400/epss/README.md` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Preserved, added, or updated v0.6.4 |
 | `data/historical_replays/cve_2024_3400/epss/archive_row.csv` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Preserved, added, or updated v0.6.4 |
 | `data/historical_replays/cve_2024_3400/epss/expected_record.json` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Preserved, added, or updated v0.6.4 |
+| `data/historical_replays/cve_2024_3400/epss/preserved_online_verification.json` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Added v0.6.5 |
 | `data/historical_replays/cve_2024_3400/epss/verification_manifest.json` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Preserved, added, or updated v0.6.4 |
 | `data/historical_replays/cve_2024_3400/public_source_registry.yaml` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Preserved, added, or updated v0.6.4 |
 | `data/historical_replays/cve_2024_3400/public_sources/cisa_kev_record.json` | Historical replay evidence, verification contract, or synthetic reference-deployment input. | Preserved, added, or updated v0.6.4 |
@@ -186,15 +187,15 @@
 | `docs/paper_asset_protocol.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/paper_claim_matrix.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/quality_assurance.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
-| `docs/reproduction.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
+| `docs/reproduction.md` | Design record, methodology, quality, correction, or research documentation. | Updated v0.6.5 |
 | `docs/scenario_protocol.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/schema.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage2_0_1_correction_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage2_vertical_slice_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage3_scope_generalisation_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage4_operational_outlier_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
-| `docs/stage5_5_1_historical_epss_verification_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
-| `docs/stage5_5_2_historical_epss_correction_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
+| `docs/stage5_5_1_historical_epss_verification_report.md` | Design record, methodology, quality, correction, or research documentation. | Updated v0.6.5 |
+| `docs/stage5_5_2_historical_epss_correction_report.md` | Design record, methodology, quality, correction, or research documentation. | Updated v0.6.5 |
 | `docs/stage5_5_historical_replay_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage5_rapid_pivot_report.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/stage6_1_1_quality_correction_report.md` | Repository methodology, quality, reproduction, limitation, or governance documentation. | Preserved, added, or updated v0.6.4 |
@@ -412,7 +413,7 @@
 | `scripts/run_stage6_4_performance.py` | Deterministic runner, validator, release gate, export, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/run_stage6_5_performance_remediation.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
 | `scripts/validate_manual_baseline_worksheet.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
-| `scripts/validate_repository.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
+| `scripts/validate_repository.py` | Repository validation, replay, verification, comparison, or release automation. | Updated v0.6.5 |
 | `scripts/validate_stage6_1_colab_notebook.py` | Notebook execution-contract and code-cell preflight validator. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_stage6_1_evaluation.py` | Executable Stage 6.1 packet export, validation, import, comparison, freeze, or asset-generation script. | Preserved, added, or updated v0.6.4 |
 | `scripts/validate_stage6_2_colab_notebook.py` | Stage 6.2 runner, validator, asset builder, or Colab contract validator. | Preserved, added, or updated v0.6.4 |
@@ -424,7 +425,7 @@
 | `scripts/validate_stage6_5_colab_notebook.py` | Stage 6.5 Colab notebook contract validator. | Added v0.6.5 |
 | `scripts/validate_stage6_5_performance_remediation.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
 | `scripts/validate_stage6_5_remediation.py` | Stage 6.5 remediation runner, validator, finalizer, or paper-asset script. | Added v0.6.5 |
-| `scripts/verify_historical_epss.py` | Repository validation, replay, verification, comparison, or release automation. | Preserved, added, or updated v0.6.4 |
+| `scripts/verify_historical_epss.py` | Repository validation, replay, verification, comparison, or release automation. | Updated v0.6.5 |
 | `src/sbom_to_audit/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Updated v0.6.5 |
 | `src/sbom_to_audit/baseline/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/baseline/evaluation_freeze.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
@@ -444,7 +445,7 @@
 | `src/sbom_to_audit/evaluation/robustness.py` | Stage 6.2 deterministic robustness and sensitivity implementation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/historical/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/historical/epss_ablation.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
-| `src/sbom_to_audit/historical/epss_verification.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
+| `src/sbom_to_audit/historical/epss_verification.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Updated v0.6.5 |
 | `src/sbom_to_audit/historical/public_replay.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/ingestion/__init__.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/ingestion/artifact_validator.py` | Application source code for ingestion, orchestration, baseline replay, or output generation. | Preserved, added, or updated v0.6.4 |
@@ -485,7 +486,7 @@
 | `tests/test_deadline_engine.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_evidence_record.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_false_comfort.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
-| `tests/test_historical_epss_verification.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
+| `tests/test_historical_epss_verification.py` | Automated quality, semantic, or regression test. | Updated v0.6.5 |
 | `tests/test_historical_reference.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_historical_replay.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_historical_replay_assertion.py` | Automated quality, semantic, or regression test. | Preserved, added, or updated v0.6.4 |

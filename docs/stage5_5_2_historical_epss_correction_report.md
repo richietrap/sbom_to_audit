@@ -103,3 +103,17 @@ Stage 5.5.2 remains `PILOT_VERIFICATION_CANDIDATE` until:
    online comparison successfully;
 3. the corrected Stage 5.5.2 Colab notebook passes;
 4. the exact tested Git commit and Colab evidence-bundle SHA-256 are preserved.
+
+## Later project-level online-gate closure — 2026-08-16
+
+The corrected `0.00371` / `0.72343` record has now been re-verified from a fresh
+date-specific FIRST API response and the archive pinned at
+`ca26ecd7b9b806badabd6aedffdc8c4472ce6e85`. The current repository preserves a
+machine-readable verification record at
+`data/historical_replays/cve_2024_3400/epss/preserved_online_verification.json` and
+reports `online_gate_required: false`. The external verification evidence ZIP SHA-256 is
+`77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`.
+
+This current closure is not used to invent missing historical checkpoint hashes or to alter
+the rejected Stage 5.5.1 record. Raw API/archive bytes remain external checkpoint evidence;
+the repository commits their hashes and the validated verification metadata.

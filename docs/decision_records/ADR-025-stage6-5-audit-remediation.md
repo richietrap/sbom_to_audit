@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted for the Stage 6.5 remediation candidate. Targeted independent closure re-audit resolved `S65-F001` and `S65-F004`; repository checkpoint acceptance remains pending the post-audit GitHub and exact-commit Colab sequence.
+Accepted for the Stage 6.5 remediation candidate. Targeted independent closure re-audit resolved `S65-F001` and `S65-F004`; the post-audit GitHub and exact-commit Colab checkpoint sequence has now completed, and the historical EPSS online-verification gate has been closed in the machine-readable repository state.
 
 ## Context
 
@@ -49,4 +49,4 @@ The audit environment could not collect `tests/test_properties.py` because Hypot
 
 ## Post-audit acceptance boundary
 
-Resolving `S65-F001` and `S65-F004` does not by itself create an accepted Stage 6.5 checkpoint. The candidate remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` until the post-audit repository gate passes, the candidate is committed and pushed, GitHub Actions pass, the exact 40-character commit is recorded, and the Stage 6.5 Colab checkpoint reproduces that immutable commit with a preserved evidence ZIP and SHA-256. The deferred manual baseline and final evaluation freeze remain separate later gates.
+Resolving `S65-F001` and `S65-F004` did not by itself create an accepted Stage 6.5 checkpoint. That post-audit repository gate has now passed, GitHub Actions have passed, the exact 40-character commit `0478690b15246dce3ecb5fb0c860b89cffb08ea4` has been recorded, and the Stage 6.5 Colab checkpoint reproduced that immutable commit with evidence ZIP SHA-256 `6c02406ffd4724f97ff5046cbc70dc49e20bf85171edb459ec0979d20be5a2a2`. Historical EPSS online verification is also now preserved in machine-readable repository state via `data/historical_replays/cve_2024_3400/epss/preserved_online_verification.json`, referencing evidence ZIP SHA-256 `77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`. The candidate nevertheless remains `CANDIDATE_NOT_FROZEN` and `manuscript_eligible: false` until the deferred manual baseline and final evaluation freeze are completed.

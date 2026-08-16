@@ -9,13 +9,18 @@ from pathlib import Path
 from typing import Any
 
 from sbom_to_audit.historical.epss_verification import (
+    DEFAULT_NORMALIZED_ROW_RELATIVE,
+    DEFAULT_PRESERVED_REPORT_RELATIVE,
     HistoricalEpssVerificationError,
     verify_offline_contract,
     verify_online,
+    verify_repository_state,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "data/historical_replays/cve_2024_3400/epss/verification_manifest.json"
+DEFAULT_PRESERVED_REPORT = ROOT / DEFAULT_PRESERVED_REPORT_RELATIVE
+DEFAULT_NORMALIZED_ROW = ROOT / DEFAULT_NORMALIZED_ROW_RELATIVE
 
 
 def _write_report(report: Path | None, payload: dict[str, Any]) -> None:
@@ -31,6 +36,7 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, default=Path("outputs/validation/epss"))
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     parser.add_argument("--report", type=Path)
+    parser.add_argument("--preserved-report", type=Path, default=DEFAULT_PRESERVED_REPORT)
     args = parser.parse_args()
 
     report = args.report
@@ -38,11 +44,16 @@ def main() -> int:
         report = args.output_dir / "historical_epss_verification.json"
 
     try:
-        result = (
-            verify_online(args.output_dir)
-            if args.online
-            else verify_offline_contract(args.manifest)
-        )
+        if args.online:
+            result = verify_online(args.output_dir)
+        elif args.preserved_report.is_file():
+            result = verify_repository_state(
+                args.manifest,
+                args.preserved_report,
+                normalized_row_path=DEFAULT_NORMALIZED_ROW,
+            )
+        else:
+            result = verify_offline_contract(args.manifest)
         payload = result.to_dict()
         _write_report(report, payload)
         print(json.dumps(payload, indent=2))
