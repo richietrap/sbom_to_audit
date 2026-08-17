@@ -5,8 +5,8 @@
 **Implementation baseline:** Stage 6.5 independent-audit remediation candidate, package v0.6.5
 **Purpose:** Drift control. Every tracked repository artefact is listed below.
 
-**Expected files:** 534
-**Created files:** 534
+**Expected files:** 536
+**Created files:** 536
 **Missing files:** 0
 
 | Path | Purpose | Status |
@@ -431,6 +431,7 @@
 | `src/sbom_to_audit/baseline/evaluation_freeze.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/baseline/evaluation_oracles.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/baseline/fairness_metrics.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
+| `src/sbom_to_audit/baseline/comparison_validation.py` | Independent validation of Stage 6.1 comparison evidence, hashes, metric consistency, applicability, and conflict quality. | Added Stage 6.1 validation hardening |
 | `src/sbom_to_audit/baseline/manual_admission.py` | Controlled manual-baseline exception admission and provenance logic. | Added Stage 6.1 governance remediation |
 | `src/sbom_to_audit/baseline/manual_results.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
 | `src/sbom_to_audit/baseline/manual_worksheet.py` | Application source code for Stage 6 pilot preservation and Stage 6.1 manual evaluation. | Preserved, added, or updated v0.6.4 |
@@ -514,6 +515,7 @@
 | `tests/test_stage6_1_colab_validator.py` | Regression test for the Stage 6.1.5 notebook contract validator. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_1_fairness_metrics.py` | Automated quality, semantic, fairness, freeze, or regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_1_freeze.py` | Automated quality, semantic, fairness, freeze, or regression test. | Preserved, added, or updated v0.6.4 |
+| `tests/test_stage6_1_comparison_validation.py` | Regression and tamper tests for Stage 6.1 comparison-evidence validation. | Added Stage 6.1 validation hardening |
 | `tests/test_stage6_1_manual_admission.py` | Regression tests for controlled Stage 6.1 baseline admission. | Added Stage 6.1 governance remediation |
 | `tests/test_stage6_1_manual_results.py` | Automated quality, semantic, fairness, freeze, or regression test. | Preserved, added, or updated v0.6.4 |
 | `tests/test_stage6_1_notebook.py` | Automated quality, semantic, fairness, freeze, or regression test. | Preserved, added, or updated v0.6.4 |

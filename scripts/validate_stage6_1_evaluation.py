@@ -7,6 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
+from sbom_to_audit.baseline.comparison_validation import validate_comparison_evidence
 from sbom_to_audit.baseline.evaluation_freeze import verify_freeze
 from sbom_to_audit.baseline.evaluation_oracles import (
     load_clock_oracle,
@@ -16,7 +17,6 @@ from sbom_to_audit.baseline.evaluation_oracles import (
 )
 from sbom_to_audit.baseline.protocol import load_manual_protocol
 from sbom_to_audit.model.metrics import MANDATORY_FIELDS
-from sbom_to_audit.utils.io import read_json
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -44,10 +44,13 @@ def validate(comparison_report: Path | None = None) -> dict[str, object]:
         "freeze_verified": not errors,
     }
     if comparison_report is not None:
-        report = read_json(comparison_report)
-        if report.get("manuscript_eligible") is not False:
-            errors.append("Stage 6.1 candidate must remain manuscript-ineligible before final tag")
-        checks["comparison_id"] = report.get("comparison_id")
+        comparison_errors, comparison_checks = validate_comparison_evidence(
+            comparison_report,
+            protocol=protocol,
+            conflict_oracle=conflicts,
+        )
+        errors.extend(comparison_errors)
+        checks.update(comparison_checks)
     return {"valid": not errors, "errors": errors, "checks": checks}
 
 
