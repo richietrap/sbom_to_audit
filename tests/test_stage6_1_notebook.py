@@ -75,6 +75,12 @@ def test_stage6_1_5_notebook_uses_isolated_environment_and_full_preflight() -> N
     assert 're.fullmatch(r"[0-9a-fA-F]{40}", REF)' in source
     assert 'PACKAGE_VERSION = "0.6.1.5"' in source
     assert 'STAGE = "6.1.5"' in source
+    assert 'CONTROLLED_EXCEPTION_JSON = ""' in source
+    assert "accepted_returncodes=(0, 1)" in source
+    assert '"--controlled-exception"' in source
+    assert '"manual_validation_report.json"' in source
+    assert '"controlled_exception_adjudication.json"' in source
+    assert '"controlled_exception_admission.json"' in source
     assert '["git", "checkout", "--detach", REF]' in source
     assert '["git", "branch", "--show-current"]' in source
     assert 'VENV_PYTHON = VENV / "bin" / "python"' in source

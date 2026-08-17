@@ -121,3 +121,19 @@ def test_stage6_1_5_notebook_validator_rejects_unsafe_manual_extraction(
     completed = _run_validator(path)
     assert completed.returncode == 1
     assert "bulk archive extraction" in completed.stdout
+
+
+def test_stage6_1_5_notebook_validator_requires_controlled_exception_wiring(
+    tmp_path: Path,
+) -> None:
+    notebook, path = _mutated_notebook(tmp_path, "missing-controlled-exception.ipynb")
+    source = _cell_source(notebook["cells"][6])
+    _set_cell_source(
+        notebook["cells"][6],
+        source.replace('            "--controlled-exception",\n', ""),
+    )
+    path.write_text(json.dumps(notebook), encoding="utf-8")
+
+    completed = _run_validator(path)
+    assert completed.returncode == 1
+    assert "controlled-exception importer admission" in completed.stdout

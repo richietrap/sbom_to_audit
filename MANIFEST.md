@@ -5,8 +5,8 @@
 **Implementation baseline:** Stage 6.5 independent-audit remediation candidate, package v0.6.5
 **Purpose:** Drift control. Every tracked repository artefact is listed below.
 
-**Expected files:** 536
-**Created files:** 536
+**Expected files:** 537
+**Created files:** 537
 **Missing files:** 0
 
 | Path | Purpose | Status |
@@ -180,6 +180,7 @@
 | `docs/decision_records/ADR-023-stage6-3-controlled-mutation-testing.md` | Architecture or research-governance decision record. | Preserved, added, or updated v0.6.4 |
 | `docs/decision_records/ADR-024-stage6-4-performance-and-scale-evaluation.md` | Architecture or research-governance decision record. | Preserved, added, or updated v0.6.4 |
 | `docs/decision_records/ADR-025-stage6-5-audit-remediation.md` | Stage 6.5 audit-remediation governance or explanatory documentation. | Added v0.6.5 |
+| `docs/decision_records/ADR-026-stage6-1-5-controlled-exception-reproduction.md` | Stage 6.1.5 controlled-exception clean-room reproduction governance decision. | Added Stage 6.1 Phase 2 governance adaptation |
 | `docs/decision_semantics.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/design_freeze_v0.2.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |
 | `docs/known_issues.md` | Design record, methodology, quality, correction, or research documentation. | Preserved, added, or updated v0.6.4 |

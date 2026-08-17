@@ -102,6 +102,7 @@ def validate(path: Path, expected_stage: str, expected_version: str) -> list[str
         f'STAGE = "{expected_stage}"': "stage marker",
         f'PACKAGE_VERSION = "{expected_version}"': "package-version marker",
         'REF = ""': "blank exact-SHA configuration",
+        'CONTROLLED_EXCEPTION_JSON = ""': "separate controlled-exception configuration",
         're.fullmatch(r"[0-9a-fA-F]{40}", REF)': "full SHA validation",
         'input("Paste the exact 40-character': "interactive SHA prompt",
         '["git", "checkout", "--detach", REF]': "detached exact-commit checkout",
@@ -117,6 +118,7 @@ def validate(path: Path, expected_stage: str, expected_version: str) -> list[str
         "verify virtual environment isolation": "virtualenv prefix verification",
         "stdlib_venv_pip_probe.log": "stdlib venv pip probe",
         "attempt-{attempt:02d}.log": "per-attempt command logging",
+        "accepted_returncodes: Sequence[int] = (0,)": "recorded expected non-zero command support",
         "scripts/release_check.py": "canonical release gate",
         "scripts/verify_historical_epss.py": "online historical EPSS gate",
         "scripts/export_stage6_1_baseline_packets.py": "packet export",
@@ -135,6 +137,15 @@ def validate(path: Path, expected_stage: str, expected_version: str) -> list[str
         "Manual result ZIP changed while the checkpoint was processing it": (
             "manual input immutability verification"
         ),
+        "Controlled-exception adjudication changed while the checkpoint was processing it": (
+            "controlled-exception input immutability verification"
+        ),
+        '"--json-output"': "preserved strict manual validation report",
+        '"--controlled-exception"': "controlled-exception importer admission",
+        '"controlled_exception_admission.json"': "controlled-exception admission evidence",
+        '"manual_validation_report.json"': "strict manual validation evidence",
+        '"controlled_exception_adjudication.json"': "adjudication evidence preservation",
+        '"strict_validation_valid"': "strict-validation state preservation",
         "files outside the canonical bundle": "canonical manual-bundle boundary",
         "archive.testzip()": "checkpoint ZIP integrity test",
         "Archived evidence checksum mismatch": "archived-evidence checksum verification",

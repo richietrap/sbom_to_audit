@@ -61,6 +61,7 @@
 
 ## 0.6.5 — Stage 6.5 independent-audit remediation candidate — 2026-08-12
 
+- adapted the Stage 6.1.5 clean-room reproduction path to preserve strict manual `valid: false` while separately admitting the exact adjudicated zero-release-event exception; the canonical six-file manual bundle remains unchanged and the adjudication is supplied and preserved separately.
 - corrected Audit Reconstructability to conform to the frozen common-fields plus `output_hash OR output_state` rule without changing its denominator or population semantics;
 - added specification-derived Stage 6.5 AR regression tests for hash-only, state-only, both, neither, common-field missingness, blank identifiers, and historical state-only behaviour;
 - preserved the Stage 6.3 exact-text mutation protocol and candidate results as immutable historical evidence, adding an explicit historical-source validation mode for later source evolution;

@@ -116,7 +116,7 @@ checkpoint bundle, never as source-controlled root files.
 2. Validate the Stage 6.1 controls with `python scripts/validate_stage6_1_evaluation.py` and the blank analyst materials with `python scripts/validate_manual_baseline_worksheet.py data/baseline_templates`.
 3. Export blinded scenario packets with `python scripts/export_stage6_1_baseline_packets.py --destination <directory>`.
 4. Complete the manual review chronologically and preserve the original workbook and canonical CSV/YAML exports unchanged.
-5. Validate and import the completed bundle with `validate_manual_baseline_worksheet.py` and `import_manual_baseline_results.py`.
+5. Validate and import the completed bundle with `validate_manual_baseline_worksheet.py` and `import_manual_baseline_results.py`. If strict validation is invalid only for an already adjudicated registered exception, preserve `valid: false` and pass the separate adjudication through `--controlled-exception`; never amend the analyst bundle merely to obtain strict validity.
 6. Run `run_stage6_1_comparison.py` and `build_stage6_1_paper_assets.py`.
-7. Push the exact candidate commit, run GitHub quality gates, and execute `notebooks/stage6_1_colab_checkpoint.ipynb` with an immutable commit SHA or tag.
-8. Preserve the Colab evidence ZIP and its SHA-256 before changing any candidate status.
+7. Commit any reproduction-governance adaptation separately from the Phase 1 execution commit, push the full local chain, require GitHub quality gates to pass, and execute `notebooks/stage6_1_5_colab_checkpoint.ipynb` with the later exact 40-character reproduction commit SHA.
+8. Supply the canonical manual-results ZIP separately from any controlled-exception adjudication, preserve strict validation and admission evidence in the checkpoint bundle, and preserve the Colab evidence ZIP and its SHA-256 before changing any candidate status.

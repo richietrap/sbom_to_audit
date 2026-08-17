@@ -101,3 +101,21 @@ def test_stage6_1_5_run_checked_preserves_all_failed_attempts(tmp_path: Path) ->
     summary = json.loads((logs / "always_fails.summary.json").read_text(encoding="utf-8"))
     assert [row["returncode"] for row in summary["attempts"]] == [3, 3]
     assert summary["final_returncode"] == 3
+
+
+def test_stage6_1_5_run_checked_records_accepted_nonzero(tmp_path: Path) -> None:
+    logs = tmp_path / "logs"
+    logs.mkdir()
+
+    completed = _run_checked(tmp_path, logs)(
+        "expected strict validation failure",
+        [sys.executable, "-c", "print('strict invalid'); raise SystemExit(1)"],
+        accepted_returncodes=(0, 1),
+    )
+
+    assert completed.returncode == 1
+    summary = json.loads(
+        (logs / "expected_strict_validation_failure.summary.json").read_text(encoding="utf-8")
+    )
+    assert summary["final_returncode"] == 1
+    assert summary["accepted_returncodes"] == [0, 1]
