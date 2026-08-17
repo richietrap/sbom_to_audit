@@ -29,7 +29,7 @@ def _run_validator(path: Path) -> subprocess.CompletedProcess[str]:
             "--expected-stage",
             "6.1.5",
             "--expected-version",
-            "0.6.1.5",
+            "0.6.5",
         ],
         cwd=ROOT,
         text=True,

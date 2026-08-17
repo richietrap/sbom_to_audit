@@ -73,7 +73,7 @@ def test_stage6_1_5_notebook_uses_isolated_environment_and_full_preflight() -> N
 
     assert 'REF = ""' in source
     assert 're.fullmatch(r"[0-9a-fA-F]{40}", REF)' in source
-    assert 'PACKAGE_VERSION = "0.6.1.5"' in source
+    assert 'PACKAGE_VERSION = "0.6.5"' in source
     assert 'STAGE = "6.1.5"' in source
     assert 'CONTROLLED_EXCEPTION_JSON = ""' in source
     assert "accepted_returncodes=(0, 1)" in source

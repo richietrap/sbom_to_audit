@@ -1,3 +1,9 @@
+## 0.6.5 Stage 6.1.5 reproduction package-version alignment — 2026-08-17
+
+- corrected the Stage 6.1.5 clean-room notebook package-version assertion from its historical checkpoint value `0.6.1.5` to the current repository package version `0.6.5`;
+- aligned the canonical release-gate notebook contract and Stage 6.1.5 regression tests with that current package version while preserving the checkpoint stage identifier `6.1.5`;
+- recorded the failed exact-commit Colab attempt as a pre-acceptance reproduction-governance defect; no manual evidence, frozen protocol/oracle, metric, scenario, normalization, comparison result, or Phase 1 candidate changed.
+
 ## 0.6.5 preserved historical EPSS gate closure and checkpoint registration — 2026-08-16
 
 - added a committed machine-readable preserved online-verification record for the historical CVE-2024-3400 EPSS gate, binding the verified FIRST API response, pinned archive, canonical verifier row hash, separately preserved external row hash, preserved evidence ZIP SHA-256 `77a68d509acffc67306584e43b447f214304fbbb93db5dde5c5f502aac2dda29`, and verification timestamp `2026-08-16T07:30:04Z`;

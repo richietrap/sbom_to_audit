@@ -598,7 +598,7 @@ def run_release_check() -> ReleaseReport:
                 "--expected-stage",
                 "6.1.5",
                 "--expected-version",
-                "0.6.1.5",
+                "0.6.5",
             ],
         ),
         (
