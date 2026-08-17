@@ -14,6 +14,7 @@ from sbom_to_audit.baseline.evaluation_oracles import (
     load_state_oracle,
     validate_oracle_coverage,
 )
+from sbom_to_audit.baseline.manual_admission import admit_controlled_exception
 from sbom_to_audit.baseline.manual_results import normalize_manual_results
 from sbom_to_audit.baseline.protocol import load_manual_protocol
 from sbom_to_audit.baseline.worksheet_validation import validate_manual_bundle
@@ -42,7 +43,30 @@ def _common_fields() -> list[str]:
     return [str(value) for value in payload["field_paths"]]
 
 
-def import_bundle(bundle: Path, destination: Path) -> dict[str, Path]:
+ZERO_RELEASE_ERROR = (
+    "events without source-access records: "
+    "[('rapid_pivot', 'EVT-RP-012H'), "
+    "('rapid_pivot', 'EVT-RP-018H'), "
+    "('rapid_pivot_control', 'EVT-RPC-018H'), "
+    "('rapid_pivot_control', 'EVT-RPC-020H')]"
+)
+
+ZERO_RELEASE_ADJUDICATION = {
+    "status": "PASS_WITH_CONTROLLED_ZERO_RELEASE_EVENT_EXCEPTION",
+    "controlled_exception_final": True,
+    "analyst_clarification_received": True,
+    "analyst_clarification_result": (
+        "NO_REGISTERED_EVIDENCE_ARTEFACT_REOPENED_FOR_ALL_FOUR_ZERO_RELEASE_EVENTS"
+    ),
+    "canonical_log_amendment_required": False,
+}
+
+
+def import_bundle(
+    bundle: Path,
+    destination: Path,
+    controlled_exception: Path | None = None,
+) -> dict[str, Path]:
     freeze_errors = verify_freeze(
         ROOT, ROOT / "evaluation" / "freeze" / "stage6_1_protocol_freeze.json"
     )
@@ -62,8 +86,17 @@ def import_bundle(bundle: Path, destination: Path) -> dict[str, Path]:
         _known_artifacts(protocol.scenario_ids),
         require_complete=True,
     )
+    admission = None
     if not report.valid:
-        raise ValueError(f"manual baseline validation failed: {report.errors}")
+        if controlled_exception is None:
+            raise ValueError(f"manual baseline validation failed: {report.errors}")
+        admission = admit_controlled_exception(
+            report.errors,
+            controlled_exception,
+            expected_errors=[ZERO_RELEASE_ERROR],
+            expected_adjudication=ZERO_RELEASE_ADJUDICATION,
+            basis="CONTROLLED_ZERO_RELEASE_EVENT_EXCEPTION",
+        )
 
     original_root = destination / "original_submissions"
     normalized_root = destination / "normalized"
@@ -86,6 +119,12 @@ def import_bundle(bundle: Path, destination: Path) -> dict[str, Path]:
             "checks": report.checks,
         },
     )
+    admission_path = None
+    if admission is not None:
+        admission_path = write_json(
+            integrity_root / "controlled_exception_admission.json",
+            admission,
+        )
     normalized = normalize_manual_results(
         original_root,
         ROOT,
@@ -105,22 +144,31 @@ def import_bundle(bundle: Path, destination: Path) -> dict[str, Path]:
             "original_hash_registry": hash_path.name,
             "normalized_output_sha256": sha256_file(normalized_path),
             "original_files_modified": False,
+            "controlled_exception_admission": (admission_path.name if admission_path else None),
         },
     )
-    return {
+    paths = {
         "hashes": hash_path,
         "validation": validation_path,
         "normalized": normalized_path,
         "provenance": provenance_path,
     }
+    if admission_path is not None:
+        paths["admission"] = admission_path
+    return paths
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("bundle", type=Path)
     parser.add_argument("--destination", type=Path, required=True)
+    parser.add_argument("--controlled-exception", type=Path)
     args = parser.parse_args()
-    paths = import_bundle(args.bundle, args.destination)
+    paths = import_bundle(
+        args.bundle,
+        args.destination,
+        args.controlled_exception,
+    )
     print("Stage 6.1 manual baseline imported:")
     for label, path in paths.items():
         print(f"- {label}: {path}")
